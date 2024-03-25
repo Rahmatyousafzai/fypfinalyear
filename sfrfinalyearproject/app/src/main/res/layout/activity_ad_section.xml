@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="Admin.ad_section"
+    android:background="@drawable/backgroundcolor"
+    android:orientation="vertical"
+    >
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/back"
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="30dp"
+        >
+
+    </ImageView>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="550dp"
+        android:background="@drawable/buttom_rounded_border"
+        android:backgroundTint="@color/white"
+        android:layout_marginTop="50dp"
+        android:orientation="vertical"
+        android:padding="10dp"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="BSAI3"
+            android:layout_marginLeft="20dp"
+            android:textSize="30dp"
+            android:textStyle="bold"
+            android:textColor="@color/green"
+
+            ></TextView>
+        <ListView
+            android:layout_width="wrap_content"
+            android:layout_height="400dp"
+            android:layout_gravity="center"
+            android:id="@+id/sectionlistview"
+
+            ></ListView>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="DONE"
+            android:layout_gravity="right"
+            android:layout_marginRight="50dp"
+            android:layout_margin="20dp"
+            android:backgroundTint="@color/green"
+            android:id="@+id/addone"
+            ></Button>
+
+
+
+    </LinearLayout>
+
+
+
+</androidx.appcompat.widget.LinearLayoutCompat>

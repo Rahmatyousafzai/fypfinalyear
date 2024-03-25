@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="Faculty.ftStudent"
+    android:background="@drawable/backgroundcolor"
+    android:orientation="vertical"
+
+    >
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:orientation="horizontal"
+        android:background="#59C0CC"
+        android:layout_marginTop="80dp"
+
+
+        >
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/back"
+            android:layout_gravity="center"
+            android:layout_marginLeft="20dp"
+
+            android:id="@+id/tcback"
+
+            ></ImageView>
+        <ImageView
+            android:layout_marginLeft="50dp"
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/student"
+
+            ></ImageView>
+        <TextView
+            android:layout_marginLeft="20dp"
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:textAllCaps="true"
+            android:textStyle="bold"
+            android:textSize="30dp"
+            android:text="STUDENT">
+
+        </TextView>
+
+    </LinearLayout>
+
+    <ListView
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@color/white"
+        android:divider="@color/green"
+        android:dividerHeight="5dp"
+        android:layout_marginTop="20dp"
+        android:id="@+id/tclistview"
+
+        >
+
+
+
+    </ListView>
+
+
+
+
+
+
+
+
+</androidx.appcompat.widget.LinearLayoutCompat>

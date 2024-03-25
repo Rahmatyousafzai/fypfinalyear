@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".slashscreen"
+    android:orientation="vertical"
+    android:background="@drawable/backgroundcolor"
+
+    >
+
+    <ImageView
+
+        android:id="@+id/logoimage"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="250dp"
+        android:alpha="40"
+
+        android:scaleType="fitCenter"
+        android:src="@drawable/logodesign"
+        android:visibility="visible"
+        tools:visibility="visible"
+
+
+
+
+        >
+
+
+    </ImageView>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="SFR"
+        android:textAlignment="center"
+        android:textAllCaps="true"
+        android:textColor="#F5F8F8"
+        android:textSize="60dp"
+        android:textStyle="bold"
+        android:id="@+id/sfr"
+        ></TextView>
+
+
+</androidx.appcompat.widget.LinearLayoutCompat>

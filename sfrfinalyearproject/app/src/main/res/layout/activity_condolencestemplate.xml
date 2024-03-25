@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="student.stdashboard"
+    android:background="@drawable/backgroundcolor"
+
+    android:orientation="vertical"
+    >
+
+
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="90dp"
+        android:background="#6BDFED"
+        android:padding="5dp"
+        android:layout_marginTop="70dp"
+
+        >
+
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/back"
+            android:layout_gravity="center"
+            android:layout_marginLeft="30dp"
+
+            ></ImageView>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="built in template"
+            android:textStyle="bold"
+            android:textSize="30dp"
+            android:textAllCaps="true"
+            android:layout_gravity="center"
+            android:layout_marginLeft="20dp"
+
+            ></TextView>
+
+
+    </LinearLayout>
+    <TextView
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:background="#F3ECD82D"
+        android:layout_marginTop="10dp"
+        android:layout_gravity="center"
+        android:text="conddolences templete"
+        android:textAllCaps="true"
+        android:textStyle="bold"
+        android:textSize="20dp"
+        android:textAlignment="center"
+        android:paddingTop="5dp"
+
+
+
+
+
+
+
+        ></TextView>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="480dp"
+        android:orientation="horizontal"
+        >
+
+        <ListView
+            android:id="@+id/allteacher"
+            android:layout_width="350dp"
+
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_marginLeft="35dp"
+            android:layout_marginTop="10dp"
+            android:background="#E3DBDB"
+            android:divider="@drawable/backgroundcolor"
+            android:dividerHeight="20dp"
+
+
+            ></ListView>
+
+    </LinearLayout>
+
+
+
+
+</androidx.appcompat.widget.LinearLayoutCompat>

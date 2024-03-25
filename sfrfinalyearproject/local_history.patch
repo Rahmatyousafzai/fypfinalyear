@@ -1,0 +1,1431 @@
+Index: app/src/main/res/layout/activity_ad_add_alumni.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/layout/activity_ad_add_alumni.xml b/app/src/main/res/layout/activity_ad_add_alumni.xml
+new file mode 100644
+--- /dev/null	(date 1709392048717)
++++ b/app/src/main/res/layout/activity_ad_add_alumni.xml	(date 1709392048717)
+@@ -0,0 +1,115 @@
++<?xml version="1.0" encoding="utf-8"?>
++<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
++    xmlns:app="http://schemas.android.com/apk/res-auto"
++    xmlns:tools="http://schemas.android.com/tools"
++    android:layout_width="match_parent"
++    android:layout_height="match_parent"
++    tools:context="Admin.Ad_AddAlumni"
++    android:background="@drawable/backgroundcolor"
++    android:orientation="vertical"
++    >
++    <LinearLayout
++        android:layout_marginTop="20dp"
++        android:layout_width="wrap_content"
++        android:layout_height="wrap_content"
++
++
++        >
++        <ImageView
++        android:layout_width="40dp"
++        android:layout_height="40dp"
++        android:src="@drawable/back"
++android:layout_marginLeft="20dp"
++            android:layout_marginTop="20dp"
++            android:id="@+id/back"
++        ></ImageView>
++
++        <ImageView
++            android:layout_width="40dp"
++            android:layout_height="40dp"
++            android:layout_marginTop="20dp"
++            android:layout_marginLeft="20dp"
++            android:id="@+id/profileimage"
++            android:layout_weight="1"
++            android:src="@color/cardview_dark_background"
++            ></ImageView>
++        <TextView
++            android:layout_width="200dp"
++            android:layout_height="wrap_content"
++            android:id="@+id/profelname"
++
++            android:layout_marginLeft="20dp"
++            android:layout_weight="2"
++            android:text="Admin"
++            android:textSize="20dp"
++            android:layout_gravity="center"
++            android:textColor="@color/white"
++            >
++
++        </TextView>
++        <ImageView
++            android:layout_width="40dp"
++            android:layout_height="40dp"
++            android:src="@drawable/baseline_more_vert_24"
++            android:layout_marginTop="20dp"
++            android:layout_marginLeft="80dp"
++            android:layout_weight="0"
++
++
++            >
++
++        </ImageView>
++        
++        
++
++    </LinearLayout>
++    <LinearLayout
++        android:layout_width="match_parent"
++        android:layout_height="90dp"
++        android:orientation="horizontal"
++        android:background="#73E3F1"
++        android:layout_marginTop="10dp"
++        android:padding="5dp"
++
++        >
++
++            <TextView
++                android:layout_width="wrap_content"
++                android:layout_height="wrap_content"
++                android:text="Add In Alumni"
++                android:textSize="30dp"
++                android:textColor="@color/black"
++                android:textStyle="bold"
++                android:id="@+id/adtxtmessage"
++                >
++
++            </TextView>
++
++
++        </LinearLayout>
++
++<LinearLayout
++    android:layout_width="match_parent"
++    android:layout_height="450dp"
++    android:background="@color/white"
++    android:padding="20dp"
++    >
++    <ListView
++        android:layout_width="match_parent"
++        android:layout_height="match_parent"
++        android:id="@+id/alumnilistview"
++        ></ListView>
++    
++</LinearLayout>
++
++
++
++
++
++    
++
++
++
++
++
++</androidx.appcompat.widget.LinearLayoutCompat>
+\ No newline at end of file
+Index: app/src/main/res/layout/activity_ad_messagebody.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/layout/activity_ad_messagebody.xml b/app/src/main/res/layout/activity_ad_messagebody.xml
+new file mode 100644
+--- /dev/null	(date 1709390478971)
++++ b/app/src/main/res/layout/activity_ad_messagebody.xml	(date 1709390478971)
+@@ -0,0 +1,168 @@
++<?xml version="1.0" encoding="utf-8"?>
++<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
++    xmlns:app="http://schemas.android.com/apk/res-auto"
++    xmlns:tools="http://schemas.android.com/tools"
++    android:layout_width="match_parent"
++    android:layout_height="match_parent"
++    tools:context="student.stdashboard"
++    android:background="@drawable/backgroundcolor"
++
++    android:orientation="vertical"
++    >
++    <LinearLayout
++        android:layout_width="wrap_content"
++        android:layout_height="wrap_content"
++        android:layout_marginTop="20dp"
++        android:layout_marginLeft="20dp"
++        >
++
++        <ImageView
++            android:layout_width="40dp"
++            android:layout_height="40dp"
++            android:layout_marginTop="20dp"
++            android:layout_marginLeft="20dp"
++            android:id="@+id/profileimage"
++            android:layout_weight="1"
++            android:src="@color/cardview_dark_background"
++            ></ImageView>
++        <TextView
++            android:layout_width="wrap_content"
++            android:layout_height="wrap_content"
++            android:id="@+id/profelname"
++
++            android:layout_marginLeft="20dp"
++            android:layout_weight="2"
++            android:text="Rahmat yousafzai"
++            android:textColor="@color/white"
++            android:textSize="20dp"
++            android:layout_gravity="center"
++            >
++
++        </TextView>
++        <ImageView
++            android:layout_width="40dp"
++            android:layout_height="40dp"
++            android:src="@drawable/baseline_more_vert_24"
++            android:layout_marginTop="20dp"
++            android:layout_marginLeft="80dp"
++            android:layout_weight="0"
++
++
++            >
++
++        </ImageView>
++
++    </LinearLayout>
++
++    <LinearLayout
++        android:layout_width="360dp"
++        android:layout_height="550dp"
++        android:background="@drawable/backgroundcolor"
++        android:backgroundTint="@color/white"
++        android:layout_gravity="center"
++        android:layout_marginTop="30dp"
++        android:orientation="vertical"
++        android:padding="5dp"
++        >
++        <LinearLayout
++            android:layout_width="350dp"
++            android:layout_height="60dp"
++            android:background="@android:drawable/btn_default"
++            android:layout_marginLeft="5dp"
++            android:layout_marginTop="20dp"
++            android:padding="10dp"
++            >
++
++            <ImageView
++                android:layout_width="wrap_content"
++                android:layout_height="wrap_content"
++                android:src="@drawable/heart"
++                >
++            </ImageView>
++
++            <TextView
++                android:layout_width="wrap_content"
++                android:layout_height="wrap_content"
++                android:text="Dr.Saeed Wattoo"
++                android:layout_marginTop="10dp"
++                android:textSize="20dp">
++            </TextView>
++            <ImageView
++                android:layout_width="50dp"
++                android:layout_height="40dp"
++                android:src="@drawable/baseline_more_vert_24"
++
++                android:layout_marginLeft="60dp"
++                >
++            </ImageView>
++
++        </LinearLayout>
++
++        <LinearLayout
++            android:layout_width="match_parent"
++            android:layout_height="380dp"
++
++            android:layout_marginTop="5dp">
++
++        </LinearLayout>
++
++
++
++
++
++
++
++        <LinearLayout
++            android:layout_width="340dp"
++            android:layout_height="70dp"
++
++            android:background="@drawable/flateborder"
++            android:layout_gravity="center"
++            >
++
++            <ImageView
++                android:layout_width="40dp"
++                android:layout_height="40dp"
++                android:src="@drawable/add_button"
++                android:layout_gravity="center"
++                android:layout_marginLeft="20dp"
++                android:id="@+id/imgtamplate"
++
++                ></ImageView>
++            <EditText
++                android:layout_width="wrap_content"
++                android:layout_height="match_parent"
++                android:hint="Type Here !"
++                android:layout_gravity="center"
++                android:layout_marginLeft="20dp"
++
++                ></EditText>
++            <Button
++                android:layout_width="wrap_content"
++                android:layout_height="wrap_content"
++                android:text="Wish"
++                android:textSize="20dp"
++                android:textStyle="bold"
++                android:backgroundTint="#039C25"
++                android:layout_gravity="center"
++                android:layout_marginLeft="60dp"
++                android:id="@+id/btnshare"
++                >
++
++
++
++            </Button>
++
++        </LinearLayout>
++
++
++
++    </LinearLayout>
++
++
++
++
++
++
++
++</androidx.appcompat.widget.LinearLayoutCompat>
+\ No newline at end of file
+Index: app/src/main/res/layout/activity_smassage.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/layout/activity_smassage.xml b/app/src/main/res/layout/activity_smassage.xml
+--- a/app/src/main/res/layout/activity_smassage.xml	
++++ b/app/src/main/res/layout/activity_smassage.xml	(date 1709390478858)
+@@ -185,7 +185,7 @@
+         <LinearLayout
+             android:layout_width="200dp"
+             android:layout_height="40dp"
+-            android:background="@drawable/roundercorner_whitebackground"
++            android:background="@drawable/border"
+             android:backgroundTint="@color/white"
+             android:layout_marginTop="10dp"
+             android:layout_marginLeft="20dp"
+@@ -195,14 +195,14 @@
+                 android:layout_width="20dp"
+                 android:layout_height="20dp"
+                 android:layout_marginLeft="10dp"
+-                android:src="@drawable/smile"
++                android:src="@drawable/search"
+                 android:layout_gravity="center"
+ 
+ 
+                 ></ImageView>
+             <EditText
+-                android:layout_width="150dp"
+-                android:layout_height="40dp"
++                android:layout_width="200dp"
++                android:layout_height="match_parent"
+                 android:hint="search"
+                 android:textSize="20dp"
+                 android:layout_gravity="center"
+Index: app/src/main/res/layout/activity_admessage.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/layout/activity_admessage.xml b/app/src/main/res/layout/activity_admessage.xml
+--- a/app/src/main/res/layout/activity_admessage.xml	
++++ b/app/src/main/res/layout/activity_admessage.xml	(date 1709394915878)
+@@ -213,9 +213,9 @@
+                     ></ImageView>
+                 <EditText
+                     android:layout_width="150dp"
+-                    android:layout_height="40dp"
++                    android:layout_height="50dp"
+                     android:hint="search"
+-                    android:textSize="20dp"
++                    android:textSize="30dp"
+                     android:layout_gravity="center"
+                     android:layout_marginLeft="20dp"
+                     ></EditText>
+Index: app/src/main/res/layout/activity_ad_section.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/layout/activity_ad_section.xml b/app/src/main/res/layout/activity_ad_section.xml
+--- a/app/src/main/res/layout/activity_ad_section.xml	
++++ b/app/src/main/res/layout/activity_ad_section.xml	(date 1709390478875)
+@@ -51,6 +51,7 @@
+             android:layout_marginRight="50dp"
+             android:layout_margin="20dp"
+             android:backgroundTint="#058A49"
++            android:id="@+id/addone"
+             ></Button>
+ 
+ 
+Index: app/src/main/res/layout/addalumni_item_rows.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/layout/addalumni_item_rows.xml b/app/src/main/res/layout/addalumni_item_rows.xml
+--- a/app/src/main/res/layout/addalumni_item_rows.xml	
++++ b/app/src/main/res/layout/addalumni_item_rows.xml	(date 1709391411614)
+@@ -15,34 +15,41 @@
+ 
+     <LinearLayout
+         android:layout_width="330dp"
+-        android:layout_height="40dp"
++        android:layout_height="63dp"
++        android:layout_gravity="center"
+         android:background="@drawable/flateborder"
++
+         android:backgroundTint="#8C8C8C"
+-
+-        android:layout_gravity="center"
+-        android:padding="5dp"
+-        >
++        android:padding="5dp">
+ 
+         <ImageView
++            android:id="@+id/aproimage"
+             android:layout_width="20dp"
+             android:layout_height="20dp"
+-            android:src="@drawable/sad"
+-            android:id="@+id/aproimage"
++            android:layout_gravity="center"
+             android:layout_marginLeft="20dp"
+-            android:layout_gravity="center"
+-            ></ImageView>
++            android:src="@drawable/sad"></ImageView>
++
+         <TextView
++            android:id="@+id/txtalmname"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+-            android:text="Ihsan"
+             android:layout_gravity="center"
+             android:layout_marginLeft="20dp"
++            android:text="Ihsan"
+             android:textSize="20dp"
+-            android:textStyle="bold"
+-            android:id="@+id/txtalmname"
+-            ></TextView>
++            android:textStyle="bold"></TextView>
+ 
++        <Button
++            android:layout_width="wrap_content"
++            android:layout_height="wrap_content"
++            android:layout_marginLeft="70dp"
++            android:backgroundTint="@color/green"
++            android:text="Add"
++            android:id="@+id/btnadd"
+ 
++
++            ></Button>
+ 
+ 
+     </LinearLayout>
+Index: app/src/main/res/layout/ad_section_rowdesign.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/layout/ad_section_rowdesign.xml b/app/src/main/res/layout/ad_section_rowdesign.xml
+--- a/app/src/main/res/layout/ad_section_rowdesign.xml	
++++ b/app/src/main/res/layout/ad_section_rowdesign.xml	(date 1709388481552)
+@@ -2,76 +2,48 @@
+ <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+     android:layout_width="match_parent"
+     android:layout_height="wrap_content"
+-    android:orientation="vertical"
++    android:orientation="horizontal"
+     android:padding="10dp"
+     android:background="@drawable/bg_row_desgin">
+-    <ScrollView
+-        android:layout_width="match_parent"
+-        android:layout_height="match_parent">
+-
+-    <HorizontalScrollView
+-        android:layout_width="match_parent"
+-        android:layout_height="match_parent">
+ 
+-    <TableLayout
+-        android:layout_width="match_parent"
++    <CheckBox
++        android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+-        android:padding="10dp"
+-     >
+-
+-        <!-- Row 1 -->
+-        <TableRow
+-            android:layout_width="match_parent"
+-            android:layout_height="wrap_content"
+-            android:gravity="center_vertical"
+-            android:orientation="vertical">
+-
+-            <!-- Cell 1 -->
+-            <CheckBox
+-                android:id="@+id/chkselection"
+-                android:layout_width="wrap_content"
+-                android:layout_height="wrap_content" />
++        android:id="@+id/chkselection"
++></CheckBox>
+ 
+-            <!-- Cell 2 -->
+-            <TextView
+-                android:id="@+id/textName"
+-                android:layout_width="0dp"
+-                android:layout_height="wrap_content"
+-                android:layout_marginLeft="5dp"
+-                android:layout_weight="1"
+-                android:text="Name" />
++    <TextView
++        android:id="@+id/textName"
++        android:layout_width="wrap_content"
++        android:layout_height="wrap_content"
++        android:layout_weight="1"
++        android:text="Name"
++        android:layout_marginLeft="5dp"
+ 
+-            <!-- Cell 3 -->
+-            <TextView
+-                android:id="@+id/textMobile"
+-                android:layout_width="0dp"
+-                android:layout_height="wrap_content"
+-                android:layout_marginLeft="0dp"
+-                android:layout_weight="1"
+-                android:text="Mobile" />
++        />
++
++    <TextView
++        android:id="@+id/textMobile"
++        android:layout_width="wrap_content"
++        android:layout_height="wrap_content"
++        android:layout_weight="1"
++        android:text="Mobile" android:layout_marginLeft="5dp"/>
+ 
+-            <!-- Cell 4 -->
+-            <TextView
+-                android:id="@+id/textNumber"
+-                android:layout_width="0dp"
+-                android:layout_height="wrap_content"
+-                android:layout_marginLeft="0dp"
+-                android:layout_weight="1"
+-                android:text="Number" />
++
++    <TextView
++        android:id="@+id/textNumber"
++        android:layout_width="wrap_content"
++        android:layout_height="wrap_content"
++        android:layout_weight="1"
++        android:layout_marginLeft="5dp"
++        android:text="Number" />
+ 
+-            <!-- Cell 5 -->
+-            <TextView
+-                android:id="@+id/textSection"
+-                android:layout_width="0dp"
+-                android:layout_height="wrap_content"
+-                android:layout_marginLeft="5dp"
+-                android:layout_weight="1"
+-                android:text="Section" />
+-
+-        </TableRow>
+-    </TableLayout>
+-    </HorizontalScrollView>
+-    </ScrollView>
++    <TextView
++        android:id="@+id/textSection"
++        android:layout_width="wrap_content"
++        android:layout_height="wrap_content"
++        android:layout_weight="1"
++        android:text="Section" android:layout_marginLeft="5dp"/>
+ 
+ 
+ </LinearLayout>
+Index: app/src/main/res/layout/activity_smessagebody.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/layout/activity_smessagebody.xml b/app/src/main/res/layout/activity_smessagebody.xml
+--- a/app/src/main/res/layout/activity_smessagebody.xml	
++++ b/app/src/main/res/layout/activity_smessagebody.xml	(date 1709394915883)
+@@ -123,7 +123,7 @@
+     <ImageView
+         android:layout_width="20dp"
+         android:layout_height="20dp"
+-        android:src="@drawable/heart"
++        android:src="@drawable/search"
+         android:layout_gravity="center"
+         android:layout_marginLeft="20dp"
+         android:id="@+id/imgtamplate"
+@@ -131,7 +131,7 @@
+ ></ImageView>
+     <EditText
+         android:layout_width="wrap_content"
+-        android:layout_height="wrap_content"
++        android:layout_height="match_parent"
+         android:hint="Type Here !"
+         android:layout_gravity="center"
+         android:layout_marginLeft="20dp"
+@@ -146,6 +146,8 @@
+       android:backgroundTint="#039C25"
+         android:layout_gravity="center"
+         android:layout_marginLeft="60dp"
++        android:id="@+id/btnshare"
++
+ >
+ 
+ 
+Index: app/src/main/res/layout/content_ad_student.xml
+===================================================================
+diff --git a/app/src/main/res/layout/content_ad_student.xml b/app/src/main/res/layout/content_ad_student.xml
+deleted file mode 100644
+--- a/app/src/main/res/layout/content_ad_student.xml	
++++ /dev/null	
+@@ -1,19 +0,0 @@
+-<?xml version="1.0" encoding="utf-8"?>
+-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+-    xmlns:app="http://schemas.android.com/apk/res-auto"
+-    android:layout_width="match_parent"
+-    android:layout_height="match_parent"
+-    app:layout_behavior="@string/appbar_scrolling_view_behavior">
+-
+-    <fragment
+-        android:id="@+id/nav_host_fragment_content_ad_student"
+-        android:name="androidx.navigation.fragment.NavHostFragment"
+-        android:layout_width="0dp"
+-        android:layout_height="0dp"
+-        app:defaultNavHost="true"
+-        app:layout_constraintBottom_toBottomOf="parent"
+-        app:layout_constraintEnd_toEndOf="parent"
+-        app:layout_constraintStart_toStartOf="parent"
+-        app:layout_constraintTop_toTopOf="parent"
+-        app:navGraph="@navigation/nav_graph" />
+-</androidx.constraintlayout.widget.ConstraintLayout>
+\ No newline at end of file
+Index: app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml b/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml
+--- a/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml	
++++ b/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml	(date 1709407085717)
+@@ -1,6 +1,6 @@
+ <?xml version="1.0" encoding="utf-8"?>
+ <adaptive-icon xmlns:android="http://schemas.android.com/apk/res/android">
+-    <background android:drawable="@drawable/ic_launcher_background" />
+-    <foreground android:drawable="@drawable/ic_launcher_foreground" />
++    <background android:drawable="@drawable/logodesign" />
++    <foreground android:drawable="@drawable/logo" />
+     <monochrome android:drawable="@drawable/ic_launcher_foreground" />
+ </adaptive-icon>
+\ No newline at end of file
+Index: app/src/main/java/Admin/ad_section.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/Admin/ad_section.java b/app/src/main/java/Admin/ad_section.java
+--- a/app/src/main/java/Admin/ad_section.java	
++++ b/app/src/main/java/Admin/ad_section.java	(date 1709390514141)
+@@ -1,6 +1,10 @@
+ package Admin;
++import static com.example.sfrfinalyearproject.R.id.*;
+ 
++import android.content.Intent;
+ import android.os.Bundle;
++import android.view.View;
++import android.widget.Button;
+ import android.widget.ListView;
+ 
+ import androidx.appcompat.app.AppCompatActivity;
+@@ -10,6 +14,8 @@
+ import java.util.ArrayList;
+ import java.util.List;
+ 
++import adopter.SectionCustomAdapter;
++
+ 
+ public class ad_section extends AppCompatActivity {
+ 
+@@ -18,7 +24,10 @@
+         super.onCreate(savedInstanceState);
+         setContentView(R.layout.activity_ad_section);
+ 
+-        ListView listView = findViewById(R.id.sectionlistview);
++        ListView listView = findViewById(sectionlistview);
++        Button Done;
++
++                    Done=findViewById(adddone);
+ 
+         // Sample data
+         List<String[]> dataList = new ArrayList<>();
+@@ -41,10 +50,29 @@
+         // Add more rows as needed
+ 
+         // Create and set the adapter
+-        adapter.SectionCustomAdapter adapter = new adapter.SectionCustomAdapter(this, R.layout.ad_section_rowdesign, dataList);
+-        listView.setAdapter(adapter);
++        SectionCustomAdapter adaptersection = new SectionCustomAdapter(this, R.layout.ad_section_rowdesign, dataList);
++        listView.setAdapter(adaptersection);
++
++
++
++       Done.setOnClickListener(new View.OnClickListener() {
++            @Override
++            public void onClick(View v) {
++
++                Intent intent = new Intent(ad_section.this, Ad_messagebody.class);
++                startActivity(intent);
++                // Finish the MainActivity so that it's removed from the back stack
++
++                // when the student_login activity starts
++                finish();
++
++            }
++        });
++
+ 
+ 
+ 
+     }
++
++
+ }
+\ No newline at end of file
+Index: app/src/main/java/Admin/ad_teachers.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/Admin/ad_teachers.java b/app/src/main/java/Admin/ad_teachers.java
+--- a/app/src/main/java/Admin/ad_teachers.java	
++++ b/app/src/main/java/Admin/ad_teachers.java	(date 1709390478936)
+@@ -1,5 +1,7 @@
+ package Admin;
+ 
++import androidx.annotation.NonNull;
++import androidx.annotation.Nullable;
+ import androidx.appcompat.app.AppCompatActivity;
+ 
+ import android.os.Bundle;
+@@ -13,4 +15,6 @@
+         super.onCreate(savedInstanceState);
+         setContentView(R.layout.activity_ad_teachers);
+     }
+-}
+\ No newline at end of file
++}
++
++
+Index: app/src/main/java/Admin/Ad_messagebody.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/Admin/Ad_messagebody.java b/app/src/main/java/Admin/Ad_messagebody.java
+new file mode 100644
+--- /dev/null	(date 1709390478923)
++++ b/app/src/main/java/Admin/Ad_messagebody.java	(date 1709390478923)
+@@ -0,0 +1,64 @@
++package Admin;
++
++import androidx.appcompat.app.AppCompatActivity;
++
++import android.content.Intent;
++import android.os.Bundle;
++import android.view.View;
++import android.widget.Button;
++import android.widget.ImageView;
++
++import com.example.sfrfinalyearproject.R;
++
++import genral.templete;
++
++public class Ad_messagebody extends AppCompatActivity {
++
++    @Override
++    protected void onCreate(Bundle savedInstanceState) {
++        super.onCreate(savedInstanceState);
++        setContentView(R.layout.activity_ad_messagebody);
++
++        ImageView imgAddtemplete;
++        Button btnshare;
++
++        imgAddtemplete =findViewById(R.id.imgtamplate);
++        btnshare= this.<Button>findViewById(R.id.btnshare);
++
++
++        imgAddtemplete.setOnClickListener(new View.OnClickListener() {
++            @Override
++            public void onClick(View v) {
++
++                Intent intent = new Intent(Ad_messagebody.this, templete.class);
++                startActivity(intent);
++                // Finish the MainActivity so that it's removed from the back stack
++
++                // when the student_login activity starts
++                finish();
++
++            }
++        });
++
++
++        btnshare.setOnClickListener(new View.OnClickListener() {
++            @Override
++            public void onClick(View v) {
++
++                Intent intent = new Intent(Ad_messagebody.this, ad_dashboard.class);
++                startActivity(intent);
++                // Finish the MainActivity so that it's removed from the back stack
++
++                // when the student_login activity starts
++                finish();
++
++            }
++        });
++
++
++
++
++
++
++    }
++}
+\ No newline at end of file
+Index: app/src/main/java/Admin/ad_viewa_lumni.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/Admin/ad_viewa_lumni.java b/app/src/main/java/Admin/ad_viewa_lumni.java
+new file mode 100644
+--- /dev/null	(date 1709406666081)
++++ b/app/src/main/java/Admin/ad_viewa_lumni.java	(date 1709406666081)
+@@ -0,0 +1,109 @@
++package Admin;
++
++import androidx.appcompat.app.AppCompatActivity;
++
++import android.content.Intent;
++import android.os.Bundle;
++import android.view.View;
++import android.widget.Button;
++import android.widget.ImageView;
++import android.widget.ListView;
++import android.widget.Spinner;
++
++import com.example.sfrfinalyearproject.R;
++
++import java.util.ArrayList;
++import java.util.Arrays;
++import java.util.List;
++
++import adopter.addalumni_list_adopter;
++import adopter.customespinner;
++
++public class ad_viewa_lumni extends AppCompatActivity {
++
++
++
++    @Override
++    protected void onCreate(Bundle savedInstanceState) {
++        super.onCreate(savedInstanceState);
++        setContentView(R.layout.activity_ad_addalumni);
++
++
++        ListView alumniListView = findViewById(R.id.addalumni);
++        Spinner spinner = findViewById(R.id.yearspinner);
++        Button adddone;
++        ImageView back;
++
++
++        back=findViewById(R.id.almback);
++        adddone=findViewById(R.id.adddone);
++
++        List<String> years = Arrays.asList("2001", "2002", "2003", "2004", "2005", "2006");
++        customespinner adapter1 = new customespinner(this, years);
++        spinner.setAdapter(adapter1);
++
++
++        // Create a list of alumni data (replace this with your actual data)
++        List<String> alumniList = new ArrayList<>();
++        alumniList.add("Rahmat");
++        alumniList.add("Jaweria");
++        alumniList.add("Hina");
++        alumniList.add("Bilal");
++        alumniList.add("Rahmat");
++        alumniList.add("Shiek Chilli");
++        alumniList.add("Rahmat");
++        alumniList.add("Jaweria");
++        alumniList.add("Amna");
++        alumniList.add("Jaweria");
++        alumniList.add("Rahmat");
++        alumniList.add("Jaweria");
++
++
++
++
++
++        // Add more alumni data as needed
++
++        // Create an instance of your adapter
++        addalumni_list_adopter adapter2 = new addalumni_list_adopter(this, R.layout.activity_ad_add_alumni, alumniList);
++
++        // Set the adapter to the ListView
++        alumniListView.setAdapter(adapter2);
++
++
++        back.setOnClickListener(new View.OnClickListener() {
++            @Override
++            public void onClick(View v) {
++
++                Intent intent = new Intent(ad_viewa_lumni.this, ad_alumni_message_option.class);
++                startActivity(intent);
++                // Finish the MainActivity so that it's removed from the back stack
++                // when the student_login activity starts
++                finish();
++
++            }
++        });
++
++        adddone.setOnClickListener(new View.OnClickListener() {
++            @Override
++            public void onClick(View v) {
++
++                Intent intent = new Intent(ad_viewa_lumni.this, ad_viewa_lumni.class);
++                startActivity(intent);
++                // Finish the MainActivity so that it's removed from the back stack
++
++                // when the student_login activity starts
++                finish();
++
++            }
++        });
++
++
++
++
++
++
++
++
++    }
++}
+\ No newline at end of file
+Index: app/src/main/java/Admin/ad_addalumni.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/Admin/ad_addalumni.java b/app/src/main/java/Admin/Ad_AddAlumni.java
+rename from app/src/main/java/Admin/ad_addalumni.java
+rename to app/src/main/java/Admin/Ad_AddAlumni.java
+--- a/app/src/main/java/Admin/ad_addalumni.java	
++++ b/app/src/main/java/Admin/Ad_AddAlumni.java	(date 1709406621656)
+@@ -2,102 +2,50 @@
+ 
+ import androidx.appcompat.app.AppCompatActivity;
+ 
+-import android.content.Context;
+-import android.content.Intent;
+ import android.os.Bundle;
+-import android.view.View;
+-import android.widget.Button;
+ import android.widget.ImageView;
+ import android.widget.ListView;
+-import android.widget.Spinner;
++import android.widget.TextView;
+ 
+ import com.example.sfrfinalyearproject.R;
+ 
+ import java.util.ArrayList;
+-import java.util.Arrays;
+ import java.util.List;
+ 
+ import adopter.addalumni_list_adopter;
+-import adopter.customespinner;
+-
+-public class ad_addalumni extends AppCompatActivity {
+ 
+-
++public class Ad_AddAlumni extends AppCompatActivity {
++    private ListView mListView;
++    private addalumni_list_adopter mAdapter;
++    private List<String> mData;
+ 
+     @Override
+     protected void onCreate(Bundle savedInstanceState) {
+         super.onCreate(savedInstanceState);
+-        setContentView(R.layout.activity_ad_addalumni);
+-
++        setContentView(R.layout.activity_ad_add_alumni);
+ 
+-        ListView alumniListView = findViewById(R.id.addalumni);
+-        Spinner spinner = findViewById(R.id.yearspinner);
+-        Button adddone;
+-        ImageView back;
++        ImageView back=findViewById(R.id.back);
++        ListView addalumni= findViewById(R.id.alumnilistview);
++        // Initialize ListView and data
+ 
++        mData = generateData(); // Implement generateData() method to generate your data
+ 
+-        back=findViewById(R.id.almback);
+-        adddone=findViewById(R.id.adddone);
++        // Create adapter and set it to ListView
++        mAdapter = new addalumni_list_adopter(this, R.layout.activity_ad_add_alumni, mData);
++        addalumni.setAdapter(mAdapter);
++    }
+ 
+-        List<String> years = Arrays.asList("2001", "2002", "2003", "2004", "2005", "2006");
+-        customespinner adapter1 = new customespinner(this, years);
+-        spinner.setAdapter(adapter1);
+-
+-
+-        // Create a list of alumni data (replace this with your actual data)
+-        List<String> alumniList = new ArrayList<>();
+-        alumniList.add("Rahmat");
+-        alumniList.add("Jaweria");
+-        alumniList.add("Hina");
+-        alumniList.add("Bilal");
+-        alumniList.add("Rahmat");
+-        alumniList.add("Shiek Chilli");
+-        alumniList.add("Rahmat");
+-        alumniList.add("Jaweria");
+-        alumniList.add("Amna");
+-        alumniList.add("Jaweria");
+-        alumniList.add("Rahmat");
+-        alumniList.add("Jaweria");
+-
+-
+-
+-
+-
+-        // Add more alumni data as needed
+-
+-        // Create an instance of your adapter
+-        addalumni_list_adopter adapter2 = new addalumni_list_adopter(this, alumniList);
+-
+-        // Set the adapter to the ListView
+-        alumniListView.setAdapter(adapter2);
+-
+-
+-        back.setOnClickListener(new View.OnClickListener() {
+-            @Override
+-            public void onClick(View v) {
+-
+-                Intent intent = new Intent(ad_addalumni.this, ad_alumni_message_option.class);
+-                startActivity(intent);
+-                // Finish the MainActivity so that it's removed from the back stack
+-                // when the student_login activity starts
+-                finish();
+-
+-            }
+-        });
+-
+-        adddone.setOnClickListener(new View.OnClickListener() {
+-            @Override
+-            public void onClick(View v) {
++    // Implement this method to generate your data
++    private List<String> generateData() {
++        // Sample data generation
++        List<String> data = new ArrayList<>();
++        data.add("Ihsan");
++        // Add more data items here if needed
++        return data;
++    }
+ 
+-                Intent intent = new Intent(ad_addalumni.this, ad_addalumni.class);
+-                startActivity(intent);
+-                // Finish the MainActivity so that it's removed from the back stack
+ 
+-                // when the student_login activity starts
+-                finish();
+ 
+-            }
+-        });
+ 
+ 
+ 
+@@ -107,4 +55,3 @@
+ 
+ 
+     }
+-}
+\ No newline at end of file
+Index: app/src/main/java/adopter/Ad_alumni_adopter.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/adopter/Ad_alumni_adopter.java b/app/src/main/java/adopter/Ad_alumni_adopter.java
+new file mode 100644
+--- /dev/null	(date 1709406621645)
++++ b/app/src/main/java/adopter/Ad_alumni_adopter.java	(date 1709406621645)
+@@ -0,0 +1,52 @@
++package adopter;
++
++import android.content.Context;
++import android.view.LayoutInflater;
++import android.view.View;
++import android.view.ViewGroup;
++import android.widget.ArrayAdapter;
++import android.widget.Button;
++import android.widget.CheckBox;
++import android.widget.ImageView;
++import android.widget.TextView;
++
++import androidx.annotation.NonNull;
++import androidx.annotation.Nullable;
++
++import com.example.sfrfinalyearproject.R;
++
++import java.util.List;
++
++public class Ad_alumni_adopter extends ArrayAdapter<String> {
++
++    private Context mContext;
++    private List<String> mData;
++
++    public Ad_alumni_adopter(@NonNull Context context, int resource, @NonNull List<String> objects) {
++        super(context, resource, objects);
++        mContext = context;
++        mData = objects;
++    }
++
++    @NonNull
++    @Override
++    public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
++        if (convertView == null) {
++            convertView = LayoutInflater.from(mContext).inflate(R.layout.addalumni_item_rows, parent, false);
++        }
++
++        // Get references to views
++        CheckBox checkBox = convertView.findViewById(R.id.chk);
++        ImageView imageView = convertView.findViewById(R.id.aproimage);
++        TextView textView = convertView.findViewById(R.id.txtalmname);
++        Button button = convertView.findViewById(R.id.btnadd);
++
++        // Set data to views
++        textView.setText(mData.get(position));
++        // Set other views accordingly
++
++        return convertView;
++
++
++    }
++}
+Index: app/src/main/java/adopter/RecyclerViewAdopter.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/adopter/RecyclerViewAdopter.java b/app/src/main/java/adopter/RecyclerViewAdopter.java
+--- a/app/src/main/java/adopter/RecyclerViewAdopter.java	
++++ b/app/src/main/java/adopter/RecyclerViewAdopter.java	(date 1709394548035)
+@@ -15,70 +15,74 @@
+ 
+ import java.util.List;
+ 
+-public class RecyclerViewAdopter extends RecyclerView.Adapter<Recyclerviewholder> {
+-    private Context context;
+-    private List<MyDataModel> contactList;
++public class RecyclerViewAdopter extends RecyclerView.Adapter<RecyclerViewAdopter.Recyclerviewholder>{
+ 
+-    public RecyclerViewAdopter(Context stdashboard, List<MyDataModel> data) {
+-        this.context=context;
+-        this.contactList=contactList;
+ 
++private List<String> mData;
+ 
+-    }
++    private List<MyDataModel> mDataList;
++    private Context mContext;
+ 
++    public RecyclerViewAdopter(Context context, int student_dashboard_row, List<MyDataModel> dataList) {
++        mContext = context;
++        mDataList = dataList;
++    }
+ 
+     @NonNull
+     @Override
+     public Recyclerviewholder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+-        View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.student_dashboard_row,parent,false);
++        View view = LayoutInflater.from(mContext).inflate(R.layout.student_dashboard_row, parent, false);
+         return new Recyclerviewholder(view);
+-
+-
+     }
+-
+-
+ 
+     @Override
+     public void onBindViewHolder(@NonNull Recyclerviewholder holder, int position) {
+-
+-        MyDataModel item = contactList.get(position);
+-        holder.imgview.setImageResource(contactList.get(position).getImageResource());
+-        holder.txtname.setText(contactList.get(position).getName());
+-        holder.txtdesc.setText(contactList.get(position).getDescription());
+-        holder.em1.setImageResource(contactList.get(position).getIm1());
+-        holder.em2.setImageResource(contactList.get(position).getI2());
+-        holder.em3.setImageResource(contactList.get(position).getIm3());
+-        holder.em4.setImageResource(contactList.get(position).getIm4());
+-        holder.em5.setImageResource(contactList.get(position).getIm5());
+-        holder.em6.setImageResource(contactList.get(position).getIm6());
+-        holder.em7.setImageResource(contactList.get(position).getIm7());
++        MyDataModel currentItem = mDataList.get(position);
+ 
+-
+-
++        holder.imageView.setImageResource(currentItem.getImageResource());
++        holder.textViewName.setText(currentItem.getName());
++        holder.textViewDesc.setText(currentItem.getDescription());
++        holder.em1.setImageResource(currentItem.getIm1());
++        holder.em2.setImageResource(currentItem.getI2());
++        holder.em3.setImageResource(currentItem.getIm3());
++        holder.em4.setImageResource(currentItem.getIm4());
++        holder.em5.setImageResource(currentItem.getIm5());
++        holder.em6.setImageResource(currentItem.getIm6());
++        holder.em7.setImageResource(currentItem.getIm7());
+     }
+ 
+     @Override
+     public int getItemCount() {
+-        return contactList.size();
++        return mDataList.size();
+     }
+-    public class viewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+-        public TextView  name,description;
+-        public ImageView profileimage,icone;
+-        public viewHolder(@NonNull View itemView) {
++
++    public static class Recyclerviewholder extends RecyclerView.ViewHolder {
++        public ImageView imageView;
++        public TextView textViewName;
++        public TextView textViewDesc;
++        public ImageView em1;
++        public ImageView em2;
++        public ImageView em3;
++        public ImageView em4;
++        public ImageView em5;
++        public ImageView em6;
++        public ImageView em7;
++
++        public Recyclerviewholder(@NonNull View itemView) {
+             super(itemView);
+-            itemView.setOnClickListener(this);
+-            name=itemView.findViewById(R.id.pfname);
+-            description=itemView.findViewById(R.id.desc);
+-            profileimage=itemView.findViewById(R.id.pfimage);
+-            icone=itemView.findViewById(R.id.icon);
++            imageView = itemView.findViewById(R.id.pfimage);
++            textViewName = itemView.findViewById(R.id.pfname);
++            textViewDesc = itemView.findViewById(R.id.desc);
++            em1 = itemView.findViewById(R.id.imj1);
++            em2 = itemView.findViewById(R.id.imj2);
++            em3 = itemView.findViewById(R.id.imj3);
++            em4 = itemView.findViewById(R.id.imj4);
++            em5 = itemView.findViewById(R.id.imj5);
++            em6 = itemView.findViewById(R.id.imj6);
++            em7 = itemView.findViewById(R.id.imj7);
++        }
+ 
+ 
+ 
+-        }
+-
+-        @Override
+-        public void onClick(View v) {
+-
+-        }
+     }
+ }
+Index: app/src/main/java/adopter/addalumni_list_adopter.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/adopter/addalumni_list_adopter.java b/app/src/main/java/adopter/addalumni_list_adopter.java
+--- a/app/src/main/java/adopter/addalumni_list_adopter.java	
++++ b/app/src/main/java/adopter/addalumni_list_adopter.java	(date 1709392392252)
+@@ -19,7 +19,7 @@
+     private List<String> dataList;
+     private LayoutInflater inflater;
+ 
+-    public addalumni_list_adopter(Context context, List<String> dataList) {
++    public addalumni_list_adopter(Context context, int activity_ad_add_alumni, List<String> dataList) {
+         super(context, 0, dataList);
+         this.dataList = dataList;
+         inflater = LayoutInflater.from(context);
+Index: app/src/main/java/adopter/test.java
+===================================================================
+diff --git a/app/src/main/java/adopter/test.java b/app/src/main/java/adopter/test.java
+deleted file mode 100644
+--- a/app/src/main/java/adopter/test.java	
++++ /dev/null	
+@@ -1,16 +0,0 @@
+-package adopter;
+-
+-import androidx.appcompat.app.AppCompatActivity;
+-
+-import android.os.Bundle;
+-
+-import com.example.sfrfinalyearproject.R;
+-
+-public class test extends AppCompatActivity {
+-
+-    @Override
+-    protected void onCreate(Bundle savedInstanceState) {
+-        super.onCreate(savedInstanceState);
+-        setContentView(R.layout.activity_test);
+-    }
+-}
+\ No newline at end of file
+Index: app/src/main/java/adopter/SectionCustomAdapter.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/adopter/SectionCustomAdapter.java b/app/src/main/java/adopter/SectionCustomAdapter.java
+--- a/app/src/main/java/adopter/SectionCustomAdapter.java	
++++ b/app/src/main/java/adopter/SectionCustomAdapter.java	(date 1709390478965)
+@@ -1,4 +1,4 @@
+-package adapter;
++package adopter;
+ 
+ import android.content.Context;
+ import android.view.LayoutInflater;
+@@ -60,4 +60,11 @@
+ 
+         return convertView;
+     }
++
++
++
++
++
++
++
+ }
+Index: app/src/main/java/student/stdashboard.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/student/stdashboard.java b/app/src/main/java/student/stdashboard.java
+--- a/app/src/main/java/student/stdashboard.java	
++++ b/app/src/main/java/student/stdashboard.java	(date 1709398022336)
+@@ -1,29 +1,21 @@
+ package student;
+ 
+-import androidx.appcompat.app.AlertDialog;
+ import androidx.appcompat.app.AppCompatActivity;
+-import androidx.recyclerview.widget.DividerItemDecoration;
+-import androidx.recyclerview.widget.LinearLayoutManager;
+ import androidx.recyclerview.widget.RecyclerView;
+ 
+-import android.content.DialogInterface;
+ import android.content.Intent;
+ import android.os.Bundle;
+ import android.view.View;
+ import android.widget.ImageView;
+ import android.widget.TextView;
+-import android.widget.Toast;
+ 
+ import com.example.sfrfinalyearproject.MyDataModel;
+ import com.example.sfrfinalyearproject.R;
+-import com.example.sfrfinalyearproject.student_login;
+ 
+ import java.util.ArrayList;
+ import java.util.List;
+ 
+ import adopter.RecyclerViewAdopter;
+-import adopter.TeachercustomAdopter;
+-import adopter.test;
+ 
+ public class stdashboard extends AppCompatActivity {
+ private RecyclerView.LayoutManager LayoutManager;
+@@ -41,6 +33,16 @@
+         imgnotification=findViewById(R.id.imgnptification);
+ 
+ 
++        RecyclerView recyclerView = findViewById(R.id.strcview);
++        List<MyDataModel> dataList = new ArrayList<>();
++        dataList.add(new MyDataModel(R.drawable.heart, "Name 1", "Description 1", R.drawable.like, R.drawable.laughter, R.drawable.heart, R.drawable.sad, R.drawable.smile, R.drawable.heart, R.drawable.heart));
++
++        // Add more data as needed
++
++        // Create adapter and set it to the ListView
++        RecyclerViewAdopter adapter1= new RecyclerViewAdopter(this, R.layout.student_dashboard_row, dataList);
++        recyclerView.setAdapter(adapter1);
++
+ /*
+ 
+         // Dummy data
+Index: app/src/main/AndroidManifest.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/AndroidManifest.xml b/app/src/main/AndroidManifest.xml
+--- a/app/src/main/AndroidManifest.xml	
++++ b/app/src/main/AndroidManifest.xml	(date 1709406666071)
+@@ -1,6 +1,6 @@
+ <?xml version="1.0" encoding="utf-8"?>
+ <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+-    xmlns:tools="http://schemas.android.com/tools">
++    xmlns:tools="http://schemas.android.com/tools" >
+ 
+     <application
+         android:allowBackup="true"
+@@ -11,8 +11,14 @@
+         android:roundIcon="@mipmap/ic_launcher_round"
+         android:supportsRtl="true"
+         android:theme="@style/Theme.Sfrfinalyearproject"
+-        tools:targetApi="31">
++        tools:targetApi="31" >
+         <activity
++            android:name="Admin.Ad_AddAlumni"
++            android:exported="false" />
++        <activity
++            android:name="Admin.Ad_messagebody"
++            android:exported="false" />
++        <activity
+             android:name="Admin.ad_section"
+             android:exported="false" />
+         <activity
+@@ -30,7 +36,7 @@
+             android:name="Admin.ad_teachers"
+             android:exported="false" />
+         <activity
+-            android:name="Admin.ad_addalumni"
++            android:name="Admin.ad_viewa_lumni"
+             android:exported="false" />
+         <activity
+             android:name="Admin.ad_alumni_message_option"
+@@ -94,7 +100,7 @@
+             android:exported="false" />
+         <activity
+             android:name=".slashscreen"
+-            android:exported="true">
++            android:exported="true" >
+             <intent-filter>
+                 <action android:name="android.intent.action.MAIN" />
+ 

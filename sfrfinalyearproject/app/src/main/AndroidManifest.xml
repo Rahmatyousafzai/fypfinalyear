@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <application
+        android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@drawable/logodesign"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.Sfrfinalyearproject"
+        tools:targetApi="31">
+        <activity
+            android:name="Faculty.select_section_all_student"
+            android:exported="false" />
+        <activity
+            android:name="Faculty.ft_section"
+            android:exported="false" />
+        <activity
+            android:name="Faculty.ft_send_message_by_samester"
+            android:exported="false" />
+        <activity
+            android:name="Faculty.course_message_body"
+            android:exported="false" />
+        <activity
+            android:name="Faculty.ft_send_message_by_course"
+            android:exported="false" />
+        <activity
+            android:name="Faculty.ftfavstudent"
+            android:exported="false" />
+        <activity
+            android:name="Faculty.ftStudent"
+            android:exported="false" />
+        <activity
+            android:name="Faculty.message_option_section_alumni_student"
+            android:exported="false" />
+        <activity
+            android:name="Admin.view_achievments"
+            android:exported="false" />
+        <activity
+            android:name="Admin.adminAddAlumni"
+            android:exported="false" />
+        <activity
+            android:name="Admin.Ad_messagebody"
+            android:exported="false" />
+        <activity
+            android:name="Admin.ad_section"
+            android:exported="false" />
+        <activity
+            android:name="Admin.ad_student"
+            android:exported="false"
+            android:label="@string/title_activity_ad_student"
+            android:theme="@style/Theme.Sfrfinalyearproject" />
+        <activity
+            android:name="Admin.ad_addachivment"
+            android:exported="false" />
+        <activity
+            android:name="Admin.admessage"
+            android:exported="false" />
+        <activity
+            android:name="Admin.ad_teachers"
+            android:exported="false" />
+        <activity
+            android:name="Admin.ad_alumni_message_option"
+            android:exported="false" />
+        <activity
+            android:name="Admin.admin_post_messagebody"
+            android:exported="false" />
+        <activity
+            android:name="Admin.ad_message_option"
+            android:exported="false" />
+        <activity
+            android:name="Faculty.faculty_dashboard"
+            android:exported="false" />
+        <activity
+            android:name="Alumni.al_dahsboard"
+            android:exported="false" />
+        <activity
+            android:name="Admin.ad_dashboard"
+            android:exported="false" />
+        <activity
+            android:name=".admin_login"
+            android:exported="false" />
+        <activity
+            android:name=".faculty_login"
+            android:exported="false" />
+        <activity
+            android:name="student.sprfile"
+            android:exported="false" />
+        <activity
+            android:name="student.snotification"
+            android:exported="false" />
+        <activity
+            android:name="genral.condolencestemplate"
+            android:exported="false" />
+        <activity
+            android:name="genral.templete"
+            android:exported="false" />
+        <activity
+            android:name="student.smessagebody"
+            android:exported="false" />
+        <activity
+            android:name="student.smassage"
+            android:exported="false" />
+        <activity
+            android:name="student.favteacher"
+            android:exported="false" />
+        <activity
+            android:name="student.allteacher"
+            android:exported="false" />
+        <activity
+            android:name="student.stteacher"
+            android:exported="false" />
+        <activity
+            android:name="student.stdashboard"
+            android:exported="false" />
+        <activity
+            android:name=".student_login"
+            android:exported="false" />
+        <activity
+            android:name=".slashscreen"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".MainActivity"
+            android:exported="true" />
+    </application>
+
+</manifest>
