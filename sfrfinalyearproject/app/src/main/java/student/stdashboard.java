@@ -30,6 +30,12 @@ public class stdashboard extends AppCompatActivity {
         imgMessage = findViewById(R.id.imgmessage);
         imgNotification = findViewById(R.id.imgnptification);
 
+
+
+
+
+
+
         // Set click listeners
         txtFavTeacher.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -1,7 +1,5 @@
 package student;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -9,12 +7,12 @@ import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.sfrfinalyearproject.R;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import adopter.TeachercustomAdopter;
 
 public class smassage extends AppCompatActivity {
 
@@ -48,9 +46,9 @@ public class smassage extends AppCompatActivity {
 
         // Create an ArrayAdapter to populate the ListView
 
-        TeachercustomAdopter adapter = new TeachercustomAdopter(this, teacherNames);
+        //TeachercustomAdopter adapter = new TeachercustomAdopter(this, teacherNames);
         // Set the adapter to the ListView
-        listView.setAdapter(adapter);
+        //listView.setAdapter(adapter);
 
 
 

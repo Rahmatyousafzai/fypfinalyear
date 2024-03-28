@@ -10,48 +10,53 @@
     android:orientation="vertical"
     >
     <LinearLayout
-        android:layout_marginTop="20dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-
+        android:layout_marginTop="@dimen/_30sdp"
+        android:layout_gravity="center"
 
         >
 
-        <ImageView
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginLeft="20dp"
-            android:id="@+id/fileimage"
-            android:layout_weight="1"
-            android:src="@color/cardview_dark_background"
-            ></ImageView>
-        <TextView
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:id="@+id/profelname"
-
-            android:layout_marginLeft="20dp"
-            android:layout_weight="2"
-            android:text="Admin"
-            android:textSize="20dp"
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/profileimage"
+            android:layout_width="@dimen/_40sdp"
+            android:layout_height="@dimen/_40sdp"
+            android:src="@drawable/baseline_account_circle_24"
             android:layout_gravity="center"
-            android:textColor="@color/white"
-            >
+            app:civ_border_color="@color/black"
+            app:civ_border_width="2dp"
+            android:layout_weight="2"
+            />
 
-        </TextView>
+        <TextView
+            android:id="@+id/profelname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:text="Admin"
+
+
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_gravity="center"
+            android:layout_marginStart="@dimen/_8sdp"
+            android:layout_weight="1"
+
+            />
+
         <ImageView
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:id="@+id/detail"
+            android:layout_width="@dimen/_40sdp"
+            android:layout_height="@dimen/_40sdp"
             android:src="@drawable/baseline_more_vert_24"
-            android:layout_marginTop="20dp"
-            android:layout_marginLeft="80dp"
-            android:layout_weight="0"
+            android:layout_gravity="center"
+            android:layout_marginStart="150dp"
+            android:backgroundTint="@color/white"
 
 
-            >
 
-        </ImageView>
+            />
 
     </LinearLayout>
     <LinearLayout
@@ -77,6 +82,7 @@ android:padding="5dp"
                 android:layout_height="50dp"
                 android:src="@drawable/publication"
                 android:id="@+id/adimgnews"
+                android:layout_gravity="center"
                 ></ImageView>
             <TextView
                 android:layout_width="match_parent"
@@ -86,6 +92,8 @@ android:padding="5dp"
                 android:textStyle="bold"
                 android:textColor="@color/black"
                 android:id="@+id/adnews"
+                android:layout_gravity="center"
+                android:textAlignment="center"
 
 
                 ></TextView>
@@ -107,12 +115,14 @@ android:padding="5dp"
                 android:layout_height="50dp"
                 android:src="@drawable/notification"
                 android:id="@+id/imgnptification"
+                android:layout_gravity="center"
                 ></ImageView>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:text="Notification"
                 android:textSize="20dp"
+                android:layout_gravity="center"
                 android:textAlignment="center"
                 android:textStyle="bold"
                 android:textColor="@color/black"
@@ -143,10 +153,12 @@ android:padding="5dp"
                 android:layout_height="50dp"
                 android:src="@drawable/message"
                 android:id="@+id/adimgmessage"
+                android:layout_gravity="center"
                 ></ImageView>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:text="Message"
                 android:textSize="20dp"
                 android:textColor="@color/black"
@@ -235,6 +247,7 @@ android:padding="5dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:layout_marginTop="@dimen/_30sdp"
 
 
         >
@@ -244,7 +257,7 @@ android:padding="5dp"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:layout_weight="1"
-            android:layout_marginLeft="40dp"
+            android:layout_marginLeft="30dp"
             android:weightSum="1"
 
             >
@@ -253,6 +266,8 @@ android:padding="5dp"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:src="@drawable/faculty"
+                android:layout_gravity="center"
+                android:id="@+id/imgtecher"
 
                 >
             </ImageView>
@@ -264,6 +279,10 @@ android:padding="5dp"
                 android:textStyle="bold"
                 android:textColor="@color/white"
                 android:id="@+id/textadteacher"
+                android:layout_gravity="center"
+                android:textAlignment="center"
+                android:textAllCaps="true"
+
                 ></TextView>
         </LinearLayout>
 
@@ -282,6 +301,7 @@ android:padding="5dp"
                 android:layout_height="50dp"
                 android:src="@drawable/achivment"
                 android:layout_gravity="center"
+                android:id="@+id/imgachivment"
                 >
             </ImageView>
             <TextView
@@ -309,7 +329,12 @@ android:padding="5dp"
             <ImageView
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:src="@drawable/student"></ImageView>
+                android:src="@drawable/student"
+                android:layout_gravity="center"
+                android:id="@+id/imgstudent"
+
+
+                ></ImageView>
 
             <TextView
                 android:id="@+id/adstudent"
@@ -318,8 +343,9 @@ android:padding="5dp"
                 android:text="STUDENT"
                 android:textColor="@color/white"
                 android:textSize="20dp"
-
+android:layout_gravity="center"
                 android:textStyle="bold"
+                android:textAlignment="center"
 
                 >
 

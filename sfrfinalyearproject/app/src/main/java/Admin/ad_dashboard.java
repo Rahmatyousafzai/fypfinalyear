@@ -64,35 +64,30 @@ public class ad_dashboard extends AppCompatActivity {
                 admessage();
             }
         });
-
         adnews.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 news();
             }
         });
-
         addteacher.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 addteacher();
             }
         });
-
         adstudent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 addstudent();
             }
         });
-
         addachivemet.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // Handle click
             }
         });
-
         adpost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -115,6 +110,13 @@ public class ad_dashboard extends AppCompatActivity {
 
     public void addteacher() {
         Intent intent = new Intent(ad_dashboard.this, ad_teachers.class);
+
+        intent.putExtra("prfilename", profilename.getText().toString());
+        startActivity(intent);
+        // Finish the current activity
+        finish();
+
+
         startActivity(intent);
         finish();
     }
@@ -136,11 +138,11 @@ public class ad_dashboard extends AppCompatActivity {
                     userdetail userDetails = response.body();
                     if (userDetails != null) {
                         // Set full name
-                        String fullName = userDetails.getFirstName() + " " + userDetails.getLastName();
+                        String fullName = userDetails.getFname() + " " + userDetails.getLname();
                         profilename.setText(fullName);
 
                         // Set profile image
-                        String imagePath = userDetails.getImagePath();
+                        String imagePath = userDetails.getProfileimage();
                         if (imagePath != null && !imagePath.isEmpty()) {
                             Picasso.get().load(imagePath).into(profileimage);
                         }
@@ -169,4 +171,13 @@ public class ad_dashboard extends AppCompatActivity {
 
 
     }
+
+
+
+
+
+
+
+
+
 }

@@ -34,34 +34,56 @@
             android:textStyle="bold"
             android:layout_marginTop="20dp"
             ></TextView>
+<LinearLayout
+    android:layout_width="350dp"
+    android:layout_height="50dp"
+    android:layout_marginTop="20dp"
 
+    android:background="@drawable/border"
+    android:orientation="horizontal"
+    android:layout_gravity="center"
+
+    >
         <EditText
-            android:layout_width="350dp"
-            android:layout_height="50dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:hint="Enter Usernmae...."
             android:layout_gravity="center"
             android:textSize="30dp"
             android:textColor="#02786D"
             android:textAlignment="center"
             android:textStyle="bold"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/border"
-            android:id="@+id/susername"
-            ></EditText>
+            android:layout_marginLeft="20dp"
 
+            android:id="@+id/susername"
+            ></EditText></LinearLayout>
+<LinearLayout
+    android:layout_width="350dp"
+    android:layout_height="50dp"
+    android:layout_marginTop="20dp"
+    android:background="@drawable/border"
+    android:layout_gravity="center"
+    >
         <EditText
-            android:layout_width="350dp"
-            android:layout_height="50dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:hint="Enter Password...."
             android:layout_gravity="center"
             android:textSize="30dp"
+            android:layout_marginLeft="20dp"
             android:textColor="#02786D"
             android:textAlignment="center"
             android:textStyle="bold"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/border"
+
             android:id="@+id/spassword"
             ></EditText>
+<ImageView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:src="hi"></ImageView>
+
+
+</LinearLayout>
         <Button
             android:layout_width="350dp"
             android:layout_height="50dp"

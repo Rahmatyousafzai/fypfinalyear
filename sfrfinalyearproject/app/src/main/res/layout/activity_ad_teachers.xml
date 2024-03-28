@@ -6,173 +6,116 @@
     android:layout_height="match_parent"
     tools:context="student.stdashboard"
     android:background="@drawable/backgroundcolor"
+    android:orientation="vertical">
 
-    android:orientation="vertical"
-    >
+    <!-- Header -->
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:layout_marginLeft="20dp"
+        android:layout_marginTop="@dimen/_30sdp"
+       android:layout_gravity="center"
+
         >
 
         <ImageView
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginLeft="20dp"
             android:id="@+id/profileimage"
-            android:layout_weight="1"
-            android:src="@color/cardview_dark_background"
-            ></ImageView>
+            android:layout_width="@dimen/_40sdp"
+            android:layout_height="@dimen/_40sdp"
+            android:background="@drawable/circlebackground"
+            android:src="@drawable/baseline_account_circle_24"
+            android:layout_gravity="center"
+         />
+
         <TextView
+            android:id="@+id/profelname"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/profelname"
-
-            android:layout_marginLeft="20dp"
-            android:layout_weight="2"
+        android:layout_marginLeft="@dimen/_10sdp"
             android:text="Rahmat yousafzai"
             android:textColor="@color/white"
-            android:textSize="20dp"
+            android:textSize="20sp"
             android:layout_gravity="center"
-            >
+            android:layout_marginStart="@dimen/_8sdp"/>
 
-        </TextView>
         <ImageView
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:id="@+id/back"
+            android:layout_width="@dimen/_40sdp"
+            android:layout_height="@dimen/_40sdp"
             android:src="@drawable/baseline_more_vert_24"
-            android:layout_marginTop="20dp"
-            android:layout_marginLeft="80dp"
-            android:layout_weight="0"
-
-
-            >
-
-        </ImageView>
-
-    </LinearLayout>
-
-
-
-
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="90dp"
-        android:background="#6BDFED"
-        android:padding="2dp"
-        android:layout_marginTop="20dp"
-
-        >
-
-<ImageView
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:src="@drawable/back"
-    android:layout_gravity="center"
-    android:layout_marginLeft="30dp"
-    >
-
-</ImageView>
-
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="TEACHERS"
-            android:textSize="30dp"
-            android:layout_marginLeft="20dp"
-            android:textStyle="bold"
             android:layout_gravity="center"
-            android:textColor="@color/black">
-
-        </TextView>
-
+            android:layout_marginStart="@dimen/_50sdp"
+            android:backgroundTint="@color/white"
 
 
 
-
-
-
-
-
-
-
+            />
 
     </LinearLayout>
 
-
-
+    <!-- Teachers List -->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="440dp"
-        android:orientation="vertical"
-        android:background="@color/white"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical">
 
-
-        >
+        <!-- Search Section -->
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Search"
-                android:textSize="20dp"
-                android:textColor="@color/black"
-                android:textStyle="bold"
-                android:layout_marginLeft="40dp"
-                android:layout_marginTop="20dp"
-                >
-            </TextView>
+            android:layout_width="@dimen/_250sdp"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:paddingTop="20dp"
+            android:paddingBottom="@dimen/_10sdp"
+            android:layout_gravity="center"
+            >
             <LinearLayout
-                android:layout_width="250dp"
-                android:layout_height="40dp"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_50sdp"
+                android:layout_weight="1"
+                android:orientation="horizontal"
                 android:background="@drawable/border"
-               android:padding="5dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginLeft="20dp"
+                android:padding="5sp"
+                android:layout_gravity="center"
+               >
 
-                >
                 <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_marginLeft="10dp"
-                    android:src="@drawable/search"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center"
+                    android:src="@drawable/search"/>
 
-
-                    ></ImageView>
                 <EditText
-                    android:layout_width="150dp"
-                    android:layout_height="40dp"
-                    android:hint="search"
-                    android:textSize="20dp"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="20dp"
-                    ></EditText>
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:hint="Search"
+                    android:textSize="20sp"
+                    android:paddingStart="@dimen/_8sdp"
+                    android:minHeight="@dimen/_48sdp"
+                    android:id="@+id/search"
+                android:gravity="center_vertical"/>
 
             </LinearLayout>
 
-
-
         </LinearLayout>
-        <ListView
-            android:id="@+id/lvmessag"
-            android:layout_width="match_parent"
 
-            android:layout_height="400dp"
+        <!-- ListView for Teachers -->
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/rvteacher"
             android:layout_gravity="center"
-            android:layout_marginTop="10dp"
-            android:background="#E3DBDB"
-            android:divider="@color/white"
-            android:dividerHeight="10dp"></ListView>
+
+            ></androidx.recyclerview.widget.RecyclerView>
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:visibility="gone" />
 
     </LinearLayout>
-
-
-
 
 </androidx.appcompat.widget.LinearLayoutCompat>

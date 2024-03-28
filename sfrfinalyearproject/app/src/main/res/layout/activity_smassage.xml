@@ -12,47 +12,49 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:layout_marginLeft="20dp"
+        android:layout_marginTop="@dimen/_30sdp"
+        android:layout_gravity="center"
+
         >
 
-        <ImageView
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginLeft="20dp"
+        <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/profileimage"
-            android:layout_weight="1"
-            android:src="@color/cardview_dark_background"
-            ></ImageView>
+            android:layout_width="@dimen/_40sdp"
+            android:layout_height="@dimen/_40sdp"
+            android:layout_gravity="center"
+            android:src="@drawable/rahmatpic"
+            app:civ_border_color="@color/black"
+            app:civ_border_width="2dp"
+
+
+            />
         <TextView
+            android:id="@+id/profelname"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/profelname"
+            android:layout_marginLeft="@dimen/_10sdp"
+            android:text="Dr.Saeed Wattoo"
+            android:textColor="@color/black"
+            android:textSize="20sp"
 
-            android:layout_marginLeft="20dp"
-            android:layout_weight="2"
-            android:text="Rahmat yousafzai"
-            android:textColor="@color/white"
-            android:textSize="20dp"
             android:layout_gravity="center"
-            >
+            android:layout_marginStart="@dimen/_8sdp"/>
 
-        </TextView>
         <ImageView
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:id="@+id/back"
+            android:layout_width="@dimen/_40sdp"
+            android:layout_height="@dimen/_40sdp"
             android:src="@drawable/baseline_more_vert_24"
-            android:layout_marginTop="20dp"
-            android:layout_marginLeft="80dp"
-            android:layout_weight="0"
+            android:layout_gravity="center"
+            android:layout_marginStart="@dimen/_50sdp"
+            android:backgroundTint="@color/white"
 
 
-            >
 
-        </ImageView>
+            />
 
     </LinearLayout>
+
 
 
 
@@ -81,6 +83,7 @@
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:src="@drawable/publication"
+                android:layout_gravity="center"
                 ></ImageView>
             <TextView
                 android:layout_width="match_parent"
@@ -90,6 +93,7 @@
                 android:textStyle="bold"
                 android:textColor="@color/black"
                 android:id="@+id/news"
+                android:layout_gravity="center"
 
 
                 ></TextView>
@@ -110,6 +114,7 @@
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:src="@drawable/notification"
+                android:layout_gravity="center"
                 ></ImageView>
             <TextView
                 android:layout_width="wrap_content"
@@ -117,6 +122,7 @@
                 android:text="Notification"
                 android:textSize="20dp"
                 android:textAlignment="center"
+                android:layout_gravity="center"
                 android:textStyle="bold"
                 android:textColor="@color/black">
 
@@ -142,6 +148,7 @@
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:src="@drawable/message"
+                android:layout_gravity="center"
                 ></ImageView>
             <TextView
                 android:layout_width="wrap_content"
@@ -149,7 +156,9 @@
                 android:text="Message"
                 android:textSize="20dp"
                 android:textColor="@color/black"
-                android:textStyle="bold">
+                android:textStyle="bold"
+                android:layout_gravity="center"
+                >
 
             </TextView>
 
@@ -169,19 +178,11 @@
 
     </LinearLayout>
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
- <TextView
-     android:layout_width="wrap_content"
-     android:layout_height="wrap_content"
-     android:text="Search"
-     android:textSize="20dp"
-     android:textColor="@color/white"
-     android:textStyle="bold"
-     android:layout_marginLeft="40dp"
-     android:layout_marginTop="20dp"
->
- </TextView>
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+
         <LinearLayout
             android:layout_width="200dp"
             android:layout_height="40dp"
@@ -189,6 +190,8 @@
             android:backgroundTint="@color/white"
             android:layout_marginTop="10dp"
             android:layout_marginLeft="20dp"
+            android:layout_gravity="center"
+
 
             >
             <ImageView
@@ -224,16 +227,16 @@
 
         >
 
-        <ListView
+        <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/lvmessag"
             android:layout_width="match_parent"
 
             android:layout_height="match_parent"
             android:layout_gravity="center"
             android:layout_marginTop="5dp"
-            android:background="#E3DBDB"
+
             android:divider="@drawable/backgroundcolor"
-            android:dividerHeight="10dp"></ListView>
+            android:dividerHeight="10dp"></androidx.recyclerview.widget.RecyclerView>
 
     </LinearLayout>
 

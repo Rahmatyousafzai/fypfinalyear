@@ -82,6 +82,7 @@ android:src="@drawable/baseline_more_vert_24"
             android:layout_gravity="center"
             android:backgroundTint="#636262"
             android:orientation="horizontal"
+            android:padding="5dp"
             >
 
 

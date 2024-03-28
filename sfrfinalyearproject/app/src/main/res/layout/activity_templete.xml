@@ -46,34 +46,36 @@ android:id="@+id/back"
 
 
     </LinearLayout>
-  <TextView
-      android:id="@+id/txtcondlence"
-      android:layout_width="300dp"
-      android:layout_height="50dp"
-     android:background="#F3ECD82D"
-   android:layout_marginTop="10dp"
-      android:layout_gravity="center"
-      android:text="conddolences templete"
-      android:textAllCaps="true"
-      android:textStyle="bold"
-      android:textSize="20dp"
-      android:textAlignment="center"
-      android:paddingTop="5dp"
+    <TextView
+        android:layout_width="@dimen/_250sdp"
+        android:layout_height="@dimen/_40sdp"
+        android:background="@drawable/border"
+        android:backgroundTint="#052880"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_gravity="center"
+        android:text="conddolences templete"
+        android:textAllCaps="true"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        android:textColor="@color/white"
+        android:textAlignment="center"
+        android:paddingTop="10sp"
 
 
 
 
 
 
-      ></TextView>
+
+        ></TextView>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="480dp"
         android:orientation="horizontal"
         >
 
-        <ListView
-            android:id="@+id/allteacher"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/alltemplet"
             android:layout_width="350dp"
 
             android:layout_height="match_parent"
@@ -85,7 +87,7 @@ android:id="@+id/back"
             android:dividerHeight="20dp"
 
 
-            ></ListView>
+            ></androidx.recyclerview.widget.RecyclerView>
 
     </LinearLayout>
 

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/backgroundcolor"
+    android:orientation="vertical"
+    >
+    <LinearLayout
+        android:layout_width="350dp"
+        android:layout_height="50dp"
+        android:background="@drawable/flateborder"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+
+        >
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/baseline_account_circle_24"
+            android:layout_gravity="center"
+            android:id="@+id/pfimage"
+            android:layout_marginLeft="20dp"
+            >
+            
+            
+            
+            
+        </ImageView>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="profile name"
+            android:id="@+id/pfname"
+android:layout_gravity="center"
+        android:padding="5dp"
+
+            ></TextView>
+
+        
+        
+    </LinearLayout>
+    
+    
+    
+
+</androidx.appcompat.widget.LinearLayoutCompat>

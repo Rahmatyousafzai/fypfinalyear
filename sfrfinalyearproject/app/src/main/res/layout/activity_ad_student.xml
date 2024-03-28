@@ -54,13 +54,13 @@ android:layout_gravity="center"
 
             >
 
-           <ListView
-            android:id="@+id/CheckBoxlistView"
-            android:layout_width="match_parent"
-            android:layout_height="400dp"
+           <androidx.recyclerview.widget.RecyclerView
+               android:layout_width="match_parent"
+               android:layout_height="400dp"
+               android:padding="20dp"
 
 
-               />
+               ></androidx.recyclerview.widget.RecyclerView>
 
 <Button
     android:layout_width="wrap_content"

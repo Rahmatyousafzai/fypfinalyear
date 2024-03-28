@@ -36,15 +36,16 @@ android:text="AI-3A"
     android:textColor="@color/green"
 
     ></TextView>
-    <ListView
-        android:layout_width="wrap_content"
-        android:layout_height="400dp"
-        android:layout_gravity="center"
-        android:id="@+id/lssection"
-        android:dividerHeight="5dp"
-        android:divider="@color/green"
+ <androidx.recyclerview.widget.RecyclerView
+     android:layout_width="match_parent"
+     android:layout_height="match_parent"
+     android:layout_gravity="center"
+     android:id="@+id/Rcsection"
 
-        ></ListView>
+
+     >
+
+ </androidx.recyclerview.widget.RecyclerView>
     <Button
         android:layout_marginTop="20dp"
         android:layout_width="wrap_content"

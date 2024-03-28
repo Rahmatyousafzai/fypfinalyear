@@ -14,8 +14,6 @@ import com.example.sfrfinalyearproject.R;
 import java.util.ArrayList;
 import java.util.List;
 
-import adopter.TeachercustomAdopter;
-
 public class stteacher extends AppCompatActivity {
 
     ImageView imgveiew,back;
@@ -48,9 +46,9 @@ public class stteacher extends AppCompatActivity {
 
         // Create an ArrayAdapter to populate the ListView
 
-        TeachercustomAdopter adapter = new TeachercustomAdopter(this, teacherNames);
+       // TeachercustomAdopter adapter = new TeachercustomAdopter(this, teacherNames);
         // Set the adapter to the ListView
-        listView.setAdapter(adapter);
+        //listView.setAdapter(adapter);
 
          back=findViewById(R.id.imgback);
          imgveiew = findViewById(R.id.imgviewall);

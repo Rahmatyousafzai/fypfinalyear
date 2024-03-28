@@ -1,11 +1,11 @@
 package com.example.sfrfinalyearproject;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
     @Override
@@ -26,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
                 // Finish the MainActivity so that it's removed from the back stack
                 // when the student_login activity starts
                 finish();
+
             }
         });
 

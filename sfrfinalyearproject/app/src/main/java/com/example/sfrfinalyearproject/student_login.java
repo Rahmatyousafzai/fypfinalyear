@@ -173,20 +173,6 @@ public class student_login extends AppCompatActivity {
         Toast.makeText(student_login.this, "Error: " + errorMessage, Toast.LENGTH_SHORT).show();
     }
 
-    private void navigateToFacultyLogin() {
-        // Start faculty login activity
-        Intent intent = new Intent(student_login.this, faculty_login.class);
-        startActivity(intent);
-        // Finish the current activity
-        finish();
-    }
 
-    private void navigateToStudentLogin() {
-        // Start student login activity
-        Intent intent = new Intent(student_login.this, student_login.class);
-        startActivity(intent);
-        // Finish the current activity
-        finish();
-    }
 
 }

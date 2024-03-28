@@ -23,5 +23,9 @@ public interface Apiservices {
     @GET("Api/User/GetWishes")
     public Call<List<Wish>> getWishes(@Query("receiverId") String receiverId) ;
 
+    @GET("api/Student/GetALLTeacher")
+    Call<List<userdetail>> getAllTeachers(); // Assuming the response is a string
+
+
 
 }

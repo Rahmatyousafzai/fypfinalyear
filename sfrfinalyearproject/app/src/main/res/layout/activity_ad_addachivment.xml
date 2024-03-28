@@ -72,26 +72,25 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
+            android:layout_gravity="center"
             >
             <TextView
-                android:layout_width="300dp"
-                android:layout_height="wrap_content"
-                android:text="VIEW ACHIVMENTS"
-                android:textSize="20dp"
-                android:textColor="@color/white"
-                android:textStyle="bold"
-                android:layout_marginLeft="60dp"
+                android:layout_width="250dp"
+                android:layout_height="50dp"
+                android:background="@drawable/border"
+                android:backgroundTint="#052880"
                 android:layout_marginTop="10dp"
-               android:background="@drawable/border"
-                android:backgroundTint="#0F7E48"
-                android:padding="15dp"
+                android:text="View achievement"
+                android:textAllCaps="true"
+                android:textStyle="bold"
+                android:layout_gravity="center"
+                android:textSize="20sp"
+                android:textColor="@color/white"
                 android:textAlignment="center"
-                android:id="@+id/viewachivment"
+                android:paddingTop="10sp"
 
 
-
-                >
-            </TextView>
+                ></TextView>
 
 
 
@@ -165,10 +164,10 @@
             android:layout_height="50dp"
             android:hint="Title......."
             android:textSize="20dp"
-            android:padding="5dp"
             android:background="@drawable/flateborder"
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
+            android:padding="10dp"
             ></EditText>
         <EditText
             android:layout_width="300dp"
@@ -178,6 +177,7 @@
             android:background="@drawable/flateborder"
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
+            android:padding="10dp"
             ></EditText>
 
 
