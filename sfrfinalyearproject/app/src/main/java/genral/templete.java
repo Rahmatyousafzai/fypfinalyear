@@ -1,16 +1,14 @@
 package genral;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.sfrfinalyearproject.R;
+import androidx.appcompat.app.AppCompatActivity;
 
-import student.smessagebody;
+import com.example.sfrfinalyearproject.R;
 
 public class templete extends AppCompatActivity {
 
@@ -21,9 +19,9 @@ public class templete extends AppCompatActivity {
         TextView txtcond;
         ImageView back;
         back=findViewById(R.id.back);
-        txtcond= findViewById(R.id.txtcondlence);
+        //txtcond= findViewById(R.id.txtcondlence);
 
-      txtcond.setOnClickListener(new View.OnClickListener() {
+     /* txtcond.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // Create an Intent to start the student_login activity
@@ -35,7 +33,7 @@ public class templete extends AppCompatActivity {
 
 
             }
-        });
+        });*/
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

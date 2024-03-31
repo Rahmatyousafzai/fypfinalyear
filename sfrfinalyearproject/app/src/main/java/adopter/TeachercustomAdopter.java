@@ -1,100 +1,74 @@
 package adopter;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Filter;
-import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.sfrfinalyearproject.R;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import mydataapi.Apiservices;
+public class TeachercustomAdopter extends RecyclerView.Adapter<TeachercustomAdopter.ViewHolder> {
+    private List<userdetail> teacherList;
 
-public class TeachercustomAdopter extends RecyclerView.Adapter<TeachercustomAdopter.ViewHolder> implements Filterable {
-    private Context mContext;
-    private List<userdetail> mTeacherList;
-    private List<userdetail> mFilteredTeacherList;
-    private LayoutInflater mInflater;
-    private Apiservices mAPIInterface;
-
-    public TeachercustomAdopter(Context context, List<userdetail> teacherList, Apiservices apiInterface) {
-        mContext = context;
-        mTeacherList = teacherList;
-        mFilteredTeacherList = new ArrayList<>(teacherList);
-        mInflater = LayoutInflater.from(context);
-        mAPIInterface = apiInterface;
+    public TeachercustomAdopter(List<userdetail> teacherList) {
+        this.teacherList = teacherList;
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = mInflater.inflate(R.layout.teacherlistvies_item, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.teacherlistvies_item, parent, false);
         return new ViewHolder(view);
     }
 
+
+    // Inside onBindViewHolder method
+
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        userdetail user = mFilteredTeacherList.get(position);
-        holder.textViewTitle.setText(user.getFname() + " " + user.getLname());
-        // Set other data as needed
+        userdetail teacher = teacherList.get(position);
+
+        // Check if the context retrieved from the itemView is not null before using it with Glide
+        if (holder.itemView.getContext() != null) {
+            Glide.with(holder.itemView.getContext())
+                    .load(teacher.getProfileimage())
+                    .into(holder.profileImageView);
+        } else {
+            // Handle the case where the context is null
+        }
+
+        holder.nameTextView.setText(teacher.getFname());
+        holder.favoriteImageView.setImageResource(teacher.isFavorite() ? R.drawable.favorite_filled : R.drawable.favorite_empty);
+
+        // Set click listener for favorite icon
+        holder.favoriteImageView.setOnClickListener(v -> {
+            teacher.setFavorite(!teacher.isFavorite());
+            notifyItemChanged(position);
+        });
     }
 
     @Override
     public int getItemCount() {
-        return mFilteredTeacherList.size();
+        return teacherList.size();
     }
 
-    @Override
-    public Filter getFilter() {
-        return new CustomFilter();
-    }
-
-    private class CustomFilter extends Filter {
-        @Override
-        protected FilterResults performFiltering(CharSequence constraint) {
-            FilterResults filterResults = new FilterResults();
-            List<userdetail> filteredList = new ArrayList<>();
-            if (constraint == null || constraint.length() == 0) {
-                filteredList.addAll(mTeacherList);
-            } else {
-                String filterPattern = constraint.toString().toLowerCase().trim();
-                for (userdetail user : mTeacherList) {
-                    if (user.getFname().toLowerCase().contains(filterPattern)) {
-                        filteredList.add(user);
-                    }
-                }
-            }
-            filterResults.values = filteredList;
-            return filterResults;
-        }
-
-        @Override
-        protected void publishResults(CharSequence constraint, FilterResults results) {
-            mFilteredTeacherList.clear();
-            mFilteredTeacherList.addAll((List<userdetail>) results.values);
-            notifyDataSetChanged();
-        }
-    }
-
-    public class ViewHolder extends RecyclerView.ViewHolder {
-        ImageView imageView;
-        TextView textViewTitle;
-        ImageView imageView2;
+    public static class ViewHolder extends RecyclerView.ViewHolder {
+        ImageView profileImageView;
+        TextView nameTextView;
+        ImageView favoriteImageView;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            imageView = itemView.findViewById(R.id.proimage);
-            textViewTitle = itemView.findViewById(R.id.txtname);
-            imageView2 = itemView.findViewById(R.id.favimage);
+            profileImageView = itemView.findViewById(R.id.proimage);
+            nameTextView = itemView.findViewById(R.id.txtname);
+            favoriteImageView = itemView.findViewById(R.id.favimage);
         }
     }
 }

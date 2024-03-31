@@ -1,78 +1,138 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="Admin.ad_section"
     android:background="@drawable/backgroundcolor"
-    android:orientation="vertical"
-    >
-    <ImageView
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:src="@drawable/back"
-        android:layout_marginTop="50dp"
-        android:layout_marginLeft="30dp"
-        >
 
-    </ImageView>
-    <LinearLayout
+
+    >
+
+    <ScrollView
+        android:id="@+id/scrollview"
         android:layout_width="match_parent"
-        android:layout_height="550dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         android:background="@drawable/buttom_rounded_border"
-        android:backgroundTint="@color/white"
-        android:layout_marginTop="50dp"
+        app:layout_constraintVertical_bias="0.229"
+        tools:layout_editor_absoluteX="0dp">
+
+
+        <TableLayout
+            android:id="@+id/tableLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginRight="30dp"
+            android:stretchColumns="*">
+
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/header_shape"
+                    android:gravity="center"
+                    android:text="Select"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/header_shape"
+                    android:gravity="center"
+                    android:text="Name"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/header_shape"
+                    android:gravity="center"
+                    android:text="Arid NO"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:background="@drawable/header_shape"
+                    android:gravity="center"
+                    android:text="Email"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+
+            </TableRow>
+
+        </TableLayout>
+
+    </ScrollView>
+
+    <LinearLayout
+        android:layout_width="122dp"
+        android:layout_height="49dp"
+        android:layout_marginTop="300dp"
+        android:background="@drawable/backgroundcolor"
         android:orientation="vertical"
-        android:padding="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.9"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/scrollview"
+        app:layout_constraintVertical_bias="0.504">
 
-        >
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="BSAI3"
-            android:layout_marginLeft="20dp"
-            android:textSize="30dp"
-            android:textStyle="bold"
-            android:textColor="@color/green"
 
-            ></TextView>
-        <androidx.recyclerview.widget.RecyclerView
-            android:layout_width="wrap_content"
-            android:layout_height="400dp"
-            android:id="@+id/rcsection"
-            android:layout_gravity="center"
-
-            >
-
-        </androidx.recyclerview.widget.RecyclerView>
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="100dp"
-    android:orientation="vertical"
-    android:layout_gravity="right"
-    android:layout_marginBottom="-100dp"
-
-    >
         <Button
-
-            android:id="@+id/addone"
-            android:layout_width="wrap_content"
+            android:id="@+id/addButton"
+            android:layout_width="114dp"
             android:layout_height="wrap_content"
-            android:layout_gravity="right"
-            android:layout_margin="20dp"
-            android:layout_marginLeft="200dp"
+            android:layout_gravity="center"
             android:backgroundTint="@color/green"
-
-            android:text="DONE"
-
-            ></Button>
-</LinearLayout>
-
+            android:text="DONE" />
 
     </LinearLayout>
 
 
+    <ImageView
+        android:id="@+id/back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@+id/scrollview"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.073"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.422"
+        app:srcCompat="@drawable/back" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="139dp"
+        android:layout_height="38dp"
+        android:text="BSIT-3A"
+        android:textStyle="bold"
+        android:textSize="30dp"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toTopOf="@+id/scrollview"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.102"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.878" />
 
 
-</androidx.appcompat.widget.LinearLayoutCompat>
+</androidx.constraintlayout.widget.ConstraintLayout>

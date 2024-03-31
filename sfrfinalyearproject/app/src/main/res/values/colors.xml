@@ -3,6 +3,7 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="green">#02776C</color>
+    <color name="pink">#F34684</color>
 <attr name="borderColor" format="color" />
 <attr name="cornerRadius" format="dimension" />
 </resources>

@@ -4,99 +4,118 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.PopupMenu;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.sfrfinalyearproject.R;
-import com.squareup.picasso.Picasso;
 
-import adopter.userdetail;
-import mydataapi.Apiservices;
-import mydataapi.RetrofitClient;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
+import java.util.ArrayList;
+
+import adopter.Wish;
+import adopter.Wishadapter;
+import adopter.emoji_class;
 
 public class ad_dashboard extends AppCompatActivity {
 
-    private Apiservices apiServices;
-
     // Declare views
-    TextView adpost, addteacher, adnews, admessage, addachivemet, adstudent, profilename;
-    ImageView profileimage;
-    RecyclerView recyclerView;
+    private TextView adminPost, addTeacher, adNews, adMessage, addAchievement, adStudent, profileName;
+    private ImageView profileImage, popup;
+    private RecyclerView recyclerView;
+    private Wishadapter wishAdapter;
+    private ArrayList<Wish> wishes;
+    LinearLayout sharepost;
+
+    // Constants for view IDs
+    private static final int ADMIN_POST_ID = R.id.adminpost;
+    private static final int ADD_TEACHER_ID = R.id.textadteacher;
+    private static final int AD_NEWS_ID = R.id.adnews;
+    private static final int AD_MESSAGE_ID = R.id.adtxtmessage;
+    private static final int ADD_ACHIEVEMENT_ID = R.id.adtextachvment;
+    private static final int AD_STUDENT_ID = R.id.adstudent;
+    private static final int PROFILE_NAME_ID = R.id.profelname;
+    private static final int RECYCLER_VIEW_ID = R.id.adrcview;
+    private static final int PROFILE_IMAGE_ID = R.id.profileimage;
+    private static final int POPUP_ID = R.id.popup;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ad_dashboard);
-
+sharepost=findViewById(R.id.linsharpost);
         // Initialize views
-        adpost = findViewById(R.id.adpost);
-        addteacher = findViewById(R.id.textadteacher);
-        adnews = findViewById(R.id.adnews);
-        admessage = findViewById(R.id.adtxtmessage);
-        addachivemet = findViewById(R.id.adtextachvment);
-        adstudent = findViewById(R.id.adstudent);
-        profilename = findViewById(R.id.profelname);
-        recyclerView = findViewById(R.id.adrcview);
-        profileimage = findViewById(R.id.fileimage);
+        initViews();
 
-        // Get username from intent
-        Intent intent = getIntent();
-        String username = intent.getStringExtra("username");
+        sharepost.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ad_dashboard.this, Admin.postshareoption.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+        // Set up RecyclerView
+        setUpRecyclerView();
 
-        // Initialize Retrofit
-        Retrofit retrofit = RetrofitClient.getClient();
-        apiServices = retrofit.create(Apiservices.class);
-
-        // Load profile information
-        profileinformation(username);
-
-        // Set click listeners
-        admessage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                admessage();
-            }
-        });
-        adnews.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                news();
-            }
-        });
-        addteacher.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                addteacher();
-            }
-        });
-        adstudent.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                addstudent();
-            }
-        });
-        addachivemet.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Handle click
-            }
-        });
-        adpost.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Handle click
-            }
-        });
+        // Set click listeners for views
+        setClickListeners();
     }
 
-    public void admessage() {
+    private void initViews() {
+        adminPost = findViewById(ADMIN_POST_ID);
+        addTeacher = findViewById(ADD_TEACHER_ID);
+        adNews = findViewById(AD_NEWS_ID);
+        adMessage = findViewById(AD_MESSAGE_ID);
+        addAchievement = findViewById(ADD_ACHIEVEMENT_ID);
+        adStudent = findViewById(AD_STUDENT_ID);
+        profileName = findViewById(PROFILE_NAME_ID);
+        recyclerView = findViewById(RECYCLER_VIEW_ID);
+        profileImage = findViewById(PROFILE_IMAGE_ID);
+        popup = findViewById(POPUP_ID);
+    }
+
+    private void setUpRecyclerView() {
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        wishes = new ArrayList<>();
+        // Add wishes
+        wishes.add(new Wish("Rahmat", R.drawable.rahmatpic, R.drawable.baseline_more_vert_24, "happy Birthday", new ArrayList<emoji_class>()));
+        wishes.add(new Wish("DR.Saeed", R.drawable.saeed, R.drawable.baseline_more_vert_24, "happy Birthday happy Birthday happy Birthday happy Birthday happy Birthday happy Birthday happy Birthday happy Birthday", new ArrayList<emoji_class>()));
+        wishAdapter = new Wishadapter(this, wishes);
+        recyclerView.setAdapter(wishAdapter);
+    }
+
+    private void setClickListeners() {
+        adMessage.setOnClickListener(v -> adMessage());
+
+        adNews.setOnClickListener(v -> news());
+
+        addTeacher.setOnClickListener(v -> addTeacher());
+
+        adStudent.setOnClickListener(v -> addStudent());
+
+        addAchievement.setOnClickListener(v -> viewAchievement());
+
+        popup.setOnClickListener(this::showPopupMenu);
+    }
+private void Sharepost(){
+
+
+
+    Intent intent = new Intent(ad_dashboard.this, Admin.postshareoption.class);
+    startActivity(intent);
+    finish();
+}
+    private void viewAchievement() {
+        Intent intent = new Intent(ad_dashboard.this, ad_addachivment.class);
+        startActivity(intent);
+        finish();
+    }
+
+    public void adMessage() {
         Intent intent = new Intent(ad_dashboard.this, Admin.admessage.class);
         startActivity(intent);
         finish();
@@ -107,77 +126,24 @@ public class ad_dashboard extends AppCompatActivity {
         startActivity(intent);
         finish();
     }
-
-    public void addteacher() {
-        Intent intent = new Intent(ad_dashboard.this, ad_teachers.class);
-
-        intent.putExtra("prfilename", profilename.getText().toString());
-        startActivity(intent);
-        // Finish the current activity
-        finish();
-
-
+    public void addTeacher() {
+        Intent intent = new Intent(ad_dashboard.this, Admin.ad_teachers.class);
+        intent.putExtra("prfilename", profileName.getText().toString());
         startActivity(intent);
         finish();
     }
-
-    public void addstudent() {
-        Intent intent = new Intent(ad_dashboard.this, ad_student.class);
+    public void addStudent() {
+        Intent intent = new Intent(ad_dashboard.this, Admin.ad_student.class);
         startActivity(intent);
         finish();
     }
-
-    public void profileinformation(String username) {
-        // Make the API call
-        Call<userdetail> call = apiServices.getUserDetails(username);
-        call.enqueue(new Callback<userdetail>() {
-            @Override
-            public void onResponse(Call<userdetail> call, Response<userdetail> response) {
-                if (response.isSuccessful()) {
-                    // Handle successful response
-                    userdetail userDetails = response.body();
-                    if (userDetails != null) {
-                        // Set full name
-                        String fullName = userDetails.getFname() + " " + userDetails.getLname();
-                        profilename.setText(fullName);
-
-                        // Set profile image
-                        String imagePath = userDetails.getProfileimage();
-                        if (imagePath != null && !imagePath.isEmpty()) {
-                            Picasso.get().load(imagePath).into(profileimage);
-                        }
-                    }
-                } else {
-                    // API call failed
-                    Toast.makeText(ad_dashboard.this, "Failed to get user details", Toast.LENGTH_SHORT).show();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<userdetail> call, Throwable t) {
-                // Error handling for network failures or other exceptions
-                Toast.makeText(ad_dashboard.this, "Error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
-            }
+    private void showPopupMenu(View v) {
+        PopupMenu popupMenu = new PopupMenu(ad_dashboard.this, v);
+        popupMenu.getMenuInflater().inflate(R.menu.popup, popupMenu.getMenu());
+        popupMenu.setOnMenuItemClickListener(item -> {
+            // Handle menu item click
+            return false;
         });
-
-
-
-
-
-
-
-
-
-
-
+        popupMenu.show();
     }
-
-
-
-
-
-
-
-
-
 }

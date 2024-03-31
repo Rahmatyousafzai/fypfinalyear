@@ -20,13 +20,7 @@ public class Recyclerviewholder extends RecyclerView.ViewHolder {
         imgview=itemView.findViewById(R.id.pfimage);
         txtname=itemView.findViewById(R.id.pfname);
         txtdesc=itemView.findViewById(R.id.desc);
-        em1=itemView.findViewById(R.id.imj1);
-        em2=itemView.findViewById(R.id.imj2);
-        em3=itemView.findViewById(R.id.imj3);
-        em4=itemView.findViewById(R.id.imj4);
-        em5=itemView.findViewById(R.id.imj5);
-        em6=itemView.findViewById(R.id.imj6);
-        em7=itemView.findViewById(R.id.imj7);
+
 
 
 

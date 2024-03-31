@@ -1,141 +1,130 @@
 package Admin;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ListView;
+import android.widget.ImageView;
 import android.widget.Spinner;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.sfrfinalyearproject.R;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
-import adopter.CustomAdapter_checkbox;
+import adopter.samester_adopter;
+import adopter.student_show_samester;
 
 public class ad_student extends AppCompatActivity {
+    Spinner spinnerdeportment;
+    Spinner spinnersamester;
+    RecyclerView recyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ad_student);
-        ListView listView = findViewById(R.id.CheckBoxlistView);
-        Button adselect=findViewById(R.id.select);
 
-        Spinner spinnerdeportment = findViewById(R.id.deparometspinner);
-        Spinner spinnersamester = findViewById(R.id.semesterspinner);
+        Button adselect = findViewById(R.id.select);
+        recyclerView = findViewById(R.id.Recsamseter);
+        spinnerdeportment = findViewById(R.id.deparometspinner);
+        spinnersamester = findViewById(R.id.semesterspinner);
+        ImageView back=findViewById(R.id.back);
 
-        List<String> sem = new ArrayList<>();
-        sem.add("Smester");
-        sem.add("1");
-        sem.add("2");
-        sem.add("3");
-        sem.add("4");
-        sem.add("5");
-
-
-
-
-        // Add more items as needed
-
-        // Create an ArrayAdapter using the list of items
-        ArrayAdapter<String> adaptersamester = new ArrayAdapter<>(this,
-                android.R.layout.simple_spinner_item, sem);
-
-        // Specify the layout to use when the list of choices appears
-        adaptersamester.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-        // Apply the adapter to the spinner
-        spinnerdeportment.setAdapter(adaptersamester);
-
-        // Set a listener to handle item selection
-        spinnerdeportment.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-                // Display a toast message with the selected item
-                String selectedItem = parentView.getItemAtPosition(position).toString();
-
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parentView) {
-                // Do nothing when nothing is selected
-            }
-        });
-
-
-
-
-
-
-
-
-        // Create a list of items to populate the Spinner
-
-        List<String> dep = new ArrayList<>();
-
-        dep.add("BSIT");
-        dep.add("BSAI");
-        dep.add("BSCS");
-        // Add more items as needed
-
-        // Create an ArrayAdapter using the list of items
-        ArrayAdapter<String> adapterdeportment = new ArrayAdapter<>(this,
-                android.R.layout.simple_spinner_item, dep);
-
-        // Specify the layout to use when the list of choices appears
-        adapterdeportment.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-        // Apply the adapter to the spinner
-        spinnerdeportment.setAdapter(adapterdeportment);
-
-        // Set a listener to handle item selection
-        spinnerdeportment.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-                // Display a toast message with the selected item
-                String selectedItem = parentView.getItemAtPosition(position).toString();
-
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parentView) {
-                // Do nothing when nothing is selected
-            }
-        });
-
-
-
-        List<String> dataList = new ArrayList<>(Arrays.asList("CS_3A", "IT_3A", "AI_3B","CS_3B", "IT_3C", "AI_3D"));
-        CustomAdapter_checkbox adapter1 = new CustomAdapter_checkbox(this, dataList);
-        listView.setAdapter(adapter1);
-
+        populateSpinners();
+        setupRecyclerView();
 
         adselect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                Intent intent = new Intent(ad_student.this, ad_section.class);
-                startActivity(intent);
-                // Finish the MainActivity so that it's removed from the back stack
-
-                // when the student_login activity starts
-                finish();
-
+                slectsemster();
             }
         });
 
 
 
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                back();
+            }
+        });
 
 
 
+    }
 
+    private void back() {
+
+        Intent intent=new Intent(ad_student.this,ad_dashboard.class);
+        startActivity(intent);
+        finish();
+    }
+
+    private void slectsemster() {
+
+
+        Intent intent=new Intent(ad_student.this,ad_section.class);
+        startActivity(intent);
+        finish();
+
+        // You can also perform other actions based on the selected values, such as fetching data from a database
+        // or updating the UI accordingly.
+    }
+
+    private void populateSpinners() {
+        List<String> departments = getDepartmentData(); // Retrieve department data
+        List<String> semesters = getSemesterData(); // Retrieve semester data
+
+        // Create adapters for spinners
+        ArrayAdapter<String> departmentAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, departments);
+        ArrayAdapter<String> semesterAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, semesters);
+
+        // Set adapters to spinners
+        spinnerdeportment.setAdapter(departmentAdapter);
+        spinnersamester.setAdapter(semesterAdapter);
+    }
+
+    private List<String> getDepartmentData() {
+        // Replace this with your actual data retrieval logic
+        List<String> departments = new ArrayList<>();
+        departments.add("Department 1");
+        departments.add("Department 2");
+        departments.add("Department 3");
+        return departments;
+    }
+
+    private List<String> getSemesterData() {
+        // Replace this with your actual data retrieval logic
+        List<String> semesters = new ArrayList<>();
+        semesters.add("Semester 1");
+        semesters.add("Semester 2");
+        semesters.add("Semester 3");
+        return semesters;
+    }
+
+    private void setupRecyclerView() {
+        List<student_show_samester> dataList = getDataList(); // Retrieve data list for RecyclerView
+
+        // Create RecyclerView adapter
+        samester_adopter adapter = new samester_adopter(dataList);
+
+        // Set layout manager and adapter to RecyclerView
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setAdapter(adapter);
+    }
+
+    private List<student_show_samester> getDataList() {
+        // Replace this with your actual data retrieval logic
+        List<student_show_samester> dataList = new ArrayList<>();
+        dataList.add(new student_show_samester("Item 1", false));
+        dataList.add(new student_show_samester("Item 2", false));
+        dataList.add(new student_show_samester("Item 3", false));
+        return dataList;
     }
 }

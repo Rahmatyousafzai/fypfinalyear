@@ -111,14 +111,11 @@
             android:id="@+id/viewachivment"
             android:layout_width="350dp"
             android:layout_marginLeft="30dp"
-
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
+            android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
-
             android:background="#FFFDFD"
             android:divider="@color/green"
-            android:dividerHeight="5dp"
+
             ></androidx.recyclerview.widget.RecyclerView>
 
     </LinearLayout>

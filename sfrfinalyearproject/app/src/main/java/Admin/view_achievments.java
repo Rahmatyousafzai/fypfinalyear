@@ -1,47 +1,42 @@
 package Admin;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
-import android.widget.ListView;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.sfrfinalyearproject.R;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
+import Class_for_admin.Achievement;
 import adopter.achivmentadopter;
-import adopter.alumniAdopter;
 
 public class view_achievments extends AppCompatActivity {
+    private RecyclerView recyclerView;
+    private achivmentadopter adapter;
+    private List<Achievement> dataList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_achievments);
 
-        ListView listView = findViewById(R.id.viewachivment);
+        recyclerView = findViewById(R.id.viewachivment);
+        dataList = new ArrayList<>();
 
-        // Initialize data
-        List<String> dataList = new ArrayList<>();
-        dataList.add(Arrays.toString(new String[]{"", "Rahmat Yousafzai","student of the year"}));
-        dataList.add(Arrays.toString(new String[]{"", "Jaweria","miss BiiT"}));
-        dataList.add(Arrays.toString(new String[]{"", "Sheih chilli","jhoota dramabaz"}));
-        dataList.add(Arrays.toString(new String[]{"", "Hina perveen",""}));
-        dataList.add(Arrays.toString(new String[]{"", "Muhammad bilal"}));
-        // Add more data as needed
-        // Initialize adapter
-        achivmentadopter adapter = new achivmentadopter(this, dataList);
-
-        // Set adapter to ListView
-
-        listView.setAdapter(adapter);
+        // Add your data to dataList
+        dataList.add(new Achievement(R.drawable.heart, "Rahmat Yousafzai", "Sample description"));
+        dataList.add(new Achievement(R.drawable.heart, "Rahmat Yousafzai", "Sample description"));
+        dataList.add(new Achievement(R.drawable.heart, "Rahmat Yousafzai", "Sample description"));
+        dataList.add(new Achievement(R.drawable.heart, "Rahmat Yousafzai", "Sample description"));
+        dataList.add(new Achievement(R.drawable.heart, "Rahmat Yousafzai", "Sample description"));
 
 
-
-
-
-
+        adapter = new achivmentadopter(dataList, this);
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
 }

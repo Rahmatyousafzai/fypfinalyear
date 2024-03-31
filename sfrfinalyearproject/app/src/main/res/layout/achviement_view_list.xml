@@ -2,24 +2,26 @@
 <androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-
-    >
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-android:background="@drawable/flateborder"
         android:orientation="vertical"
-      />
+        android:layout_gravity="center"
+        android:padding="10dp"
+        android:background="@drawable/flateborder"
+        android:layout_marginTop="10dp"
+
+        >
         <LinearLayout
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="0dp"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_gravity="center"
             android:background="@drawable/flateborder"
-            android:backgroundTint="#938D8D"
+
             android:padding="10dp"
             >
             <ImageView
@@ -35,6 +37,7 @@ android:background="@drawable/flateborder"
     android:layout_gravity="center"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    android:layout_marginLeft="20dp"
 android:text="Rahmat yousafzai"
     android:id="@+id/proname"
 
@@ -49,8 +52,6 @@ android:text="Rahmat yousafzai"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_gravity="center"
-        android:background="@drawable/flateborder"
-        android:backgroundTint="#8C8A8A"
         android:padding="10dp"
         >
 
@@ -68,6 +69,7 @@ android:text="Rahmat yousafzai"
     </LinearLayout>
 
 
+    </LinearLayout>
 
 
 

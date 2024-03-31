@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="Admin.postshareoption"
+    android:orientation="vertical"
+    android:background="@drawable/backgroundcolor"
+    >
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_30sdp"
+        android:layout_gravity="center"
+
+        >
+
+        <ImageView
+            android:id="@+id/profileimage"
+            android:layout_width="@dimen/_40sdp"
+            android:layout_height="@dimen/_40sdp"
+            android:background="@drawable/circlebackground"
+            android:src="@drawable/baseline_account_circle_24"
+            android:layout_gravity="center"
+            />
+
+        <TextView
+            android:id="@+id/profelname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/_10sdp"
+            android:text="Rahmat yousafzai"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:layout_gravity="center"
+            android:layout_marginStart="@dimen/_8sdp"/>
+
+        <ImageView
+            android:id="@+id/back"
+            android:layout_width="@dimen/_40sdp"
+            android:layout_height="@dimen/_40sdp"
+            android:src="@drawable/baseline_more_vert_24"
+            android:layout_gravity="center"
+            android:layout_marginStart="@dimen/_50sdp"
+            android:backgroundTint="@color/white"
+
+
+
+            />
+
+    </LinearLayout>
+
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="500dp"
+        android:orientation="vertical"
+        android:background="@color/white"
+        android:layout_marginTop="40dp"
+
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Select to Send "
+            android:textSize="20dp"
+            android:textStyle="bold"
+            android:textAlignment="center"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+
+
+
+            ></TextView>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_gravity="center"
+            android:layout_marginTop="50dp"
+
+
+            >
+            <Button
+                android:layout_width="277dp"
+                android:layout_height="89dp"
+                android:layout_gravity="center"
+                android:backgroundTint="@color/green"
+                android:text="FACULTY "
+                android:textSize="20dp"
+                android:textStyle="bold"
+                android:id="@+id/afaculty"
+
+                >
+
+            </Button>
+            <Button
+                android:layout_width="277dp"
+                android:layout_height="89dp"
+                android:layout_gravity="center"
+                android:backgroundTint="@color/green"
+                android:text="STUDENT "
+                android:textSize="20dp"
+                android:textStyle="bold"
+                android:layout_marginTop="50dp"
+                android:id="@+id/astudent"
+
+
+                >
+
+            </Button>
+
+            <Button
+
+                android:layout_width="277dp"
+                android:layout_height="86dp"
+                android:layout_gravity="center"
+                android:backgroundTint="@color/green"
+                android:layout_marginTop="50dp"
+                android:text="ALUMNI "
+                android:textSize="20dp"
+                android:textStyle="bold"
+                android:id="@+id/aalumni"
+
+
+                >
+
+
+            </Button>
+
+        </LinearLayout>
+
+
+
+
+
+
+
+
+
+
+
+    </LinearLayout>
+
+
+
+</androidx.appcompat.widget.LinearLayoutCompat>

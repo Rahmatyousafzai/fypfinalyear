@@ -39,7 +39,8 @@ public class  admin_login extends AppCompatActivity {
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               performLogin();
+                //  performLogin();
+                login();
             }
         });
 
@@ -68,7 +69,12 @@ public class  admin_login extends AppCompatActivity {
         // Create API service instance
         apiServices = retrofit.create(Apiservices.class);
     }
-
+private  void login(){
+    Intent intent = new Intent(admin_login.this, ad_dashboard.class);
+    startActivity(intent);
+    // Finish the current activity
+    finish();
+}
     private void performLogin() {
         // Get username and password from input fields
         String username = adusername.getText().toString().trim();

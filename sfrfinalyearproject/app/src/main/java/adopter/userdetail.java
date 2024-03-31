@@ -1,45 +1,24 @@
 package adopter;
 
-import java.util.Date;
-
 public class userdetail {
-    public String username;
-    public String password;
+
     public String fname ;
     public String lname ;
+    private boolean favorite;
 
-    public Date DOB;
-    public String profileimage;
-    public String email;
-    public String usertype;
+    public int profileimage;
 
-    public userdetail(String username, String password, String fname, String lname, Date DOB, String profileimage, String email, String usertype) {
-        this.username = username;
-        this.password = password;
+    public userdetail( String fname,  int profileimage, boolean favorite) {
+
         this.fname = fname;
-        this.lname = lname;
-        this.DOB = DOB;
+
         this.profileimage = profileimage;
-        this.email = email;
-        this.usertype = usertype;
+        this.favorite = favorite;
     }
 
 
-    public String getUsername() {
-        return username;
-    }
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
 
     public String getFname() {
         return fname;
@@ -57,35 +36,24 @@ public class userdetail {
         this.lname = lname;
     }
 
-    public Date getDOB() {
-        return DOB;
-    }
 
-    public void setDOB(Date DOB) {
-        this.DOB = DOB;
-    }
-
-    public String getProfileimage() {
+    public int getProfileimage() {
         return profileimage;
     }
 
-    public void setProfileimage(String profileimage) {
+    public void setProfileimage(int profileimage) {
         this.profileimage = profileimage;
     }
 
-    public String getEmail() {
-        return email;
+
+
+
+
+    public boolean isFavorite() {
+        return favorite;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getUsertype() {
-        return usertype;
-    }
-
-    public void setUsertype(String usertype) {
-        this.usertype = usertype;
+    public void setFavorite(boolean favorite) {
+        this.favorite = favorite;
     }
 }

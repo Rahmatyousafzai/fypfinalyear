@@ -18,7 +18,7 @@ ListView tclistview;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ft_student);
         imgback=findViewById(R.id.tcback);
-        tclistview=findViewById(R.id.tclistview);
+        //tclistview=findViewById(R.id.tclistview);
 
 
 

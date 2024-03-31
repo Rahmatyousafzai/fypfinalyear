@@ -1,162 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="horizontal"
-    android:padding="0dp"
-
-    >
+    android:layout_height="wrap_content"
+    android:layout_margin="10dp"
+    app:cardCornerRadius="10dp"
+    app:cardElevation="4dp">
 
     <LinearLayout
-        android:layout_width="350dp"
-        android:layout_height="wrap_content"
-        android:background="@drawable/border"
-        android:orientation="vertical"
-        >
-
-        <LinearLayout
-            android:layout_width="280dp"
-            android:layout_height="50dp"
-            android:layout_gravity="center"
-            android:orientation="horizontal"
-            android:background="@drawable/border"
-            android:layout_marginLeft="0dp"
-            android:layout_marginTop="20dp"
-            android:padding="5dp"
-            >
-            <ImageView
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:src="@drawable/heart"
-                android:layout_marginLeft="20dp"
-                android:background="@drawable/top_rounded_corner"
-android:id="@+id/pfimage"
-                ></ImageView>
-            <TextView
-                android:layout_weight="2"
-                android:layout_marginLeft="20dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="Rahmat"
-                android:textSize="20dp"
-                android:textColor="@color/black"
-                android:id="@+id/pfname"
-                >
-
-            </TextView>
-
-
-<ImageView
-    android:layout_width="30dp"
-    android:layout_height="40dp"
-android:src="@drawable/baseline_more_vert_24"
-    android:layout_marginRight="20dp"
-    android:id="@+id/icon"
-></ImageView>
-        </LinearLayout>
-
-
-    <TextView
-        android:layout_marginTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="50dp"
-        android:text="hello  word "
+        android:orientation="vertical"
+        android:background="@drawable/top_rounded_corner"
+        android:padding="16dp">
 
-
-        android:layout_marginLeft="10dp"
-        android:textSize="20dp"
-        android:id="@+id/desc"
-
-        >
-
-
-    </TextView>
         <LinearLayout
-            android:layout_width="270dp"
+            android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:background="@drawable/flateborder"
-            android:layout_marginTop="5dp"
-            android:layout_marginLeft="5dp"
-            android:layout_gravity="center"
-            android:backgroundTint="#636262"
-            android:orientation="horizontal"
-            android:padding="5dp"
+            android:layout_marginBottom="8dp"
+            android:gravity="center_vertical"
+            android:background="@drawable/border"
+
             >
 
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/pfimage"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginLeft="@dimen/_20sdp"
+                android:src="@drawable/saeed"
+                app:civ_border_color="@color/black"
+                app:civ_border_width="2dp" />
+
+            <TextView
+                android:id="@+id/pfname"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_weight="1"
+                android:text="Rahmat"
+                android:textColor="@color/black"
+                android:textSize="20sp" />
 
             <ImageView
-                android:layout_width="40dp"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="10dp"
-                android:src="@drawable/heart"
-                android:id="@+id/imj1"
-                ></ImageView>
-
-            <ImageView
-                android:layout_width="40dp"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="5dp"
-                android:src="@drawable/like"
-                android:id="@+id/imj2"
-                ></ImageView>
-            <ImageView
-                android:layout_width="40dp"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="5dp"
-                android:src="@drawable/sad"
-                android:id="@+id/imj3"
-                ></ImageView>
-            <ImageView
-                android:layout_width="40dp"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="5dp"
-                android:src="@drawable/laughter"
-                android:id="@+id/imj4"
-                ></ImageView>
-
-            <ImageView
-                android:layout_width="40dp"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="5dp"
-                android:src="@drawable/smile"
-                android:id="@+id/imj5"
-                ></ImageView>
-            <ImageView
-                android:layout_width="40dp"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="5dp"
-                android:src="@drawable/heart"
-                android:id="@+id/imj6"
-                ></ImageView>
-            <ImageView
-                android:layout_width="40dp"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="5dp"
-                android:src="@drawable/sad"
-                android:id="@+id/imj7"
-                ></ImageView>
-
-
-
-
-
-
-
-
-
+                android:id="@+id/icon"
+                android:layout_width="30dp"
+                android:layout_height="40dp"
+                android:src="@drawable/baseline_more_vert_24"
+                android:layout_marginEnd="20dp"/>
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="10dp"></LinearLayout>
+        <TextView
+            android:id="@+id/desc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:text="Hello World"
+            android:textSize="20sp" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:background="@drawable/flateborder"
+            android:padding="5dp"
+            android:id="@+id/RcEmoji"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp" />
     </LinearLayout>
-
-
-
-
-
-
 
 </androidx.cardview.widget.CardView>

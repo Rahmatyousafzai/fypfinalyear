@@ -28,7 +28,7 @@ public class CustomAdapter_checkbox extends ArrayAdapter<String> {
         if (convertView == null) {
             convertView = inflater.inflate(R.layout.checkboxw_item_rows, parent, false);
             holder = new ViewHolder();
-            holder.checkBox = convertView.findViewById(R.id.checkBox);
+            holder.checkBox = convertView.findViewById(R.id.customcheckBox);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();

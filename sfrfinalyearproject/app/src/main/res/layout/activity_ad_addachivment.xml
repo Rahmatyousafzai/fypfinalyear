@@ -28,6 +28,7 @@
             android:src="@drawable/back"
             android:layout_gravity="center"
             android:layout_marginLeft="30dp"
+            android:id="@+id/imageback"
             >
 
         </ImageView>
@@ -88,6 +89,7 @@
                 android:textColor="@color/white"
                 android:textAlignment="center"
                 android:paddingTop="10sp"
+                android:id="@+id/viewachevment"
 
 
                 ></TextView>
@@ -124,6 +126,7 @@
                 android:layout_width="100dp"
                 android:layout_height="50dp"
                 android:layout_marginLeft="10dp"
+                android:id="@+id/selectcatagory"
                 >
 
             </Spinner>
@@ -151,6 +154,7 @@
         android:hint="Enter ID"
         android:text="25dp"
         android:layout_marginLeft="20dp"
+        android:id="@+id/username"
         >
 
     </EditText>
@@ -168,6 +172,7 @@
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
             android:padding="10dp"
+            android:id="@+id/title"
             ></EditText>
         <EditText
             android:layout_width="300dp"
@@ -178,6 +183,7 @@
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
             android:padding="10dp"
+            android:id="@+id/titlemessage"
             ></EditText>
 
 

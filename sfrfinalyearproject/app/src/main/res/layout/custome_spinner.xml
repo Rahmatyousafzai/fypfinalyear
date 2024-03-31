@@ -8,8 +8,10 @@
     <TextView xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/spinner_item_text"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
+        android:background="@drawable/flateborder"
         android:textSize="20dp"
+        android:textStyle="bold"
         android:textColor="#000000" />
 
 
