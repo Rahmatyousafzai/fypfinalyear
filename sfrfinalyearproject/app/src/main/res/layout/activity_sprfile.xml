@@ -159,7 +159,7 @@
         android:textStyle="bold"
         android:layout_gravity="center"
         android:layout_marginTop="50dp"
-        android:backgroundTint="#0FD7EF">
+        android:backgroundTint="#830D24">
 
 
     </Button>

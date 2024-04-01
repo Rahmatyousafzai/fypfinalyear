@@ -93,9 +93,11 @@ public class ad_student extends AppCompatActivity {
     private List<String> getDepartmentData() {
         // Replace this with your actual data retrieval logic
         List<String> departments = new ArrayList<>();
-        departments.add("Department 1");
-        departments.add("Department 2");
-        departments.add("Department 3");
+        departments.add("BSIT");
+        departments.add("BSCS");
+        departments.add("BSAI");
+        departments.add("BSSE");
+
         return departments;
     }
 
@@ -105,6 +107,13 @@ public class ad_student extends AppCompatActivity {
         semesters.add("Semester 1");
         semesters.add("Semester 2");
         semesters.add("Semester 3");
+        semesters.add("Semester 4");
+        semesters.add("Semester 5");
+        semesters.add("Semester 6");
+        semesters.add("Semester 7");
+        semesters.add("Semester 8");
+
+
         return semesters;
     }
 
@@ -122,9 +131,12 @@ public class ad_student extends AppCompatActivity {
     private List<student_show_samester> getDataList() {
         // Replace this with your actual data retrieval logic
         List<student_show_samester> dataList = new ArrayList<>();
-        dataList.add(new student_show_samester("Item 1", false));
-        dataList.add(new student_show_samester("Item 2", false));
-        dataList.add(new student_show_samester("Item 3", false));
+        dataList.add(new student_show_samester("BSIT-1A", false));
+        dataList.add(new student_show_samester("BSAI-1A", false));
+        dataList.add(new student_show_samester("BSSE-1A", false));
+        dataList.add(new student_show_samester("BSIT-1B", false));
+        dataList.add(new student_show_samester("BSAI-1B", false));
+        dataList.add(new student_show_samester("BSSE-1B", false));
         return dataList;
     }
 }

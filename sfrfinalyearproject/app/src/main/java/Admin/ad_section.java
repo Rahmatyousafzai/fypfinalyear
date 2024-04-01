@@ -72,8 +72,24 @@ public class ad_section extends AppCompatActivity {
         initialData.add(new String[]{ "2020-Arid-3535", "Rahmat", "rahmat@example.com"});
         initialData.add(new String[]{"2020-Arid03565", "jaweria", "rahmat@example.com"});
         initialData.add(new String[]{"2020-Arid-3623", "Faiza", "rahmat@example.com"});
+        initialData.add(new String[]{ "2020-Arid-3535", "Rahmat", "rahmat@example.com"});
+        initialData.add(new String[]{"2020-Arid03565", "jaweria", "rahmat@example.com"});
+        initialData.add(new String[]{"2020-Arid-3623", "Faiza", "rahmat@example.com"});
+        initialData.add(new String[]{ "2020-Arid-3535", "Rahmat", "rahmat@example.com"});
+        initialData.add(new String[]{"2020-Arid03565", "jaweria", "rahmat@example.com"});
+        initialData.add(new String[]{"2020-Arid-3623", "Faiza", "rahmat@example.com"});
+        initialData.add(new String[]{ "2020-Arid-3535", "Rahmat", "rahmat@example.com"});
+        initialData.add(new String[]{"2020-Arid03565", "jaweria", "rahmat@example.com"});
+        initialData.add(new String[]{"2020-Arid-3623", "Faiza", "rahmat@example.com"});
 
-
+        initialData.add(new String[]{"2020-Arid03565", "jaweria", "rahmat@example.com"});
+        initialData.add(new String[]{"2020-Arid-3623", "Faiza", "rahmat@example.com"});
+        initialData.add(new String[]{ "2020-Arid-3535", "Rahmat", "rahmat@example.com"});
+        initialData.add(new String[]{"2020-Arid03565", "jaweria", "rahmat@example.com"});
+        initialData.add(new String[]{"2020-Arid-3623", "Faiza", "rahmat@example.com"});
+        initialData.add(new String[]{ "2020-Arid-3535", "Rahmat", "rahmat@example.com"});
+        initialData.add(new String[]{"2020-Arid03565", "jaweria", "rahmat@example.com"});
+        initialData.add(new String[]{"2020-Arid-3623", "Faiza", "rahmat@example.com"});
 
         // Add each row to the table
         for (String[] rowData : initialData) {

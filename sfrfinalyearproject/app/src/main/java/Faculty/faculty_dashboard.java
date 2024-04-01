@@ -10,8 +10,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.sfrfinalyearproject.R;
 
-import Admin.admessage;
-
 public class faculty_dashboard extends AppCompatActivity {
 
 
@@ -101,7 +99,7 @@ public class faculty_dashboard extends AppCompatActivity {
         private void message() {
 
 
-            Intent intent = new Intent(faculty_dashboard.this, admessage.class);
+            Intent intent = new Intent(faculty_dashboard.this, ft_message.class);
             startActivity(intent);
             finish();
         }

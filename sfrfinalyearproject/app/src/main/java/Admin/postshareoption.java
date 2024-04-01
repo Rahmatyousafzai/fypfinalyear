@@ -22,9 +22,9 @@ public class postshareoption extends AppCompatActivity {
         student=findViewById(R.id.astudent);
         alumni=findViewById(R.id.aalumni);
 
-        Faculty();
-        alumni();
-        student();
+
+
+
 
 
 
@@ -32,14 +32,14 @@ public class postshareoption extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-
+                alumni();
             }
         });
         faculty.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-
+                Faculty();
             }
         });
 
@@ -48,7 +48,7 @@ public class postshareoption extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-
+                student();
 
             }
         });
@@ -72,7 +72,7 @@ public class postshareoption extends AppCompatActivity {
 
 
     public  void alumni(){
-        Intent intent = new Intent(postshareoption.this, postbody.class);
+        Intent intent = new Intent(postshareoption.this, ad_alumni_message_option.class);
         startActivity(intent);
         // Finish the MainActivity so that it's removed from the back stack
         // when the student_login activity starts

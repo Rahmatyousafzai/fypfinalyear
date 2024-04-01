@@ -39,7 +39,7 @@
     android:layout_height="50dp"
     android:layout_marginTop="20dp"
 
-    android:background="@drawable/border"
+    android:background="@drawable/borderwithgreen"
     android:orientation="horizontal"
     android:layout_gravity="center"
 
@@ -61,7 +61,7 @@
     android:layout_width="350dp"
     android:layout_height="50dp"
     android:layout_marginTop="20dp"
-    android:background="@drawable/border"
+    android:background="@drawable/borderwithgreen"
     android:layout_gravity="center"
     >
         <EditText

@@ -1,5 +1,6 @@
 package Admin;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -32,6 +33,10 @@ imgback.setOnClickListener(new View.OnClickListener() {
     @Override
     public void onClick(View v) {
 
+        Intent intent=new Intent(adminAddAlumni.this,ad_alumni_message_option.class);
+        startActivity(intent);
+        finish();
+
     }
 });
 
@@ -43,7 +48,7 @@ imgback.setOnClickListener(new View.OnClickListener() {
 
         // Add more data as neede
         // Initialize adapter
-        adapter = new alumniAdopter(alumniList, this);
+        alumniAdopter  adapter = new alumniAdopter(alumniList, this);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }

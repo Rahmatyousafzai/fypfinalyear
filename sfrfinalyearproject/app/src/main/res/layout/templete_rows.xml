@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical"
+    >
+
+
+
+    <TextView
+        android:background="@drawable/border"
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/template"
+        android:layout_gravity="center"
+        android:text="I'm deeply sorry for your loss.Losing someone
+ dear to us is never easy, and during this difficult
+ time, my thoughts and prayers are with you and
+ your family.May you find strength in the love
+ and support of those around you, and may
+ the memories you shared bring you comfort
+and peace in the days ahead.Please know that
+I am here for you if you need someone to talk
+to or if there's anything I can do to support you
+ during this time of grief.
+Sending you my heartfelt condolences and wishin
+g you strength and healing in the days to come."
+        android:padding="10dp">
+
+
+
+    </TextView>
+
+
+    
+
+</androidx.appcompat.widget.LinearLayoutCompat>

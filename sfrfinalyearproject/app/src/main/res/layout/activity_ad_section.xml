@@ -1,138 +1,142 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<androidx.appcompat.widget.LinearLayoutCompat
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/backgroundcolor"
+    android:orientation="vertical"
 
 
     >
-
-    <ScrollView
-        android:id="@+id/scrollview"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:background="@drawable/buttom_rounded_border"
-        app:layout_constraintVertical_bias="0.229"
-        tools:layout_editor_absoluteX="0dp">
-
-
-        <TableLayout
-            android:id="@+id/tableLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="30dp"
-            android:layout_marginTop="30dp"
-            android:layout_marginRight="30dp"
-            android:stretchColumns="*">
-
-
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="@drawable/header_shape"
-                    android:gravity="center"
-                    android:text="Select"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="@drawable/header_shape"
-                    android:gravity="center"
-                    android:text="Name"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="@drawable/header_shape"
-                    android:gravity="center"
-                    android:text="Arid NO"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="2"
-                    android:background="@drawable/header_shape"
-                    android:gravity="center"
-                    android:text="Email"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
-
-
-            </TableRow>
-
-        </TableLayout>
-
-    </ScrollView>
-
-    <LinearLayout
-        android:layout_width="122dp"
-        android:layout_height="49dp"
-        android:layout_marginTop="300dp"
-        android:background="@drawable/backgroundcolor"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.9"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/scrollview"
-        app:layout_constraintVertical_bias="0.504">
-
-
-        <Button
-            android:id="@+id/addButton"
-            android:layout_width="114dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:backgroundTint="@color/green"
-            android:text="DONE" />
-
-    </LinearLayout>
-
 
     <ImageView
         android:id="@+id/back"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@+id/scrollview"
+
+        android:layout_marginTop="68dp"
+        app:layout_constraintBottom_toTopOf="@+id/textView2"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.073"
+        app:layout_constraintHorizontal_bias="0.117"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.422"
+        app:layout_constraintVertical_bias="0.0"
         app:srcCompat="@drawable/back" />
 
     <TextView
         android:id="@+id/textView2"
         android:layout_width="139dp"
         android:layout_height="38dp"
+        android:layout_marginTop="30dp"
         android:text="BSIT-3A"
-        android:textStyle="bold"
-        android:textSize="30dp"
         android:textColor="@color/black"
-        app:layout_constraintBottom_toTopOf="@+id/scrollview"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.102"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.878" />
+        android:textSize="30dp"
+        android:textStyle="bold"
+></TextView>
+    <LinearLayout
+        android:layout_gravity="center"
+        android:id="@+id/linearLayout"
+        android:layout_width="350dp"
+        android:layout_height="450dp"
+        android:background="@color/white"
+        android:layout_marginTop="10dp"
+     >
+
+        <ScrollView
+            android:id="@+id/scrollview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/buttom_rounded_border"
+            android:orientation="vertical"
+       >
+        <ScrollView
+            android:id="@+id/scroll"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/buttom_rounded_border"
+            android:orientation="horizontal"
+            >
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+            <TableLayout
+                android:id="@+id/tableLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginRight="30dp"
+                android:stretchColumns="*">
+
+
+                <TableRow
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+
+                        android:background="@drawable/header_shape"
+                        android:gravity="center"
+                        android:text="Select"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+
+                        android:background="@drawable/header_shape"
+                        android:gravity="center"
+                        android:text="Name"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+
+                        android:background="@drawable/header_shape"
+                        android:gravity="center"
+                        android:text="Arid NO"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/header_shape"
+                        android:gravity="center"
+                        android:text="Email"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+
+                </TableRow>
+
+            </TableLayout>
+        </ScrollView>
+
+        </ScrollView>
+    </LinearLayout>
+
+
+
+
+    <Button
+        android:id="@+id/addButton"
+        android:layout_width="114dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:backgroundTint="@color/green"
+        android:text="DONE"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="10dp"
+
+
+   />
+
+
+</androidx.appcompat.widget.LinearLayoutCompat>

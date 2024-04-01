@@ -30,7 +30,6 @@ public class  ad_alumni_message_option extends AppCompatActivity {
 
             }
         });
-
         sendtoAll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -39,7 +38,6 @@ public class  ad_alumni_message_option extends AppCompatActivity {
 
             }
         });
-
         newalumni.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -48,16 +46,6 @@ public class  ad_alumni_message_option extends AppCompatActivity {
 
             }
         });
-
-
-
-
-
-
-
-
-
-
 
 
 

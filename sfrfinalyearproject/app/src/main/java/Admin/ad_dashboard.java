@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -23,15 +22,16 @@ import adopter.emoji_class;
 public class ad_dashboard extends AppCompatActivity {
 
     // Declare views
-    private TextView adminPost, addTeacher, adNews, adMessage, addAchievement, adStudent, profileName;
+    private TextView adminPost, addTeacher, adNews, adMessage, addAchievement, adStudent, profileName,notification;
     private ImageView profileImage, popup;
     private RecyclerView recyclerView;
     private Wishadapter wishAdapter;
     private ArrayList<Wish> wishes;
-    LinearLayout sharepost;
+
 
     // Constants for view IDs
     private static final int ADMIN_POST_ID = R.id.adminpost;
+    private static final int ADMIN_NOTIFICATION_ID = R.id.adtxtnotification;
     private static final int ADD_TEACHER_ID = R.id.textadteacher;
     private static final int AD_NEWS_ID = R.id.adnews;
     private static final int AD_MESSAGE_ID = R.id.adtxtmessage;
@@ -46,18 +46,14 @@ public class ad_dashboard extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ad_dashboard);
-sharepost=findViewById(R.id.linsharpost);
+
+
         // Initialize views
+
+
         initViews();
 
-        sharepost.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(ad_dashboard.this, Admin.postshareoption.class);
-                startActivity(intent);
-                finish();
-            }
-        });
+
         // Set up RecyclerView
         setUpRecyclerView();
 
@@ -67,6 +63,7 @@ sharepost=findViewById(R.id.linsharpost);
 
     private void initViews() {
         adminPost = findViewById(ADMIN_POST_ID);
+        notification = findViewById(ADMIN_NOTIFICATION_ID);
         addTeacher = findViewById(ADD_TEACHER_ID);
         adNews = findViewById(AD_NEWS_ID);
         adMessage = findViewById(AD_MESSAGE_ID);
@@ -89,6 +86,8 @@ sharepost=findViewById(R.id.linsharpost);
     }
 
     private void setClickListeners() {
+        adminPost.setOnClickListener(v -> adminpost());
+        notification.setOnClickListener(v -> notification());
         adMessage.setOnClickListener(v -> adMessage());
 
         adNews.setOnClickListener(v -> news());
@@ -101,7 +100,14 @@ sharepost=findViewById(R.id.linsharpost);
 
         popup.setOnClickListener(this::showPopupMenu);
     }
-private void Sharepost(){
+
+    private void adminpost() {
+        Intent intent = new Intent(ad_dashboard.this, Admin.postshareoption.class);
+        startActivity(intent);
+        finish();
+    }
+
+    private void Sharepost(){
 
 
 
@@ -114,7 +120,11 @@ private void Sharepost(){
         startActivity(intent);
         finish();
     }
-
+    public void notification() {
+        Intent intent = new Intent(ad_dashboard.this, Admin.ad_notification.class);
+        startActivity(intent);
+        finish();
+    }
     public void adMessage() {
         Intent intent = new Intent(ad_dashboard.this, Admin.admessage.class);
         startActivity(intent);
@@ -142,6 +152,7 @@ private void Sharepost(){
         popupMenu.getMenuInflater().inflate(R.menu.popup, popupMenu.getMenu());
         popupMenu.setOnMenuItemClickListener(item -> {
             // Handle menu item click
+
             return false;
         });
         popupMenu.show();

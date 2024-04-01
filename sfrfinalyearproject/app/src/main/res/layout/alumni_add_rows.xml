@@ -7,8 +7,7 @@
 
     <LinearLayout
         android:layout_width="350dp"
-        android:layout_height="45dp"
-        android:backgroundTint="#8A8383"
+        android:layout_height="70dp"
         android:orientation="horizontal"
         android:layout_marginTop="5dp"
         android:padding="0dp"
@@ -21,7 +20,7 @@
             android:layout_height="40dp"
             android:src="@drawable/rahmatpic"
             android:layout_marginLeft="20dp"
-android:layout_weight="1"
+
             android:id="@+id/pfimage"
             android:layout_gravity="center"
             app:civ_border_color="@color/white"
@@ -30,12 +29,11 @@ android:layout_weight="1"
         <TextView
 
             android:layout_marginLeft="10dp"
-            android:layout_width="180dp"
+            android:layout_width="160dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="Rahmat"
             android:textSize="20dp"
-            android:layout_weight="@integer/material_motion_duration_long_2"
             android:textColor="@color/black"
             android:id="@+id/pfname"
             >
@@ -50,7 +48,7 @@ android:layout_weight="1"
             android:text="Add"
             android:textSize="20dp"
 android:layout_gravity="center"
-android:layout_weight="1"
+
             ></Button>
 
     </LinearLayout>
