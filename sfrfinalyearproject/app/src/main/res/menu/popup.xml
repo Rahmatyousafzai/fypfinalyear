@@ -1,20 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android"
-
-
-    >
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/mnlogout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:icon="@color/black"
-
-
         android:title="Logout" />
     <item
         android:id="@+id/mnprofile"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:icon="@drawable/baseline_account_circle_24"
         android:title="Profile" />
 </menu>

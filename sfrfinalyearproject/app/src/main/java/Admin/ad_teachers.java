@@ -38,7 +38,7 @@ public class ad_teachers extends AppCompatActivity {
         // Initialize views
         pfimage = findViewById(R.id.profileimage);
         pfname = findViewById(R.id.profelname);
-        back = findViewById(R.id.back);
+        back = findViewById(R.id.imgback);
         search = findViewById(R.id.search);
 
 

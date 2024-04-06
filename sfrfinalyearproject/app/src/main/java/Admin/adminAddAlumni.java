@@ -28,8 +28,11 @@ public class adminAddAlumni extends AppCompatActivity {
          recyclerView = findViewById(R.id.Rcalumni);
 ImageView imgback=findViewById(R.id.imgback);
         // Initialize data
+        ///////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////onclickListener////////////////////////////////////
+        //////////////////////////////////////////////////////////////////////////////
 
-imgback.setOnClickListener(new View.OnClickListener() {
+        imgback.setOnClickListener(new View.OnClickListener() {
     @Override
     public void onClick(View v) {
 

@@ -34,7 +34,7 @@ public class ad_student extends AppCompatActivity {
         recyclerView = findViewById(R.id.Recsamseter);
         spinnerdeportment = findViewById(R.id.deparometspinner);
         spinnersamester = findViewById(R.id.semesterspinner);
-        ImageView back=findViewById(R.id.back);
+        ImageView back=findViewById(R.id.imgback);
 
         populateSpinners();
         setupRecyclerView();

@@ -1,12 +1,12 @@
 package Admin;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.sfrfinalyearproject.R;
 
@@ -21,8 +21,26 @@ public class Ad_messagebody extends AppCompatActivity {
         setContentView(R.layout.activity_ad_messagebody);
         imgAddtemplete =findViewById(R.id.imgtamplate);
         btnshare= this.<Button>findViewById(R.id.btnshare);
-templetechois();
-Share();
+
+
+
+        ///////////////////////////////////////////////////////////////////////////////
+        //////////////////////Click Listner///////////////////////////////////////////
+        /////////////////////////////////////////////////////////////////////////////
+        imgAddtemplete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                templetechois();
+            }
+        });
+        imgAddtemplete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Share();
+            }
+        });
+
+
 
 
 
@@ -35,7 +53,9 @@ Share();
 
     }
 
-
+    ///////////////////////////////////////////////////////////////////////////////
+    //////////////////////     FUNCTION       ////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////
     public  void templetechois(){
 
         imgAddtemplete.setOnClickListener(new View.OnClickListener() {

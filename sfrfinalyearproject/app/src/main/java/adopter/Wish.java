@@ -9,14 +9,26 @@ public class Wish {
     private int profileImage;
     private int icon;
     private String content;
+
+    public int getBtnadd() {
+        return btnadd;
+    }
+
+    public void setBtnadd(int btnadd) {
+        this.btnadd = btnadd;
+    }
+
+    private int btnadd;
     private ArrayList<emoji_class> imageList;
 
-    public Wish(String firstName, int profileImage, int icon, String content, ArrayList<emoji_class> imageList) {
+    public Wish(String firstName, int profileImage, int icon, String content,int btnadd,ArrayList<emoji_class> imageList) {
         this.firstName = firstName;
         this.profileImage = profileImage;
         this.icon = icon;
         this.content = content;
+        this.btnadd=btnadd;
         this.imageList = imageList;
+
     }
 
     public String getFirstName() {

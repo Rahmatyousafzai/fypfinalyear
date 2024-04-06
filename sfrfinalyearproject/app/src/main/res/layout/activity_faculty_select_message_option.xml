@@ -7,25 +7,71 @@
     tools:context="Faculty.faculty_select_message_option"
 
 android:orientation="vertical"
+    android:background="@drawable/backgroundcolor"
 
     >
-
-
-    <TextView
-        android:layout_width="178dp"
-        android:layout_height="72dp"
-        android:text="Select To send "
-        android:textSize="20dp"
-      android:layout_gravity="center"
-        android:layout_marginTop="100dp"
-    ></TextView>
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_30sdp"
+        android:layout_gravity="center"
 
+        >
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/profileimage"
+            android:layout_width="@dimen/_40sdp"
+            android:layout_height="@dimen/_40sdp"
+            android:layout_gravity="center"
+            android:src="@drawable/saeed"
+            app:civ_border_color="@color/black"
+            app:civ_border_width="2dp"
+
+
+            />
+        <TextView
+            android:id="@+id/profelname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/_10sdp"
+            android:text="Dr.Saeed Wattoo"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+
+            android:layout_gravity="center"
+            android:layout_marginStart="@dimen/_8sdp"/>
+
+        <ImageView
+            android:id="@+id/back"
+            android:layout_width="@dimen/_40sdp"
+            android:layout_height="@dimen/_40sdp"
+            android:src="@drawable/baseline_more_vert_24"
+            android:layout_gravity="center"
+            android:layout_marginStart="@dimen/_50sdp"
+            android:backgroundTint="@color/white"
+
+
+
+            />
+
+    </LinearLayout>
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="500dp"
+    android:orientation="vertical"
+    android:background="@color/white"
+    android:layout_marginTop="50dp"
+    >
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+android:background="@drawable/borderwithgreen"
         android:layout_gravity="center"
         android:orientation="vertical"
-        android:layout_marginTop="@dimen/_100sdp"
+        android:layout_marginTop="80dp"
+        android:padding="30dp"
         >
     <Button
         android:id="@+id/btnall"
@@ -50,6 +96,6 @@ android:orientation="vertical"
         ></Button>
     </LinearLayout>
 
-
+</LinearLayout>
 
 </androidx.appcompat.widget.LinearLayoutCompat>

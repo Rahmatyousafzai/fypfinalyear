@@ -3,6 +3,7 @@ package Admin;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,7 +15,7 @@ public class admessage extends AppCompatActivity {
 
     RecyclerView recyclerView;
     private TextView adNews, adMessage, addnotification;
-
+ImageView imgback;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,30 +24,35 @@ public class admessage extends AppCompatActivity {
         adNews=findViewById(R.id.news);
         adMessage=findViewById(R.id.txtmessage);
         addnotification=findViewById(R.id.txtnotification);
-
-        adNews.setOnClickListener(new View.OnClickListener() {
+        addnotification.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+             notification();
             }
         });
         adNews.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+news();
             }
         });
-        adNews.setOnClickListener(new View.OnClickListener() {
+        adMessage.setOnClickListener(new View.OnClickListener()
+        {
             @Override
             public void onClick(View v) {
-
+                adMessage();
             }
         });
+
+
 
 
 
 
     }
+
+
+
     public void notification() {
         Intent intent = new Intent(admessage.this, Admin.ad_notification.class);
         startActivity(intent);

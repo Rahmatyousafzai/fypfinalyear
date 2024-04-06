@@ -13,12 +13,17 @@ import com.example.sfrfinalyearproject.R;
 public class faculty_dashboard extends AppCompatActivity {
 
 
-    TextView news,notification,message,student,favstudent;
-    ImageView imgnews,imgNotification,imgmessage,imgstudent,imgfavstudent;
+    TextView news,notification,message,student,favstudent,typepost;
+    ImageView imgnews,imgNotification,imgmessage,imgstudent,imgfavstudent,imgpost;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ft_dashboard);
+
+
+       /////////////////////////////////////////////////////////////////
+      //////////////////////////////  Find view.////////////////////////
+      /////////////////////////////////////////////////////////////////
              news = findViewById(R.id.news);
             notification=findViewById(R.id.txtnotification);
             message=findViewById(R.id.txtmessage);
@@ -29,7 +34,27 @@ public class faculty_dashboard extends AppCompatActivity {
             imgmessage=findViewById(R.id.imgmessage);
             imgstudent=findViewById(R.id.imgstudent);
             imgfavstudent=findViewById(R.id.imgfavstudent);
-            // Set click listeners
+            imgpost=findViewById(R.id.pluspost);
+            typepost=findViewById(R.id.typepost);
+
+        /////////////////////////////////////////////////////////////////////////
+        ///////////////////////// Set click listeners////////////////////////////
+        /////////////////////////////////////////////////////////////////////////
+            imgpost.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    TYPEPOST();
+                }
+            });
+
+            typepost.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    TYPEPOST();
+                }
+            });
+
+
             news.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -96,7 +121,17 @@ public class faculty_dashboard extends AppCompatActivity {
         ////////////////////////////////////////////////////////
         }
 
-        private void message() {
+        //////////////////////////////////////////////////////
+        /////////////////////////FUNCTION/////////////////////
+        //////////////////////////////////////////////////////
+    private void TYPEPOST() {
+
+        Intent intent=new Intent(faculty_dashboard.this,faculty_select_message_option.class);
+        startActivity(intent);
+        finish();
+    }
+
+    private void message() {
 
 
             Intent intent = new Intent(faculty_dashboard.this, ft_message.class);

@@ -4,14 +4,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.sfrfinalyearproject.R;
 
 public class faculty_select_message_option extends AppCompatActivity {
-TextView txtall,txtgroup;
+
 Button btnall,btngroup;
 
 
@@ -22,6 +21,7 @@ Button btnall,btngroup;
 
         btnall=findViewById(R.id.btnall);
         btngroup=findViewById(R.id.btngroup);
+
 
 
 

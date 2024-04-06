@@ -57,14 +57,30 @@
             android:layout_marginBottom="16dp"
             android:text="Hello World"
             android:textSize="20sp" />
+<LinearLayout
+    android:layout_width="340dp"
+    android:layout_height="50dp"
+    android:background="@drawable/flateborder"
+    android:padding="5dp"
 
+    >
         <androidx.recyclerview.widget.RecyclerView
-            android:background="@drawable/flateborder"
-            android:padding="5dp"
+android:layout_gravity="center"
             android:id="@+id/RcEmoji"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp" />
+            android:layout_weight="1"
+
+            />
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/add_button"
+            android:id="@+id/btnadd"
+android:layout_marginRight="10dp"
+            ></ImageView>
+
+</LinearLayout>
     </LinearLayout>
 
 </androidx.cardview.widget.CardView>

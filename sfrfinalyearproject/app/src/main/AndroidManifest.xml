@@ -43,6 +43,9 @@
             android:name="Faculty.ft_send_message_by_samester"
             android:exported="false" />
         <activity
+            android:name="Faculty.faculty_select_message_option"
+            android:exported="false" />
+        <activity
             android:name="Faculty.course_message_body"
             android:exported="false" />
         <activity

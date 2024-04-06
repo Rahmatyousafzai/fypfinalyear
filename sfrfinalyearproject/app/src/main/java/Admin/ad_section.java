@@ -29,7 +29,7 @@ public class ad_section extends AppCompatActivity {
         setContentView(R.layout.activity_ad_section);
 
 
-        ImageView imgback = findViewById(R.id.back);
+        ImageView imgback = findViewById(R.id.imgback);
         tableLayout = findViewById(R.id.tableLayout);
         addButton = findViewById(R.id.addButton);
         addButton.setOnClickListener(new View.OnClickListener() {
@@ -42,7 +42,7 @@ public class ad_section extends AppCompatActivity {
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(ad_section.this, Ad_messagebody.class);
+                Intent intent = new Intent(ad_section.this, postbody.class);
                 startActivity(intent);
                 finish();
             }

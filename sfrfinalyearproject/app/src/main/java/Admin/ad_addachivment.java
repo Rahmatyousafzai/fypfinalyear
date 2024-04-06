@@ -17,10 +17,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ad_addachivment extends AppCompatActivity {
-    ImageView imgback;
+    ImageView imgback,profileimage;
     Button btnsave;
 
-    TextView viewach ,title,messagedescription;
+    TextView viewach ,title,messagedescription,profilename;
 Spinner catogary;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,8 +31,12 @@ Spinner catogary;
         imgback = findViewById(R.id.imageback);
         title = findViewById(R.id.title);
         messagedescription = findViewById(R.id.titlemessage);
-
         catogary = findViewById(R.id.selectcatagory);
+
+
+                 ///////////////////////////////////////////////////////////////////////////////
+                //////////////////////Click Listner///////////////////////////////////////////
+                /////////////////////////////////////////////////////////////////////////////
         viewach.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -52,6 +56,13 @@ Spinner catogary;
                 navigateToDashboard();
             }
         });
+
+
+
+
+        ///////////////////////////////////////////////////////////////////////////////
+        //////////////////////SET ADOPTER CATAGORY///////////////////////////////////////////
+        /////////////////////////////////////////////////////////////////////////////
         ArrayAdapter<String> categoryAdapter = null; // Corrected variable name
 
         List<String> categoryList = new ArrayList<>(); // Corrected variable name
@@ -69,6 +80,11 @@ Spinner catogary;
 
     }
 
+
+    ///////////////////////////////////////////////////////////////////////////////
+    //////////////////////FUNCTION////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////
+
     private void navigateToDashboard() {
         Intent intent = new Intent(ad_addachivment.this,ad_dashboard.class);
         startActivity(intent);
@@ -80,6 +96,7 @@ Spinner catogary;
 
     private void navigateToDisplayachvement() {
         Intent intent = new Intent(ad_addachivment.this,view_achievments.class);
+
         startActivity(intent);
         // Finish the MainActivity so that it's removed from the back stack
 
