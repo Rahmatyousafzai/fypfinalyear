@@ -4,9 +4,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -30,16 +30,15 @@ public class ad_student extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ad_student);
 
-        Button adselect = findViewById(R.id.select);
+          TextView AddALumni = findViewById(R.id.Alumni);
         recyclerView = findViewById(R.id.Recsamseter);
-        spinnerdeportment = findViewById(R.id.deparometspinner);
-        spinnersamester = findViewById(R.id.semesterspinner);
+
+
         ImageView back=findViewById(R.id.imgback);
 
-        populateSpinners();
-        setupRecyclerView();
 
-        adselect.setOnClickListener(new View.OnClickListener() {
+
+        AddALumni.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 slectsemster();
@@ -69,7 +68,7 @@ public class ad_student extends AppCompatActivity {
     private void slectsemster() {
 
 
-        Intent intent=new Intent(ad_student.this,ad_section.class);
+        Intent intent=new Intent(ad_student.this,adminAddAlumni.class);
         startActivity(intent);
         finish();
 

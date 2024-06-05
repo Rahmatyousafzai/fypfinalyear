@@ -1,7 +1,6 @@
 package Faculty;
 
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -10,9 +9,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -21,15 +22,18 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.sfrfinalyearproject.R;
 
-import java.util.ArrayList;
 import java.util.List;
 
+import ModeClasees.Message;
+import adopter.ChatAdapter;
+import adopter.MessagListAdopter;
 import facultyClasses.message;
-import facultyClasses.messageAdopter;
+import mydataapi.Apiservices;
+import mydataapi.RetrofitClient;
 
 public class ft_message extends AppCompatActivity {
-    private RecyclerView recyclerView;
-    private messageAdopter userAdapter;
+
+
     private List<message> messageList1;
     private List<message> messageList2;
     private PopupWindow popupWindowCreateGroup;
@@ -37,6 +41,24 @@ public class ft_message extends AppCompatActivity {
     private boolean isMessageList1Visible = true;
 
     ImageView messageImage, groupMessage, createGroup;
+
+
+
+
+
+    private Apiservices apiServices = RetrofitClient.getInstance();
+    RecyclerView recyclerView;
+
+    private GridView gridView;
+    private ChatAdapter chatAdapter;
+    private List<Message> messageList;
+    TextView profilename, pfimageofteacher, tcname;
+    ImageView profile, profileImageView, Emojipapolate;
+    private String username, FullName, profileImage, TeacherUsername, teacher_lastname, teacher_firstname, teacher_username, TCfullname;
+    private LinearLayout linearLayout;
+    private MessagListAdopter adapter;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,10 +75,6 @@ public class ft_message extends AppCompatActivity {
         recyclerView = findViewById(R.id.Rcmassage);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        // Generate sample data lists
-        messageList1 = UserUtil.generateSampleMessages();
-        messageList2 = UserUtil.generateDifferentSampleMessages();
-        showData(messageList1);
 
         // Set OnClickListener for the groupMessage button
         groupMessage.setOnClickListener(new View.OnClickListener() {
@@ -64,9 +82,9 @@ public class ft_message extends AppCompatActivity {
             public void onClick(View v) {
                 // Toggle between the two lists
                 if (isMessageList1Visible) {
-                    showData(messageList2);
+
                 } else {
-                    showData(messageList1);
+
                 }
                 // Toggle the visibility of createGroup
                 createGroup.setVisibility(isMessageList1Visible ? View.VISIBLE : View.GONE);
@@ -79,7 +97,7 @@ public class ft_message extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // Show messageList1 when messageImage is clicked
-                showData(messageList1);
+
                 // Make sure createGroup is hidden
                 createGroup.setVisibility(View.GONE);
                 // Update visibility flag
@@ -95,6 +113,8 @@ public class ft_message extends AppCompatActivity {
             public void onClick(View v) {
                 // Show popup window for creating a group
                 showCreateGroupPopup();
+
+
                 linearLayout.setVisibility(View.GONE);
                 recyclerView.setVisibility(View.GONE);
                 createGroup.setVisibility(View.GONE);
@@ -102,77 +122,15 @@ public class ft_message extends AppCompatActivity {
         });
 
 
-
-
         // Set item click listener for the adapter
-        userAdapter.setOnItemClickListener(new messageAdopter.OnItemClickListener() {
-            @Override
-            public void onItemClick(String userName, int imageResource) {
-                // Handle item click here
-                Intent intent = new Intent(ft_message.this, groupmessage_body.class);
-                intent.putExtra("userName", userName);
-                intent.putExtra("imageResource", imageResource);
-                startActivity(intent);
-            }
-        });
-
-    }
-
-    // Method to display data in the RecyclerView
-    private void showData(List<message> dataList) {
-        // Create and set the adapter with the provided data list
-        userAdapter = new messageAdopter(dataList);
-        recyclerView.setAdapter(userAdapter);
-
     }
 
 
     // Utility class for generating sample data
-    public static class UserUtil {
-        public static List<message> generateSampleMessages() {
-            List<message> userList = new ArrayList<>();
-            userList.add(new message("Rahmat", "yousafzai", "12/09/2024", R.drawable.rahmatpic));
-            userList.add(new message("Khurram", "Qaser", "12/09/2024", R.drawable.zindalash));
-            userList.add(new message("Jaweria", "Smith", "12/09/2024", R.drawable.baseline_account_circle_24));
-            // Add more sample data as needed
-            userList.add(new message("Rahmat", "yousafzai", "12/09/2024", R.drawable.rahmatpic));
-            userList.add(new message("Khurram", "Qaser", "12/09/2024", R.drawable.zindalash));
-            userList.add(new message("Jaweria", "Smith", "12/09/2024", R.drawable.baseline_account_circle_24));
-            // Add more sample data as needed
-            userList.add(new message("Rahmat", "yousafzai", "12/09/2024", R.drawable.rahmatpic));
-            userList.add(new message("Khurram", "Qaser", "12/09/2024", R.drawable.zindalash));
-            userList.add(new message("Jaweria", "Smith", "12/09/2024", R.drawable.baseline_account_circle_24));
-            // Add more sample data as needed
-            userList.add(new message("Rahmat", "yousafzai", "12/09/2024", R.drawable.rahmatpic));
-            userList.add(new message("Khurram", "Qaser", "12/09/2024", R.drawable.zindalash));
-            userList.add(new message("Jaweria", "Smith", "12/09/2024", R.drawable.baseline_account_circle_24));
-            // Add more sample data as needed
-            return userList;
-        }
-
-        public static List<message> generateDifferentSampleMessages() {
-            List<message> userList = new ArrayList<>();
-            userList.add(new message("muhammad", "bilal", "12/09/2024", R.drawable.bilal));
-            userList.add(new message("yousafzai", "Doe", "12/09/2024", R.drawable.care));
-            userList.add(new message("Alice", "Smith", "12/09/2024", R.drawable.baseline_account_circle_24));
-            // Add more sample data as needed
-            userList.add(new message("muhammad", "bilal", "12/09/2024", R.drawable.bilal));
-            userList.add(new message("yousafzai", "Doe", "12/09/2024", R.drawable.care));
-            userList.add(new message("Alice", "Smith", "12/09/2024", R.drawable.baseline_account_circle_24));
-            // Add more sample data as needed
-            userList.add(new message("muhammad", "bilal", "12/09/2024", R.drawable.bilal));
-            userList.add(new message("yousafzai", "Doe", "12/09/2024", R.drawable.care));
-            userList.add(new message("Alice", "Smith", "12/09/2024", R.drawable.baseline_account_circle_24));
-            // Add more sample data as needed
-            userList.add(new message("muhammad", "bilal", "12/09/2024", R.drawable.bilal));
-            userList.add(new message("yousafzai", "Doe", "12/09/2024", R.drawable.care));
-            userList.add(new message("Alice", "Smith", "12/09/2024", R.drawable.baseline_account_circle_24));
-            // Add more sample data as needed
 
 
-            return userList;
-        }
-    }
+
+
 
     // Method to show the popup window for creating a group
     private void showCreateGroupPopup() {

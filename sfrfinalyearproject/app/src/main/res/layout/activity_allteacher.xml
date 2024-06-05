@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="student.stdashboard"
+    tools:context="student.AllTeacherActivity"
     android:background="@drawable/backgroundcolor"
 
     android:orientation="vertical"
@@ -117,6 +117,7 @@
 
 <androidx.recyclerview.widget.RecyclerView
     android:layout_width="match_parent"
+
     android:layout_height="match_parent"
     android:id="@+id/allteacherRec"
     android:layout_gravity="center"

@@ -12,16 +12,19 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.sfrfinalyearproject.R;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import Class_for_admin.Achievement;
-import adopter.achivmentadopter;
+import ModeClasees.Achievement;
+import adopter.AchievementAdapter;
+import mydataapi.Apiservices;
+import mydataapi.RetrofitClient;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class view_achievments extends AppCompatActivity {
     private RecyclerView recyclerView;
-    private achivmentadopter adapter;
-    private List<Achievement> dataList;
+    private AchievementAdapter adapter;
     ImageView profileimage ,imgback;
     TextView profilename;
 
@@ -38,6 +41,10 @@ public class view_achievments extends AppCompatActivity {
 
 
 
+        recyclerView = findViewById(R.id.allachiRec);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        fetchAchievements();
         ///////////////////////////////////////////////////////////////////////////////
         ////////////////////////////onclickListener////////////////////////////////////
         //////////////////////////////////////////////////////////////////////////////
@@ -57,24 +64,39 @@ public class view_achievments extends AppCompatActivity {
             profileimage.setImageResource(imageResourceId);
         }
 
-        recyclerView = findViewById(R.id.viewachivment);
-        dataList = new ArrayList<>();
 
-        // Add your data to dataList
-        dataList.add(new Achievement(R.drawable.heart, "Rahmat Yousafzai", "Sample description"));
-        dataList.add(new Achievement(R.drawable.heart, "Rahmat Yousafzai", "Sample description"));
-        dataList.add(new Achievement(R.drawable.heart, "Rahmat Yousafzai", "Sample description"));
-        dataList.add(new Achievement(R.drawable.heart, "Rahmat Yousafzai", "Sample description"));
-        dataList.add(new Achievement(R.drawable.heart, "Rahmat Yousafzai", "Sample description"));
-
-
-        adapter = new achivmentadopter(dataList, this);
-        recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
 ///////////////////////////////////////////////////////////////////////////////
     ////////////////////////////METHODS////////////////////////////////////
     //////////////////////////////////////////////////////////////////////////////
+
+    private void fetchAchievements() {
+
+
+        Apiservices apiService = RetrofitClient.getInstance();
+        Call<List<Achievement>> call = apiService.getAchievements();
+
+        call.enqueue(new Callback<List<Achievement>>() {
+            @Override
+            public void onResponse(Call<List<Achievement>> call, Response<List<Achievement>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    List<Achievement> achievements = response.body();
+                    adapter = new AchievementAdapter(achievements, view_achievments.this);
+                    recyclerView.setAdapter(adapter);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Achievement>> call, Throwable t) {
+                t.printStackTrace();
+            }
+        });
+    }
+
+
+
+
+
 
     private void navigateToback() {
 

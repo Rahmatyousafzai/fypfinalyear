@@ -21,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // Create an Intent to start the student_login activity
-                Intent intent = new Intent(MainActivity.this, student_login.class);
+                Intent intent = new Intent(MainActivity.this, admin_login.class);
                 startActivity(intent);
                 // Finish the MainActivity so that it's removed from the back stack
                 // when the student_login activity starts

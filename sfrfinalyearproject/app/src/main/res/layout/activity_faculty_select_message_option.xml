@@ -19,9 +19,11 @@ android:orientation="vertical"
         >
 
         <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/profileimage"
+            android:id="@+id/profilepicture"
+
             android:layout_width="@dimen/_40sdp"
             android:layout_height="@dimen/_40sdp"
+            android:layout_weight="2"
             android:layout_gravity="center"
             android:src="@drawable/saeed"
             app:civ_border_color="@color/black"
@@ -34,9 +36,10 @@ android:orientation="vertical"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/_10sdp"
-            android:text="Dr.Saeed Wattoo"
+            android:text="Rahmat Yousafzai"
             android:textColor="@color/black"
             android:textSize="20sp"
+            android:layout_weight="1"
 
             android:layout_gravity="center"
             android:layout_marginStart="@dimen/_8sdp"/>
@@ -66,32 +69,54 @@ android:orientation="vertical"
 
     <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="450dp"
 android:background="@drawable/borderwithgreen"
         android:layout_gravity="center"
         android:orientation="vertical"
-        android:layout_marginTop="80dp"
-        android:padding="30dp"
+        android:layout_marginTop="10dp"
+        android:padding="40dp"
         >
     <Button
-        android:id="@+id/btnall"
+        android:id="@+id/Student"
         android:layout_width="296dp"
         android:layout_height="70dp"
         android:backgroundTint="@color/green"
-        android:text="ALL"
+        android:text="Student"
         android:textSize="30dp"
         android:textStyle="bold"
   ></Button>
 
     <Button
-        android:id="@+id/btngroup"
+        android:id="@+id/Alumni"
         android:layout_width="296dp"
         android:layout_height="70dp"
         android:backgroundTint="@color/green"
-        android:text="GROUPS"
+        android:text="Alumni"
         android:textSize="30dp"
         android:textStyle="bold"
-        android:layout_marginTop="@dimen/_100sdp"
+       android:layout_marginTop="20dp"></Button>
+
+        <Button
+            android:id="@+id/Displine"
+            android:layout_width="296dp"
+            android:layout_height="70dp"
+            android:backgroundTint="@color/green"
+            android:text="Program"
+            android:textSize="30dp"
+            android:textStyle="bold"
+            android:layout_marginTop="20dp"
+></Button>
+
+        <Button
+            android:id="@+id/semeter"
+            android:layout_width="296dp"
+            android:layout_height="70dp"
+            android:backgroundTint="@color/green"
+            android:text="samester"
+            android:textSize="30dp"
+            android:textStyle="bold"
+            android:layout_marginTop="20dp"
+
 
         ></Button>
     </LinearLayout>

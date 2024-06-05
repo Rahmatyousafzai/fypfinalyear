@@ -1,86 +1,115 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="10dp"
-    app:cardCornerRadius="10dp"
-    app:cardElevation="4dp">
-
+    android:orientation="vertical"
+    android:padding="10dp"
+    >
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:background="@drawable/top_rounded_corner"
-        android:padding="16dp">
+        android:padding="10dp"
+        >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@drawable/border"
+        android:padding="6dp"
+        android:layout_marginTop="5dp"
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginBottom="8dp"
-            android:gravity="center_vertical"
-            android:background="@drawable/border"
+        >
 
-            >
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
 
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/pfimage"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_marginLeft="@dimen/_20sdp"
-                android:src="@drawable/saeed"
-                app:civ_border_color="@color/black"
-                app:civ_border_width="2dp" />
+            android:id="@+id/postprofileimage"
+            android:layout_weight="2"
+            android:src="@drawable/baseline_account_circle_24"
+            ></de.hdodenhof.circleimageview.CircleImageView>
 
-            <TextView
-                android:id="@+id/pfname"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_weight="1"
-                android:text="Rahmat"
-                android:textColor="@color/black"
-                android:textSize="20sp" />
-
-            <ImageView
-                android:id="@+id/icon"
-                android:layout_width="30dp"
-                android:layout_height="40dp"
-                android:src="@drawable/baseline_more_vert_24"
-                android:layout_marginEnd="20dp"/>
-        </LinearLayout>
 
         <TextView
-            android:id="@+id/desc"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:text="Hello World"
-            android:textSize="20sp" />
-<LinearLayout
-    android:layout_width="340dp"
-    android:layout_height="50dp"
-    android:background="@drawable/flateborder"
-    android:padding="5dp"
-
-    >
-        <androidx.recyclerview.widget.RecyclerView
-android:layout_gravity="center"
-            android:id="@+id/RcEmoji"
+            android:id="@+id/postprofilename"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:text="Rahmat yousafzaia"
+            android:layout_gravity="center"
             android:layout_weight="1"
+            android:textStyle="bold">
 
-            />
+        </TextView>
         <ImageView
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:src="@drawable/add_button"
-            android:id="@+id/btnadd"
-android:layout_marginRight="10dp"
+            android:id="@+id/profiledetail"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/baseline_more_vert_24"
+            android:layout_gravity="center"
+            android:layout_weight="2"
+
             ></ImageView>
 
-</LinearLayout>
+
     </LinearLayout>
 
-</androidx.cardview.widget.CardView>
+    <TextView
+        android:id="@+id/textViewName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/textViewContent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="16sp" />
+        <TextView
+            android:id="@+id/profileimageurl"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16sp" />
+    <TextView
+        android:id="@+id/textViewDateTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="14sp"
+        android:textColor="@android:color/darker_gray" />
+     <LinearLayout
+         android:layout_width="300dp"
+         android:layout_height="40dp"
+        android:background="@drawable/flateborder"
+       android:layout_gravity="center"
+        >
+         <LinearLayout
+             android:layout_width="250dp"
+             android:layout_height="wrap_content"
+      >
+             <androidx.recyclerview.widget.RecyclerView
+                 android:layout_width="match_parent"
+                 android:layout_height="wrap_content"
+                 android:orientation="horizontal"
+                 android:id="@+id/emojiRecyclerView" />
+
+         </LinearLayout>
+
+
+         <ImageView
+             android:layout_width="wrap_content"
+             android:layout_height="match_parent"
+             android:src="@drawable/add_button"
+             android:layout_gravity="center"
+             android:id="@+id/addemojis"
+
+
+             ></ImageView>
+
+     </LinearLayout>
+
+    </LinearLayout>
+</LinearLayout>
+

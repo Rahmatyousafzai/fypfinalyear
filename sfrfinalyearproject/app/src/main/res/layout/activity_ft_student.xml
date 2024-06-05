@@ -58,7 +58,7 @@
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="500dp"
-android:id="@+id/tcRcview"
+android:id="@+id/StudentRC"
 
         ></androidx.recyclerview.widget.RecyclerView>
 

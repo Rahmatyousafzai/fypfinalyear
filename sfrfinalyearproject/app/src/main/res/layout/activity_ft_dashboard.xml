@@ -18,9 +18,11 @@
         >
 
         <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/profileimage"
+            android:id="@+id/profilepicture"
+
             android:layout_width="@dimen/_40sdp"
             android:layout_height="@dimen/_40sdp"
+            android:layout_weight="2"
             android:layout_gravity="center"
             android:src="@drawable/saeed"
             app:civ_border_color="@color/black"
@@ -33,9 +35,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/_10sdp"
-            android:text="Dr.Saeed Wattoo"
+            android:text="Rahmat Yousafzai"
             android:textColor="@color/black"
             android:textSize="20sp"
+            android:layout_weight="1"
 
             android:layout_gravity="center"
             android:layout_marginStart="@dimen/_8sdp"/>
@@ -60,6 +63,7 @@
         android:orientation="horizontal"
         android:background="#73E3F1"
         android:layout_marginTop="10dp"
+        android:padding="2dp"
 
 
         >
@@ -69,7 +73,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
 
-            android:layout_marginLeft="30dp"
+
             android:layout_weight="1"
             >
             <ImageView
@@ -169,6 +173,40 @@
 
 
         </LinearLayout>
+        <LinearLayout
+            android:layout_marginTop="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginLeft="30dp"
+            android:layout_weight="1"
+            >
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/add_button"
+                android:layout_gravity="center"
+                android:id="@+id/typepost"
+
+
+                >
+            </ImageView>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="post"
+                android:textSize="20dp"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:id="@+id/addpost"
+                android:layout_gravity="center"
+
+                >
+
+            </TextView>
+
+
+        </LinearLayout>
 
     </LinearLayout>
 
@@ -185,48 +223,7 @@
         android:orientation="vertical"
 
         >
-        <LinearLayout
-            android:layout_width="300dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/border"
-            android:padding="10dp"
-            android:id="@+id/createwish"
 
-            >
-
-            <TextView
-                android:layout_width="200dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:hint="Type wish"
-                android:textSize="20dp"
-                android:textStyle="bold"
-                android:layout_marginLeft="10dp"
-                android:textAlignment="center"
-                android:id="@+id/typepost"
-
-                >
-
-
-            </TextView>
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/add_button"
-                android:layout_gravity="center"
-                android:layout_marginLeft="30dp"
-      android:id="@+id/pluspost"
-
-                >
-            </ImageView>
-
-
-
-
-
-        </LinearLayout>
 
 
         <androidx.recyclerview.widget.RecyclerView

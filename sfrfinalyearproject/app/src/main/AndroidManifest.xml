@@ -14,7 +14,47 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Sfrfinalyearproject"
+        android:usesCleartextTraffic="true"
         tools:targetApi="31">
+        <activity
+            android:name="Faculty.alumnimessage"
+            android:exported="false" />
+        <activity
+            android:name="Faculty.facultymessagebody"
+            android:exported="false" />
+        <activity
+            android:name="Faculty.facultmessage"
+            android:exported="false" />
+        <activity
+            android:name="Faculty.facultypapulationMessage"
+            android:exported="false" />
+        <activity
+            android:name=".slashscreen"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="Alumni.alfavteacher"
+            android:exported="false" />
+        <activity
+            android:name="Alumni.alteachers"
+            android:exported="false" />
+        <activity
+            android:name="Alumni.almessagebody"
+            android:exported="false" />
+        <activity
+            android:name="Alumni.almessages"
+            android:exported="false" />
+        <activity
+            android:name="Admin.ad_teachers"
+            android:exported="false" />
+        <activity
+            android:name="student.test"
+            android:exported="false" />
         <activity
             android:name="Faculty.groupmessage_body"
             android:exported="false" />
@@ -84,10 +124,10 @@
             android:name="Admin.admessage"
             android:exported="false" />
         <activity
-            android:name="Admin.ad_teachers"
+            android:name="Admin.ad_alumni_message_option"
             android:exported="false" />
         <activity
-            android:name="Admin.ad_alumni_message_option"
+            android:name="Faculty.faculty_public_messagebody"
             android:exported="false" />
         <activity
             android:name="Faculty.faculty_dashboard"
@@ -129,20 +169,14 @@
             android:name="student.stteacher"
             android:exported="false" />
         <activity
+            android:name="student.AllTeacherActivity"
+            android:exported="false" />
+        <activity
             android:name="student.stdashboard"
             android:exported="false" />
         <activity
             android:name=".student_login"
             android:exported="false" />
-        <activity
-            android:name=".slashscreen"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
         <activity
             android:name=".MainActivity"
             android:exported="true" />

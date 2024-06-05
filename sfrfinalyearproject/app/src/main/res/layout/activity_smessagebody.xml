@@ -13,9 +13,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_30sdp"
-        android:layout_gravity="center"
-
-        >
+        android:layout_gravity="center">
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/profileimage"
@@ -24,10 +22,8 @@
             android:layout_gravity="center"
             android:src="@drawable/rahmatpic"
             app:civ_border_color="@color/black"
-            app:civ_border_width="2dp"
+            app:civ_border_width="2dp" />
 
-
-            />
         <TextView
             android:id="@+id/profelname"
             android:layout_width="wrap_content"
@@ -36,9 +32,8 @@
             android:text="Rahmat yousafzai"
             android:textColor="@color/black"
             android:textSize="20sp"
-
             android:layout_gravity="center"
-            android:layout_marginStart="@dimen/_8sdp"/>
+            android:layout_marginStart="@dimen/_8sdp" />
 
         <ImageView
             android:id="@+id/back"
@@ -47,128 +42,123 @@
             android:src="@drawable/baseline_more_vert_24"
             android:layout_gravity="center"
             android:layout_marginStart="@dimen/_50sdp"
-            android:backgroundTint="@color/white"
-
-
-
-            />
-
+            android:backgroundTint="@color/white" />
     </LinearLayout>
 
-<LinearLayout
-    android:layout_width="360dp"
-    android:layout_height="550dp"
-    android:background="@drawable/backgroundcolor"
-    android:backgroundTint="@color/white"
-    android:layout_gravity="center"
-    android:layout_marginTop="30dp"
-    android:orientation="vertical"
-    android:padding="5dp"
-    >
     <LinearLayout
-        android:layout_width="330dp"
-        android:layout_height="60dp"
-        android:background="@drawable/border"
-
-        android:layout_marginLeft="5dp"
-        android:layout_marginTop="20dp"
-        android:padding="10dp"
+        android:layout_width="360dp"
+        android:layout_height="550dp"
+        android:background="@drawable/backgroundcolor"
+        android:backgroundTint="@color/white"
+        android:layout_gravity="center"
+        android:layout_marginTop="30dp"
+        android:orientation="vertical"
+        android:padding="5dp"
         >
-
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:layout_width="@dimen/_30sdp"
-            android:layout_height="@dimen/_30sdp"
-            android:src="@drawable/saeed"
-            android:layout_gravity="center"
-            app:civ_circle_background_color="@color/black"
-            app:civ_border_width="2dp"
->
-        </de.hdodenhof.circleimageview.CircleImageView>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Dr.Saeed Wattoo"
-
-            android:textSize="20dp"
-            android:layout_marginLeft="10dp"
-            android:layout_gravity="center"
+        <LinearLayout
+            android:layout_width="350dp"
+            android:layout_height="60dp"
+            android:background="@drawable/border"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="20dp"
+            android:padding="10dp"
 
             >
-        </TextView>
-        <ImageView
-            android:layout_width="50dp"
-            android:layout_height="40dp"
-            android:src="@drawable/baseline_more_vert_24"
 
-            android:layout_marginLeft="60dp"
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/saeed"
+                app:civ_border_width="2dp"
+                app:civ_circle_background_color="@color/black"
+                android:id="@+id/techerimage"
+
+                >
+            </de.hdodenhof.circleimageview.CircleImageView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Dr.Saeed Wattoo"
+                android:layout_marginLeft="10dp"
+                android:layout_gravity="center"
+                android:textSize="20dp"
+
+                android:id="@+id/teachername"
+
+                >
+            </TextView>
+
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="350dp">
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_gravity="center"
+            android:id="@+id/recycllerviewmessage"
             >
-        </ImageView>
+
+
+        </androidx.recyclerview.widget.RecyclerView>
+
+
+        </LinearLayout>
+
+
+
+
+        <LinearLayout
+            android:layout_width="340dp"
+            android:layout_height="70dp"
+
+            android:background="@drawable/flateborder"
+            android:layout_gravity="center"
+            >
+
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/smile"
+                android:layout_gravity="center"
+                android:layout_marginLeft="20dp"
+                android:id="@+id/emojibutton"
+
+                ></ImageView>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:hint=" "
+                android:layout_gravity="center"
+                android:layout_marginLeft="20dp"
+                android:layout_weight="1"
+
+                android:id="@+id/message_input_field"
+                ></ImageView>
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Wish"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                android:backgroundTint="@color/green"
+                android:layout_gravity="center"
+
+                android:id="@+id/send_button"
+                >
+
+
+
+            </Button>
+
+        </LinearLayout>
+
+
 
     </LinearLayout>
-
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="380dp"
-
-    android:layout_marginTop="5dp">
-
-</LinearLayout>
-
-
-
-
-
-
-
-<LinearLayout
-    android:layout_width="340dp"
-    android:layout_height="70dp"
-
-    android:background="@drawable/flateborder"
-    android:layout_gravity="center"
-    >
-
-    <ImageView
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:src="@drawable/add_button"
-        android:layout_gravity="center"
-        android:layout_marginLeft="20dp"
-
-        android:id="@+id/imgtamplate"
-
-></ImageView>
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:hint="Type Here !"
-        android:layout_gravity="center"
-        android:layout_marginLeft="20dp"
-
-></EditText>
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Wish"
-        android:textSize="20dp"
-        android:textStyle="bold"
-      android:backgroundTint="@color/green"
-        android:layout_gravity="center"
-        android:layout_marginLeft="60dp"
-        android:id="@+id/btnshare"
-
->
-
-
-
-    </Button>
-
-</LinearLayout>
-
-
-
-</LinearLayout>
 
 
 

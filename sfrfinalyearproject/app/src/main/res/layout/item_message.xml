@@ -1,0 +1,59 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="8dp">
+
+    <!-- Sent Message Layout -->
+    <LinearLayout
+        android:id="@+id/sent_message_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="end"
+        android:orientation="vertical"
+        android:padding="8dp"
+        android:layout_gravity="end">
+
+        <TextView
+            android:id="@+id/sent_message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/green"
+            android:padding="8dp"
+            android:textColor="@android:color/white" />
+
+        <ImageView
+            android:id="@+id/sent_emoji"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_gravity="end"
+            android:contentDescription="@string/emoji"
+            android:visibility="gone" />
+    </LinearLayout>
+
+    <!-- Received Message Layout -->
+    <LinearLayout
+        android:id="@+id/received_message_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="start"
+        android:orientation="vertical"
+        android:padding="8dp"
+        android:layout_gravity="start">
+
+        <TextView
+            android:id="@+id/received_message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:padding="8dp"
+            android:textColor="@android:color/black" />
+
+        <ImageView
+            android:id="@+id/received_emoji"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:contentDescription="@string/emoji"
+            android:visibility="gone" />
+    </LinearLayout>
+</LinearLayout>

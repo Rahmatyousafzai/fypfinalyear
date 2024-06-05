@@ -48,6 +48,18 @@ ImageView imgback=findViewById(R.id.imgback);
         alumniList.add(new alumni(R.drawable.sufi, "sufian"));
         alumniList.add(new alumni(R.drawable.zindalash, "Khuram"));
         alumniList.add(new alumni(R.drawable.bilal, "Muhammad Bilal"));
+        alumniList.add(new alumni(R.drawable.baseline_account_circle_24, "Adeel Hassan"));
+        alumniList.add(new alumni(R.drawable.baseline_account_circle_24, "Najeeb ur Rehman "));
+        alumniList.add(new alumni(R.drawable.baseline_account_circle_24, "Najeeb ur Rehman "));
+        alumniList.add(new alumni(R.drawable.baseline_account_circle_24, "Faiza Anwar"));
+        alumniList.add(new alumni(R.drawable.baseline_account_circle_24, "Jaweria Abbasi"));
+        alumniList.add(new alumni(R.drawable.baseline_account_circle_24, "Aqib wilayat"));
+        alumniList.add(new alumni(R.drawable.baseline_account_circle_24, "Hamid"));
+        alumniList.add(new alumni(R.drawable.baseline_account_circle_24, "Haya "));
+        alumniList.add(new alumni(R.drawable.baseline_account_circle_24, "Anwar Ali"));  alumniList.add(new alumni(R.drawable.rahmatpic, "Rahmat"));
+        alumniList.add(new alumni(R.drawable.baseline_account_circle_24, "Nouman Khan"));
+        alumniList.add(new alumni(R.drawable.baseline_account_circle_24, "abdul Haq"));
+        alumniList.add(new alumni(R.drawable.baseline_account_circle_24, "Hamza Satti"));
 
         // Add more data as neede
         // Initialize adapter

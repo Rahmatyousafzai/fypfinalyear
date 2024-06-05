@@ -1,159 +1,151 @@
-
 package com.example.sfrfinalyearproject;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.gson.Gson;
+
 import Admin.ad_dashboard;
+import Alumni.al_dahsboard;
+import Faculty.faculty_dashboard;
+import ModeClasees.user;
 import mydataapi.Apiservices;
 import mydataapi.RetrofitClient;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
+import student.stdashboard;
 
-public class  admin_login extends AppCompatActivity {
-    private Apiservices apiServices;
-    private TextView adusername;
-    private TextView adpassword;
+public class admin_login extends AppCompatActivity {
+    private EditText username;
+    private EditText password;
+    private boolean passwordVisible = false;
+    private ImageView hidePasswordImage;
+
+    // API service instance
+    private Apiservices apiServices = RetrofitClient.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_login);
-        // Initialize views
-        adusername = findViewById(R.id.adusername);
-        adpassword = findViewById(R.id.adpassword);
-        Button loginButton = findViewById(R.id.btnadlogin);
-        TextView txtfeculty = findViewById(R.id.txtAdfaculty);
-        TextView txtstudent = findViewById(R.id.adstudent);
 
-        // Set click listeners
+        // Initialize views
+        username = findViewById(R.id.username);
+        password = findViewById(R.id.password);
+        Button loginButton = findViewById(R.id.btnadlogin);
+        hidePasswordImage = findViewById(R.id.hidepassword);
+
+        // Set click listener for login button
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //  performLogin();
-                login();
+                String inputUsername = username.getText().toString().trim();
+                String inputPassword = password.getText().toString().trim();
+                Log.d("LoginActivity", "Attempting login with username: " + inputUsername);
+                performLogin(inputUsername, inputPassword);
             }
         });
 
-        txtfeculty.setOnClickListener(new View.OnClickListener() {
+        // Initialize password toggle functionality
+        hidePasswordImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                navigateToFacultyLogin();
+                togglePasswordVisibility();
             }
         });
-
-        txtstudent.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                navigateToStudentLogin();
-            }
-        });
-
-        // Initialize Retrofit
-        initializeRetrofit();
     }
 
-    private void initializeRetrofit() {
-        // Create Retrofit instance
-        Retrofit retrofit = RetrofitClient.getClient();
+    // Method to handle login
+    private void performLogin(String username, String password) {
+        try {
+            Call<String> call = apiServices.login(username, password);
+            call.enqueue(new Callback<String>() {
+                @Override
+                public void onResponse(Call<String> call, Response<String> response) {
+                    try {
+                        if (response.isSuccessful()) {
+                            String jsonResponse = response.body();
+                            Log.d("LoginActivity", "Login response: " + jsonResponse);
+                            Gson gson = new Gson();
+                            user user = gson.fromJson(jsonResponse, user.class);
+                            if (username.equals(user.getUsername()) && password.equals(user.getPassword())) {
+                                Log.d("LoginActivity", "Login successful for user: " + username);
+                                navigateToNextActivity(user);
+                            } else {
+                                Toast.makeText(admin_login.this, "Invalid username or password", Toast.LENGTH_SHORT).show();
+                                Log.e("LoginActivity", "Invalid username or password");
+                            }
+                        } else {
+                            Log.e("LoginActivity", "Login failed: " + response.message());
+                            Toast.makeText(admin_login.this, "Login failed", Toast.LENGTH_SHORT).show();
+                        }
+                    } catch (Exception e) {
+                        Log.e("LoginActivity", "Error parsing login response", e);
+                    }
+                }
 
-        // Create API service instance
-        apiServices = retrofit.create(Apiservices.class);
+                @Override
+                public void onFailure(Call<String> call, Throwable t) {
+                    Toast.makeText(admin_login.this, "Network error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                    Log.e("LoginActivity", "Network error: " + t.getMessage());
+                }
+            });
+        } catch (Exception e) {
+            Log.e("LoginActivity", "Error initiating login call", e);
+        }
     }
-private  void login(){
-    Intent intent = new Intent(admin_login.this, ad_dashboard.class);
-    startActivity(intent);
-    // Finish the current activity
-    finish();
-}
-    private void performLogin() {
-        // Get username and password from input fields
-        String username = adusername.getText().toString().trim();
-        String password = adpassword.getText().toString().trim();
-        String usertype = "Admin";
 
-        // Validate input
-        if (username.isEmpty() || password.isEmpty()) {
-            // Show error message for empty fields
-            Toast.makeText(admin_login.this, "Username and password are required", Toast.LENGTH_SHORT).show();
+    // Method to navigate to the next activity based on user type
+    private void navigateToNextActivity(user user) {
+        String userType = user.getUserType();
+        Intent intent;
+        if ("Student".equals(userType)) {
+            intent = new Intent(admin_login.this, stdashboard.class);
+        } else if ("Teacher".equals(userType)) {
+            intent = new Intent(admin_login.this, faculty_dashboard.class);
+        } else if ("Admin".equals(userType)) {
+            intent = new Intent(admin_login.this, ad_dashboard.class);
+        } else if ("Alumni".equals(userType)) {
+            intent = new Intent(admin_login.this, al_dahsboard.class);
+        } else {
+
+
+
+
+            Toast.makeText(this, "Unknown user type", Toast.LENGTH_SHORT).show();
+            Log.e("LoginActivity", "Unknown user type: " + userType);
             return;
         }
 
-        // Make API call
-        Call<String> call = apiServices.login(username, password, usertype);
-        call.enqueue(new Callback<String>() {
-            @Override
-            public void onResponse(Call<String> call, Response<String> response) {
-                if (response.isSuccessful()) {
-                    // Handle successful login
-                    handleSuccessfulLogin();
-                } else {
-                    // Handle unsuccessful login
-                    handleUnsuccessfulLogin(response.code(), response.message());
+        // Add user details to the intent
+        intent.putExtra("username", user.getUsername());
+        intent.putExtra("firstname", user.getFirstName());
+        intent.putExtra("lastname", user.getLastName());
+        intent.putExtra("profileimage", user.getProfileImage());
 
-                    // Log the error message
-                    Log.e("Login Error", "Error Body: " + response.errorBody());
-                }
-            }
-
-            @Override
-            public void onFailure(Call<String> call, Throwable t) {
-                // Handle failure
-                handleLoginFailure(t.getMessage());
-
-                // Log the exception
-                Log.e("Login Error", "Exception: " + t.getMessage());
-            }
-        });
-    }
-
-    private void handleSuccessfulLogin() {
-        // Start admin dashboard activity
-        Intent intent = new Intent(admin_login.this, ad_dashboard.class);
-        intent.putExtra("username", adusername.getText().toString());
+        Log.d("LoginActivity", "Navigating to next activity with user: " + user.getUsername());
         startActivity(intent);
-        // Finish the current activity
-        finish();
     }
 
-    private void handleUnsuccessfulLogin(int errorCode, String errorMessage) {
-        // Display appropriate error message based on response status code
-        if (errorCode == 401) {
-            // Unauthorized: Incorrect username or password
-            Toast.makeText(admin_login.this, "Incorrect username or password", Toast.LENGTH_SHORT).show();
+    // Method to toggle password visibility
+    private void togglePasswordVisibility() {
+        if (passwordVisible) {
+            password.setTransformationMethod(PasswordTransformationMethod.getInstance());
+            hidePasswordImage.setImageResource(R.drawable.hidepassword);
         } else {
-            // Other errors
-            Toast.makeText(admin_login.this, "Login failed: " + errorMessage, Toast.LENGTH_SHORT).show();
+            password.setTransformationMethod(null);
+            hidePasswordImage.setImageResource(R.drawable.unhidepassword);
         }
-    }
-
-    private void handleLoginFailure(String errorMessage) {
-        // Display error message
-        Toast.makeText(admin_login.this, "Error: " + errorMessage, Toast.LENGTH_SHORT).show();
-    }
-
-    private void navigateToFacultyLogin() {
-        // Start faculty login activity
-        Intent intent = new Intent(admin_login.this, faculty_login.class);
-        startActivity(intent);
-        // Finish the current activity
-        finish();
-    }
-
-    private void navigateToStudentLogin() {
-        // Start student login activity
-        Intent intent = new Intent(admin_login.this, student_login.class);
-        startActivity(intent);
-        // Finish the current activity
-        finish();
+        passwordVisible = !passwordVisible;
     }
 }

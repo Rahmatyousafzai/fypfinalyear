@@ -4,8 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="Admin.adminAddAlumni"
+    tools:context="student.AllTeacherActivity"
     android:background="@drawable/backgroundcolor"
+
     android:orientation="vertical"
     >
     <LinearLayout
@@ -21,7 +22,7 @@
             android:layout_width="@dimen/_40sdp"
             android:layout_height="@dimen/_40sdp"
             android:layout_gravity="center"
-            android:src="@drawable/baseline_account_circle_24"
+            android:src="@drawable/rahmatpic"
             app:civ_border_color="@color/black"
             app:civ_border_width="2dp"
 
@@ -32,7 +33,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/_10sdp"
-            android:text="Admin                 "
+            android:text="Rahmat yousafzai"
             android:textColor="@color/black"
             android:textSize="20sp"
 
@@ -76,19 +77,26 @@
             >
 
         </ImageView>
+        <ImageView
+            android:layout_width="@dimen/_40sdp"
+            android:layout_height="@dimen/_40sdp"
+            android:src="@drawable/faculty"
+            android:layout_gravity="center"
+            android:layout_marginLeft="20dp"
 
+            ></ImageView>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
 
-            android:text="Acheivments"
-            android:textSize="25dp"
-            android:textAllCaps="true"
+            android:text="Achievments"
+            android:textSize="25sp"
+
             android:textStyle="bold"
             android:textColor="@color/black"
             android:textAlignment="center"
-            android:layout_marginTop="9dp"
-            android:layout_marginLeft="20dp"
+            android:layout_marginTop="9sp"
+            android:layout_marginLeft="@dimen/_20sdp"
             android:layout_gravity="center"
             ></TextView>
 
@@ -101,20 +109,19 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="480dp"
+        android:layout_height="@dimen/_480sdp"
         android:orientation="horizontal"
 
 
         >
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/viewachivment"
-            android:layout_width="350dp"
-            android:layout_marginLeft="30dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:background="#FFFDFD"
-            android:divider="@color/green"
+            android:layout_width="match_parent"
+
+            android:layout_height="match_parent"
+            android:id="@+id/allachiRec"
+            android:layout_gravity="center"
+
 
             ></androidx.recyclerview.widget.RecyclerView>
 

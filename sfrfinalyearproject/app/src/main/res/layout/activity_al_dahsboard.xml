@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="student.stdashboard"
+    tools:context="Alumni.al_dahsboard"
     android:background="@drawable/backgroundcolor"
 
     android:orientation="vertical"
@@ -18,24 +18,28 @@
         >
 
         <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/profileimage"
+            android:id="@+id/profilepicture"
+
             android:layout_width="@dimen/_40sdp"
             android:layout_height="@dimen/_40sdp"
-
-            android:src="@drawable/baseline_account_circle_24"
+            android:layout_weight="2"
             android:layout_gravity="center"
-            app:civ_border_width="2dp"
+            android:src="@drawable/rahmatpic"
             app:civ_border_color="@color/black"
-            />
+            app:civ_border_width="2dp"
 
+
+            />
         <TextView
             android:id="@+id/profelname"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/_10sdp"
-            android:text="Rahmat yousafzai"
-            android:textColor="@color/white"
+            android:text="Rahmat Yousafzai"
+            android:textColor="@color/black"
             android:textSize="20sp"
+            android:layout_weight="1"
+
             android:layout_gravity="center"
             android:layout_marginStart="@dimen/_8sdp"/>
 
@@ -55,28 +59,27 @@
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="120dp"
-        android:orientation="horizontal"
-        android:background="#73E3F1"
-        android:layout_marginTop="10dp"
-
+        android:layout_height="90dp"
+        android:background="#6BDFED"
+        android:padding="5dp"
+        android:layout_marginTop="30dp"
 
         >
+
+
         <LinearLayout
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="5dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
 
-            android:layout_marginLeft="20dp"
+            android:layout_marginLeft="30dp"
             android:layout_weight="1"
             >
             <ImageView
-                android:layout_width="70dp"
-                android:layout_height="70dp"
-                android:layout_gravity="center"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
                 android:src="@drawable/publication"
-                android:id="@+id/imgnews"
                 ></ImageView>
             <TextView
                 android:layout_width="match_parent"
@@ -85,9 +88,7 @@
                 android:textSize="20dp"
                 android:textStyle="bold"
                 android:textColor="@color/black"
-                android:id="@+id/adnews"
-                android:layout_gravity="center"
-                android:textAlignment="center"
+                android:id="@+id/news"
 
 
                 ></TextView>
@@ -97,7 +98,7 @@
 
 
         <LinearLayout
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="5dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
@@ -105,10 +106,9 @@
             android:layout_weight="1"
             >
             <ImageView
-                android:layout_width="70dp"
-                android:layout_height="70dp"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
                 android:src="@drawable/notification"
-                android:layout_gravity="center"
                 android:id="@+id/imgnptification"
                 ></ImageView>
             <TextView
@@ -118,10 +118,8 @@
                 android:textSize="20dp"
                 android:textAlignment="center"
                 android:textStyle="bold"
-                android:textColor="@color/black"
-                android:id="@+id/adtxtnotification"
-android:layout_gravity="center"
-                >
+                android:id="@+id/txtnotification"
+                android:textColor="@color/black">
 
             </TextView>
 
@@ -134,7 +132,7 @@ android:layout_gravity="center"
 
 
         <LinearLayout
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="5dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
@@ -142,44 +140,52 @@ android:layout_gravity="center"
             android:layout_weight="1"
             >
             <ImageView
-                android:layout_width="70dp"
-                android:layout_height="70dp"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
                 android:src="@drawable/message"
                 android:id="@+id/imgmessage"
-                android:layout_gravity="center"
                 ></ImageView>
             <TextView
-                android:layout_gravity="center"
-
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Message"
                 android:textSize="20dp"
                 android:textColor="@color/black"
-                android:textStyle="bold"
-                android:id="@+id/adtxtmessage"
-                >
+                android:id="@+id/txtmessage"
+                android:textStyle="bold">
 
             </TextView>
 
 
         </LinearLayout>
 
+
+
+
+
+
+
+
+
+
+
+
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="380dp"
+        android:layout_height="360dp"
         android:background="@color/white"
+        android:layout_margin="0dp"
 
         >
         <androidx.recyclerview.widget.RecyclerView
-            android:layout_width="350dp"
-            android:layout_marginTop="10dp"
-            android:layout_height="380dp"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
             android:layout_gravity="center"
             android:background="@color/white"
             android:backgroundTint="@color/white"
-            android:padding="20dp"
+            android:layout_marginLeft="20dp"
+
             android:id="@+id/strcview"
             ></androidx.recyclerview.widget.RecyclerView>
     </LinearLayout>
@@ -187,8 +193,9 @@ android:layout_gravity="center"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginTop="10dp"
-        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:layout_gravity="bottom"
+
         >
         <LinearLayout
             android:layout_width="wrap_content"
@@ -203,18 +210,14 @@ android:layout_gravity="center"
                 android:layout_width="70dp"
                 android:layout_height="70dp"
                 android:src="@drawable/faculty"
-                android:id="@+id/techer"
                 android:layout_gravity="center"
-
+                android:id="@+id/imgtecher"
                 >
             </ImageView>
             <TextView
-                android:layout_width="150dp"
+                android:layout_width="100dp"
                 android:layout_height="wrap_content"
                 android:text="Techers"
-                android:layout_gravity="center"
-                android:textAlignment="center"
-                android:textAllCaps="true"
                 android:textSize= "20dp"
                 android:textStyle="bold"
                 android:textColor="@color/white"
@@ -224,11 +227,11 @@ android:layout_gravity="center"
 
         <LinearLayout
 
-            android:layout_width="250dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:layout_weight="1"
-            android:layout_marginLeft="40dp"
+            android:layout_marginLeft="70dp"
 
             >
 
@@ -237,20 +240,17 @@ android:layout_gravity="center"
                 android:layout_height="70dp"
                 android:src="@drawable/heart"
                 android:layout_gravity="center"
-                android:id="@+id/imgfavteacher"
                 >
             </ImageView>
             <TextView
-                android:layout_width="200dp"
+                android:layout_width="250dp"
                 android:layout_height="match_parent"
                 android:text="Favourite Teacher"
                 android:textSize="20dp"
-                android:layout_gravity="center"
-                android:textAllCaps="true"
-                android:textAlignment="center"
                 android:textStyle="bold"
                 android:textColor="@color/white"
-
+                android:layout_gravity="center"
+                android:textAlignment="center"
                 android:id="@+id/favtecher"
 
                 >

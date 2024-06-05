@@ -1,0 +1,18 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="end"
+    android:orientation="horizontal">
+
+    <!-- ImageView for emoji -->
+    <ImageView
+        android:id="@+id/emoji_image_view_sender"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:src="@drawable/default_profile_image"
+        android:layout_gravity="right"
+        />
+
+    <!-- Add other views for sender message content -->
+</LinearLayout>

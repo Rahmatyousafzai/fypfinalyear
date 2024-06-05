@@ -24,7 +24,7 @@
             android:layout_height="@dimen/_40sdp"
             android:layout_gravity="center"
             android:layout_weight="2"
-            android:src="@drawable/saeed"
+            android:src="@drawable/baseline_account_circle_24"
             app:civ_border_color="@color/black"
             app:civ_border_width="2dp" />
 
@@ -34,11 +34,9 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginStart="@dimen/_8sdp"
-
-
             android:layout_marginLeft="20dp"
-            android:layout_weight="1"
-            android:text="Dr.saeed"
+
+            android:text="Mr.Shahid Jamil"
             android:textColor="@color/black"
             android:textSize="20sp"
             android:textStyle="bold"

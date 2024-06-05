@@ -20,7 +20,7 @@ ImageView imgback,imgcourse,imgtemplete;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_course_message_body);
         btnsendwish=findViewById(R.id.sendwish);
-        imgback=findViewById(R.id.imgback);
+
         imgcourse=findViewById(R.id.addcourse);
         imgtemplete=findViewById(R.id.addtem);
 

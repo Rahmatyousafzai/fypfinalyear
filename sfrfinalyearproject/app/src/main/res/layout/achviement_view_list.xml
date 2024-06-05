@@ -1,86 +1,78 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp"
 
-    <LinearLayout
+    >
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/flateborder"
+    android:orientation="vertical"
+    android:padding="20dp"
+    >
+    <TextView
+        android:id="@+id/username"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_gravity="center"
-        android:padding="10dp"
-        android:background="@drawable/flateborder"
-        android:layout_marginTop="10dp"
-
-        >
-        <LinearLayout
-            android:layout_marginTop="0dp"
-            android:layout_width="300dp"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_gravity="center"
-            android:background="@drawable/flateborder"
-
-            android:padding="10dp"
-            >
-            <ImageView
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:src="@drawable/heart"
-                android:id="@+id/imgprofile"
-
-                >
-            </ImageView>
-
-<TextView
-    android:layout_gravity="center"
+        android:textStyle="bold"
+        android:text="usenmae"
+        android:textColor="@color/black"
+        android:textSize="20dp"
+        />
+<LinearLayout
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_marginLeft="20dp"
-android:text="Rahmat yousafzai"
-    android:id="@+id/proname"
-
-    ></TextView>
-
-
-        </LinearLayout>
-
-    <LinearLayout
-        android:layout_marginTop="0dp"
-        android:layout_width="300dp"
+    android:layout_height="wrap_content">
+    <TextView
+        android:id="@+id/firstName"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_gravity="center"
-        android:padding="10dp"
-        >
+        android:text="usenmae"
+        android:textColor="@color/black"
+        android:textSize="20dp"
+
+        />
+
+    <TextView
+        android:id="@+id/lastName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="usenmae"
+        android:textColor="@color/black"
+        android:textSize="20dp"
+        android:layout_marginLeft="8dp"
+
+        />
+
+</LinearLayout>
 
 
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="usenmae"
+        android:textColor="@color/black"
+        android:textSize="20dp"
 
-        <TextView
-            android:layout_gravity="center"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Rahmat yousafzai"
-            android:id="@+id/achdesc"
-            ></TextView>
+        />
 
+    <TextView
+        android:id="@+id/event"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="usenmae"
+        android:textColor="@color/black"
+        android:textSize="20dp"
 
-    </LinearLayout>
-
-
-    </LinearLayout>
-
-
-
-
-
-
-
-
-
-
-
+        />
+    <TextView
+        android:id="@+id/description"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
 
-</androidx.appcompat.widget.LinearLayoutCompat>
+</LinearLayout>
+</LinearLayout>

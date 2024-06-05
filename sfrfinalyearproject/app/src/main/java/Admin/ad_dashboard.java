@@ -1,215 +1,216 @@
 package Admin;
 
-import static com.example.sfrfinalyearproject.R.drawable;
-import static com.example.sfrfinalyearproject.R.id;
-import static com.example.sfrfinalyearproject.R.layout;
-
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.sfrfinalyearproject.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.List;
 
-import adopter.Wish;
-import adopter.Wishadapter;
-import adopter.emoji_class;
+import ModeClasees.Wish;
+import ModeClasees.cuTeacher;
+import ModeClasees.user;
+import adopter.OnTeacherClickListener;
+//import adopter.Wishadapter;
+import mydataapi.Apiservices;
+import mydataapi.RetrofitClient;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
-public class ad_dashboard extends AppCompatActivity {
+public class ad_dashboard extends AppCompatActivity implements OnTeacherClickListener {
 
-    // Declare views
     private TextView adminPost, addTeacher, adNews, adMessage, addAchievement, adStudent, profileName, notification;
-    private ImageView profileImage, popup;
     private RecyclerView recyclerView;
-    private Wishadapter wishAdapter;
-    private ArrayList<Wish> wishes;
-    private ArrayList<Integer> imageList;
+    //private Wishadapter adapter;
+    private List<Wish> wishList = new ArrayList<>();
+    private ImageView profile, popup;
 
-
-    // Constants for view IDs
-    private static final int ADMIN_POST_ID = id.adminpost;
-    private static final int ADMIN_NOTIFICATION_ID = id.adtxtnotification;
-    private static final int ADD_TEACHER_ID = id.textadteacher;
-    private static final int AD_NEWS_ID = id.adnews;
-    private static final int AD_MESSAGE_ID = id.adtxtmessage;
-    private static final int ADD_ACHIEVEMENT_ID = id.adtextachvment;
-    private static final int AD_STUDENT_ID = id.adstudent;
-    private static final int PROFILE_NAME_ID = id.profelname;
-    private static final int RECYCLER_VIEW_ID = id.adrcview;
-    private static final int PROFILE_IMAGE_ID = id.profileimage;
-    private static final int POPUP_ID = id.popup;
+    private static final String TAG = "ad_dashboard";
+    private Apiservices apiServices;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(layout.activity_ad_dashboard);
+        setContentView(R.layout.activity_ad_dashboard);
 
-
-        // Initialize views
-
-
-        // Initialize image list
-        initImageList();
-
+        // Initialize views and image list
         initViews();
 
-
-        // Set up RecyclerView
-        setUpRecyclerView();
-
-        // Set click listeners for views
+        // Set up RecyclerView and click listeners for views
         setClickListeners();
+
+        fetchAndDisplayWishes();
+
     }
 
     private void initViews() {
-        adminPost = findViewById(ADMIN_POST_ID);
-        notification = findViewById(ADMIN_NOTIFICATION_ID);
-        addTeacher = findViewById(ADD_TEACHER_ID);
-        adNews = findViewById(AD_NEWS_ID);
-        adMessage = findViewById(AD_MESSAGE_ID);
-        addAchievement = findViewById(ADD_ACHIEVEMENT_ID);
-        adStudent = findViewById(AD_STUDENT_ID);
-        profileName = findViewById(PROFILE_NAME_ID);
-        recyclerView = findViewById(RECYCLER_VIEW_ID);
-        profileImage = findViewById(PROFILE_IMAGE_ID);
-        popup = findViewById(POPUP_ID);
-        profileImage.setImageResource(drawable.baseline_account_circle_24);
-        profileName.setText("Admin");
+        // Initialize views by finding them through their IDs
+        adminPost = findViewById(R.id.adminpost);
+        notification = findViewById(R.id.adtxtnotification);
+        addTeacher = findViewById(R.id.textadteacher);
+        adNews = findViewById(R.id.adnews);
+        adMessage = findViewById(R.id.adtxtmessage);
+        addAchievement = findViewById(R.id.adtextachvment);
+        adStudent = findViewById(R.id.adstudent);
+        profileName = findViewById(R.id.profelname);
+        recyclerView = findViewById(R.id.adrcview);
+        profile = findViewById(R.id.profileimage);
+        popup = findViewById(R.id.popup);
 
+        Intent intent = getIntent();
+        String username = intent.getStringExtra("username");
+        String firstName = intent.getStringExtra("firstname");
+        String lastName = intent.getStringExtra("lastname");
+        String profileImage = intent.getStringExtra("profileimage");
 
-    }
+        String fullName = firstName + " " + lastName;
+        profileName.setText(fullName);
 
-    private void setUpRecyclerView() {
+        if (profileImage != null && !profileImage.isEmpty()) {
+            String imageUrl = RetrofitClient.getBaseUrl() + "images/profileimages/" + profileImage + ".jpg";
+            Picasso.get().load(imageUrl).error(R.drawable.baseline_account_circle_24).into(profile);
+        } else {
+            profile.setImageResource(R.drawable.baseline_account_circle_24);
+        }
+
+        apiServices = RetrofitClient.getInstance();
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        wishes = new ArrayList<>();
-        String name="Ms Umer";
-        // Add wishes
-        wishes.add(new Wish("Rahmat", drawable.rahmatpic, drawable.baseline_more_vert_24, "happy Birthday",drawable.add_button ,new ArrayList<emoji_class>()));
-        wishes.add(new Wish("DR.Saeed", drawable.saeed, drawable.baseline_more_vert_24, "congratulation to" + ""+name+" " + "for being selected best techer of the year",drawable.add_button , new ArrayList<emoji_class>()));
-        wishes.add(new Wish("Rahmat", drawable.rahmatpic, drawable.baseline_more_vert_24, "happy Birthday",drawable.add_button ,new ArrayList<emoji_class>()));
-        wishes.add(new Wish("DR.Saeed", drawable.saeed, drawable.baseline_more_vert_24, "congratulation to" +name+ "for being selected best techer of the year",drawable.add_button , new ArrayList<emoji_class>()));
-        wishes.add(new Wish("Rahmat", drawable.rahmatpic, drawable.baseline_more_vert_24, "happy Birthday",drawable.add_button ,new ArrayList<emoji_class>()));
-        wishes.add(new Wish("DR.Saeed", drawable.saeed, drawable.baseline_more_vert_24, "congratulation to" +name+ "for being selected best techer of the year",drawable.add_button , new ArrayList<emoji_class>()));
-
-
-        wishAdapter = new Wishadapter(this, wishes,imageList);
-        recyclerView.setAdapter(wishAdapter);
+       // adapter = new Wishadapter(this, wishList, this);
+       // recyclerView.setAdapter(adapter);
     }
-    private void initImageList() {
-        imageList = new ArrayList<>();
-        imageList.add(drawable.heart);
-        imageList.add(drawable.img_2);
-        imageList.add(drawable.heart);
-        imageList.add(drawable.img_2);
-        imageList.add(drawable.heart);
-        imageList.add(drawable.img_2);
-        imageList.add(drawable.heart);
-        imageList.add(drawable.img_2);
-        imageList.add(drawable.heart);
-        imageList.add(drawable.img_2);
-        imageList.add(drawable.heart);
-        imageList.add(drawable.img_2);
-        // Add more images as needed
+
+    private void fetchAndDisplayWishes() {
+        apiServices.getWishes().enqueue(new Callback<List<Wish>>() {
+            @Override
+            public void onResponse(Call<List<Wish>> call, Response<List<Wish>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    wishList.clear();
+                    wishList.addAll(response.body());
+               //     adapter.notifyDataSetChanged(); // Notify adapter of data change
+                    Log.d(TAG, "Wishes fetched successfully. List size: " + wishList.size());
+                } else {
+                    Log.d(TAG, "Failed to get wishes. Response code: " + response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Wish>> call, Throwable t) {
+                Log.d(TAG, "Error fetching wishes: " + t.getMessage());
+                Toast.makeText(ad_dashboard.this, "Error fetching wishes", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    @Override
+    public void onTeacherClick(user teacher) {
+        // Handle teacher click
+    }
+
+    @Override
+    public void onTeacherClick(cuTeacher teacher) {
+
+    }
+
+    @Override
+    public void onTeacherClick(Wish wish) {
+        showToast("Clicked on: " + wish.getSwid());
+    }
+
+    @Override
+    public void onTeacherClick(Object item) {
+        // Handle other item clicks
+    }
+
+    private void showToast(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
     private void setClickListeners() {
+        // Set click listeners for each view to trigger the corresponding methods
         adminPost.setOnClickListener(v -> adminpost());
         notification.setOnClickListener(v -> notification());
         adMessage.setOnClickListener(v -> adMessage());
-
         adNews.setOnClickListener(v -> news());
-
         addTeacher.setOnClickListener(v -> addTeacher());
-
         adStudent.setOnClickListener(v -> addStudent());
-
         addAchievement.setOnClickListener(v -> viewAchievement());
-
-
-
-
-
-
-
-
-
+        popup.setOnClickListener(v -> {
+            // Handle popup click
+        });
     }
 
- 
-
-
-
-
-
+    // Methods for handling clicks on different views
     private void adminpost() {
+        // Start the activity for admin post sharing options
         Intent intent = new Intent(ad_dashboard.this, Admin.postshareoption.class);
         intent.putExtra("username", profileName.getText().toString());
         intent.putExtra("image", R.drawable.baseline_account_circle_24);
         startActivity(intent);
         finish();
     }
-    private void Sharepost(){
 
-
-
-    Intent intent = new Intent(ad_dashboard.this, Admin.postshareoption.class);
-        intent.putExtra("username", profileName.getText().toString());
-        intent.putExtra("image", R.drawable.baseline_account_circle_24);
-    startActivity(intent);
-    finish();
-}
     private void viewAchievement() {
+        // Start the activity for viewing achievements
         Intent intent = new Intent(ad_dashboard.this, ad_addachivment.class);
         intent.putExtra("username", profileName.getText().toString());
         intent.putExtra("image", R.drawable.baseline_account_circle_24);
-
         startActivity(intent);
         finish();
     }
+
     public void notification() {
-        // Assuming PROFILE_NAME_ID is a string containing the name and profileImage is an integer representing the drawable resource ID
+        // Start the activity for notifications
         Intent intent = new Intent(ad_dashboard.this, ad_notification.class);
         intent.putExtra("username", profileName.getText().toString());
-        intent.putExtra("image", R.drawable.baseline_account_circle_24); // Replace with the appropriate drawable resource ID
+        intent.putExtra("image", R.drawable.baseline_account_circle_24);
         startActivity(intent);
         finish();
     }
 
-
     public void adMessage() {
+        // Start the activity for admin messages
         Intent intent = new Intent(ad_dashboard.this, Admin.admessage.class);
         intent.putExtra("username", profileName.getText().toString());
         intent.putExtra("image", R.drawable.baseline_account_circle_24);
         startActivity(intent);
         finish();
     }
+
     public void news() {
+        // Start the activity for news
         Intent intent = new Intent(ad_dashboard.this, ad_dashboard.class);
         intent.putExtra("username", profileName.getText().toString());
         intent.putExtra("image", R.drawable.baseline_account_circle_24);
         startActivity(intent);
         finish();
     }
+
     public void addTeacher() {
+        // Start the activity for adding teachers
         Intent intent = new Intent(ad_dashboard.this, Admin.ad_teachers.class);
         intent.putExtra("username", profileName.getText().toString());
         intent.putExtra("image", R.drawable.baseline_account_circle_24);
         startActivity(intent);
         finish();
     }
+
     public void addStudent() {
+        // Start the activity for adding students
         Intent intent = new Intent(ad_dashboard.this, Admin.ad_student.class);
         intent.putExtra("username", profileName.getText().toString());
         intent.putExtra("image", R.drawable.baseline_account_circle_24);
         startActivity(intent);
         finish();
     }
-
-
 }

@@ -27,10 +27,11 @@
         <TextView
             android:layout_width="300dp"
             android:layout_height="wrap_content"
-            android:text="Admin Log In"
+            android:text="Log In"
             android:layout_gravity="center"
             android:textSize="40dp"
             android:textColor="#02786D"
+            android:textAlignment="center"
             android:textStyle="bold"
             android:layout_marginTop="20dp"
             ></TextView>
@@ -46,23 +47,42 @@
             android:textStyle="bold"
             android:layout_marginTop="20dp"
             android:background="@drawable/borderwithgreen"
-            android:id="@+id/adusername"
+            android:id="@+id/username"
             ></EditText>
 
-        <EditText
+        <LinearLayout
+
             android:layout_width="350dp"
             android:layout_height="50dp"
-            android:hint="Enter Password...."
+            android:layout_marginTop="20dp"
             android:layout_gravity="center"
+            android:orientation="horizontal"
+            android:background="@drawable/borderwithgreen"
+            >
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:hint="Enter Password...."
+
             android:textSize="30dp"
             android:textColor="#02786D"
             android:textAlignment="center"
             android:textStyle="bold"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/borderwithgreen"
-            android:id="@+id/adpassword"
-            ></EditText>
 
+
+            android:id="@+id/password"
+            ></EditText>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/hidepassword"
+                android:id="@+id/hidepassword"
+
+
+
+                ></ImageView>
+        </LinearLayout>
         <Button
             android:layout_width="350dp"
             android:layout_height="50dp"
@@ -77,75 +97,9 @@
             >
 
         </Button>
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            >
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Log in is Faculty memeber?"
-                android:textSize="20dp"
-                android:textColor="@color/black"
-                android:layout_marginLeft="30dp"
-                android:layout_marginTop="20dp"
-                ></TextView>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Log in?"
-                android:textSize="20dp"
-                android:textColor="#0A2DEC"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="20dp"
-                android:textStyle="bold"
-                android:id="@+id/txtAdfaculty"
-                >
 
 
 
-            </TextView>
-
-
-
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            >
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Log in is Student?"
-                android:textSize="20dp"
-                android:textColor="@color/black"
-                android:layout_marginLeft="50dp"
-                android:layout_marginTop="15dp"
-                ></TextView>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Log in?"
-                android:textSize="20dp"
-                android:textColor="#0A2DEC"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="15dp"
-                android:textStyle="bold"
-                android:id="@+id/adstudent"
-                >
-
-
-
-            </TextView>
-
-
-
-
-        </LinearLayout>
 
 
 

@@ -1,116 +1,125 @@
-package adopter;
+/*package adopter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.sfrfinalyearproject.R;
+import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
+import java.util.List;
+
+import ModeClasees.Emoji;
+import ModeClasees.Wish;
+import mydataapi.Apiservices;
+import mydataapi.RetrofitClient;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class Wishadapter extends RecyclerView.Adapter<Wishadapter.WishViewHolder> {
+//    private List<Wish> wishList;
+   /* private OnTeacherClickListener listener;
+    private EmojiAdapter2 emojiAdapter;
     private Context context;
-    private ArrayList<Wish> mWishes;
-    private ArrayList<Integer> imageList;
 
-    public Wishadapter(Context context, ArrayList<Wish> wishes, ArrayList<Integer> imageList) {
+    public Wishadapter(Context context, List<Wish> wishList, OnTeacherClickListener listener) {
         this.context = context;
-        mWishes = wishes;
-        this.imageList = imageList;
+        this.wishList = wishList;
+        this.listener = listener;
     }
 
     @NonNull
     @Override
     public WishViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.student_dashboard_row, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.student_dashboard_row, parent, false);
         return new WishViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull WishViewHolder holder, int position) {
-        Wish wish = mWishes.get(position);
-        holder.pfimage.setImageResource(wish.getProfileImage());
-        holder.icon.setImageResource(wish.getIcon());
-        holder.pfname.setText(wish.getFirstName());
-        holder.content.setText(wish.getContent());
-        holder.addbtn.setImageResource(wish.getBtnadd());
+        Wish wish = wishList.get(position);
+        String profileImage = wish.getProfileImage();
 
-        holder.addbtn.setOnClickListener(new View.OnClickListener() {
+        if (profileImage != null && !profileImage.isEmpty()) {
+            String imageUrl = RetrofitClient.getBaseUrl() + "images/profileimages/" + profileImage + ".jpg";
+            Picasso.get().load(imageUrl).error(R.drawable.baseline_account_circle_24).into(holder.postProfileImage);
+        } else {
+            holder.postProfileImage.setImageResource(R.drawable.baseline_account_circle_24);
+        }
+
+        holder.postProfileName.setText(wish.getFirstName() + " " + wish.getLastName());
+        holder.wishTitle.setText(wish.getTitle());
+        holder.wishContent.setText(wish.getContent());
+
+        holder.itemView.setOnClickListener(v -> listener.onTeacherClick(wish));
+
+        // Setup Emoji RecyclerView
+        setupEmojiRecyclerView(holder, wish);
+    }
+
+    private void setupEmojiRecyclerView(WishViewHolder holder, Wish wish) {
+        Apiservices apiService = RetrofitClient.getInstance();
+
+        Call<List<Emoji>> call = apiService.getAllEmojis();
+        call.enqueue(new Callback<List<Emoji>>() {
             @Override
-            public void onClick(View v) {
-                // Create and show the dialog when addbtn is clicked
-                showDialog();
+            public void onResponse(Call<List<Emoji>> call, Response<List<Emoji>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    List<Emoji> emojis = response.body();
+                    if (!emojis.isEmpty()) {
+                        holder.emojiRecyclerView.setVisibility(View.VISIBLE);
+                        emojiAaapter = new EmojiAdapter(context, emojis); // Initialize EmojiAdapter2 with data
+                        holder.emojiRecyclerView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
+                        holder.emojiRecyclerView.setAdapter(emojiAdapter);
+                    } else {
+                        holder.emojiRecyclerView.setVisibility(View.GONE);
+                    }
+                } else {
+                    handleEmojiFetchError(holder.itemView);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Emoji>> call, Throwable t) {
+                handleEmojiFetchError(holder.itemView);
+                Log.e("WishAdapter", "Failed to fetch emojis: " + t.getMessage());
             }
         });
+    }
 
-        // Create an ArrayList of emoji resources
-        ArrayList<Integer> emojiList = new ArrayList<>();
-        emojiList.add(R.drawable.heart);
-        emojiList.add(R.drawable.smile);
-        emojiList.add(R.drawable.heart);
-        emojiList.add(R.drawable.smile);
-        emojiList.add(R.drawable.heart);
-        emojiList.add(R.drawable.smile);
-        emojiList.add(R.drawable.heart);
-        emojiList.add(R.drawable.smile);
-        emojiList.add(R.drawable.heart);
-        emojiList.add(R.drawable.smile);
-        // Add more emojis as needed
-
-        // Create an instance of the emoji adapter and set it to the RecyclerView
-        emoji emojiAdapter = new emoji(context, emojiList);
-        holder.recyclerView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
-        holder.recyclerView.setAdapter(emojiAdapter);
+    private void handleEmojiFetchError(View itemView) {
+        RecyclerView emojiRecyclerView = itemView.findViewById(R.id.emojiRecyclerView);
+        emojiRecyclerView.setVisibility(View.GONE);
     }
 
     @Override
     public int getItemCount() {
-        return mWishes.size();
+        return wishList.size();
     }
 
-    public static class WishViewHolder extends RecyclerView.ViewHolder {
-        ImageView pfimage, icon, addbtn;
-        TextView pfname, content;
-        RecyclerView recyclerView;
+    static class WishViewHolder extends RecyclerView.ViewHolder {
+        TextView wishTitle, wishContent, postProfileName;
+        ImageView postProfileImage;
+        RecyclerView emojiRecyclerView;
 
-        public WishViewHolder(View itemView) {
+        WishViewHolder(View itemView) {
             super(itemView);
-            pfimage = itemView.findViewById(R.id.pfimage);
-            icon = itemView.findViewById(R.id.icon);
-            pfname = itemView.findViewById(R.id.pfname);
-            content = itemView.findViewById(R.id.desc);
-            recyclerView = itemView.findViewById(R.id.RcEmoji);
-            addbtn = itemView.findViewById(R.id.btnadd);
+            wishTitle = itemView.findViewById(R.id.textViewName);
+            wishContent = itemView.findViewById(R.id.textViewContent);
+            postProfileName = itemView.findViewById(R.id.postprofilename);
+            postProfileImage = itemView.findViewById(R.id.postprofileimage);
+            emojiRecyclerView = itemView.findViewById(R.id.emojiRecyclerView);
         }
     }
-
-    private void showDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(context); // Use context here
-        View dialogView = LayoutInflater.from(context).inflate(R.layout.dialog_image_gallery, null);
-        builder.setView(dialogView);
-        AlertDialog dialog = builder.create();
-
-        // Set size of dialog window
-        WindowManager.LayoutParams layoutParams = new WindowManager.LayoutParams();
-        layoutParams.copyFrom(dialog.getWindow().getAttributes());
-        layoutParams.width = WindowManager.LayoutParams.MATCH_PARENT; // Set width as needed
-        layoutParams.height = WindowManager.LayoutParams.WRAP_CONTENT; // Set height as needed
-        dialog.getWindow().setAttributes(layoutParams);
-
-        dialog.show();
-    }
-
-
-
-
-
 }
+
+ */

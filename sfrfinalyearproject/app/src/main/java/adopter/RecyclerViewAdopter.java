@@ -15,6 +15,8 @@ import com.example.sfrfinalyearproject.R;
 
 import java.util.List;
 
+import ModeClasees.Wish;
+
 public class RecyclerViewAdopter extends RecyclerView.Adapter<RecyclerViewAdopter.Recyclerviewholder>{
 
 
