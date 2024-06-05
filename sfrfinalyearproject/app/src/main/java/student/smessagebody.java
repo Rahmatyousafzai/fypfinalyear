@@ -33,6 +33,9 @@ import mydataapi.SendWishRequest;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import studentClasses.UserDataSingleton;
+import studentClasses.UserRepository;
+import studentClasses.studentData;
 
 public class smessagebody extends AppCompatActivity implements OnEmojiClickListener {
 
@@ -57,7 +60,7 @@ public class smessagebody extends AppCompatActivity implements OnEmojiClickListe
     private int selectedEmoji;
     TextView profilename,teachername;
     ImageView profile,teacherprofileimage;
-    private String studentusername, FullName, profileImage,teacherUsername;
+    private String username,firstName,lastName, FullName, profileImage,teacherUsername;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,15 +79,65 @@ public class smessagebody extends AppCompatActivity implements OnEmojiClickListe
         teachername=findViewById(R.id.teachername);
         teacherprofileimage=findViewById(R.id.techerimage);
 
-        Intent intent = getIntent();
-        studentusername = intent.getStringExtra("username");
-        FullName = intent.getStringExtra("FullName");
-        profileImage = intent.getStringExtra("profileimage");
-        Log.d("stteacher", "Profile Name: " + FullName);
 
-        String username = intent.getStringExtra("username");
-        String fullName = intent.getStringExtra("FullName");
-      profileImage = intent.getStringExtra("profileimage");
+        // In any other activity where you want to access the username
+        String username = UserDataSingleton.getInstance().getUsername();
+
+        UserRepository userRepository = new UserRepository();
+        userRepository.fetchUserData(username, new UserRepository.UserRepositoryCallback() {
+            @Override
+            public void onSuccess(studentData data) {
+                // Access user data fields
+                String programName = data.getProgramName();
+                int semesterName = data.getSemesterName();
+                String sectionName = data.getSectionName();
+
+                profileImage=data.getProfileImage();
+                firstName=data.getFirstName();
+                lastName=data.getLastName();
+
+                // Log user data
+                Log.e("UserData.......", "Program Name...........: " + programName);
+                Log.e("UserData......", "Semester Name..........: " + semesterName);
+                Log.e("UserData.........", "Section Name:........... " + sectionName);
+
+                // Optionally, update UI with user data
+                TextView textView = findViewById(R.id.sectionandsamester);
+                String displayData = "("+programName + " "+semesterName +""+sectionName+")";
+                textView.setText(displayData);
+                if (profileImage != null && !profileImage.isEmpty()) {
+                    String imageUrl = RetrofitClient.getBaseUrl() + "images/profileimages/" +profileImage + ".jpg";
+                    Picasso.get().load(imageUrl).error(R.drawable.baseline_account_circle_24).into(profile);
+                } else {
+                    profile.setImageResource(R.drawable.baseline_account_circle_24);
+                }
+
+
+
+                String fullName = firstName+ " " + lastName;
+                profilename.setText(fullName);
+
+            }
+
+            @Override
+            public void onFailure(Exception e) {
+                Log.e("SomeActivity", "Error fetching user data: " + e.getMessage());
+                // Handle error case, e.g., show a toast or an error message
+            }
+        });
+
+
+
+
+
+
+
+
+
+
+
+        Intent intent = getIntent();
+
         teacherUsername = intent.getStringExtra("teacher_username");
         String teacherFirstName = intent.getStringExtra("teacher_firstName");
         String teacherLastName = intent.getStringExtra("teacher_lastName");
@@ -170,7 +223,7 @@ String Techerfullname=teacherFirstName+" "+teacherLastName;
 
     // Function to fetch conversation between sender and receiver
     private void fetchConversation() {
-        apiService.chatmessage(studentusername, teacherUsername).enqueue(new Callback<List<Message>>() {
+        apiService.chatmessage(username, teacherUsername).enqueue(new Callback<List<Message>>() {
 
 
             @Override
@@ -189,7 +242,7 @@ String Techerfullname=teacherFirstName+" "+teacherLastName;
                     }
 
                     // Create and set adapter to RecyclerView
-                    String currentUserUsername = studentusername;
+                    String currentUserUsername = username;
                     adapter = new ConversationAdapter(smessagebody.this, conversationItems, currentUserUsername);
                     recyclerView.setAdapter(adapter);
                     recyclerView.hasFixedSize();
@@ -286,7 +339,7 @@ String Techerfullname=teacherFirstName+" "+teacherLastName;
                 if (response.isSuccessful() && response.body() != null) {
                     Log.i("Send Message", "Message sent successfully");
                     // Create a new ConversationItem representing the sent message
-                    ConversationItem sentMessage = new ConversationItem(studentusername, teacherUsername, selectedEmoji);
+                    ConversationItem sentMessage = new ConversationItem(username, teacherUsername, selectedEmoji);
                     //
                     //                // Add the sent message to the d
                      adapter.addItem(sentMessage);

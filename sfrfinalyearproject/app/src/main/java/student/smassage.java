@@ -26,6 +26,9 @@ import mydataapi.RetrofitClient;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import studentClasses.UserDataSingleton;
+import studentClasses.UserRepository;
+import studentClasses.studentData;
 
 public class smassage extends AppCompatActivity implements OnTeacherClickListener {
     private Apiservices apiServices = RetrofitClient.getInstance();
@@ -33,7 +36,7 @@ public class smassage extends AppCompatActivity implements OnTeacherClickListene
 
     TextView profilename;
     ImageView profile;
-    private String username, FullName, profileImage;
+    private String username,firstName,lastName ,FullName, profileImage;
 
     private MessagListAdopter adapter;
     private List<Wish> MessageList = new ArrayList<>();
@@ -46,22 +49,59 @@ public class smassage extends AppCompatActivity implements OnTeacherClickListene
         profilename = findViewById(R.id.profelname);
         profile = findViewById(R.id.profileimage);
 
-        Intent intent = getIntent();
-        username = intent.getStringExtra("username");
-        FullName = intent.getStringExtra("FullName");
-        profileImage = intent.getStringExtra("profileimage");
-        Log.d("stteacher", "Profile Name: " + FullName);
 
-        // Set profile name
-        profilename.setText(FullName);
 
-        // Load profile image using Picasso
-        if (profileImage != null && !profileImage.isEmpty()) {
-            String imageUrl = RetrofitClient.getBaseUrl() + "images/profileimages/" + profileImage + ".jpg";
-            Picasso.get().load(imageUrl).into(profile);
-        } else {
-            profile.setImageResource(R.drawable.baseline_account_circle_24);
-        }
+        // In any other activity where you want to access the username
+        String username = UserDataSingleton.getInstance().getUsername();
+
+        UserRepository userRepository = new UserRepository();
+        userRepository.fetchUserData(username, new UserRepository.UserRepositoryCallback() {
+            @Override
+            public void onSuccess(studentData data) {
+                // Access user data fields
+                String programName = data.getProgramName();
+                int semesterName = data.getSemesterName();
+                String sectionName = data.getSectionName();
+
+                profileImage=data.getProfileImage();
+                firstName=data.getFirstName();
+                lastName=data.getLastName();
+
+                // Log user data
+                Log.e("UserData.......", "Program Name...........: " + programName);
+                Log.e("UserData......", "Semester Name..........: " + semesterName);
+                Log.e("UserData.........", "Section Name:........... " + sectionName);
+
+                // Optionally, update UI with user data
+                TextView textView = findViewById(R.id.sectionandsamester);
+                String displayData = "("+programName + " "+semesterName +""+sectionName+")";
+                textView.setText(displayData);
+                if (profileImage != null && !profileImage.isEmpty()) {
+                    String imageUrl = RetrofitClient.getBaseUrl() + "images/profileimages/" +profileImage + ".jpg";
+                    Picasso.get().load(imageUrl).error(R.drawable.baseline_account_circle_24).into(profile);
+                } else {
+                    profile.setImageResource(R.drawable.baseline_account_circle_24);
+                }
+
+
+
+                String fullName = firstName+ " " + lastName;
+                profilename.setText(fullName);
+
+            }
+
+            @Override
+            public void onFailure(Exception e) {
+                Log.e("SomeActivity", "Error fetching user data: " + e.getMessage());
+                // Handle error case, e.g., show a toast or an error message
+            }
+        });
+
+
+
+
+
+
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         adapter = new MessagListAdopter(new ArrayList<>(), this);

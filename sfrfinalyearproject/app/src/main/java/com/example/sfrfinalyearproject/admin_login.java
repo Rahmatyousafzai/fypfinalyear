@@ -24,6 +24,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import student.stdashboard;
+import studentClasses.UserDataSingleton;
 
 public class admin_login extends AppCompatActivity {
     private EditText username;
@@ -80,6 +81,11 @@ public class admin_login extends AppCompatActivity {
                             user user = gson.fromJson(jsonResponse, user.class);
                             if (username.equals(user.getUsername()) && password.equals(user.getPassword())) {
                                 Log.d("LoginActivity", "Login successful for user: " + username);
+                                // Save username globally
+                                GlobalData.getInstance().setUsername(username);
+
+                                // Set username in UserDataSingleton
+                                UserDataSingleton.getInstance().setUsername(username);
                                 navigateToNextActivity(user);
                             } else {
                                 Toast.makeText(admin_login.this, "Invalid username or password", Toast.LENGTH_SHORT).show();
@@ -118,10 +124,6 @@ public class admin_login extends AppCompatActivity {
         } else if ("Alumni".equals(userType)) {
             intent = new Intent(admin_login.this, al_dahsboard.class);
         } else {
-
-
-
-
             Toast.makeText(this, "Unknown user type", Toast.LENGTH_SHORT).show();
             Log.e("LoginActivity", "Unknown user type: " + userType);
             return;
@@ -140,12 +142,38 @@ public class admin_login extends AppCompatActivity {
     // Method to toggle password visibility
     private void togglePasswordVisibility() {
         if (passwordVisible) {
-            password.setTransformationMethod(PasswordTransformationMethod.getInstance());
+            password.setTransformationMethod
+                    (PasswordTransformationMethod.getInstance());
             hidePasswordImage.setImageResource(R.drawable.hidepassword);
         } else {
             password.setTransformationMethod(null);
             hidePasswordImage.setImageResource(R.drawable.unhidepassword);
         }
         passwordVisible = !passwordVisible;
+    }
+
+    // Define a singleton class to store global data
+    public static class GlobalData {
+        private static GlobalData instance;
+        private String username;
+
+        private GlobalData() {
+            // Private constructor to prevent instantiation
+        }
+
+        public static synchronized GlobalData getInstance() {
+            if (instance == null) {
+                instance = new GlobalData();
+            }
+            return instance;
+        }
+
+        public String getUsername() {
+            return username;
+        }
+
+        public void setUsername(String username) {
+            this.username = username;
+        }
     }
 }

@@ -20,6 +20,7 @@ import mydataapi.RetrofitClient;
 
 public class EmojiAdapter extends RecyclerView.Adapter<EmojiAdapter.EmojiViewHolder> {
 
+
     private Context context;
     private List<Emoji> emojis;
     private OnEmojiClickListener listener;

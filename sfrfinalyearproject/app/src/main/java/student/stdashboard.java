@@ -18,8 +18,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ModeClasees.Message;
-import ModeClasees.UserData;
-import ModeClasees.UserDataResponse;
 import ModeClasees.Wish;
 import ModeClasees.cuTeacher;
 import ModeClasees.user;
@@ -30,13 +28,16 @@ import mydataapi.RetrofitClient;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import studentClasses.UserDataSingleton;
+import studentClasses.UserRepository;
+import studentClasses.studentData;
 
 public class stdashboard extends AppCompatActivity implements OnTeacherClickListener {
 
     private static final String TAG = "StudentDashboard";
 
     // Views
-    private TextView txtNews, txtMessage, txtNotification, txtFavTeacher, profilename, textteacher;
+    private TextView txtNews,sectionandsamester, txtMessage, txtNotification, txtFavTeacher, profilename, textteacher;
     private ImageView profile;
     private RecyclerView recyclerView;
 
@@ -52,10 +53,14 @@ public class stdashboard extends AppCompatActivity implements OnTeacherClickList
         setContentView(R.layout.activity_stdashboard);
 
         apiServices = RetrofitClient.getInstance();
+
+
+
+
         initializeViews();
 
         Intent intent = getIntent();
-        extractUserInfo(intent);
+
 
         setupRecyclerView();
 
@@ -63,7 +68,57 @@ public class stdashboard extends AppCompatActivity implements OnTeacherClickList
 
         fetchAndDisplayWishes();
 
-        getUserInfo(username);
+
+
+// In any other activity where you want to access the username
+        String username = UserDataSingleton.getInstance().getUsername();
+
+        UserRepository userRepository = new UserRepository();
+        userRepository.fetchUserData(username, new UserRepository.UserRepositoryCallback() {
+            @Override
+            public void onSuccess(studentData data) {
+                // Access user data fields
+                String programName = data.getProgramName();
+                int semesterName = data.getSemesterName();
+                String sectionName = data.getSectionName();
+                String Profilename=data.getProgramName();
+                profileImage=data.getProfileImage();
+                 firstName=data.getFirstName();
+                lastName=data.getLastName();
+
+                // Log user data
+                Log.e("UserData.......", "Program Name...........: " + programName);
+                Log.e("UserData......", "Semester Name..........: " + semesterName);
+                Log.e("UserData.........", "Section Name:........... " + sectionName);
+
+                // Optionally, update UI with user data
+                TextView textView = findViewById(R.id.sectionandsamester);
+                String displayData = "("+programName + " "+semesterName +""+sectionName+")";
+                textView.setText(displayData);
+                if (profileImage != null && !profileImage.isEmpty()) {
+                    String imageUrl = RetrofitClient.getBaseUrl() + "images/profileimages/" +profileImage + ".jpg";
+                    Picasso.get().load(imageUrl).error(R.drawable.baseline_account_circle_24).into(profile);
+                } else {
+                    profile.setImageResource(R.drawable.baseline_account_circle_24);
+                }
+
+
+
+                String fullName = firstName+ " " + lastName;
+                profilename.setText(fullName);
+
+            }
+
+            @Override
+            public void onFailure(Exception e) {
+                Log.e("SomeActivity", "Error fetching user data: " + e.getMessage());
+                // Handle error case, e.g., show a toast or an error message
+            }
+        });
+
+
+
+
     }
 
     private void initializeViews() {
@@ -77,7 +132,7 @@ public class stdashboard extends AppCompatActivity implements OnTeacherClickList
         recyclerView = findViewById(R.id.strcview);
     }
 
-    private void extractUserInfo(Intent intent) {
+   /* private void extractUserInfo(Intent intent) {
         username = intent.getStringExtra("username");
         firstName = intent.getStringExtra("firstname");
         lastName = intent.getStringExtra("lastname");
@@ -92,7 +147,7 @@ public class stdashboard extends AppCompatActivity implements OnTeacherClickList
         } else {
             profile.setImageResource(R.drawable.baseline_account_circle_24);
         }
-    }
+    }*/
 
     private void setupClickListeners() {
         textteacher.setOnClickListener(v -> openTeacherActivity());
@@ -165,38 +220,7 @@ public class stdashboard extends AppCompatActivity implements OnTeacherClickList
         });
     }
 
-    private void getUserInfo(String username) {
-        Call<UserDataResponse> call = apiServices.getUserInfo(username);
-        call.enqueue(new Callback<UserDataResponse>() {
-            @Override
-            public void onResponse(Call<UserDataResponse> call, Response<UserDataResponse> response) {
-                if (response.isSuccessful()) {
-                    // Handle user info response
-                    UserDataResponse userDataResponse = response.body();
-                    UserData userData = userDataResponse.getUserData();
-                    Log.d("UserData", "Username: " + userData.getUsername());
-                    Log.d("UserData", "First Name: " + userData.getFirstName());
-                    Log.d("UserData", "Last Name: " + userData.getLastName());
-                    Log.d("UserData", "Profile Image: " + userData.getProfileImage());
-                    Log.d("UserData", "Section ID: " + userData.getSectionId());
-                    Log.d("UserData", "Section Name: " + userData.getSectionName());
-                    Log.d("UserData", "Semester ID: " + userData.getSemesterId());
-                    Log.d("UserData", "Semester Name: " + userData.getSemesterName());
-                    Log.d("UserData", "Course ID: " + userData.getCourseId());
-                    Log.d("UserData", "Course Title: " + userData.getCourseTitle());
-                    Log.d("UserData", "Program ID: " + userData.getProgramId());
-                    Log.d("UserData", "Program Name: " + userData.getProgramName());
-                } else {
-                    Log.d(TAG, "Failed to get user info. Response code: " + response.code());
-                }
-            }
 
-            @Override
-            public void onFailure(Call<UserDataResponse> call, Throwable t) {
-                Log.d(TAG, "Error fetching user info: " + t.getMessage());
-            }
-        });
-    }
 
     @Override
     public void onTeacherClick(user teacher) {

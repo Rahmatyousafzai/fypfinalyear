@@ -19,6 +19,7 @@ import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
+import studentClasses.StudentResponse;
 
 public interface Apiservices {
 
@@ -86,5 +87,11 @@ public interface Apiservices {
 
     @POST("api/Wish/CreateWish")
     Call<SendWishResponse> createWish(@Body SendWishRequest sendWishRequest);
+
+
+
+    @GET("api/User/getstudentinfo")
+    Call<StudentResponse> getUserData(@Query("username") String username);
+
 
 }

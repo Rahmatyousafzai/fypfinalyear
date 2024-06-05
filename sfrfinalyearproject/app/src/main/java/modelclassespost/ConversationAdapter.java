@@ -16,11 +16,13 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 
 import mydataapi.RetrofitClient;
+import studentClasses.UserDataSingleton;
 
 public class ConversationAdapter extends RecyclerView.Adapter<ConversationAdapter.ViewHolder> {
     private Context context;
     private List<ConversationItem> conversationItems;
-    private String currentUserUsername="2020-arid-3535";
+    String username2 = UserDataSingleton.getInstance().getUsername();
+
 
     // View types for sender and receiver messages
     private static final int VIEW_TYPE_SENDER = 1;
@@ -29,7 +31,7 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationAdapte
     public ConversationAdapter(Context context, List<ConversationItem> conversationItems, String currentUserUsername) {
         this.context = context;
         this.conversationItems = conversationItems;
-        this.currentUserUsername = currentUserUsername;
+        this.username2 = currentUserUsername;
     }
 
     @NonNull
@@ -69,7 +71,7 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationAdapte
     @Override
     public int getItemViewType(int position) {
         ConversationItem item = conversationItems.get(position);
-        if (item != null && item.getSenderId() != null && item.getSenderId().equals(currentUserUsername)) {
+        if ((username2!=null)) {
             return VIEW_TYPE_SENDER;
         } else {
             return VIEW_TYPE_RECEIVER;
