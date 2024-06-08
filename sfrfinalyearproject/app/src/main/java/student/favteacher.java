@@ -32,29 +32,44 @@ import studentClasses.studentData;
 public class favteacher extends AppCompatActivity implements FavTeachercustomAdopter.OnTeacherClickListener {
 
     private Apiservices apiServices = RetrofitClient.getInstance();
-    RecyclerView recyclerView;
-    ImageView imgBack;
-    TextView profilename;
-    ImageView profile;
-    private String username,firstName,lastName , FullName, profileImage;
+    private RecyclerView recyclerView;
+    private ImageView imgBack;
+    private TextView profilename, sectionsamester;
+    private ImageView profile;
+    private String username, firstName, lastName, profileImage;
 
     private FavTeachercustomAdopter adapter;
     private List<cuTeacher> teacherList = new ArrayList<>();
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_favteacher);
 
-        imgBack = findViewById(R.id.imgback);
-        recyclerView = findViewById(R.id.allteacherRec);
+        initializeViews();
+
+        // Retrieve username from UserDataSingleton
+        username = UserDataSingleton.getInstance().getUsername();
+
+        // Fetch user data
+        fetchUserData();
+
+        recyclerView = findViewById(R.id.faveacherRec);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        adapter = new FavTeachercustomAdopter(new ArrayList<>(), this);
+        recyclerView.setAdapter(adapter);
+
+        loadTeachers();
+    }
+
+    private void initializeViews() {
+
         profilename = findViewById(R.id.profelname);
-        profile = findViewById(R.id.profileimage);
+        profile = findViewById(R.id.profilepicture);
+        sectionsamester = findViewById(R.id.sectionandsamester);
+    }
 
-        // In any other activity where you want to access the username
-        String username = UserDataSingleton.getInstance().getUsername();
-
+    private void fetchUserData() {
         UserRepository userRepository = new UserRepository();
         userRepository.fetchUserData(username, new UserRepository.UserRepositoryCallback() {
             @Override
@@ -64,9 +79,9 @@ public class favteacher extends AppCompatActivity implements FavTeachercustomAdo
                 int semesterName = data.getSemesterName();
                 String sectionName = data.getSectionName();
 
-                profileImage=data.getProfileImage();
-                firstName=data.getFirstName();
-                lastName=data.getLastName();
+                profileImage = data.getProfileImage();
+                firstName = data.getFirstName();
+                lastName = data.getLastName();
 
                 // Log user data
                 Log.e("UserData.......", "Program Name...........: " + programName);
@@ -74,21 +89,17 @@ public class favteacher extends AppCompatActivity implements FavTeachercustomAdo
                 Log.e("UserData.........", "Section Name:........... " + sectionName);
 
                 // Optionally, update UI with user data
-                TextView textView = findViewById(R.id.sectionandsamester);
-                String displayData = "("+programName + " "+semesterName +""+sectionName+")";
-                textView.setText(displayData);
+                String displayData = "(" + programName + " " + semesterName + " " + sectionName + ")";
+                profilename.setText(firstName + " " + lastName);
+                sectionsamester.setText(displayData);
+
+                // Load profile image using Picasso
                 if (profileImage != null && !profileImage.isEmpty()) {
-                    String imageUrl = RetrofitClient.getBaseUrl() + "images/profileimages/" +profileImage + ".jpg";
+                    String imageUrl = RetrofitClient.getBaseUrl() + "images/profileimages/" + profileImage + ".jpg";
                     Picasso.get().load(imageUrl).error(R.drawable.baseline_account_circle_24).into(profile);
                 } else {
                     profile.setImageResource(R.drawable.baseline_account_circle_24);
                 }
-
-
-
-                String fullName = firstName+ " " + lastName;
-                profilename.setText(fullName);
-
             }
 
             @Override
@@ -97,52 +108,26 @@ public class favteacher extends AppCompatActivity implements FavTeachercustomAdo
                 // Handle error case, e.g., show a toast or an error message
             }
         });
-
-
-
-
-
-
-
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new FavTeachercustomAdopter(new ArrayList<>(), this);
-        recyclerView.setAdapter(adapter);
-
-        loadTeachers();
-
-        imgBack.setOnClickListener(v -> finish());
-
-        loadTeachers();
     }
 
     @Override
     public void onTeacherClick(user teacher) {
-        Intent intent = new Intent(this, sprfile.class);
-        intent.putExtra("username", teacher.getUsername());
-        intent.putExtra("firstName", teacher.getFirstName());
-        intent.putExtra("lastName", teacher.getLastName());
-        intent.putExtra("profileImage", teacher.getProfileImage());
-        startActivity(intent);
+        // Handle click on user teacher
     }
 
     @Override
     public void onTeacherClick(cuTeacher teacher) {
-        Intent intent = new Intent(this, sprfile.class);
-        intent.putExtra("username", teacher.getUsername());
-        intent.putExtra("firstName", teacher.getFirstName());
-        intent.putExtra("lastName", teacher.getLastName());
-        intent.putExtra("profileImage", teacher.getProfileImage());
-        startActivity(intent);
+        // Handle click on custom teacher
     }
 
     @Override
     public void onTeacherClick(Wish wish) {
-
+        // Handle click on wish
     }
 
     @Override
     public void onTeacherClick(Object item) {
-
+        // Handle click on any other item
     }
 
     private void loadTeachers() {
@@ -163,22 +148,14 @@ public class favteacher extends AppCompatActivity implements FavTeachercustomAdo
             @Override
             public void onFailure(Call<List<cuTeacher>> call, Throwable t) {
                 // Handle the error
+                Log.e("FavTeacher", "Error loading teachers: " + t.getMessage());
             }
         });
-
     }
-
-    @Override
-    public void onPointerCaptureChanged(boolean hasCapture) {
-        super.onPointerCaptureChanged(hasCapture);
-    }
-
-
-
 
     @Override
     public void onBackPressed() {
-        // Navigate back to the login screen
+        // Navigate back to the dashboard
         Intent intent = new Intent(this, stdashboard.class);
         startActivity(intent);
         finish(); // Finish the current activity to prevent returning to it when pressing back again

@@ -19,6 +19,7 @@ import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
+import studentClasses.GroupsData;
 import studentClasses.StudentResponse;
 
 public interface Apiservices {
@@ -37,6 +38,13 @@ public interface Apiservices {
     Call<List<cuTeacher>> getFavTeacher(@Query("username") String username);
     @GET("api/wish/GetAllEmojis")
     Call<List<Emoji>> getAllEmojis();
+
+
+    @GET("api/Wish/GetpermittedEmoji")
+    Call<List<Emoji>> GetpermittedEmoji();
+
+
+
     @GET("api/Wish/GetStudentDashBoardWishes")
     Call<List<Wish>> getWishes();
 
@@ -50,6 +58,14 @@ public interface Apiservices {
 
     @GET("api/Wish/inboxmessageList")
     Call<List<Wish>> getinboxMessage( @Query("senderID") String senderID);
+
+
+    @GET("api/Wish/GroupinboxmessageList")
+    Call<List<GroupsData>> getGroupinboxMessage(@Query("username") String username);
+
+
+
+
     @GET("api/Wish/chatmessage")
     Call<List<Message>> chatmessage(
             @Query("senderID") String senderID,

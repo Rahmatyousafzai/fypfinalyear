@@ -157,7 +157,7 @@ public class stdashboard extends AppCompatActivity implements OnTeacherClickList
     }
 
     private void openTeacherActivity() {
-        Intent teacherIntent = new Intent(stdashboard.this, AllTeacherActivity.class);
+        Intent teacherIntent = new Intent(stdashboard.this, stteacher.class);
         teacherIntent.putExtra("username", username);
         teacherIntent.putExtra("FullName", firstName + " " + lastName);
         teacherIntent.putExtra("profileimage", profileImage);

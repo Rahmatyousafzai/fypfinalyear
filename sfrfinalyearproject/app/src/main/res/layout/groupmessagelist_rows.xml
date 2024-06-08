@@ -5,32 +5,34 @@
     android:orientation="horizontal"
     android:padding="8dp"
 
+
     >
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+    android:background="@drawable/flateborder"
         android:padding="10dp"
- android:background="@drawable/flateborder"
-
 
         >
 
-    <ImageView
 
- android:layout_gravity="center"
-        android:id="@+id/profile_image"
+    <ImageView
+        android:id="@+id/group_icon"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_marginEnd="8dp"
+        android:layout_gravity="center"
         android:src="@drawable/baseline_account_circle_24" />
 
+
     <TextView
-        android:layout_gravity="center"
-        android:id="@+id/sender_name"
+        android:id="@+id/group_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Sender Name"
-        android:textSize="16sp" />
+        android:text="Group Name"
+        android:textSize="16sp"
+        android:layout_gravity="center"
+        />
 </LinearLayout>
 </LinearLayout>

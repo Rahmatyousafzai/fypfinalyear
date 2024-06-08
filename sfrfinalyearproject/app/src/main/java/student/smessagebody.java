@@ -42,7 +42,7 @@ public class smessagebody extends AppCompatActivity implements OnEmojiClickListe
     // Declare UI components
     ImageView messageInputField;
     Button sendButton;
-    ImageView emojiButton,emojiImageView;
+    ImageView emojiButton, emojiImageView;
 
     // RecyclerView for displaying messages
     private RecyclerView recyclerView;
@@ -52,15 +52,17 @@ public class smessagebody extends AppCompatActivity implements OnEmojiClickListe
     private Apiservices apiService;
 
     // Mock user sender ID and receiver ID
-
+    TextView txtNews, txtMessage, txtNotification;
 
     // List to store all emojis
     private List<Emoji> allEmojis;
+    private List<Emoji> RistricEmoji;
     // Selected emoji
     private int selectedEmoji;
-    TextView profilename,teachername;
-    ImageView profile,teacherprofileimage;
-    private String username,firstName,lastName, FullName, profileImage,teacherUsername;
+    TextView profilename, teachername;
+    ImageView profile, teacherprofileimage;
+    private String username, firstName, lastName, profileImage, teacherUsername;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,13 +77,12 @@ public class smessagebody extends AppCompatActivity implements OnEmojiClickListe
         sendButton = findViewById(R.id.send_button);
         emojiButton = findViewById(R.id.emojibutton);
         profilename = findViewById(R.id.profelname);
-        profile = findViewById(R.id.profileimage);
-        teachername=findViewById(R.id.teachername);
-        teacherprofileimage=findViewById(R.id.techerimage);
-
+        profile = findViewById(R.id.profilepicture);
+        teachername = findViewById(R.id.teachername); // Make sure this matches your layout file
+        teacherprofileimage = findViewById(R.id.techerimage); // Make sure this matches your layout file
 
         // In any other activity where you want to access the username
-        String username = UserDataSingleton.getInstance().getUsername();
+        username = UserDataSingleton.getInstance().getUsername();
 
         UserRepository userRepository = new UserRepository();
         userRepository.fetchUserData(username, new UserRepository.UserRepositoryCallback() {
@@ -92,9 +93,9 @@ public class smessagebody extends AppCompatActivity implements OnEmojiClickListe
                 int semesterName = data.getSemesterName();
                 String sectionName = data.getSectionName();
 
-                profileImage=data.getProfileImage();
-                firstName=data.getFirstName();
-                lastName=data.getLastName();
+                profileImage = data.getProfileImage();
+                firstName = data.getFirstName();
+                lastName = data.getLastName();
 
                 // Log user data
                 Log.e("UserData.......", "Program Name...........: " + programName);
@@ -102,21 +103,18 @@ public class smessagebody extends AppCompatActivity implements OnEmojiClickListe
                 Log.e("UserData.........", "Section Name:........... " + sectionName);
 
                 // Optionally, update UI with user data
-                TextView textView = findViewById(R.id.sectionandsamester);
-                String displayData = "("+programName + " "+semesterName +""+sectionName+")";
-                textView.setText(displayData);
+                TextView sectionandsamester = findViewById(R.id.sectionandsamester);
+                String displayData = "(" + programName + " " + semesterName + "" + sectionName + ")";
+                sectionandsamester.setText(displayData);
                 if (profileImage != null && !profileImage.isEmpty()) {
-                    String imageUrl = RetrofitClient.getBaseUrl() + "images/profileimages/" +profileImage + ".jpg";
+                    String imageUrl = RetrofitClient.getBaseUrl() + "images/profileimages/" + profileImage + ".jpg";
                     Picasso.get().load(imageUrl).error(R.drawable.baseline_account_circle_24).into(profile);
                 } else {
                     profile.setImageResource(R.drawable.baseline_account_circle_24);
                 }
 
-
-
-                String fullName = firstName+ " " + lastName;
+                String fullName = firstName + " " + lastName;
                 profilename.setText(fullName);
-
             }
 
             @Override
@@ -126,16 +124,6 @@ public class smessagebody extends AppCompatActivity implements OnEmojiClickListe
             }
         });
 
-
-
-
-
-
-
-
-
-
-
         Intent intent = getIntent();
 
         teacherUsername = intent.getStringExtra("teacher_username");
@@ -143,63 +131,39 @@ public class smessagebody extends AppCompatActivity implements OnEmojiClickListe
         String teacherLastName = intent.getStringExtra("teacher_lastName");
         String teacherProfileImage = intent.getStringExtra("teacher_profileImage");
 
-String Techerfullname=teacherFirstName+" "+teacherLastName;
-    teachername.setText(Techerfullname);
+        String teacherFullName = teacherFirstName + " " + teacherLastName;
+        if (teachername != null) {
+            teachername.setText(teacherFullName);
+        } else {
+            Log.e("smessagebody", "teachername TextView is null");
+        }
 
         if (teacherProfileImage != null && !teacherProfileImage.isEmpty()) {
             String imageUrl = RetrofitClient.getBaseUrl() + "images/profileimages/" + teacherProfileImage + ".jpg";
-            Picasso.get().load(imageUrl).into(teacherprofileimage);
+            if (teacherprofileimage != null) {
+                Picasso.get().load(imageUrl).into(teacherprofileimage);
+            } else {
+                Log.e("smessagebody", "teacherprofileimage ImageView is null");
+            }
         } else {
-            profile.setImageResource(R.drawable.baseline_account_circle_24);
+            if (teacherprofileimage != null) {
+                teacherprofileimage.setImageResource(R.drawable.baseline_account_circle_24);
+            } else {
+                Log.e("smessagebody", "teacherprofileimage ImageView is null");
+            }
         }
-
-
-
-
-
-
-
-
-
-
-        profilename.setText(FullName);
-
-        // Load profile image using Picasso
-        if (profileImage != null && !profileImage.isEmpty()) {
-            String imageUrl = RetrofitClient.getBaseUrl() + "images/profileimages/" + profileImage + ".jpg";
-            Picasso.get().load(imageUrl).into(profile);
-        } else {
-            profile.setImageResource(R.drawable.baseline_account_circle_24);
-        }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
         // Initialize ApiService
         apiService = RetrofitClient.getInstance();
 
         // Fetch conversation between sender and receiver
+        fetchConversation();
 
         // Fetch all emojis from the server
         fetchAllEmojis();
+        fetcRistrictEmojis();
 
-        Log.d("TecaherUsername","teacherusername"+teacherUsername);
+        Log.d("TeacherUsername", "teacherUsername: " + teacherUsername);
         // Set OnClickListener for emoji button to show emoji popup window
         emojiButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -216,19 +180,12 @@ String Techerfullname=teacherFirstName+" "+teacherLastName;
                 fetchConversation();
             }
         });
-
-        // Fetch conversation between sender and receiver
-        fetchConversation();
     }
 
     // Function to fetch conversation between sender and receiver
     private void fetchConversation() {
         apiService.chatmessage(username, teacherUsername).enqueue(new Callback<List<Message>>() {
-
-
             @Override
-
-
             public void onResponse(Call<List<Message>> call, Response<List<Message>> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     List<Message> messages = response.body();
@@ -237,18 +194,17 @@ String Techerfullname=teacherFirstName+" "+teacherLastName;
                     // Convert Message objects to ConversationItem objects
                     for (Message message : messages) {
                         conversationItems.add(new ConversationItem(message.getSenderUsername(),
-                                message.getReceiverUsername(), message.getEmojiData()));
+                                message.getReceiverUsername(),message.getReceiverProfileImage(),message.getSenderProfileImage(), message.getEmojiData()));
                         Log.d("Response Index", "Message: " + message);
                     }
 
                     // Create and set adapter to RecyclerView
-                    String currentUserUsername = username;
-                    adapter = new ConversationAdapter(smessagebody.this, conversationItems, currentUserUsername);
+
+                    adapter = new ConversationAdapter(smessagebody.this, conversationItems,username);
                     recyclerView.setAdapter(adapter);
                     recyclerView.hasFixedSize();
                     recyclerView.setLayoutManager(new LinearLayoutManager(smessagebody.this));
                     Log.d("Adapter Data", "Conversation Items: " + conversationItems);
-
                 } else {
                     // Handle unsuccessful response
                     Log.d("API chatmessage", "Failed to fetch conversation data");
@@ -282,6 +238,25 @@ String Techerfullname=teacherFirstName+" "+teacherLastName;
         });
     }
 
+
+    private void fetcRistrictEmojis() {
+        apiService.GetpermittedEmoji().enqueue(new Callback<List<Emoji>>() {
+            @Override
+            public void onResponse(Call<List<Emoji>> call, Response<List<Emoji>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    allEmojis = response.body();
+                } else {
+                    Log.e("API Error", "Failed to fetch all emojis");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Emoji>> call, Throwable t) {
+                Log.e("Network Error", "Failed to fetch all emojis", t);
+            }
+        });
+    }
+
     // Function to show emoji popup window
     private void showEmojisPopupWindow(List<Emoji> emojis) {
         if (emojis == null || emojis.isEmpty()) {
@@ -289,12 +264,45 @@ String Techerfullname=teacherFirstName+" "+teacherLastName;
         }
         View popupView = LayoutInflater.from(this).inflate(R.layout.popup_window_layout, null);
         RecyclerView emojisPopupRecyclerView = popupView.findViewById(R.id.emojis_popup_recyclerview);
+        ImageView ristrictemoji=popupView.findViewById(R.id.ristrictemoji);
         emojisPopupRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         EmojiAdapter emojiAdapter = new EmojiAdapter(this, emojis, this);
         emojisPopupRecyclerView.setAdapter(emojiAdapter);
         PopupWindow popupWindow = new PopupWindow(popupView, RecyclerView.LayoutParams.MATCH_PARENT, RecyclerView.LayoutParams.WRAP_CONTENT);
         popupWindow.setFocusable(true);
+        popupWindow.showAtLocation(popupView, Gravity.BOTTOM, 10, 10);
+
+        ristrictemoji.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               Ristrcitemoji(allEmojis);
+            }
+        });
+
+
+
+    }
+
+
+//ristricted emoji admin will approve access
+    private void Ristrcitemoji(List<Emoji> ristricEmoji) {
+        if (ristricEmoji== null || ristricEmoji.isEmpty()) {
+            return;
+        }
+        View popupView = LayoutInflater.from(this).inflate(R.layout.restrictedemojipopup_window_layout, null);
+        RecyclerView emojisPopupRecyclerView = popupView.findViewById(R.id.emojis_popup_recyclerview);
+
+        emojisPopupRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+        EmojiAdapter emojiAdapter = new EmojiAdapter(this,ristricEmoji, this);
+        emojisPopupRecyclerView.setAdapter(emojiAdapter);
+        PopupWindow popupWindow = new PopupWindow(popupView, RecyclerView.LayoutParams.MATCH_PARENT, RecyclerView.LayoutParams.WRAP_CONTENT);
+        popupWindow.setFocusable(true);
         popupWindow.showAtLocation(popupView, Gravity.BOTTOM, 0, 0);
+
+
+
+
+
     }
 
     @Override
@@ -306,24 +314,22 @@ String Techerfullname=teacherFirstName+" "+teacherLastName;
         String imageUrl = RetrofitClient.getBaseUrl() + "images/emojis/" + emoji.getImagePath() + ".png";
         Picasso.get().load(imageUrl).into(emojiImageView);
 
-        Log.d("click emijo", "click emoji: " + emoji.getEmojiString());
+        Log.d("click emoji", "click emoji: " + emoji.getEmojiString());
         Log.d("Image URL", "Image URL: " + imageUrl);
-
         Log.d("Image URL", "Image ID: " + selectedEmoji);
-
     }
+
     @Override
     public void onEmojiFetched(List<Emoji> section3Emojis) {
 
     }
 
+
     @Override
     public void onEmojisFetched(List<Emoji> emojis) {
-
     }
 
     // Function to send message
-// Function to send messageFunction to send message
     private void sendMessage() {
         if (selectedEmoji == 0) {
             Log.e("Validation Error", "Emoji and message text are required");
@@ -332,7 +338,7 @@ String Techerfullname=teacherFirstName+" "+teacherLastName;
 
         SendWishRequest request = new SendWishRequest("2020-arid-3535", "BIIT0001", selectedEmoji);
 
-        //    // Insert data into the database
+        // Insert data into the database
         apiService.createWish(request).enqueue(new Callback<SendWishResponse>() {
             @Override
             public void onResponse(Call<SendWishResponse> call, Response<SendWishResponse> response) {
@@ -340,41 +346,30 @@ String Techerfullname=teacherFirstName+" "+teacherLastName;
                     Log.i("Send Message", "Message sent successfully");
                     // Create a new ConversationItem representing the sent message
                     ConversationItem sentMessage = new ConversationItem(username, teacherUsername, selectedEmoji);
-                    //
-                    //                // Add the sent message to the d
-                     adapter.addItem(sentMessage);
-                    //
-                    //                // Notify the adapter that the dataset has changed
 
+                    // Add the sent message to the adapter
+                    adapter.addItem(sentMessage);
 
                     // Scroll RecyclerView to the bottom
                     recyclerView.scrollToPosition(adapter.getItemCount() - 1);
-                    //
-                    //                // Clear the emojiImageView
+
+                    // Clear the emojiImageView
                     emojiImageView.setImageDrawable(null);
-                    //
-                    //                // Reset the selected emoji ID
+
+                    // Reset the selected emoji ID
                     selectedEmoji = 0;
-                    //
-                    //                // Log to verify dataset update
+
+                    // Log to verify dataset update
                     Log.d("RecyclerView Update", "New item added to dataset: " + sentMessage);
                 } else {
                     Log.e("API Error", "Failed to send message");
                 }
             }
-            //
+
             @Override
             public void onFailure(Call<SendWishResponse> call, Throwable t) {
                 Log.e("Network Error", "Failed to send message", t);
             }
         });
     }
-
-
-
-
-
 }
-
-
-

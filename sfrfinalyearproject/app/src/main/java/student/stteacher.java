@@ -51,13 +51,15 @@ public class stteacher extends AppCompatActivity implements CurrentTeachercustom
         imgBack = findViewById(R.id.imgback);
         recyclerView = findViewById(R.id.allteacherRec);
         profilename = findViewById(R.id.profelname);
-        profile = findViewById(R.id.profileimage);
+
         txtviewall=findViewById(R.id.txtviewall);
         imgviewall=findViewById(R.id.imgviewall);
+        profile = findViewById(R.id.profilepicture);
+
 
 
         // In any other activity where you want to access the username
-        String username = UserDataSingleton.getInstance().getUsername();
+         username = UserDataSingleton.getInstance().getUsername();
 
         UserRepository userRepository = new UserRepository();
         userRepository.fetchUserData(username, new UserRepository.UserRepositoryCallback() {

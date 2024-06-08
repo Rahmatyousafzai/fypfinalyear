@@ -182,7 +182,7 @@ public class facultymessagebody extends AppCompatActivity implements OnEmojiClic
                     // Convert Message objects to ConversationItem objects
                     for (Message message : messages) {
                         conversationItems.add(new ConversationItem(message.getSenderUsername(),
-                                message.getReceiverUsername(), message.getEmojiData()));
+                                message.getReceiverUsername(),message.getReceiverProfileImage(),message.getSenderProfileImage(), message.getEmojiData()));
                         Log.d("Response Index", "Message: " + message);
                     }
 

@@ -1,5 +1,6 @@
 package adopter;
 
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,44 +15,54 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
+import Faculty.groupmessage_body;
 import ModeClasees.Wish;
 import mydataapi.RetrofitClient;
+import studentClasses.GroupsData;
 
-public class MessagListAdopter extends RecyclerView.Adapter<MessagListAdopter.ViewHolder> {
-    private List<Wish> messageList;
+public class MessagListAdopter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+    private List<Object> messageList;
     private OnTeacherClickListener listener;
 
-    public MessagListAdopter(List<Wish> messageList, OnTeacherClickListener listener) {
+    private static final int VIEW_TYPE_SIMPLE = 1;
+    private static final int VIEW_TYPE_GROUP = 2;
+
+    public MessagListAdopter(List<Object> messageList, OnTeacherClickListener listener) {
         this.messageList = messageList;
         this.listener = listener;
     }
 
-    public void setTeacherList(List<Wish> messageList) {
-        this.messageList = messageList;
-        notifyDataSetChanged();
+    @Override
+    public int getItemViewType(int position) {
+        if (messageList.get(position) instanceof Wish) {
+            return VIEW_TYPE_SIMPLE;
+        } else {
+            return VIEW_TYPE_GROUP;
+        }
     }
 
     @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.messagelist_rows, parent, false);
-        return new ViewHolder(view);
+    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view;
+        if (viewType == VIEW_TYPE_SIMPLE) {
+            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.messagelist_rows, parent, false);
+            return new SimpleMessageViewHolder(view);
+        } else {
+            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.groupmessagelist_rows, parent, false);
+            return new GroupMessageViewHolder(view);
+        }
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Wish wish = messageList.get(position);
-
-        String image=wish.getProfileImage();
-        holder.teacherName.setText(wish.getFirstName() + " " + wish.getLastName());
-        String imageUrl = RetrofitClient.getBaseUrl() + "images/profileimages/" +image+ ".jpg";
-        if (wish.getProfileImage() != null && !wish.getProfileImage().isEmpty()) {
-            Picasso.get().load(imageUrl).into(holder.teacherImage);
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+        if (holder.getItemViewType() == VIEW_TYPE_SIMPLE) {
+            Wish wish = (Wish) messageList.get(position);
+            ((SimpleMessageViewHolder) holder).bind(wish);
         } else {
-            holder.teacherImage.setImageResource(R.drawable.baseline_account_circle_24);
+            GroupsData groupMessage = (GroupsData) messageList.get(position);
+            ((GroupMessageViewHolder) holder).bind(groupMessage);
         }
-
-        holder.itemView.setOnClickListener(v -> listener.onTeacherClick(wish));
     }
 
     @Override
@@ -59,14 +70,51 @@ public class MessagListAdopter extends RecyclerView.Adapter<MessagListAdopter.Vi
         return messageList.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView teacherName;
-        ImageView teacherImage;
+    public void setTeacherList(List<?> messages) {
+        messageList.clear();
+        messageList.addAll(messages);
+        notifyDataSetChanged();
+    }
 
-        public ViewHolder(@NonNull View itemView) {
+    class SimpleMessageViewHolder extends RecyclerView.ViewHolder {
+        TextView senderName;
+        ImageView profileImage;
+
+        SimpleMessageViewHolder(@NonNull View itemView) {
             super(itemView);
-            teacherName = itemView.findViewById(R.id.teacher_name);
-            teacherImage = itemView.findViewById(R.id.teacher_image);
+            senderName = itemView.findViewById(R.id.sender_name);
+            profileImage = itemView.findViewById(R.id.profile_image);
+        }
+
+        void bind(Wish wish) {
+            senderName.setText(wish.getFirstName() + " " + wish.getLastName());
+            Picasso.get().load(RetrofitClient.getBaseUrl() + "images/profileimages/" + wish.getProfileImage() + ".jpg")
+                    .error(R.drawable.baseline_account_circle_24).into(profileImage);
+            itemView.setOnClickListener(v -> listener.onTeacherClick(wish));
+        }
+    }
+
+    class GroupMessageViewHolder extends RecyclerView.ViewHolder {
+        TextView groupName;
+        ImageView groupIcon;
+
+        GroupMessageViewHolder(@NonNull View itemView) {
+            super(itemView);
+            groupName = itemView.findViewById(R.id.group_name);
+            groupIcon = itemView.findViewById(R.id.group_icon);
+        }
+
+        void bind(GroupsData groupMessage) {
+            groupName.setText(groupMessage.getGropnmae());
+            Picasso.get().load(groupMessage.getGroupicon()).error(R.drawable.baseline_account_circle_24).into(groupIcon);
+            itemView.setOnClickListener(v -> {
+                // Pass data to the next activity when clicked
+                Intent intent = new Intent(v.getContext(), groupmessage_body.class);
+                intent.putExtra("group_id", groupMessage.getGID());
+                intent.putExtra("group_name", groupMessage.getGropnmae());
+                // Add more data as needed
+                v.getContext().startActivity(intent);
+            });
         }
     }
 }

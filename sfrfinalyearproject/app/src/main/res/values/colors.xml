@@ -11,6 +11,14 @@
         <color name="colorTextPrimary">#000000</color>
         <color name="colorTextSecondary">#757575</color>
 
+
+
+
+
+        <color name="highlighted_color">#E66B6B</color>
+        <color name="unhighlighted_color">#6BDFED</color>
+
+
     <attr name="borderColor" format="color" />
 <attr name="cornerRadius" format="dimension" />
 </resources>

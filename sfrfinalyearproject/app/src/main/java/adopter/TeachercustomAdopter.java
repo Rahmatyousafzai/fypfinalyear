@@ -1,10 +1,14 @@
 package adopter;
 
+import android.content.Context;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -23,11 +27,15 @@ import student.stteacher;
 public class TeachercustomAdopter extends RecyclerView.Adapter<TeachercustomAdopter.ViewHolder> {
     private List<user> teacherList;
     private OnTeacherClickListener listener;
+    Context context;
+
     private static final String TAG = "TeachercustomAdopter";
 
     public TeachercustomAdopter(List<user> teacherList, OnTeacherClickListener listener) {
         this.teacherList = teacherList;
         this.listener = listener;
+        this.context=context;
+
     }
 
     public TeachercustomAdopter(List<user> teacherList, stteacher stteacher) {
@@ -76,8 +84,49 @@ public class TeachercustomAdopter extends RecyclerView.Adapter<TeachercustomAdop
         holder.itemView.setOnClickListener(v -> {
             listener.onTeacherClick(teacher);
         });
+
+        holder.Teacherdeitaile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showEmojisPopupWindow();
+
+            }
+        });
+
+
     }
 
+
+
+
+
+
+    private void showEmojisPopupWindow() {
+
+
+        View popupView=LayoutInflater.from(context).inflate(R.layout.teacherdetial,null);
+
+
+        ImageView iconprofile=popupView.findViewById(R.id.iconprofile);
+        ImageView iconpfav=popupView.findViewById(R.id.iconfav);
+        ImageView iconwish=popupView.findViewById(R.id.iconwish);
+
+        TextView dprofilename=popupView.findViewById(R.id.dprofilename);
+
+        TextView txtfavourite=popupView.findViewById(R.id.txtfav);
+
+        TextView txtwish=popupView.findViewById(R.id.txtwish);
+
+
+        PopupWindow popupWindow = new PopupWindow(popupView, LinearLayout.HORIZONTAL,LinearLayout.VERTICAL);
+        popupWindow.setFocusable(true);
+        popupWindow.showAtLocation(popupView, Gravity.BOTTOM, 10, 10);
+
+
+
+
+
+    }
     @Override
     public int getItemCount() {
         if (teacherList == null) {
@@ -94,12 +143,14 @@ public class TeachercustomAdopter extends RecyclerView.Adapter<TeachercustomAdop
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         ImageView profileImageView;
-        TextView nameTextView,testimage;
+        TextView nameTextView;
+     ImageView   Teacherdeitaile;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             profileImageView = itemView.findViewById(R.id.pfimage);
             nameTextView = itemView.findViewById(R.id.pfname);
+            Teacherdeitaile=itemView.findViewById(R.id.Teacherdeitaile);
 
         }
     }

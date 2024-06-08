@@ -30,6 +30,7 @@ import studentClasses.studentData;
 public class snotification extends AppCompatActivity {
     RecyclerView recyclerView;
     private EmojiAdapter2 emojiAdapter;
+    TextView txtNews,txtNotification,txtMessage;
 
     String firstName,lastName,profileImage;
     ImageView profile;
@@ -40,9 +41,9 @@ public class snotification extends AppCompatActivity {
         setContentView(R.layout.activity_snotification);
 
 
+recyclerView=findViewById(R.id.rcnotification);
 
-
-
+initializeViews();
 
 
 
@@ -103,6 +104,20 @@ public class snotification extends AppCompatActivity {
 
 
 
+
+
+
+
+
+    private void initializeViews() {
+        txtNews = findViewById(R.id.news);
+        txtMessage = findViewById(R.id.txtmessage);
+        txtNotification = findViewById(R.id.txtnotification);
+
+        profilename = findViewById(R.id.profelname);
+        profile = findViewById(R.id.profilepicture);
+        recyclerView = findViewById(R.id.strcview);
+    }
 
     private void fetchEmojis() {
         Apiservices apiService = RetrofitClient.getInstance();

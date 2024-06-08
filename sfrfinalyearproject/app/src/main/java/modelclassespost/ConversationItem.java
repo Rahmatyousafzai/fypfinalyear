@@ -1,75 +1,142 @@
 package modelclassespost;
 
 public class ConversationItem {
-    public String getSenderId() {
-        return senderId;
+
+    private String SenderUsername;
+    private String SenderFirstName;
+    private String SenderLastName;
+    private String SenderProfileImage;
+    private String Reciverprofile;
+    private String ReceiverUsername;
+    private String ReceiverFirstName;
+    private String ReceiverLastName;
+    private String ReceiverProfileImage;
+    private String Emojidata;
+    private String WishDateTime;
+
+    public int getEmojiID() {
+        return emojiID;
     }
 
-    public void setSenderId(String senderId) {
-        this.senderId = senderId;
+    public void setEmojiID(int emojiID) {
+        this.emojiID = emojiID;
     }
 
-    public String getReceiverId() {
-        return receiverId;
+    private int emojiID;
+
+    public ConversationItem(String senderUsername,
+                            String receiverUsername,
+                            String receiverProfileImage,
+                            String senderProfileImage,
+                            String emojiData) {
+
+        this.SenderUsername=senderUsername;
+        this.ReceiverUsername=receiverUsername;
+        this.ReceiverProfileImage=receiverProfileImage;
+        this.SenderProfileImage=senderProfileImage;
+        this.Emojidata=emojiData;
+
+
+
+
     }
 
-    public void setReceiverId(String receiverId) {
-        this.receiverId = receiverId;
+    public ConversationItem(String studentusername, String teacherUsername, int selectedEmoji) {
+
+   this.SenderUsername=studentusername;
+   this.ReceiverUsername=teacherUsername;
+   this.emojiID=selectedEmoji;
+
+
     }
-
-    public int getEmojiId() {
-        return emojiId;
-    }
-
-    public void setEmojiId(int emojiId) {
-        this.emojiId = emojiId;
-    }
-
-    private String senderId;
-
-    public ConversationItem(String senderId, String receiverId, int emojiId) {
-        this.senderId = senderId;
-        this.receiverId = receiverId;
-        this.emojiId = emojiId;
-    }
-
-    private String receiverId;
-    private int emojiId;
-    private String senderUsername;
-
-    public ConversationItem(String senderUsername, String receiverUsername, String emojiData) {
-        this.senderUsername = senderUsername;
-        this.receiverUsername = receiverUsername;
-        this.emojiData = emojiData;
-    }
-
-    private String receiverUsername;
 
     public String getSenderUsername() {
-        return senderUsername;
+        return SenderUsername;
     }
 
     public void setSenderUsername(String senderUsername) {
-        this.senderUsername = senderUsername;
+        SenderUsername = senderUsername;
+    }
+
+    public String getSenderFirstName() {
+        return SenderFirstName;
+    }
+
+    public void setSenderFirstName(String senderFirstName) {
+        SenderFirstName = senderFirstName;
+    }
+
+    public String getSenderLastName() {
+        return SenderLastName;
+    }
+
+    public void setSenderLastName(String senderLastName) {
+        SenderLastName = senderLastName;
+    }
+
+    public String getSenderProfileImage() {
+        return SenderProfileImage;
+    }
+
+    public void setSenderProfileImage(String senderProfileImage) {
+        SenderProfileImage = senderProfileImage;
+    }
+
+    public String getReciverprofile() {
+        return Reciverprofile;
+    }
+
+    public void setReciverprofile(String reciverprofile) {
+        Reciverprofile = reciverprofile;
     }
 
     public String getReceiverUsername() {
-        return receiverUsername;
+        return ReceiverUsername;
     }
 
     public void setReceiverUsername(String receiverUsername) {
-        this.receiverUsername = receiverUsername;
+        ReceiverUsername = receiverUsername;
     }
 
-    public String getEmojiData() {
-        return emojiData;
+    public String getReceiverFirstName() {
+        return ReceiverFirstName;
     }
 
-    public void setEmojiData(String emojiData) {
-        this.emojiData = emojiData;
+    public void setReceiverFirstName(String receiverFirstName) {
+        ReceiverFirstName = receiverFirstName;
     }
 
-    private String emojiData;
+    public String getReceiverLastName() {
+        return ReceiverLastName;
+    }
+
+    public void setReceiverLastName(String receiverLastName) {
+        ReceiverLastName = receiverLastName;
+    }
+
+    public String getReceiverProfileImage() {
+        return ReceiverProfileImage;
+    }
+
+    public void setReceiverProfileImage(String receiverProfileImage) {
+        ReceiverProfileImage = receiverProfileImage;
+    }
+
+    public String getEmojidata() {
+        return Emojidata;
+    }
+
+    public void setEmojidata(String emojidata) {
+        Emojidata = emojidata;
+    }
+
+    public String getWishDateTime() {
+        return WishDateTime;
+    }
+
+    public void setWishDateTime(String wishDateTime) {
+        WishDateTime = wishDateTime;
+    }
 
 
 

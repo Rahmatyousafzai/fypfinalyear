@@ -33,12 +33,15 @@ import studentClasses.studentData;
 public class AllTeacherActivity extends AppCompatActivity implements OnTeacherClickListener {
     private Apiservices apiServices = RetrofitClient.getInstance();
     RecyclerView recyclerView;
-    ImageView imgBack;
+
     TextView profilename;
     ImageView profile;
 
     private String username,firstName,lastName, FullName, profileImage;
     private TeachercustomAdopter adapter;
+
+
+    TextView txtNews,txtNotification,txtMessage;
     private List<user> teacherList = new ArrayList<>();
 
     @Override
@@ -46,14 +49,7 @@ public class AllTeacherActivity extends AppCompatActivity implements OnTeacherCl
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_allteacher);
 
-        imgBack = findViewById(R.id.imgback);
-        recyclerView = findViewById(R.id.allteacherRec);
-        profilename = findViewById(R.id.profelname);
-        profile = findViewById(R.id.profileimage);
-        Intent intent = getIntent();
-        username = intent.getStringExtra("username");
-        FullName = intent.getStringExtra("FullName");
-        profileImage = intent.getStringExtra("profileimage");
+        initializeViews();
 
         // Set profile name
 
@@ -65,6 +61,9 @@ public class AllTeacherActivity extends AppCompatActivity implements OnTeacherCl
             @Override
             public void onSuccess(studentData data) {
                 // Access user data fields
+
+
+
                 String programName = data.getProgramName();
                 int semesterName = data.getSemesterName();
                 String sectionName = data.getSectionName();
@@ -102,16 +101,31 @@ public class AllTeacherActivity extends AppCompatActivity implements OnTeacherCl
                 // Handle error case, e.g., show a toast or an error message
             }
         });
-
+        recyclerView=findViewById(R.id.allteacherRec);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         adapter = new TeachercustomAdopter(teacherList, this);
         recyclerView.setAdapter(adapter);
 
-        imgBack.setOnClickListener(v -> finish());
-
         loadTeachers();
     }
+
+
+
+
+    private void initializeViews() {
+        txtNews = findViewById(R.id.news);
+        txtMessage = findViewById(R.id.txtmessage);
+        txtNotification = findViewById(R.id.txtnotification);
+        profilename = findViewById(R.id.profelname);
+        profile = findViewById(R.id.profilepicture);
+
+    }
+
+
+
+
+
 
     @Override
     public void onTeacherClick(user teacher) {
