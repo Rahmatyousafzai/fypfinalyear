@@ -4,133 +4,188 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="Faculty.groupmessage_body"
+    tools:context="student.stdashboard"
     android:background="@drawable/backgroundcolor"
+
     android:orientation="vertical"
     >
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
         android:layout_marginTop="@dimen/_30sdp"
+        android:layout_gravity="center"
 
         >
 
         <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/profileimage"
+            android:id="@+id/profilepicture"
+
             android:layout_width="@dimen/_40sdp"
             android:layout_height="@dimen/_40sdp"
-            android:layout_gravity="center"
             android:layout_weight="2"
-            android:src="@drawable/saeed"
+            android:layout_gravity="center"
+            android:src="@drawable/rahmatpic"
             app:civ_border_color="@color/black"
-            app:civ_border_width="2dp" />
+            app:civ_border_width="2dp"
 
+
+            />
         <TextView
             android:id="@+id/profelname"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginStart="@dimen/_8sdp"
-
-
-            android:layout_marginLeft="20dp"
-            android:layout_weight="1"
-            android:text="Dr.saeed"
+            android:layout_marginLeft="@dimen/_10sdp"
+            android:text="Rahmat Yousafzai"
             android:textColor="@color/black"
             android:textSize="20sp"
-            android:textStyle="bold"
-
-            />
-
-        <ImageView
-            android:id="@+id/detail"
-            android:layout_width="@dimen/_40sdp"
-            android:layout_height="@dimen/_40sdp"
-            android:layout_gravity="center"
-            android:layout_marginStart="150dp"
-            android:backgroundTint="@color/white"
-            android:src="@drawable/baseline_more_vert_24"
-
-
-            />
-
-    </LinearLayout>
-
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="550dp"
-    android:background="@color/white"
-    android:orientation="vertical"
-
-    >
-    <LinearLayout
-        android:layout_width="350dp"
-        android:layout_height="50dp"
-        android:background="@drawable/border"
-        android:layout_gravity="center"
-        android:layout_marginTop="@dimen/_20sdp"
-        >
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:src="@drawable/baseline_account_circle_24"
-            android:layout_gravity="center"
-            android:layout_marginLeft="20dp"
-            android:id="@+id/userimage"
-            ></de.hdodenhof.circleimageview.CircleImageView>
-        <TextView
-            android:layout_width="200dp"
-            android:layout_height="30dp"
-            android:text="username"
-            android:layout_gravity="center"
-            android:textSize="20dp"
-            android:layout_marginLeft="20dp"
-            android:id="@+id/userusername"
-            ></TextView>
-
-    </LinearLayout>
-    <androidx.recyclerview.widget.RecyclerView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:id="@+id/inboxmessages"
-        android:layout_weight="1"
-        ></androidx.recyclerview.widget.RecyclerView>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:background="@drawable/flateborder"
-        android:padding="10dp"
->
-        <ImageView
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:src="@drawable/add_button"
-            android:id="@+id/template"
-            android:layout_weight="2"
-            ></ImageView>
-        <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:hint="Type something"
-            android:id="@+id/typewish"
             android:layout_weight="1"
 
-            ></EditText>
+            android:layout_gravity="center"
+            android:layout_marginStart="@dimen/_8sdp"/>
 
-        <Button
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="wish"
-            android:id="@+id/btnwish"
-            android:backgroundTint="@color/green"
+            android:id="@+id/sectionandsamester"
+            android:layout_marginLeft="10dp"
+            android:textSize="20dp"
+            android:textStyle="italic"
+            android:text="section"
+            android:layout_gravity="bottom"
+            android:layout_weight="1"
+            ></TextView>
+        <ImageView
+            android:id="@+id/back"
+            android:layout_width="@dimen/_40sdp"
+            android:layout_height="@dimen/_40sdp"
+            android:src="@drawable/baseline_more_vert_24"
+            android:layout_gravity="center"
+            android:layout_weight="2"
+            android:backgroundTint="@color/white"
 
 
-            ></Button>
+
+            />
+
     </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="360dp"
+        android:layout_height="550dp"
+        android:background="@drawable/backgroundcolor"
+        android:backgroundTint="@color/white"
+        android:layout_gravity="center"
+        android:layout_marginTop="30dp"
+        android:orientation="vertical"
+        android:padding="5dp"
+        >
+        <LinearLayout
+            android:layout_width="350dp"
+            android:layout_height="60dp"
+            android:background="@drawable/border"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="20dp"
+            android:padding="10dp"
+
+            >
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/saeed"
+                app:civ_border_width="2dp"
+                app:civ_circle_background_color="@color/black"
+                android:id="@+id/techerimage"
+
+                >
+            </de.hdodenhof.circleimageview.CircleImageView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Dr.Saeed Wattoo"
+                android:layout_marginLeft="10dp"
+                android:layout_gravity="center"
+                android:textSize="20dp"
+
+                android:id="@+id/teachername"
+
+                >
+            </TextView>
+
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="350dp">
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_gravity="center"
+                android:id="@+id/recycllerviewmessage"
+                >
+
+
+            </androidx.recyclerview.widget.RecyclerView>
+
+
+        </LinearLayout>
+
+
+
+
+        <LinearLayout
+            android:layout_width="340dp"
+            android:layout_height="70dp"
+
+            android:background="@drawable/flateborder"
+            android:layout_gravity="center"
+            >
+
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/smile"
+                android:layout_gravity="center"
+                android:layout_marginLeft="20dp"
+                android:id="@+id/emojibutton"
+
+                ></ImageView>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:hint=" "
+                android:layout_gravity="center"
+                android:layout_marginLeft="20dp"
+                android:layout_weight="1"
+
+                android:id="@+id/message_input_field"
+                ></ImageView>
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Wish"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                android:backgroundTint="@color/green"
+                android:layout_gravity="center"
+
+                android:id="@+id/send_button"
+                >
+
+
+
+            </Button>
+
+        </LinearLayout>
+
+
+
     </LinearLayout>
+
+
+
 
 
 
