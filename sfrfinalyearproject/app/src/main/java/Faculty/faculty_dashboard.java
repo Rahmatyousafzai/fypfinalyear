@@ -22,12 +22,14 @@ import ModeClasees.Wish;
 import ModeClasees.cuTeacher;
 import ModeClasees.user;
 import adopter.OnTeacherClickListener;
-//import adopter.Wishadapter;
 import mydataapi.Apiservices;
 import mydataapi.RetrofitClient;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import studentClasses.TeacherData;
+import studentClasses.UserDataSingleton;
+import studentClasses.teacherRepository;
 
 public class faculty_dashboard extends AppCompatActivity implements OnTeacherClickListener {
 
@@ -84,6 +86,64 @@ public class faculty_dashboard extends AppCompatActivity implements OnTeacherCli
         } else {
             profile.setImageResource(R.drawable.baseline_account_circle_24);
         }
+
+
+
+
+
+        String username = UserDataSingleton.getInstance().getUsername();
+
+        teacherRepository userRepository = new teacherRepository();
+
+        userRepository.fetchTeacherData(username, new teacherRepository.teacherRepositoryCallback() {
+            @Override
+            public void onSuccess(TeacherData data)
+            {
+                // Access user data fields
+
+                String sectionName = data.getDisgnation();
+
+                profileImage=data.getProfileImage();
+                firstName=data.getFirstName();
+                lastName=data.getLastName();
+
+                Log.e("UserData.........", "Section Name:........... " + sectionName);
+
+                // Optionally, update UI with user data
+                TextView textView = findViewById(R.id.disgnation);
+                String displayData = (sectionName);
+                textView.setText(displayData);
+                if (profileImage != null && !profileImage.isEmpty()) {
+                    String imageUrl = RetrofitClient.getBaseUrl() + "images/profileimages/" +profileImage + ".jpg";
+                    Picasso.get().load(imageUrl).error(R.drawable.baseline_account_circle_24).into(profile);
+                } else {
+                    profile.setImageResource(R.drawable.baseline_account_circle_24);
+                }
+
+
+
+                String fullName = firstName+ " " + lastName;
+                profilename.setText(fullName);
+
+            }
+
+            @Override
+            public void onFailure(Exception e) {
+                Log.e("SomeActivity", "Error fetching user data: " + e.getMessage());
+                // Handle error case, e.g., show a toast or an error message
+            }
+        });
+
+
+
+
+
+
+
+
+
+
+
 
         apiServices = RetrofitClient.getInstance();
         recyclerView = findViewById(R.id.strcview);

@@ -21,6 +21,7 @@ import retrofit2.http.POST;
 import retrofit2.http.Query;
 import studentClasses.GroupsData;
 import studentClasses.StudentResponse;
+import studentClasses.TeacherResponse;
 
 public interface Apiservices {
 
@@ -108,6 +109,10 @@ public interface Apiservices {
 
     @GET("api/User/getstudentinfo")
     Call<StudentResponse> getUserData(@Query("username") String username);
+
+    @GET("api/User/GetTeacherInfo")
+    Call<TeacherResponse> getTeacherData(@Query("username") String username);
+
 
 
 }
