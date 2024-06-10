@@ -62,7 +62,6 @@
             android:layout_height="@dimen/_40sdp"
             android:src="@drawable/baseline_more_vert_24"
             android:layout_gravity="center"
-            android:layout_marginStart="@dimen/_50sdp"
             android:backgroundTint="@color/white"
 
 

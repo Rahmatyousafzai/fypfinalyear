@@ -71,21 +71,9 @@ public class faculty_dashboard extends AppCompatActivity implements OnTeacherCli
         profilename = findViewById(R.id.profelname);
         profile = findViewById(R.id.profilepicture);
 
-        Intent intent = getIntent();
-        username = intent.getStringExtra("username");
-        firstName = intent.getStringExtra("firstname");
-        lastName = intent.getStringExtra("lastname");
-        profileImage = intent.getStringExtra("profileimage");
 
-        String fullName = firstName + " " + lastName;
-        profilename.setText(fullName);
 
-        if (profileImage != null && !profileImage.isEmpty()) {
-            String imageUrl = RetrofitClient.getBaseUrl() + "images/profileimages/" + profileImage + ".jpg";
-            Picasso.get().load(imageUrl).error(R.drawable.baseline_account_circle_24).into(profile);
-        } else {
-            profile.setImageResource(R.drawable.baseline_account_circle_24);
-        }
+
 
 
 

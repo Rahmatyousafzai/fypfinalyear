@@ -28,6 +28,9 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import student.smessagebody;
 import student.sprfile;
+import studentClasses.TeacherData;
+import studentClasses.UserDataSingleton;
+import studentClasses.teacherRepository;
 
 public class facultmessage extends AppCompatActivity implements OnTeacherClickListener {
     private Apiservices apiServices = RetrofitClient.getInstance();
@@ -51,22 +54,49 @@ public class facultmessage extends AppCompatActivity implements OnTeacherClickLi
         profilename = findViewById(R.id.profelname);
         profile = findViewById(R.id.profileimage);
 
-        Intent intent = getIntent();
-        username = intent.getStringExtra("username");
-        FullName = intent.getStringExtra("FullName");
-        profileImage = intent.getStringExtra("profileimage");
-        Log.d("stteacher", "Profile Name: " + FullName);
+        username = UserDataSingleton.getInstance().getUsername();
 
-        // Set profile name
-        profilename.setText(FullName);
+        teacherRepository userRepository = new teacherRepository();
 
-        // Load profile image using Picasso
-        if (profileImage != null && !profileImage.isEmpty()) {
-            String imageUrl = RetrofitClient.getBaseUrl() + "images/profileimages/" + profileImage + ".jpg";
-            Picasso.get().load(imageUrl).into(profile);
-        } else {
-            profile.setImageResource(R.drawable.baseline_account_circle_24);
-        }
+        userRepository.fetchTeacherData(username, new teacherRepository.teacherRepositoryCallback() {
+            @Override
+            public void onSuccess(TeacherData data)
+            {
+                // Access user data fields
+
+                String Disignation = data.getDisgnation();
+
+                String profileImage = data.getProfileImage();
+                String firstName = data.getFirstName();
+                String lastName = data.getLastName();
+
+                Log.e("UserData.........", "Section Name:........... " + Disignation);
+
+                // Optionally, update UI with user data
+                TextView textView = findViewById(R.id.disgnation);
+                String displayData = (Disignation);
+                textView.setText(displayData);
+                if (profileImage != null && !profileImage.isEmpty()) {
+                    String imageUrl = RetrofitClient.getBaseUrl() + "images/profileimages/" +profileImage + ".jpg";
+                    Picasso.get().load(imageUrl).error(R.drawable.baseline_account_circle_24).into(profile);
+                } else {
+                    profile.setImageResource(R.drawable.baseline_account_circle_24);
+                }
+
+
+
+                String fullName = firstName+ " " + lastName;
+                profilename.setText(fullName);
+
+            }
+
+            @Override
+            public void onFailure(Exception e) {
+                Log.e("SomeActivity", "Error fetching user data: " + e.getMessage());
+                // Handle error case, e.g., show a toast or an error message
+            }
+        });
+
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         adapter = new MessagListAdopter(new ArrayList<>(), this);

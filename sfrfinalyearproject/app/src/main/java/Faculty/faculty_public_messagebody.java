@@ -26,6 +26,9 @@ import mydataapi.RetrofitClient;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import studentClasses.TeacherData;
+import studentClasses.UserDataSingleton;
+import studentClasses.teacherRepository;
 
 public class faculty_public_messagebody extends AppCompatActivity {
     Button sendwish;
@@ -47,26 +50,53 @@ public class faculty_public_messagebody extends AppCompatActivity {
 
         sendwish = findViewById(R.id.sendwish);
 
-        back = findViewById(R.id.back);
+
         profilename = findViewById(R.id.profelname);  // Initialize this
         profile = findViewById(R.id.profilepicture);          // Initialize this
 typesomthing=findViewById(R.id.typesomthing);
-        Intent intent = getIntent();
-        username = intent.getStringExtra("username");
-        firstName = intent.getStringExtra("firstname");
-        lastName = intent.getStringExtra("lastname");
-        profileImage = intent.getStringExtra("profileimage");
+        username = UserDataSingleton.getInstance().getUsername();
 
-        Log.d("usernameofsender","username"+username);
-        String fullName = firstName + " " + lastName;
-        profilename.setText(fullName);
+        teacherRepository userRepository = new teacherRepository();
 
-        if (profileImage != null && !profileImage.isEmpty()) {
-            String imageUrl = RetrofitClient.getBaseUrl() + "images/profileimages/" + profileImage + ".jpg";
-            Picasso.get().load(imageUrl).error(R.drawable.baseline_account_circle_24).into(profile);
-        } else {
-            profile.setImageResource(R.drawable.baseline_account_circle_24);
-        }
+        userRepository.fetchTeacherData(username, new teacherRepository.teacherRepositoryCallback() {
+            @Override
+            public void onSuccess(TeacherData data)
+            {
+                // Access user data fields
+
+                String Disignation = data.getDisgnation();
+
+                String profileImage = data.getProfileImage();
+                String firstName = data.getFirstName();
+                String lastName = data.getLastName();
+
+                Log.e("UserData.........", "Section Name:........... " + Disignation);
+
+                // Optionally, update UI with user data
+                TextView textView = findViewById(R.id.disgnation);
+                String displayData = (Disignation);
+                textView.setText(displayData);
+                if (profileImage != null && !profileImage.isEmpty()) {
+                    String imageUrl = RetrofitClient.getBaseUrl() + "images/profileimages/" +profileImage + ".jpg";
+                    Picasso.get().load(imageUrl).error(R.drawable.baseline_account_circle_24).into(profile);
+                } else {
+                    profile.setImageResource(R.drawable.baseline_account_circle_24);
+                }
+
+
+
+                String fullName = firstName+ " " + lastName;
+                profilename.setText(fullName);
+
+            }
+
+            @Override
+            public void onFailure(Exception e) {
+                Log.e("SomeActivity", "Error fetching user data: " + e.getMessage());
+                // Handle error case, e.g., show a toast or an error message
+            }
+        });
+
 
         apiServices = RetrofitClient.getInstance();
 
@@ -98,23 +128,11 @@ typesomthing=findViewById(R.id.typesomthing);
 
                 sendWish(wishData);
             }
-        });
-
-
-        back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                back();
-            }
-
-
-
-
-
-
-
 
         });
+
+
+
 
 
 
@@ -151,11 +169,7 @@ typesomthing=findViewById(R.id.typesomthing);
         return sdf.format(new Date());
     }
 
-    private void back() {
-        Intent intent = new Intent(faculty_public_messagebody.this, faculty_select_message_option.class);
-        startActivity(intent);
-        finish();
-    }
+
 
     private void addtemplate() {
         Intent intent = new Intent(faculty_public_messagebody.this, templete.class);

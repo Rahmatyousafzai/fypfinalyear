@@ -1,7 +1,7 @@
 package Faculty;
 
-import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -26,6 +26,9 @@ import mydataapi.RetrofitClient;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import studentClasses.TeacherData;
+import studentClasses.UserDataSingleton;
+import studentClasses.teacherRepository;
 
 public class facultypapulationMessage extends AppCompatActivity {
 
@@ -48,21 +51,49 @@ public class facultypapulationMessage extends AppCompatActivity {
         ImageView profile = findViewById(R.id.profilepicture);
         layoutCheckboxes = findViewById(R.id.layout_checkboxes);
 
-        Intent intent = getIntent();
-        username = intent.getStringExtra("username");
-        firstName = intent.getStringExtra("firstname");
-        lastName = intent.getStringExtra("lastname");
-        profileImage = intent.getStringExtra("profileimage");
+        username = UserDataSingleton.getInstance().getUsername();
 
-        String fullName = firstName + " " + lastName;
-        profilename.setText(fullName);
+        teacherRepository userRepository = new teacherRepository();
 
-        if (profileImage != null && !profileImage.isEmpty()) {
-            String imageUrl = RetrofitClient.getBaseUrl() + "images/profileimages/" + profileImage + ".jpg";
-            Picasso.get().load(imageUrl).error(R.drawable.baseline_account_circle_24).into(profile);
-        } else {
-            profile.setImageResource(R.drawable.baseline_account_circle_24);
-        }
+        userRepository.fetchTeacherData(username, new teacherRepository.teacherRepositoryCallback() {
+            @Override
+            public void onSuccess(TeacherData data)
+            {
+                // Access user data fields
+
+                String Disignation = data.getDisgnation();
+
+                String profileImage = data.getProfileImage();
+                String firstName = data.getFirstName();
+                String lastName = data.getLastName();
+
+                Log.e("UserData.........", "Section Name:........... " + Disignation);
+
+                // Optionally, update UI with user data
+                TextView textView = findViewById(R.id.disgnation);
+                String displayData = (Disignation);
+                textView.setText(displayData);
+                if (profileImage != null && !profileImage.isEmpty()) {
+                    String imageUrl = RetrofitClient.getBaseUrl() + "images/profileimages/" +profileImage + ".jpg";
+                    Picasso.get().load(imageUrl).error(R.drawable.baseline_account_circle_24).into(profile);
+                } else {
+                    profile.setImageResource(R.drawable.baseline_account_circle_24);
+                }
+
+
+
+                String fullName = firstName+ " " + lastName;
+                profilename.setText(fullName);
+
+            }
+
+            @Override
+            public void onFailure(Exception e) {
+                Log.e("SomeActivity", "Error fetching user data: " + e.getMessage());
+                // Handle error case, e.g., show a toast or an error message
+            }
+        });
+
 
         spinnerProgram = findViewById(R.id.programspinner);
         layoutCheckboxes = findViewById(R.id.layout_checkboxes);
@@ -77,7 +108,7 @@ public class facultypapulationMessage extends AppCompatActivity {
             apiservices = RetrofitClient.getInstance();
         }
 
-        apiservices.getSemesterSection("BIIT0001").enqueue(new Callback<List<Course>>() {
+        apiservices.getSemesterSection(username).enqueue(new Callback<List<Course>>() {
             @Override
             public void onResponse(Call<List<Course>> call, Response<List<Course>> response) {
                 if (response.isSuccessful() && response.body() != null) {

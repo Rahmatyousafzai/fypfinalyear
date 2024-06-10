@@ -68,6 +68,9 @@ public class smessagebody extends AppCompatActivity implements OnEmojiClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_smessagebody);
 
+        username = UserDataSingleton.getInstance().getUsername();
+
+        UserRepository userRepository = new UserRepository();
         // Initialize RecyclerView
         recyclerView = findViewById(R.id.recycllerviewmessage);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -82,9 +85,6 @@ public class smessagebody extends AppCompatActivity implements OnEmojiClickListe
         teacherprofileimage = findViewById(R.id.techerimage); // Make sure this matches your layout file
 
         // In any other activity where you want to access the username
-        username = UserDataSingleton.getInstance().getUsername();
-
-        UserRepository userRepository = new UserRepository();
         userRepository.fetchUserData(username, new UserRepository.UserRepositoryCallback() {
             @Override
             public void onSuccess(studentData data) {

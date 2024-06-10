@@ -26,6 +26,9 @@ import mydataapi.RetrofitClient;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import studentClasses.TeacherData;
+import studentClasses.UserDataSingleton;
+import studentClasses.teacherRepository;
 
 public class alumnimessage extends AppCompatActivity {
 
@@ -34,6 +37,7 @@ public class alumnimessage extends AppCompatActivity {
     private static final String TAG = "Alumni";
     private String username;
     private String FullName;
+    String firstName;
     private String lastName;
     private String profileImage;
     private Apiservices apiServices;
@@ -46,26 +50,52 @@ public class alumnimessage extends AppCompatActivity {
         setContentView(R.layout.activity_alumnimessage);
         sendwish = findViewById(R.id.sendwish);
 
-        back = findViewById(R.id.back);
+
         profilename = findViewById(R.id.profelname);  // Initialize this
         profile = findViewById(R.id.profilepicture);          // Initialize this
         typesomthing=findViewById(R.id.typesomthing);
-        Intent intent = getIntent();
-        username = intent.getStringExtra("username");
-        FullName = intent.getStringExtra("FullName");
-        profileImage = intent.getStringExtra("profileimage");
-        Log.d("stteacher", "Profile Name: " + FullName);
-        // Set profile name
-        profilename.setText(FullName);
+        String username = UserDataSingleton.getInstance().getUsername();
 
-        // Load profile image using Picasso
-        if (profileImage != null && !profileImage.isEmpty()) {
-            String imageUrl = RetrofitClient.getBaseUrl() + "images/profileimages/" + profileImage + ".jpg";
-            Picasso.get().load(imageUrl).into(profile);
-        } else {
-            profile.setImageResource(R.drawable.baseline_account_circle_24);
-        }
-        apiServices = RetrofitClient.getInstance();
+        teacherRepository userRepository = new teacherRepository();
+
+        userRepository.fetchTeacherData(username, new teacherRepository.teacherRepositoryCallback() {
+            @Override
+            public void onSuccess(TeacherData data)
+            {
+                // Access user data fields
+
+                String Disignation = data.getDisgnation();
+
+                profileImage=data.getProfileImage();
+                      firstName = data.getFirstName();
+                lastName=data.getLastName();
+
+                Log.e("UserData.........", "Section Name:........... " + Disignation);
+
+                // Optionally, update UI with user data
+                TextView textView = findViewById(R.id.disgnation);
+                String displayData = (Disignation);
+                textView.setText(displayData);
+                if (profileImage != null && !profileImage.isEmpty()) {
+                    String imageUrl = RetrofitClient.getBaseUrl() + "images/profileimages/" +profileImage + ".jpg";
+                    Picasso.get().load(imageUrl).error(R.drawable.baseline_account_circle_24).into(profile);
+                } else {
+                    profile.setImageResource(R.drawable.baseline_account_circle_24);
+                }
+
+
+
+                String fullName = firstName+ " " + lastName;
+                profilename.setText(fullName);
+
+            }
+
+            @Override
+            public void onFailure(Exception e) {
+                Log.e("SomeActivity", "Error fetching user data: " + e.getMessage());
+                // Handle error case, e.g., show a toast or an error message
+            }
+        });
 
         sendwish.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -98,12 +128,7 @@ public class alumnimessage extends AppCompatActivity {
         });
 
 
-        back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                back();
-            }
-        });
+
     }
 
     private void sendWish(SendWishRequestDto wishData) {
@@ -135,11 +160,7 @@ public class alumnimessage extends AppCompatActivity {
         return sdf.format(new Date());
     }
 
-    private void back() {
-        Intent intent = new Intent(alumnimessage.this, faculty_select_message_option.class);
-        startActivity(intent);
-        finish();
-    }
+
 
     private void addtemplate() {
         Intent intent = new Intent(alumnimessage.this, templete.class);

@@ -25,12 +25,7 @@ CheckBox chksection;
         chksection=findViewById(R.id.chksection);
 
 
-        imgback.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                NavigateToback();
-            }
-        });
+
         btnwish.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

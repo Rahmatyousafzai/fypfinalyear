@@ -127,6 +127,24 @@ public class smassage extends AppCompatActivity implements OnTeacherClickListene
                 unhighlightButton(smipleMessage);
             }
         });
+
+
+
+        createGroup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent =new Intent(smassage.this, CreateGroup.class);
+                startActivity(intent);
+
+                finish();
+            }
+        });
+
+
+
+
+
     }
 
     private void initializeViews() {
@@ -223,5 +241,14 @@ public class smassage extends AppCompatActivity implements OnTeacherClickListene
             }
         });
     }
+
+
+
+
+
+
+
+
+
 
 }

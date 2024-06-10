@@ -112,6 +112,8 @@ public class MessagListAdopter extends RecyclerView.Adapter<RecyclerView.ViewHol
                 Intent intent = new Intent(v.getContext(), groupmessage_body.class);
                 intent.putExtra("group_id", groupMessage.getGID());
                 intent.putExtra("group_name", groupMessage.getGropnmae());
+                intent.putExtra("group_Dis", groupMessage.getGropnmae());
+                intent.putExtra("group_image", groupMessage.getGropnmae());
                 // Add more data as needed
                 v.getContext().startActivity(intent);
             });

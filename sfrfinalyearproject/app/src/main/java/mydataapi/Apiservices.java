@@ -19,6 +19,8 @@ import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
+import studentClasses.Group;
+import studentClasses.GroupMember;
 import studentClasses.GroupsData;
 import studentClasses.StudentResponse;
 import studentClasses.TeacherResponse;
@@ -73,6 +75,13 @@ public interface Apiservices {
             @Query("ReciverId") String ReciverId
     );
 
+
+    @GET("api/Wish/chatmessage")
+    Call<List<Message>> groupmessage(
+            @Query("GroupId") String GroupId
+
+    );
+
     @GET("api/Wish/GetAchievements")
     Call<List<Achievement>> getAchievements();
 
@@ -95,7 +104,11 @@ public interface Apiservices {
     Call<List<Message>> getMessages();
 
 
+    @POST("api/Teacher/CreateGroup")
+    Call<Void> createGroup(@Body Group group);
 
+    @POST("api/Teacher/AddGroupMember")
+    Call<Void> addGroupMember(@Body GroupMember groupMember);
 
 
 
