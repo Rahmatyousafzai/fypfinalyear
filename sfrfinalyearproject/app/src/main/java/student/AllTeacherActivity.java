@@ -197,7 +197,7 @@ public class AllTeacherActivity extends AppCompatActivity implements OnTeacherCl
     @Override
     public void onBackPressed() {
         // Navigate back to the login screen
-        Intent intent = new Intent(this, stdashboard.class);
+        Intent intent = new Intent(this, stteacher.class);
         startActivity(intent);
         finish(); // Finish the current activity to prevent returning to it when pressing back again
         super.onBackPressed(); // Call super method

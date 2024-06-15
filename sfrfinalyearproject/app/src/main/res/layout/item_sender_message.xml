@@ -1,49 +1,45 @@
-<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:gravity="end">
-
-
+    android:padding="8dp"
+    android:gravity="end"> <!-- Aligns sender messages to the right side -->
     <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-        <de.hdodenhof.circleimageview.CircleImageView
+        android:layout_height="wrap_content"
 
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:src="@drawable/rahmatpic"
-            app:civ_border_color="@color/green"
-            app:civ_border_width="3dp"
-            android:id="@+id/scimage"
+        >
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/senderImage"
+        app:civ_border_color="#B6092A"
+        app:civ_border_width="3dp"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:src="@drawable/default_profile_image"
+        android:scaleType="centerCrop"
+        android:layout_marginEnd="8dp" /> <!-- Use marginEnd for right margin -->
 
-            ></de.hdodenhof.circleimageview.CircleImageView>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Rahmat"
-            android:id="@+id/scname"
-            android:textColor="@color/colorPrimary"
-            android:layout_gravity="center"
-            android:layout_marginLeft="10dp"
-
-            ></TextView>
-
-    </LinearLayout>
-
-    <LinearLayout
+    <TextView
+        android:id="@+id/sender_name"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-
-        <ImageView
-            android:background="@color/colorAccent"
-            android:layout_marginTop="10dp"
-            android:id="@+id/emoji_image_view_sender"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:layout_margin="8dp" />
-
+        android:layout_height="wrap_content"
+        android:text="Sender Name"
+        android:textSize="16sp"
+        android:textStyle="bold" />
     </LinearLayout>
+    <ImageView
+        android:id="@+id/emoji_image_view_sender"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:src="@drawable/default_profile_image"
+        android:scaleType="centerCrop"
+        android:layout_marginEnd="40dp"
+android:background="@color/green"
+        android:padding="5dp"
+        android:layout_marginTop="10dp"
+
+ />
+
+
 </LinearLayout>

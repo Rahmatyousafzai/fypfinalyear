@@ -1,47 +1,43 @@
-<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:gravity="start">
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-<de.hdodenhof.circleimageview.CircleImageView
+    android:padding="8dp"
+    android:gravity="start"> <!-- Aligns receiver messages to the left side -->
+<LinearLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/emoji_image_view_receiver"
+        app:civ_border_color="@color/green"
+        app:civ_border_width="3dp"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:src="@drawable/default_profile_image"
+        android:scaleType="centerCrop"
+        android:layout_marginEnd="8dp" />
 
-    android:layout_width="40dp"
-    android:layout_height="40dp"
-    android:src="@drawable/rahmatpic"
-    app:civ_border_color="@color/green"
-    app:civ_border_width="3dp"
-    android:id="@+id/rcimage"
-
-    ></de.hdodenhof.circleimageview.CircleImageView>
     <TextView
+        android:id="@+id/rcname"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Rahmat"
-        android:id="@+id/rcname"
-        android:textColor="@color/colorPrimary"
-       android:layout_gravity="center"
-        android:layout_marginLeft="10dp"
-
-        ></TextView>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-
+        android:text="Receiver Name"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:layout_marginEnd="8dp" />
+</LinearLayout>
     <ImageView
-        android:background="@color/colorAccent"
+        android:id="@+id/Reciveremoji"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:src="@drawable/default_profile_image"
+        android:scaleType="centerCrop"
         android:layout_marginTop="10dp"
-        android:id="@+id/emoji_image_view_receiver"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_margin="8dp" />
+        android:layout_marginStart="50dp"
+        android:padding="8dp"
+        android:background="@color/colorAccent"
 
-    </LinearLayout>
+        />
+
 </LinearLayout>

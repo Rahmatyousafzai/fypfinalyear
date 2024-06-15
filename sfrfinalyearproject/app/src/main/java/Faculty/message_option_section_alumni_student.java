@@ -33,7 +33,7 @@ public class message_option_section_alumni_student extends AppCompatActivity {
         favstudent=findViewById(R.id.txtfavstudent);
 
         TextView profilename = findViewById(R.id.profelname);
-        ImageView profile = findViewById(R.id.profilepicture);
+        ImageView profile = findViewById(R.id.profileimage);
 
 
         username = UserDataSingleton.getInstance().getUsername();

@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:background="@drawable/flateborder"
         android:orientation="horizontal"
-        android:padding="20dp"
+        android:padding="5dp"
         >
     <ImageView
 
@@ -28,23 +28,10 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
+        android:orientation="horizontal"
+        android:layout_gravity="center"
 
         >
-
-
-        <TextView
-            android:id="@+id/username"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Username"
-            android:layout_gravity="center"
-            android:padding="2dp"
-            android:textSize="20dp"
-            android:textColor="@color/black"
-
-            />
-
         <TextView
             android:id="@+id/fname"
             android:layout_width="wrap_content"
@@ -53,7 +40,7 @@
             android:textColor="@color/black"
             android:layout_gravity="center"
 
-            android:textSize="20dp"
+            android:textSize="15dp"
 
             />
 
@@ -61,11 +48,28 @@
             android:layout_marginLeft="3dp"
             android:layout_gravity="center"
             android:id="@+id/lname"
-            android:textSize="20dp"
+            android:textSize="15dp"
             android:textColor="@color/black"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Last Name" />
+
+
+        <TextView
+            android:id="@+id/username"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Username"
+            android:layout_marginLeft="10dp"
+            android:layout_gravity="center"
+            android:padding="2dp"
+            android:textSize="15dp"
+            android:layout_weight="1"
+            android:textColor="@color/black"
+
+            />
+
+
     </LinearLayout>
     </LinearLayout>
 

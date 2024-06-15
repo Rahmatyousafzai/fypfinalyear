@@ -1,43 +1,39 @@
 package ModeClasees;
 
+import com.google.gson.annotations.SerializedName;
+
 public class Message {
+    @SerializedName("senderUsername")
+private String senderUsername;
 
-
-
-
-
-
-    private String profileImageUrl;
-    private String firstName;
-    private String lastName;
-    private String content;
-
-    public Message(String profileImageUrl, String firstName, String lastName, String content) {
-        this.profileImageUrl = profileImageUrl;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.content = content;
-    }
-
-    public String getProfileImageUrl() {
-        return profileImageUrl;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public String getContent() {
-        return content;
-    }
-    private String senderUsername;
+    @SerializedName("senderFirstName")
     private String senderFirstName;
+
+    @SerializedName("senderLastName")
     private String senderLastName;
 
+    @SerializedName("senderProfileImage")
+    private String senderProfileImage;
+
+    @SerializedName("receiverUsername")
+    private String receiverUsername;
+
+    @SerializedName("receiverFirstName")
+    private String receiverFirstName;
+
+    @SerializedName("receiverLastName")
+    private String receiverLastName;
+
+    @SerializedName("receiverProfileImage")
+    private String receiverProfileImage;
+
+    @SerializedName("emojiData")
+    private String emojiData;
+
+    @SerializedName("wishDateTime")
+    private String wishDateTime;
+
+    // Getters and setters
     public String getSenderUsername() {
         return senderUsername;
     }
@@ -103,11 +99,11 @@ public class Message {
     }
 
     public String getEmojiData() {
-        return Emojidata;
+        return emojiData;
     }
 
     public void setEmojiData(String emojiData) {
-        this.Emojidata = emojiData;
+        this.emojiData = emojiData;
     }
 
     public String getWishDateTime() {
@@ -116,30 +112,4 @@ public class Message {
 
     public void setWishDateTime(String wishDateTime) {
         this.wishDateTime = wishDateTime;
-    }
-
-    private String senderProfileImage;
-    private String receiverUsername;
-    private String receiverFirstName;
-
-    public Message(String senderUsername, String senderFirstName, String senderLastName, String senderProfileImage, String receiverUsername, String receiverFirstName, String receiverLastName, String receiverProfileImage, String emojiData, String wishDateTime) {
-        this.senderUsername = senderUsername;
-        this.senderFirstName = senderFirstName;
-        this.senderLastName = senderLastName;
-        this.senderProfileImage = senderProfileImage;
-        this.receiverUsername = receiverUsername;
-        this.receiverFirstName = receiverFirstName;
-        this.receiverLastName = receiverLastName;
-        this.receiverProfileImage = receiverProfileImage;
-        this.Emojidata = emojiData;
-        this.wishDateTime = wishDateTime;
-    }
-
-    private String receiverLastName;
-    private String receiverProfileImage;
-    private String Emojidata;
-    private String wishDateTime;
-
-
-
-}
+    }}

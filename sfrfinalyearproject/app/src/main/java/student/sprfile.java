@@ -62,7 +62,7 @@ public class sprfile extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         // Navigate back to the login screen
-        Intent intent = new Intent(this, AllTeacherActivity.class);
+        Intent intent = new Intent(this, stdashboard.class);
         startActivity(intent);
         finish(); // Finish the current activity to prevent returning to it when pressing back again
         super.onBackPressed(); // Call super method

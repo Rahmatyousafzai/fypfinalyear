@@ -2,6 +2,8 @@ package student;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -34,32 +36,38 @@ import studentClasses.UserRepository;
 import studentClasses.studentData;
 
 public class smassage extends AppCompatActivity implements OnTeacherClickListener {
+
+    // Instance of Apiservices for API calls
     private Apiservices apiServices = RetrofitClient.getInstance();
-    private RecyclerView recyclerView;
+    private RecyclerView recyclerView; // RecyclerView for displaying messages
 
-    private TextView profilename;
-    private ImageView profile, smipleMessage, groupmessage, createGroup;
+    private TextView profilename; // TextView for displaying profile name
+    private ImageView profile, smipleMessage, groupmessage, createGroup; // ImageViews for profile, simple message, group message, and creating a group
 
-    private String username, firstName, lastName, FullName, profileImage;
+    private String username, firstName, lastName, FullName, profileImage; // User information
 
-    private MessagListAdopter adapter;
-    private List<Wish> MessageList = new ArrayList<>();
-    private List<GroupsData> GroupMessageList = new ArrayList<>();
+    private MessagListAdopter adapter; // Adapter for RecyclerView
+    private List<Wish> MessageList = new ArrayList<>(); // List for simple messages
+    private List<GroupsData> GroupMessageList = new ArrayList<>(); // List for group messages
+
+    private Handler handler; // Handler for background API calls
+    private Runnable apiRunnable; // Runnable for background API calls
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_smassage);
 
-        createGroup = findViewById(R.id.creategroup);
-        smipleMessage = findViewById(R.id.simlpemessage);
-        groupmessage = findViewById(R.id.group);
+        // Initialize views
         initializeViews();
 
+        // Initialize handler for background API calls
+        handler = new Handler(Looper.getMainLooper());
 
         // In any other activity where you want to access the username
         username = UserDataSingleton.getInstance().getUsername();
 
+        // Fetch user data from repository
         UserRepository userRepository = new UserRepository();
         userRepository.fetchUserData(username, new UserRepository.UserRepositoryCallback() {
             @Override
@@ -79,13 +87,13 @@ public class smassage extends AppCompatActivity implements OnTeacherClickListene
                 Log.e("UserData.........", "Section Name:........... " + sectionName);
 
                 // Optionally, update UI with user data
-                TextView textView = findViewById(R.id.sectionandsamester);
                 String displayData = "(" + programName + " " + semesterName + "" + sectionName + ")";
-                textView.setText(displayData);
+                profilename.setText(displayData);
                 if (profileImage != null && !profileImage.isEmpty()) {
                     String imageUrl = RetrofitClient.getBaseUrl() + "images/profileimages/" + profileImage + ".jpg";
                     Picasso.get().load(imageUrl).error(R.drawable.baseline_account_circle_24).into(profile);
-                } else {
+                }
+                else {
                     profile.setImageResource(R.drawable.baseline_account_circle_24);
                 }
 
@@ -100,7 +108,8 @@ public class smassage extends AppCompatActivity implements OnTeacherClickListene
             }
         });
 
-        recyclerView = findViewById(R.id.smessage); // Make sure to use the correct ID for RecyclerView
+        // Set up RecyclerView
+        recyclerView = findViewById(R.id.smessage);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         adapter = new MessagListAdopter(new ArrayList<>(), this);
         recyclerView.setAdapter(adapter);
@@ -108,48 +117,44 @@ public class smassage extends AppCompatActivity implements OnTeacherClickListene
         // Load simple messages initially
         loadMessages();
 
-        smipleMessage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                loadMessages();
-                createGroup.setVisibility(View.GONE);
-                highlightButton(smipleMessage);
-                unhighlightButton(groupmessage);
-            }
+        // Set click listeners for buttons
+        smipleMessage.setOnClickListener(v -> {
+            loadMessages();
+            createGroup.setVisibility(View.GONE);
+            highlightButton(smipleMessage);
+            unhighlightButton(groupmessage);
         });
 
-        groupmessage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                loadGroupMessages();
-                createGroup.setVisibility(View.VISIBLE);
-                highlightButton(groupmessage);
-                unhighlightButton(smipleMessage);
-            }
+        groupmessage.setOnClickListener(v -> {
+            loadGroupMessages();
+            createGroup.setVisibility(View.VISIBLE);
+            highlightButton(groupmessage);
+            unhighlightButton(smipleMessage);
         });
 
-
-
-        createGroup.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Intent intent =new Intent(smassage.this, CreateGroup.class);
-                startActivity(intent);
-
-                finish();
-            }
+        createGroup.setOnClickListener(v -> {
+            Intent intent = new Intent(smassage.this, CreateGroup.class);
+            startActivity(intent);
+            finish();
         });
 
-
-
-
-
+        // Set up background API call every 5 seconds
+        apiRunnable = new Runnable() {
+            @Override
+            public void run() {
+                loadMessages(); // Load messages in the background
+                handler.postDelayed(this, 5000); // Repeat every 5 seconds
+            }
+        };
+        handler.postDelayed(apiRunnable, 5000); // Start the background task
     }
 
     private void initializeViews() {
         profilename = findViewById(R.id.profelname);
         profile = findViewById(R.id.profilepicture);
+        createGroup = findViewById(R.id.creategroup);
+        smipleMessage = findViewById(R.id.simlpemessage);
+        groupmessage = findViewById(R.id.group);
     }
 
     private void highlightButton(View button) {
@@ -159,8 +164,6 @@ public class smassage extends AppCompatActivity implements OnTeacherClickListene
     private void unhighlightButton(View button) {
         button.setBackgroundColor(ContextCompat.getColor(this, R.color.unhighlighted_color));
     }
-
-
 
     @Override
     public void onTeacherClick(cuTeacher teacher) {
@@ -242,13 +245,19 @@ public class smassage extends AppCompatActivity implements OnTeacherClickListene
         });
     }
 
+    @Override
+    public void onBackPressed() {
+        // Navigate back to the login screen
+        Intent intent = new Intent(this, stdashboard.class);
+        startActivity(intent);
+        finish(); // Finish the current activity to prevent returning to it when pressing back again
+        super.onBackPressed(); // Call super method
+    }
 
-
-
-
-
-
-
-
-
+    @Override
+    protected void onDestroy() {
+        // Remove the callback when the activity is destroyed to prevent memory leaks
+        handler.removeCallbacks(apiRunnable);
+        super.onDestroy();
+    }
 }

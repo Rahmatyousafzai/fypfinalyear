@@ -25,9 +25,9 @@ import com.example.sfrfinalyearproject.R;
 import java.util.List;
 
 import ModeClasees.Message;
-import adopter.ChatAdapter;
 import adopter.MessagListAdopter;
 import facultyClasses.message;
+import modelclassespost.ConversationAdapter;
 import mydataapi.Apiservices;
 import mydataapi.RetrofitClient;
 
@@ -50,7 +50,7 @@ public class ft_message extends AppCompatActivity {
     RecyclerView recyclerView;
 
     private GridView gridView;
-    private ChatAdapter chatAdapter;
+    private ConversationAdapter chatAdapter;
     private List<Message> messageList;
     TextView profilename, pfimageofteacher, tcname;
     ImageView profile, profileImageView, Emojipapolate;

@@ -1,10 +1,7 @@
 package Faculty;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -18,25 +15,19 @@ import studentClasses.TeacherData;
 import studentClasses.UserDataSingleton;
 import studentClasses.teacherRepository;
 
-public class ft_send_message_by_course extends AppCompatActivity {
-Button done;
-String username;
-    private String firstName;
-    private String lastName;
-    private String profileImage;
-    ImageView profile;
-    TextView profilename;
+public class facultyprofile extends AppCompatActivity {
+
+    String username;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_ft_send_message_by_course);
 
-        username = UserDataSingleton.getInstance().getUsername();
 
-        profilename = findViewById(R.id.profelname);
-        profile = findViewById(R.id.profilepicture);
+        setContentView(R.layout.activity_facultyprofile);
 
-        done=findViewById(R.id.done);
+        TextView profilename = findViewById(R.id.txtname);
+        ImageView profile = findViewById(R.id.profelpicture);
+        TextView TXTusername = findViewById(R.id.txtname);
 
         username = UserDataSingleton.getInstance().getUsername();
 
@@ -67,8 +58,7 @@ String username;
                     profile.setImageResource(R.drawable.baseline_account_circle_24);
                 }
 
-
-
+                TXTusername.setText(username);
                 String fullName = firstName+ " " + lastName;
                 profilename.setText(fullName);
 
@@ -80,25 +70,6 @@ String username;
                 // Handle error case, e.g., show a toast or an error message
             }
         });
-
-
-        done.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                navigateTomessagebody();
-            }
-        });
-
-    }
-
-    private void navigateTomessagebody() {
-
-        Intent intent=new Intent(ft_send_message_by_course.this,course_message_body.class);
-        startActivity(intent);
-        finish();
-
-
 
     }
 }

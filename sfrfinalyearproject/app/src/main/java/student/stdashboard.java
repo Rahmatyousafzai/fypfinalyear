@@ -5,10 +5,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.sfrfinalyearproject.R;
@@ -18,32 +16,25 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ModeClasees.Message;
-import ModeClasees.Wish;
-import ModeClasees.cuTeacher;
-import ModeClasees.user;
-import adopter.OnTeacherClickListener;
-import modelclassespost.MessageAdapter;
 import mydataapi.Apiservices;
 import mydataapi.RetrofitClient;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 import studentClasses.UserDataSingleton;
 import studentClasses.UserRepository;
 import studentClasses.studentData;
 
-public class stdashboard extends AppCompatActivity implements OnTeacherClickListener {
+public class stdashboard extends AppCompatActivity {
+    //implements OnTeacherClickListener {
 
     private static final String TAG = "StudentDashboard";
 
     // Views
-    private TextView txtNews,sectionandsamester, txtMessage, txtNotification, txtFavTeacher, profilename, textteacher;
+    private TextView txtNews, sectionandsamester, txtMessage, txtNotification, txtFavTeacher, profilename, textteacher;
     private ImageView profile;
     private RecyclerView recyclerView;
 
     // Data
     private List<Message> messages = new ArrayList<>();
-    private MessageAdapter messageAdapter;
+    //private MessageAdapter messageAdapter;
     private Apiservices apiServices;
     private String username, firstName, lastName, profileImage;
 
@@ -55,19 +46,16 @@ public class stdashboard extends AppCompatActivity implements OnTeacherClickList
         apiServices = RetrofitClient.getInstance();
 
 
-
-
         initializeViews();
 
         Intent intent = getIntent();
 
 
-        setupRecyclerView();
+       // setupRecyclerView();
 
         setupClickListeners();
 
-        fetchAndDisplayWishes();
-
+        //fetchAndDisplayWishes();
 
 
 // In any other activity where you want to access the username
@@ -81,10 +69,10 @@ public class stdashboard extends AppCompatActivity implements OnTeacherClickList
                 String programName = data.getProgramName();
                 int semesterName = data.getSemesterName();
                 String sectionName = data.getSectionName();
-                String Profilename=data.getProgramName();
-                profileImage=data.getProfileImage();
-                 firstName=data.getFirstName();
-                lastName=data.getLastName();
+                String Profilename = data.getProgramName();
+                profileImage = data.getProfileImage();
+                firstName = data.getFirstName();
+                lastName = data.getLastName();
 
                 // Log user data
                 Log.e("UserData.......", "Program Name...........: " + programName);
@@ -93,18 +81,17 @@ public class stdashboard extends AppCompatActivity implements OnTeacherClickList
 
                 // Optionally, update UI with user data
                 TextView textView = findViewById(R.id.sectionandsamester);
-                String displayData = "("+programName + " "+semesterName +""+sectionName+")";
+                String displayData = "(" + programName + " " + semesterName + "" + sectionName + ")";
                 textView.setText(displayData);
                 if (profileImage != null && !profileImage.isEmpty()) {
-                    String imageUrl = RetrofitClient.getBaseUrl() + "images/profileimages/" +profileImage + ".jpg";
+                    String imageUrl = RetrofitClient.getBaseUrl() + "images/profileimages/" + profileImage + ".jpg";
                     Picasso.get().load(imageUrl).error(R.drawable.baseline_account_circle_24).into(profile);
                 } else {
                     profile.setImageResource(R.drawable.baseline_account_circle_24);
                 }
 
 
-
-                String fullName = firstName+ " " + lastName;
+                String fullName = firstName + " " + lastName;
                 profilename.setText(fullName);
 
             }
@@ -115,8 +102,6 @@ public class stdashboard extends AppCompatActivity implements OnTeacherClickList
                 // Handle error case, e.g., show a toast or an error message
             }
         });
-
-
 
 
     }
@@ -192,7 +177,7 @@ public class stdashboard extends AppCompatActivity implements OnTeacherClickList
         finish();
     }
 
-    private void setupRecyclerView() {
+  /*  private void setupRecyclerView() {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         messageAdapter = new MessageAdapter(messages);
         recyclerView.setAdapter(messageAdapter);
@@ -245,4 +230,6 @@ public class stdashboard extends AppCompatActivity implements OnTeacherClickList
     private void showToast(String message) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
+
+   */
 }

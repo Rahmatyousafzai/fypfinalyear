@@ -1,5 +1,6 @@
 package student;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -22,7 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ModeClasees.Emoji;
-import ModeClasees.Message;
+import chatClasses.MessageResponse;
 import modelclassespost.ConversationAdapter;
 import modelclassespost.ConversationItem;
 import modelclassespost.SendWishResponse;
@@ -84,11 +85,10 @@ public class smessagebody extends AppCompatActivity implements OnEmojiClickListe
         teachername = findViewById(R.id.teachername); // Make sure this matches your layout file
         teacherprofileimage = findViewById(R.id.techerimage); // Make sure this matches your layout file
 
-        // In any other activity where you want to access the username
+        // Fetch user data
         userRepository.fetchUserData(username, new UserRepository.UserRepositoryCallback() {
             @Override
             public void onSuccess(studentData data) {
-                // Access user data fields
                 String programName = data.getProgramName();
                 int semesterName = data.getSemesterName();
                 String sectionName = data.getSectionName();
@@ -97,14 +97,8 @@ public class smessagebody extends AppCompatActivity implements OnEmojiClickListe
                 firstName = data.getFirstName();
                 lastName = data.getLastName();
 
-                // Log user data
-                Log.e("UserData.......", "Program Name...........: " + programName);
-                Log.e("UserData......", "Semester Name..........: " + semesterName);
-                Log.e("UserData.........", "Section Name:........... " + sectionName);
-
-                // Optionally, update UI with user data
                 TextView sectionandsamester = findViewById(R.id.sectionandsamester);
-                String displayData = "(" + programName + " " + semesterName + "" + sectionName + ")";
+                String displayData = "(" + programName + " " + semesterName + " " + sectionName + ")";
                 sectionandsamester.setText(displayData);
                 if (profileImage != null && !profileImage.isEmpty()) {
                     String imageUrl = RetrofitClient.getBaseUrl() + "images/profileimages/" + profileImage + ".jpg";
@@ -119,8 +113,7 @@ public class smessagebody extends AppCompatActivity implements OnEmojiClickListe
 
             @Override
             public void onFailure(Exception e) {
-                Log.e("SomeActivity", "Error fetching user data: " + e.getMessage());
-                // Handle error case, e.g., show a toast or an error message
+                Log.e("smessagebody", "Error fetching user data: " + e.getMessage());
             }
         });
 
@@ -156,12 +149,17 @@ public class smessagebody extends AppCompatActivity implements OnEmojiClickListe
         // Initialize ApiService
         apiService = RetrofitClient.getInstance();
 
+        // Initialize adapter
+        adapter = new ConversationAdapter(this, new ArrayList<>(), username);
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
         // Fetch conversation between sender and receiver
         fetchConversation();
 
         // Fetch all emojis from the server
         fetchAllEmojis();
-        fetcRistrictEmojis();
+        fetchRestrictedEmojis();
 
         Log.d("TeacherUsername", "teacherUsername: " + teacherUsername);
         // Set OnClickListener for emoji button to show emoji popup window
@@ -178,42 +176,46 @@ public class smessagebody extends AppCompatActivity implements OnEmojiClickListe
             public void onClick(View v) {
                 sendMessage();
                 fetchConversation();
+                messageInputField = null;
             }
         });
     }
 
     // Function to fetch conversation between sender and receiver
     private void fetchConversation() {
-        apiService.chatmessage(username, teacherUsername).enqueue(new Callback<List<Message>>() {
+        apiService.chatmessage(username, teacherUsername).enqueue(new Callback<List<MessageResponse>>() {
             @Override
-            public void onResponse(Call<List<Message>> call, Response<List<Message>> response) {
+            public void onResponse(Call<List<MessageResponse>> call, Response<List<MessageResponse>> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    List<Message> messages = response.body();
+                    List<MessageResponse> messageResponses = response.body();
                     List<ConversationItem> conversationItems = new ArrayList<>();
 
-                    // Convert Message objects to ConversationItem objects
-                    for (Message message : messages) {
-                        conversationItems.add(new ConversationItem(message.getSenderUsername(),
-                                message.getReceiverUsername(),message.getReceiverProfileImage(),message.getSenderProfileImage(), message.getEmojiData()));
-                        Log.d("Response Index", "Message: " + message);
+                    // Convert MessageResponse objects to ConversationItem objects
+                    for (MessageResponse messageResponse : messageResponses) {
+                        conversationItems.add(new ConversationItem(
+                                messageResponse.getSenderUsername(),
+                                messageResponse.getSenderFirstName(),
+                                messageResponse.getSenderLastName(),
+                                messageResponse.getSenderProfileImage(),
+                                messageResponse.getReceiverUsername(),
+                                messageResponse.getReceiverFirstName(),
+                                messageResponse.getReceiverLastName(),
+                                messageResponse.getReceiverProfileImage(),
+                                messageResponse.getEmojidata(),
+                                messageResponse.getWishDateTime()
+                        ));
                     }
 
-                    // Create and set adapter to RecyclerView
-
-                    adapter = new ConversationAdapter(smessagebody.this, conversationItems,username);
-                    recyclerView.setAdapter(adapter);
-                    recyclerView.hasFixedSize();
-                    recyclerView.setLayoutManager(new LinearLayoutManager(smessagebody.this));
-                    Log.d("Adapter Data", "Conversation Items: " + conversationItems);
+                    // Update adapter with new data
+                    adapter.setData(conversationItems);
+                    adapter.notifyDataSetChanged();
                 } else {
-                    // Handle unsuccessful response
-                    Log.d("API chatmessage", "Failed to fetch conversation data");
+                    Log.e("API chatmessage", "Failed to fetch conversation data. Response code: " + response.code());
                 }
             }
 
             @Override
-            public void onFailure(Call<List<Message>> call, Throwable t) {
-                // Handle API call failure
+            public void onFailure(Call<List<MessageResponse>> call, Throwable t) {
                 Log.e("Network Error", "Failed to fetch conversation data", t);
             }
         });
@@ -238,21 +240,20 @@ public class smessagebody extends AppCompatActivity implements OnEmojiClickListe
         });
     }
 
-
-    private void fetcRistrictEmojis() {
+    private void fetchRestrictedEmojis() {
         apiService.GetpermittedEmoji().enqueue(new Callback<List<Emoji>>() {
             @Override
             public void onResponse(Call<List<Emoji>> call, Response<List<Emoji>> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    allEmojis = response.body();
+                    RistricEmoji = response.body();
                 } else {
-                    Log.e("API Error", "Failed to fetch all emojis");
+                    Log.e("API Error", "Failed to fetch restricted emojis");
                 }
             }
 
             @Override
             public void onFailure(Call<List<Emoji>> call, Throwable t) {
-                Log.e("Network Error", "Failed to fetch all emojis", t);
+                Log.e("Network Error", "Failed to fetch restricted emojis", t);
             }
         });
     }
@@ -264,7 +265,7 @@ public class smessagebody extends AppCompatActivity implements OnEmojiClickListe
         }
         View popupView = LayoutInflater.from(this).inflate(R.layout.popup_window_layout, null);
         RecyclerView emojisPopupRecyclerView = popupView.findViewById(R.id.emojis_popup_recyclerview);
-        ImageView ristrictemoji=popupView.findViewById(R.id.ristrictemoji);
+        ImageView ristrictemoji = popupView.findViewById(R.id.ristrictemoji);
         emojisPopupRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         EmojiAdapter emojiAdapter = new EmojiAdapter(this, emojis, this);
         emojisPopupRecyclerView.setAdapter(emojiAdapter);
@@ -275,91 +276,129 @@ public class smessagebody extends AppCompatActivity implements OnEmojiClickListe
         ristrictemoji.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               Ristrcitemoji(allEmojis);
+                showRestrictedEmojiPopupWindow(RistricEmoji);
             }
         });
-
-
-
     }
 
-
-//ristricted emoji admin will approve access
-    private void Ristrcitemoji(List<Emoji> ristricEmoji) {
-        if (ristricEmoji== null || ristricEmoji.isEmpty()) {
+    // Function to show restricted emojis popup window
+// Function to show restricted emojis popup window
+    private void showRestrictedEmojiPopupWindow(List<Emoji> ristricEmoji) {
+        if (ristricEmoji == null || ristricEmoji.isEmpty()) {
             return;
         }
         View popupView = LayoutInflater.from(this).inflate(R.layout.restrictedemojipopup_window_layout, null);
         RecyclerView emojisPopupRecyclerView = popupView.findViewById(R.id.emojis_popup_recyclerview);
 
         emojisPopupRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
-        EmojiAdapter emojiAdapter = new EmojiAdapter(this,ristricEmoji, this);
+        EmojiAdapter emojiAdapter = new EmojiAdapter(this, ristricEmoji, new OnEmojiClickListener() {
+            @Override
+            public void onEmojiClick(Emoji emoji) {
+                // Pass the clicked emoji to the confirmation dialog
+                showConfirmationDialog(emoji);
+                Log.e("clicked emoji.....","clickedEMoji......"+emoji.getEmojiID());
+            }
+
+            @Override
+            public void onEmojiFetched(List<Emoji> section3Emojis) {}
+
+            @Override
+            public void onEmojisFetched(List<Emoji> emojis) {}
+        });
         emojisPopupRecyclerView.setAdapter(emojiAdapter);
         PopupWindow popupWindow = new PopupWindow(popupView, RecyclerView.LayoutParams.MATCH_PARENT, RecyclerView.LayoutParams.WRAP_CONTENT);
         popupWindow.setFocusable(true);
         popupWindow.showAtLocation(popupView, Gravity.BOTTOM, 0, 0);
+    }
 
 
+    // Function to show confirmation dialog for restricted emoji
+    private void showConfirmationDialog(Emoji emoji) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Restricted Emoji");
+        builder.setMessage("This emoji is restricted. Do you want to proceed?");
+        builder.setPositiveButton("Yes", (dialog, which) -> {
+            updateEmojiPermission(emoji); // Make sure emoji is correct here
+        });
+        builder.setNegativeButton("No", (dialog, which) -> dialog.dismiss());
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
 
 
+    // Function to update emoji permission in the database
+    private void updateEmojiPermission(Emoji emoji) {
+        int esid = selectedEmoji; // Ensure this returns the correct ID
+        String permission = "R";
+        String requestedBy = username;  // Replace with actual value
+        String requestedFor = teacherUsername;  // Replace with actual value
 
+        Log.d("API Call", "Updating emoji with ID: " + esid + ", permission: " + permission +
+                ", requestedBy: " + requestedBy + ", requestedFor: " + requestedFor);
+
+        apiService.updateEmojiPermission(esid, permission, requestedBy, requestedFor).enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                if (response.isSuccessful()) {
+                    Log.i("Update Emoji", "Emoji permission updated successfully");
+                    // Handle success (e.g., notify the user, update UI, etc.)
+                } else {
+                    Log.e("API Error", "Failed to update emoji permission. Response code: " + response.code());
+                    // Handle the failure (e.g., show error message)
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                Log.e("Network Error", "Failed to update emoji permission", t);
+                // Handle network error (e.g., show error message)
+            }
+        });
     }
 
     @Override
     public void onEmojiClick(Emoji emoji) {
-        // Store the selected emoji ID
         selectedEmoji = emoji.getEmojiID();
-
-        // Set the clicked emoji image in the ImageView
         String imageUrl = RetrofitClient.getBaseUrl() + "images/emojis/" + emoji.getImagePath() + ".png";
         Picasso.get().load(imageUrl).into(emojiImageView);
-
         Log.d("click emoji", "click emoji: " + emoji.getEmojiString());
         Log.d("Image URL", "Image URL: " + imageUrl);
-        Log.d("Image URL", "Image ID: " + selectedEmoji);
+        Log.d("Image ID", "Image ID: " + selectedEmoji);
     }
 
     @Override
-    public void onEmojiFetched(List<Emoji> section3Emojis) {
-
-    }
-
+    public void onEmojiFetched(List<Emoji> section3Emojis) {}
 
     @Override
-    public void onEmojisFetched(List<Emoji> emojis) {
-    }
+    public void onEmojisFetched(List<Emoji> emojis) {}
 
     // Function to send message
     private void sendMessage() {
         if (selectedEmoji == 0) {
-            Log.e("Validation Error", "Emoji and message text are required");
+            Log.e("Validation Error", "Emoji is required");
             return;
         }
 
-        SendWishRequest request = new SendWishRequest("2020-arid-3535", "BIIT0001", selectedEmoji);
+        // Assuming you have the necessary parameters to send a message, modify this accordingly
+        SendWishRequest request = new SendWishRequest(username, teacherUsername, selectedEmoji);
 
-        // Insert data into the database
         apiService.createWish(request).enqueue(new Callback<SendWishResponse>() {
             @Override
             public void onResponse(Call<SendWishResponse> call, Response<SendWishResponse> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     Log.i("Send Message", "Message sent successfully");
-                    // Create a new ConversationItem representing the sent message
-                    ConversationItem sentMessage = new ConversationItem(username, teacherUsername, selectedEmoji);
-
+                    // Create a ConversationItem with the sent message data
+                    ConversationItem sentMessage = new ConversationItem(
+                            request.getSenderid(),
+                            request.getMessageType(), // Assuming messageType is used to identify emojis
+                            request.getEmojiId() // Assuming emojiId is used to store the selected emoji ID
+                    );
                     // Add the sent message to the adapter
                     adapter.addItem(sentMessage);
-
-                    // Scroll RecyclerView to the bottom
                     recyclerView.scrollToPosition(adapter.getItemCount() - 1);
-
-                    // Clear the emojiImageView
+                    // Reset emoji selection
                     emojiImageView.setImageDrawable(null);
-
-                    // Reset the selected emoji ID
                     selectedEmoji = 0;
-
-                    // Log to verify dataset update
                     Log.d("RecyclerView Update", "New item added to dataset: " + sentMessage);
                 } else {
                     Log.e("API Error", "Failed to send message");
@@ -371,5 +410,14 @@ public class smessagebody extends AppCompatActivity implements OnEmojiClickListe
                 Log.e("Network Error", "Failed to send message", t);
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        // Navigate back to the login screen
+        Intent intent = new Intent(this, smassage.class);
+        startActivity(intent);
+        finish(); // Finish the current activity to prevent returning to it when pressing back again
+        super.onBackPressed(); // Call super method
     }
 }

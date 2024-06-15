@@ -18,11 +18,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.sfrfinalyearproject.R;
 import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import ModeClasees.Emoji;
-import ModeClasees.Message;
 import modelclassespost.ConversationAdapter;
 import modelclassespost.ConversationItem;
 import modelclassespost.SendWishResponse;
@@ -170,7 +168,7 @@ TextView userusername;
         apiService = RetrofitClient.getInstance();
 
         // Fetch conversation between sender and receiver
-        fetchConversation();
+
 
         // Fetch all emojis from the server
         fetchAllEmojis();
@@ -190,47 +188,13 @@ TextView userusername;
             @Override
             public void onClick(View v) {
                 sendMessage();
-                fetchConversation();
+
             }
         });
     }
 
     // Function to fetch conversation between sender and receiver
-    private void fetchConversation() {
-        apiService.groupmessage(username).enqueue(new Callback<List<Message>>() {
-            @Override
-            public void onResponse(Call<List<Message>> call, Response<List<Message>> response) {
-                if (response.isSuccessful() && response.body() != null) {
-                    List<Message> messages = response.body();
-                    List<ConversationItem> conversationItems = new ArrayList<>();
 
-                    // Convert Message objects to ConversationItem objects
-                    for (Message message : messages) {
-                        conversationItems.add(new ConversationItem(message.getSenderUsername(),
-                                message.getReceiverUsername(),message.getReceiverProfileImage(),message.getSenderProfileImage(), message.getEmojiData()));
-                        Log.d("Response Index", "Message: " + message);
-                    }
-
-                    // Create and set adapter to RecyclerView
-
-                    adapter = new ConversationAdapter(groupmessage_body.this, conversationItems,username);
-                    recyclerView.setAdapter(adapter);
-                    recyclerView.hasFixedSize();
-                    recyclerView.setLayoutManager(new LinearLayoutManager(groupmessage_body.this));
-                    Log.d("Adapter Data", "Conversation Items: " + conversationItems);
-                } else {
-                    // Handle unsuccessful response
-                    Log.d("API chatmessage", "Failed to fetch conversation data");
-                }
-            }
-
-            @Override
-            public void onFailure(Call<List<Message>> call, Throwable t) {
-                // Handle API call failure
-                Log.e("Network Error", "Failed to fetch conversation data", t);
-            }
-        });
-    }
 
     // Function to fetch all emojis from the server
     private void fetchAllEmojis() {

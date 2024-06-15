@@ -64,12 +64,12 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
 
         public void bind(Message message) {
             // Bind data to views
-            firstName.setText(message.getFirstName());
-            lastName.setText(message.getLastName());
-            messageContent.setText(message.getContent());
+            firstName.setText(message.getSenderFirstName());
+            lastName.setText(message.getSenderFirstName());
+            messageContent.setText(message.getWishDateTime());
             // Load profile image using Picasso
-            if (message.getProfileImageUrl() != null && !message.getReceiverProfileImage().isEmpty()) {
-                String imageUrl = RetrofitClient.getBaseUrl() + "images/profileimages/" + message.getProfileImageUrl() + ".jpg";
+            if (message.getSenderProfileImage() != null && !message.getReceiverProfileImage().isEmpty()) {
+                String imageUrl = RetrofitClient.getBaseUrl() + "images/profileimages/" + message.getReceiverProfileImage() + ".jpg";
                 Picasso.get().load(imageUrl).error(R.drawable.baseline_account_circle_24).into(profileImage);
             } else {
                 profileImage.setImageResource(R.drawable.baseline_account_circle_24);

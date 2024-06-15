@@ -44,6 +44,18 @@ android:orientation="vertical"
             android:layout_gravity="center"
             android:layout_marginStart="@dimen/_8sdp"/>
 
+
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:text="title"
+            android:textStyle="italic"
+
+            android:id="@+id/disgnation"
+            ></TextView>
         <ImageView
             android:id="@+id/back"
             android:layout_width="@dimen/_40sdp"
@@ -112,7 +124,7 @@ android:background="@drawable/borderwithgreen"
             android:layout_width="296dp"
             android:layout_height="70dp"
             android:backgroundTint="@color/green"
-            android:text="samester"
+            android:text="Course"
             android:textSize="30dp"
             android:textStyle="bold"
             android:layout_marginTop="20dp"

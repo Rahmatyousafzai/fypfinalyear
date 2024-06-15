@@ -59,7 +59,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
 
             if (message.getEmojiData() != null) {
                 holder.receivedEmoji.setVisibility(View.VISIBLE);
-                Picasso.get().load(RetrofitClient.getBaseUrl() + "images/emojis/" + message.getEmojiData()+".pngfe").into(holder.receivedEmoji);
+                Picasso.get().load(RetrofitClient.getBaseUrl() + "images/emojis/" + message.getEmojiData()+".png").into(holder.receivedEmoji);
             } else {
                 holder.receivedEmoji.setVisibility(View.GONE);
             }

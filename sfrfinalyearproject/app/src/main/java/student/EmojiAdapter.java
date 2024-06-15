@@ -38,11 +38,22 @@ public class EmojiAdapter extends RecyclerView.Adapter<EmojiAdapter.EmojiViewHol
         return new EmojiViewHolder(view);
     }
 
+    // Inside the EmojiAdapter class
     @Override
     public void onBindViewHolder(@NonNull EmojiViewHolder holder, int position) {
         Emoji emoji = emojis.get(position);
         holder.bind(emoji);
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Pass the clicked emoji to the listener
+                if (listener != null) {
+                    listener.onEmojiClick(emoji);
+                }
+            }
+        });
     }
+
 
     @Override
     public int getItemCount() {

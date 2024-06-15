@@ -21,7 +21,7 @@ import studentClasses.teacherRepository;
 
 public class faculty_select_message_option extends AppCompatActivity {
 
-Button Student, alumni, semseter,program ;
+Button Student, alumni, course,program ;
 
     private String username;
     private String firstName;
@@ -37,8 +37,8 @@ ImageView profile;
 
         Student=findViewById(R.id.Student);
         alumni=findViewById(R.id.Alumni);
-        semseter=findViewById(R.id.Displine);
-        program=findViewById(R.id.semeter);
+        program=findViewById(R.id.Displine);
+        course=findViewById(R.id.semeter);
         profilename = findViewById(R.id.profelname);
         profile = findViewById(R.id.profilepicture);
 
@@ -87,23 +87,6 @@ ImageView profile;
         });
 
 
-        Student.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                NavegateALL();
-
-            }
-        });
-
-        alumni.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                NavegatetoAlumni();
-
-            }
-        });
-
 
 
 
@@ -122,10 +105,6 @@ ImageView profile;
 
         Intent intent=new Intent(faculty_select_message_option.this, facultypapulationMessage.class);
 
-        intent.putExtra("username", username);
-        intent.putExtra("firstname", firstName);
-        intent.putExtra("lastname", lastName);
-        intent.putExtra("profileimage", profileImage);
 
         startActivity(intent);
         finish();
@@ -138,10 +117,7 @@ ImageView profile;
 
         Intent intent=new Intent(faculty_select_message_option.this, faculty_public_messagebody.class);
 
-        intent.putExtra("username", username);
-        intent.putExtra("firstname", firstName);
-        intent.putExtra("lastname", lastName);
-        intent.putExtra("profileimage", profileImage);
+
 
         startActivity(intent);
         finish();

@@ -18,11 +18,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.sfrfinalyearproject.R;
 import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import ModeClasees.Emoji;
-import ModeClasees.Message;
 import modelclassespost.ConversationAdapter;
 import modelclassespost.ConversationItem;
 import modelclassespost.SendWishResponse;
@@ -158,7 +156,7 @@ public class facultymessagebody extends AppCompatActivity implements OnEmojiClic
             @Override
             public void onClick(View v) {
                 sendMessage();
-                fetchConversation();
+               // fetchConversation();
                 messageInputField.setImageDrawable(null);
 
 
@@ -167,11 +165,11 @@ public class facultymessagebody extends AppCompatActivity implements OnEmojiClic
         });
 
         // Fetch conversation between sender and receiver
-        fetchConversation();
+       // fetchConversation();
     }
 
     // Function to fetch conversation between sender and receiver
-    private void fetchConversation() {
+   /* private void fetchConversation() {
         apiService.chatmessage(studentusername, teacherUsername).enqueue(new Callback<List<Message>>() {
             @Override
             public void onResponse(Call<List<Message>> call, Response<List<Message>> response) {
@@ -207,7 +205,7 @@ public class facultymessagebody extends AppCompatActivity implements OnEmojiClic
             }
         });
     }
-
+*/
     // Function to fetch all emojis from the server
     private void fetchAllEmojis() {
         apiService.getAllEmojis().enqueue(new Callback<List<Emoji>>() {
@@ -316,7 +314,13 @@ public class facultymessagebody extends AppCompatActivity implements OnEmojiClic
     }
 
 
-
+    public void onBackPressed() {
+        // Navigate back to the login screen
+        Intent intent = new Intent(this, facultmessage.class);
+        startActivity(intent);
+        finish(); // Finish the current activity to prevent returning to it when pressing back again
+        super.onBackPressed(); // Call super method
+    }
 
 
 }

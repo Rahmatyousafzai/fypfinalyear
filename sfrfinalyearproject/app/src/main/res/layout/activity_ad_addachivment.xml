@@ -108,30 +108,7 @@
     android:layout_marginTop="10dp">
 </TextView>
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="10dp">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Select"
-                android:textSize="20dp"
-                android:textStyle="bold"
-                >
-            </TextView>
-            <Spinner
-                android:layout_width="100dp"
-                android:layout_height="50dp"
-                android:layout_marginLeft="10dp"
-                android:id="@+id/selectcatagory"
-                >
-
-            </Spinner>
-
-        </LinearLayout>
 
 <LinearLayout
     android:layout_width="wrap_content"
@@ -140,20 +117,15 @@
     android:layout_marginTop="10dp"
 >
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="ID"
-        android:textSize="25dp"></TextView>
+
 
     <EditText
-        android:layout_width="250dp"
+        android:layout_width="300dp"
         android:layout_height="50dp"
-        android:background="@drawable/flateborder"
-        android:padding="5dp"
-        android:hint="Enter ID"
-        android:text="25dp"
-        android:layout_marginLeft="20dp"
+        android:background="@drawable/borderwithwhite"
+        android:padding="10dp"
+        android:hint="Enter Username"
+
         android:id="@+id/username"
         >
 
@@ -168,7 +140,8 @@
             android:layout_height="50dp"
             android:hint="Title......."
             android:textSize="20dp"
-            android:background="@drawable/flateborder"
+            android:background="@drawable/borderwithwhite"
+
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
             android:padding="10dp"
@@ -179,10 +152,11 @@
             android:layout_height="150dp"
             android:hint="Title......."
             android:textSize="20dp"
-            android:background="@drawable/flateborder"
+            android:background="@drawable/borderwithwhite"
+            android:padding="10dp"
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
-            android:padding="10dp"
+
             android:id="@+id/titlemessage"
             ></EditText>
 

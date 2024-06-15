@@ -3,24 +3,40 @@ package Faculty;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.sfrfinalyearproject.R;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import ModeClasees.Wish;
+import ModeClasees.cuTeacher;
+import ModeClasees.user;
+import adopter.FavTeachercustomAdopter;
+import mydataapi.Apiservices;
 import mydataapi.RetrofitClient;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import studentClasses.TeacherData;
 import studentClasses.UserDataSingleton;
 import studentClasses.teacherRepository;
 
-public class ftfavstudent extends AppCompatActivity {
+public class ftfavstudent extends AppCompatActivity  implements FavTeachercustomAdopter.OnTeacherClickListener{
 
+    private Apiservices apiServices = RetrofitClient.getInstance();
+    private RecyclerView recyclerView;
+    private FavTeachercustomAdopter adapter;
+    private List<cuTeacher> teacherList = new ArrayList<>();
 
-String username;
+    String username;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,14 +88,40 @@ String username;
             }
         });
 
+        recyclerView = findViewById(R.id.Rcfavestudent);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        adapter = new FavTeachercustomAdopter(new ArrayList<>(), this);
+        recyclerView.setAdapter(adapter);
 
+        loadfavstudent();
 
 
 
     }
 
 
+    private void loadfavstudent() {
+        apiServices.getFavTeacher(username).enqueue(new Callback<List<cuTeacher>>() {
+            @Override
+            public void onResponse(Call<List<cuTeacher>> call, Response<List<cuTeacher>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    List<cuTeacher> teachers = response.body();
+                    for (cuTeacher teacher : teachers) {
+                        if (teacher.getProfileImage() == null || teacher.getProfileImage().isEmpty()) {
+                            teacher.setProfileImage(String.valueOf(R.drawable.baseline_account_circle_24));
+                        }
+                    }
+                    adapter.setTeacherList(teachers);
+                }
+            }
 
+            @Override
+            public void onFailure(Call<List<cuTeacher>> call, Throwable t) {
+                // Handle the error
+                Log.e("FavTeacher", "Error loading teachers: " + t.getMessage());
+            }
+        });
+    }
 
 
 
@@ -94,4 +136,23 @@ String username;
         super.onBackPressed(); // Call super method
     }
 
+    @Override
+    public void onTeacherClick(user teacher) {
+
+    }
+
+    @Override
+    public void onTeacherClick(cuTeacher teacher) {
+
+    }
+
+    @Override
+    public void onTeacherClick(Wish wish) {
+
+    }
+
+    @Override
+    public void onTeacherClick(Object item) {
+
+    }
 }

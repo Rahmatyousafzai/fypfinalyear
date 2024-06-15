@@ -17,26 +17,21 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.sfrfinalyearproject.R;
 import com.squareup.picasso.Picasso;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import ModeClasees.Emoji;
 import ModeClasees.Message;
 import ModeClasees.Wish;
-import ModeClasees.cuTeacher;
-import ModeClasees.user;
 import adopter.ChatAdapter;
 import adopter.MessagListAdopter;
-import adopter.OnTeacherClickListener;
 import mydataapi.Apiservices;
 import mydataapi.RetrofitClient;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import student.sprfile;
 
-public class almessagebody extends AppCompatActivity implements OnTeacherClickListener {
+public class almessagebody extends AppCompatActivity {
 
 
 
@@ -117,7 +112,7 @@ public class almessagebody extends AppCompatActivity implements OnTeacherClickLi
         Log.d("parms","Myusername"+receiverId);
 
 
-        fetchConversation(senderId, receiverId);
+
 
 
 
@@ -148,70 +143,9 @@ public class almessagebody extends AppCompatActivity implements OnTeacherClickLi
         });
     }
 
-    @Override
-    public void onTeacherClick(user teacher) {
-        Intent intent = new Intent(this, sprfile.class);
-        intent.putExtra("username", teacher.getUsername());
-        intent.putExtra("firstName", teacher.getFirstName());
-        intent.putExtra("lastName", teacher.getLastName());
-        intent.putExtra("profileImage", teacher.getProfileImage());
-        startActivity(intent);
-    }
 
-    @Override
-    public void onTeacherClick(cuTeacher teacher) {
-        Intent intent = new Intent(this, sprfile.class);
-        intent.putExtra("username", teacher.getUsername());
-        intent.putExtra("firstName", teacher.getFirstName());
-        intent.putExtra("lastName", teacher.getLastName());
-        intent.putExtra("profileImage", teacher.getProfileImage());
-        startActivity(intent);
-    }
 
-    @Override
-    public void onTeacherClick(Wish wish) {
-        // Implement this if needed
-    }
 
-    @Override
-    public void onTeacherClick(Object item) {
-        // Implement this if needed
-    }
 
-    private void fetchConversation(String senderId, String receiverId) {
-        Apiservices apiService = RetrofitClient.getInstance();
-        apiService.chatmessage(senderId, receiverId).enqueue(new Callback<List<Message>>() {
-            @Override
-            public void onResponse(Call<List<Message>> call, Response<List<Message>> response) {
-                if (response.isSuccessful() && response.body() != null) {
-                    messageList = response.body();
-                    Log.d("fetchConversation", "Message list size: " + messageList.size());
-                    chatAdapter = new ChatAdapter(almessagebody.this, messageList, senderId);
-                    recyclerView.setAdapter(chatAdapter);
-                } else {
-                    // Log detailed response information
-                    Log.e("fetchConversation", "Response unsuccessful or body is null");
-                    Log.e("fetchConversation", "Response code: " + response.code());
-                    Log.e("fetchConversation", "Response message: " + response.message());
-                    if (response.errorBody() != null) {
-                        try {
-                            Log.e("fetchConversation", "Error body: " + response.errorBody().string());
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }
-            }
 
-            @Override
-            public void onFailure(Call<List<Message>> call, Throwable t) {
-                Log.e("fetchConversation", "API call failed: " + t.getMessage());
-            }
-        });
-    }
-
-    @Override
-    public void onPointerCaptureChanged(boolean hasCapture) {
-        super.onPointerCaptureChanged(hasCapture);
-    }
 }

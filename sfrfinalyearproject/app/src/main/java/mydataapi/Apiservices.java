@@ -2,6 +2,7 @@ package mydataapi;
 
 import java.util.List;
 
+import facultyClasses.InsertPapolationDataDto;
 import ModeClasees.Achievement;
 import ModeClasees.Emoji;
 import ModeClasees.Message;
@@ -11,7 +12,9 @@ import ModeClasees.Wish;
 import ModeClasees.cuTeacher;
 import ModeClasees.papulationselection;
 import ModeClasees.user;
+import chatClasses.MessageResponse;
 import facultyClasses.Course;
+import facultyClasses.InsertPapolationResponse;
 import modelclassespost.SendWishRequestDto;
 import modelclassespost.SendWishResponse;
 import retrofit2.Call;
@@ -19,6 +22,9 @@ import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
+import student.Program;
+import student.Section;
+import student.Semester;
 import studentClasses.Group;
 import studentClasses.GroupMember;
 import studentClasses.GroupsData;
@@ -39,8 +45,6 @@ public interface Apiservices {
     // Get wishes API call
     @GET("api/Student/GetfavTeacher")
     Call<List<cuTeacher>> getFavTeacher(@Query("username") String username);
-    @GET("api/wish/GetAllEmojis")
-    Call<List<Emoji>> getAllEmojis();
 
 
     @GET("api/Wish/GetpermittedEmoji")
@@ -69,14 +73,41 @@ public interface Apiservices {
 
 
 
-    @GET("api/Wish/chatmessage")
-    Call<List<Message>> chatmessage(
-            @Query("senderID") String senderID,
-            @Query("ReciverId") String ReciverId
-    );
 
 
+
+
+
+
+
+
+
+
+
     @GET("api/Wish/chatmessage")
+    Call<List<MessageResponse>> chatmessage(@Query("senderID") String senderID, @Query("ReciverId") String receiverId);
+
+    @GET("api/wish/GetAllEmojis")
+    Call<List<Emoji>> getAllEmojis();
+
+    @POST("api/Wish/CreateWish")
+    Call<SendWishResponse> createWish(@Body SendWishRequest request);
+
+    @POST("api/Wish/Reaction")
+    Call<ReactionResponse> createReaction(@Body Reaction reaction);
+
+
+
+
+
+
+
+
+
+
+
+
+    @GET("api/Wish/Groupchatmessage")
     Call<List<Message>> groupmessage(
             @Query("GroupId") String GroupId
 
@@ -115,8 +146,6 @@ public interface Apiservices {
     @POST("api/Wish/SendWishByPapluation")
     Call<SendWishResponse> sendWishByPapluation(@Body SendWishRequestDto sendWishRequest);
 
-    @POST("api/Wish/CreateWish")
-    Call<SendWishResponse> createWish(@Body SendWishRequest sendWishRequest);
 
 
 
@@ -127,5 +156,28 @@ public interface Apiservices {
     Call<TeacherResponse> getTeacherData(@Query("username") String username);
 
 
+
+    @GET("api/Teacher/GetPrograms")
+    Call<List<Program>> getPrograms(@Query("teacherId") String teacherId);
+
+    @GET("api/Teacher/GetSemestersForProgram")
+    Call<List<Semester>> GetSemestersForProgram(@Query("teacherUsername") String teacherId, @Query("programid") int programId);
+
+    @GET("api/Teacher/GetSectionsForSemester")
+    Call<List<Section>> getSections(@Query("teacherUsername") String teacherId, @Query("semesterid") int semester);
+
+
+
+    @POST("api/Wish/InsertpapolationData")
+    Call<InsertPapolationResponse> insertPapolationData(@Body InsertPapolationDataDto dto);
+////api for update
+
+    @POST("api/Emoji/UpdateEmojistickerPermission")
+    Call<Void> updateEmojiPermission(
+            @Query("esid") int esid,
+            @Query("permission") String permission,
+            @Query("requestedBy") String requestedBy,
+            @Query("requestedFor") String requestedFor
+    );
 
 }
