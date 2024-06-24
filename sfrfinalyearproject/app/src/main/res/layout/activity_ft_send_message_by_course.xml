@@ -5,31 +5,28 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="Faculty.ft_send_message_by_course"
-
     android:background="@drawable/backgroundcolor"
-android:orientation="vertical"
-    >
+    android:orientation="vertical">
+
+    <!-- Your existing layout code -->
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_30sdp"
-        android:layout_gravity="center"
+        android:layout_gravity="center">
 
-        >
-
+        <!-- Profile Picture -->
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/profilepicture"
-
             android:layout_width="@dimen/_40sdp"
             android:layout_height="@dimen/_40sdp"
             android:layout_weight="2"
             android:layout_gravity="center"
             android:src="@drawable/saeed"
             app:civ_border_color="@color/black"
-            app:civ_border_width="2dp"
+            app:civ_border_width="2dp"/>
 
-
-            />
+        <!-- Profile Name -->
         <TextView
             android:id="@+id/profelname"
             android:layout_width="wrap_content"
@@ -39,22 +36,19 @@ android:orientation="vertical"
             android:textColor="@color/black"
             android:textSize="20sp"
             android:layout_weight="1"
-
             android:layout_gravity="center"
             android:layout_marginStart="@dimen/_8sdp"/>
 
-
-
-
+        <!-- Designation -->
         <TextView
+            android:id="@+id/disgnation"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
             android:text="title"
-            android:textStyle="italic"
+            android:textStyle="italic"/>
 
-            android:id="@+id/disgnation"
-            ></TextView>
+        <!-- More Options Button -->
         <ImageView
             android:id="@+id/back"
             android:layout_width="@dimen/_40sdp"
@@ -62,22 +56,19 @@ android:orientation="vertical"
             android:src="@drawable/baseline_more_vert_24"
             android:layout_gravity="center"
             android:layout_marginStart="@dimen/_50sdp"
-            android:backgroundTint="@color/white"
-
-
-
-            />
-
+            android:backgroundTint="@color/white"/>
     </LinearLayout>
 
+    <!-- Courses Section -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="500dp"
         android:layout_marginTop="30dp"
         android:background="@drawable/buttom_rounded_border"
         android:backgroundTint="@color/white"
-        android:orientation="vertical"
-        >
+        android:orientation="vertical">
+
+        <!-- Courses Title -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -86,54 +77,44 @@ android:orientation="vertical"
             android:layout_marginTop="20dp"
             android:layout_marginLeft="30dp"
             android:textStyle="bold"
-            android:textColor="@color/green"></TextView>
-<LinearLayout
-    android:layout_width="350dp"
-    android:layout_height="400dp"
-    android:background="@drawable/border"
-    android:layout_gravity="center"
-    android:orientation="vertical"
+            android:textColor="@color/green"/>
 
-    >
+        <!-- Container for Checkboxes -->
+        <LinearLayout
+            android:id="@+id/container"
+            android:layout_width="350dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/border"
+            android:layout_gravity="center"
+            android:orientation="vertical"
+            android:layout_marginTop="20dp">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Select Course"
+            <!-- Checkbox Section -->
 
-  android:layout_gravity="center"
-        android:layout_marginTop="20dp"
-        android:textSize="20dp"></TextView>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Select Course"
+                android:layout_gravity="center"
+                android:layout_marginTop="20dp"
+                android:textSize="20dp"/>
 
+            <!-- Placeholder for checkboxes -->
 
-<CheckBox
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_marginLeft="20dp"
-android:text="NA"
+        </LinearLayout>
 
-    >
-
-
-
-</CheckBox>
-
-<Button
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:backgroundTint="@color/green"
-    android:layout_gravity="right"
-    android:layout_marginRight="20dp"
-    android:text="Done"
-    android:textSize="20dp"
-android:layout_marginTop="200dp"
-android:id="@+id/done"
-
-    ></Button>
-
-</LinearLayout>
+        <!-- Done Button -->
+        <Button
+            android:id="@+id/done"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="20dp"
+            android:text="Done"
+            android:textSize="20dp"
+            android:backgroundTint="@color/green"/>
 
     </LinearLayout>
-
 
 </androidx.appcompat.widget.LinearLayoutCompat>

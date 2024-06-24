@@ -1,30 +1,18 @@
 package facultyClasses;
 
+import java.util.List;
+
 public class InsertPapolationDataDto {
-    private Sendwish sendWish;
+    private Sendwish sendwish;
     private Audience audience;
     private MessageRecipient messageRecipient;
-    private int programId;
-    private int[] semesterIds;
-    private int[] sections;
 
-    public InsertPapolationDataDto(Sendwish sendWish, Audience audience, MessageRecipient messageRecipient,
-                                   int programId, int[] semesterIds, int[] sections) {
-        this.sendWish = sendWish;
-        this.audience = audience;
-        this.messageRecipient = messageRecipient;
-        this.programId = programId;
-        this.semesterIds = semesterIds;
-        this.sections = sections;
+    public Sendwish getSendwish() {
+        return sendwish;
     }
 
-    // Getters and setters as needed
-    public Sendwish getSendWish() {
-        return sendWish;
-    }
-
-    public void setSendWish(Sendwish sendWish) {
-        this.sendWish = sendWish;
+    public void setSendwish(Sendwish sendwish) {
+        this.sendwish = sendwish;
     }
 
     public Audience getAudience() {
@@ -43,27 +31,44 @@ public class InsertPapolationDataDto {
         this.messageRecipient = messageRecipient;
     }
 
-    public int getProgramId() {
-        return programId;
+    public int getSendWishId() {
+        return sendWishId;
     }
 
-    public void setProgramId(int programId) {
-        this.programId = programId;
+    public void setSendWishId(int sendWishId) {
+        this.sendWishId = sendWishId;
     }
 
-    public int[] getSemesterIds() {
-        return semesterIds;
+    public List<Integer> getSelectedSemesterIds() {
+        return selectedSemesterIds;
     }
 
-    public void setSemesterIds(int[] semesterIds) {
-        this.semesterIds = semesterIds;
+    public void setSelectedSemesterIds(List<Integer> selectedSemesterIds) {
+        this.selectedSemesterIds = selectedSemesterIds;
     }
 
-    public int[] getSections() {
-        return sections;
+    public List<Integer> getSelectedSectionIds() {
+        return selectedSectionIds;
     }
 
-    public void setSections(int[] sections) {
-        this.sections = sections;
+    public void setSelectedSectionIds(List<Integer> selectedSectionIds) {
+        this.selectedSectionIds = selectedSectionIds;
     }
+
+    private int sendWishId;
+    private List<Integer> selectedSemesterIds;
+    private List<Integer> selectedSectionIds;
+
+    public InsertPapolationDataDto(Sendwish sendwish, Audience audience, MessageRecipient messageRecipient,
+                                   int sendWishId, List<Integer> selectedSemesterIds, List<Integer> selectedSectionIds) {
+        this.sendwish = sendwish;
+        this.audience = audience;
+        this.messageRecipient = messageRecipient;
+        this.sendWishId = sendWishId;
+        this.selectedSemesterIds = selectedSemesterIds;
+        this.selectedSectionIds = selectedSectionIds;
+    }
+
+    // Getters and setters
+    // ...
 }

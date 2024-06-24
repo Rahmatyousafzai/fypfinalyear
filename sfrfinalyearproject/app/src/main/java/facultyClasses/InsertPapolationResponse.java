@@ -1,22 +1,14 @@
 package facultyClasses;
 
 public class InsertPapolationResponse {
-    private int sendWishId;
-    private int audienceId;
+    private int SendWishId;
+    private int AudienceId;
 
     public int getSendWishId() {
-        return sendWishId;
-    }
-
-    public void setSendWishId(int sendWishId) {
-        this.sendWishId = sendWishId;
+        return SendWishId;
     }
 
     public int getAudienceId() {
-        return audienceId;
-    }
-
-    public void setAudienceId(int audienceId) {
-        this.audienceId = audienceId;
+        return AudienceId;
     }
 }

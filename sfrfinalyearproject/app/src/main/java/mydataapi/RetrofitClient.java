@@ -1,5 +1,7 @@
 package mydataapi;
 
+import java.util.concurrent.TimeUnit;
+
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
@@ -23,6 +25,7 @@ public class RetrofitClient {
             logging.setLevel(HttpLoggingInterceptor.Level.BODY);
 
             OkHttpClient client = new OkHttpClient.Builder()
+                    .callTimeout(5, TimeUnit.SECONDS)
                     .addInterceptor(logging)
                     .build();
 

@@ -97,6 +97,14 @@ ImageView profile;
 
             }
         });
+        course.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(faculty_select_message_option.this,ft_send_message_by_course.class);
+                startActivity(intent);
+                finish();
+            }
+        });
 
 
     }

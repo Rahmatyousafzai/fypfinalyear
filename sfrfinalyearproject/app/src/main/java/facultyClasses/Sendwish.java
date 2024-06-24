@@ -1,49 +1,31 @@
 package facultyClasses;
 
+import java.util.ArrayList;
+
 public class Sendwish {
-    private int sw_id;
+    private String content;
+    private String username;
+    private String programId;
+    private String dateTime;
+    private String sectionId;
+    private String semesterId;
+    private String isEmail;
+    private ArrayList<Integer> selectedSemesterIds;
+    private ArrayList<Integer> selectedSectionIds;
 
-    private String sw_content;
-
-    public Sendwish( String sw_content, String senderId) {
-        this.sw_id = sw_id;
-        this.sw_content = sw_content;
-        this.senderId = senderId;
+    public Sendwish(String content, String username, String programId, String dateTime,
+                    String sectionId, String semesterId, String isEmail,
+                    ArrayList<Integer> selectedSemesterIds, ArrayList<Integer> selectedSectionIds) {
+        this.content = content;
+        this.username = username;
+        this.programId = programId;
+        this.dateTime = dateTime;
+        this.sectionId = sectionId;
+        this.semesterId = semesterId;
+        this.isEmail = isEmail;
+        this.selectedSemesterIds = selectedSemesterIds;
+        this.selectedSectionIds = selectedSectionIds;
     }
 
-    public String getSenderId() {
-        return senderId;
-    }
-
-    public void setSenderId(String senderId) {
-        this.senderId = senderId;
-    }
-
-    private String senderId;
-
-    public Sendwish(String sw_content) {
-        this.sw_content = sw_content;
-    }
-
-    public Sendwish(int sw_id, String sw_content) {
-        this.sw_id = sw_id;
-        this.sw_content = sw_content;
-    }
-
-    // Add getters and setters as needed
-    public int getSw_id() {
-        return sw_id;
-    }
-
-    public void setSw_id(int sw_id) {
-        this.sw_id = sw_id;
-    }
-
-    public String getSw_content() {
-        return sw_content;
-    }
-
-    public void setSw_content(String sw_content) {
-        this.sw_content = sw_content;
-    }
+    // Getters and setters if needed
 }

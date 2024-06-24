@@ -1,19 +1,29 @@
 package Faculty;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.sfrfinalyearproject.R;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import facultyClasses.Course;
+import mydataapi.Apiservices;
 import mydataapi.RetrofitClient;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import studentClasses.TeacherData;
 import studentClasses.UserDataSingleton;
 import studentClasses.teacherRepository;
@@ -25,6 +35,7 @@ String username;
     private String lastName;
     private String profileImage;
     ImageView profile;
+    private Apiservices apiService;
     TextView profilename;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,24 +92,68 @@ String username;
             }
         });
 
+        apiService = RetrofitClient.getInstance();
+
+        fetchCourses();
 
         done.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                navigateTomessagebody();
+
             }
         });
 
     }
 
-    private void navigateTomessagebody() {
+    private void fetchCourses() {
+        Call<List<Course>> call = apiService.getCourse(username);
+        call.enqueue(new Callback<List<Course>>() {
+            @Override
+            public void onResponse(Call<List<Course>> call, Response<List<Course>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    displayCourses(response.body());
+                } else {
+                    Toast.makeText(ft_send_message_by_course.this, "Failed to fetch courses", Toast.LENGTH_SHORT).show();
+                }
+            }
 
-        Intent intent=new Intent(ft_send_message_by_course.this,course_message_body.class);
-        startActivity(intent);
-        finish();
+            @Override
+            public void onFailure(Call<List<Course>> call, Throwable t) {
+                Toast.makeText(ft_send_message_by_course.this, "Network error! Please try again later!", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
 
+    private void displayCourses(List<Course> courses) {
+        LinearLayout container = findViewById(R.id.container);
 
+        for (Course course : courses) {
+            CheckBox checkBox = new CheckBox(this);
+            checkBox.setText(course.getCourseid()); // Display course id or title as needed
+            checkBox.setTag(course); // Store Course object in tag for reference
+            container.addView(checkBox);
+        }
+    }
 
+    // Example method to get selected course ids
+    private List<String> getSelectedCourseIds() {
+        LinearLayout container = findViewById(R.id.container);
+        List<String> selectedIds = new ArrayList<>();
+
+        for (int i = 0; i < container.getChildCount(); i++) {
+            View childView = container.getChildAt(i);
+            if (childView instanceof CheckBox) {
+                CheckBox checkBox = (CheckBox) childView;
+                if (checkBox.isChecked()) {
+                    Course course = (Course) checkBox.getTag();
+                    if (course != null) {
+                        selectedIds.add(course.getCourseid());
+                    }
+                }
+            }
+        }
+
+        return selectedIds;
     }
 }

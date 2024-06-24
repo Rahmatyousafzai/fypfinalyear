@@ -1,45 +1,47 @@
 package facultyClasses;
 
 public class MessageRecipient {
-    private int message_id;
-
-    public MessageRecipient(int message_id, String senderId, int audienceID) {
+    public void setMessage_id(Integer message_id) {
         this.message_id = message_id;
-        this.senderId = senderId;
-        this.audienceID = audienceID;
     }
 
-    public String getSenderId() {
-        return senderId;
+    public void setCourse_id(Integer course_id) {
+        Course_id = course_id;
     }
 
-    public void setSenderId(String senderId) {
-        this.senderId = senderId;
+    public void setSendTopapolation(String sendTopapolation) {
+        SendTopapolation = sendTopapolation;
     }
 
-    private  String senderId;
-    public int getMessage_id() {
+    public void setReceiverID(String receiverID) {
+        ReceiverID = receiverID;
+    }
+
+    private Integer message_id;
+    private Integer Course_id;
+    private String SendTopapolation;
+    private String ReceiverID;
+
+    public MessageRecipient(Integer message_id, Integer Course_id, String SendTopapolation, String ReceiverID) {
+        this.message_id = message_id;
+        this.Course_id = Course_id;
+        this.SendTopapolation = SendTopapolation;
+        this.ReceiverID = ReceiverID;
+    }
+
+    public Integer getMessage_id() {
         return message_id;
     }
 
-    public void setMessage_id(int message_id) {
-        this.message_id = message_id;
+    public Integer getCourse_id() {
+        return Course_id;
     }
 
-    public int getAudienceID() {
-        return audienceID;
+    public String getSendTopapolation() {
+        return SendTopapolation;
     }
 
-    public void setAudienceID(int audienceID) {
-        this.audienceID = audienceID;
+    public String getReceiverID() {
+        return ReceiverID;
     }
-
-    private int audienceID;
-
-    public MessageRecipient(int message_id, int audienceID) {
-        this.message_id = message_id;
-        this.audienceID = audienceID;
-    }
-
-    // Getters and setters
 }

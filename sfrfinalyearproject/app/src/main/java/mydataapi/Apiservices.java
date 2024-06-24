@@ -2,7 +2,6 @@ package mydataapi;
 
 import java.util.List;
 
-import facultyClasses.InsertPapolationDataDto;
 import ModeClasees.Achievement;
 import ModeClasees.Emoji;
 import ModeClasees.Message;
@@ -14,7 +13,10 @@ import ModeClasees.papulationselection;
 import ModeClasees.user;
 import chatClasses.MessageResponse;
 import facultyClasses.Course;
+import facultyClasses.InsertPapolationDataDto;
 import facultyClasses.InsertPapolationResponse;
+import facultyClasses.Sendwish;
+import facultyClasses.postpapolation;
 import modelclassespost.SendWishRequestDto;
 import modelclassespost.SendWishResponse;
 import retrofit2.Call;
@@ -152,20 +154,28 @@ public interface Apiservices {
     @GET("api/User/getstudentinfo")
     Call<StudentResponse> getUserData(@Query("username") String username);
 
-    @GET("api/User/GetTeacherInfo")
+    @GET("api/Teacher/GetTeacherInfo")
     Call<TeacherResponse> getTeacherData(@Query("username") String username);
 
 
 
     @GET("api/Teacher/GetPrograms")
     Call<List<Program>> getPrograms(@Query("teacherId") String teacherId);
-
+    @GET("api/Teacher/GetCourse")
+    Call<List<Course>> getCourse(@Query("username") String username);
     @GET("api/Teacher/GetSemestersForProgram")
     Call<List<Semester>> GetSemestersForProgram(@Query("teacherUsername") String teacherId, @Query("programid") int programId);
 
     @GET("api/Teacher/GetSectionsForSemester")
-    Call<List<Section>> getSections(@Query("teacherUsername") String teacherId, @Query("semesterid") int semester);
+    Call<List<Section>> getSections(@Query("teacherUsername") String teacherUsername, @Query("semesterid") int semesterid);
 
+    @POST("api/Wish/InsertSendWish")
+    Call<InsertPapolationResponse> insertSendWish(@Body Sendwish sendWish);
+
+
+
+    @POST("api/Wish/Post")
+    Call<Void> sendWish(@Body postpapolation sendWishRequestDto);
 
 
     @POST("api/Wish/InsertpapolationData")
