@@ -15,39 +15,40 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 
 import ModeClasees.Emoji;
+import mydataapi.OnEmojiClickListener;
+import mydataapi.RetrofitClient;
 
-public class EmojiAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class EmojiAdapter extends RecyclerView.Adapter<EmojiAdapter.EmojiViewHolder> {
+
     private Context context;
     private List<Emoji> emojis;
-    private String senderId;
+    private OnEmojiClickListener listener;
 
-    public EmojiAdapter(Context context, List<Emoji> emojis, String senderId) {
+    public EmojiAdapter(Context context, List<Emoji> emojis, OnEmojiClickListener listener) {
         this.context = context;
         this.emojis = emojis;
-        this.senderId = senderId;
+        this.listener = listener;
     }
 
     @NonNull
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view;
-        if (viewType == 1) {
-            view = LayoutInflater.from(context).inflate(R.layout.item_conversation_sender, parent, false);
-            return new SenderEmojiViewHolder(view);
-        } else {
-            view = LayoutInflater.from(context).inflate(R.layout.item_conversation_receiver, parent, false);
-            return new ReceiverEmojiViewHolder(view);
-        }
+    public EmojiViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(context).inflate(R.layout.item_emoji, parent, false);
+        return new EmojiViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull EmojiViewHolder holder, int position) {
         Emoji emoji = emojis.get(position);
-        if (holder instanceof SenderEmojiViewHolder) {
-            ((SenderEmojiViewHolder) holder).bind(emoji);
-        } else if (holder instanceof ReceiverEmojiViewHolder) {
-            ((ReceiverEmojiViewHolder) holder).bind(emoji);
-        }
+        holder.bind(emoji);
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (listener != null) {
+                    listener.onEmojiClick(emoji);
+                }
+            }
+        });
     }
 
     @Override
@@ -55,38 +56,31 @@ public class EmojiAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         return emojis.size();
     }
 
-    @Override
-    public int getItemViewType(int position) {
-        Emoji emoji = emojis.get(position);
-        // Check if the emoji was sent by the sender
-        return emoji.getSenderId().equals(senderId) ? 1 : 2;
-    }
+    class EmojiViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+        ImageView emojiImageView;
 
-    static class SenderEmojiViewHolder extends RecyclerView.ViewHolder {
-        private ImageView emojiImageView;
-
-        public SenderEmojiViewHolder(@NonNull View itemView) {
+        public EmojiViewHolder(@NonNull View itemView) {
             super(itemView);
             emojiImageView = itemView.findViewById(R.id.emoji_image_view);
+            itemView.setOnClickListener(this);
         }
 
         public void bind(Emoji emoji) {
-            // Load sender emoji image into ImageView
-            Picasso.get().load(emoji.getImagePath()).into(emojiImageView);
-        }
-    }
-
-    static class ReceiverEmojiViewHolder extends RecyclerView.ViewHolder {
-        private ImageView emojiImageView;
-
-        public ReceiverEmojiViewHolder(@NonNull View itemView) {
-            super(itemView);
-            emojiImageView = itemView.findViewById(R.id.emoji_image_view_reciver);
+            if (emoji != null) {
+                String imageUrl = RetrofitClient.getBaseUrl() + "images/emojis/" + emoji.getImagePath() + ".png";
+                Picasso.get().load(imageUrl).into(emojiImageView);
+            }
         }
 
-        public void bind(Emoji emoji) {
-            // Load receiver emoji image into ImageView
-            Picasso.get().load(emoji.getImagePath()).into(emojiImageView);
+        @Override
+        public void onClick(View v) {
+            int position = getAdapterPosition();
+            if (position != RecyclerView.NO_POSITION) {
+                Emoji clickedEmoji = emojis.get(position);
+                if (listener != null) {
+                    listener.onEmojiClick(clickedEmoji);
+                }
+            }
         }
     }
 }

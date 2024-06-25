@@ -304,6 +304,16 @@ public class smessagebody extends AppCompatActivity implements OnEmojiClickListe
 
             @Override
             public void onEmojisFetched(List<Emoji> emojis) {}
+
+            @Override
+            public void onEmojiClick(int emojiId) {
+
+            }
+
+            @Override
+            public void onEmojiClick(int wishId, int emojiId) {
+
+            }
         });
         emojisPopupRecyclerView.setAdapter(emojiAdapter);
         PopupWindow popupWindow = new PopupWindow(popupView, RecyclerView.LayoutParams.MATCH_PARENT, RecyclerView.LayoutParams.WRAP_CONTENT);
@@ -371,6 +381,16 @@ public class smessagebody extends AppCompatActivity implements OnEmojiClickListe
 
     @Override
     public void onEmojisFetched(List<Emoji> emojis) {}
+
+    @Override
+    public void onEmojiClick(int emojiId) {
+
+    }
+
+    @Override
+    public void onEmojiClick(int wishId, int emojiId) {
+
+    }
 
     // Function to send message
     private void sendMessage() {

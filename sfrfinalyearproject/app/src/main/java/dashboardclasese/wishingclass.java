@@ -5,7 +5,7 @@ public class wishingclass {
          private String Username;
     private String        FirstName;
 
-    public wishingclass(String username, String firstName, String lastName, String profileImage, String content, String dateTime, String swId) {
+    public wishingclass(String username, String firstName, String lastName, String profileImage, String content, String dateTime, Integer swId) {
         Username = username;
         FirstName = firstName;
         LastName = lastName;
@@ -66,15 +66,15 @@ public class wishingclass {
         this.dateTime = dateTime;
     }
 
-    public String getSwId() {
+    public Integer getSwId() {
         return SwId;
     }
 
-    public void setSwId(String swId) {
+    public void setSwId(Integer swId) {
         SwId = swId;
     }
 
     private String Content;
     private String dateTime;
-    private String SwId;
+    private Integer SwId;
 }

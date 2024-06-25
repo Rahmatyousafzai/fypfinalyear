@@ -10,4 +10,8 @@ public interface OnEmojiClickListener {
     void onEmojiFetched(List<Emoji> section3Emojis);
 
     void onEmojisFetched(List<Emoji> emojis);
+
+    void onEmojiClick(int emojiId);
+
+    void onEmojiClick(int wishId, int emojiId);
 }

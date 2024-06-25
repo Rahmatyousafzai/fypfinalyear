@@ -265,6 +265,16 @@ public class facultymessagebody extends AppCompatActivity implements OnEmojiClic
 
     }
 
+    @Override
+    public void onEmojiClick(int emojiId) {
+
+    }
+
+    @Override
+    public void onEmojiClick(int wishId, int emojiId) {
+
+    }
+
     // Function to send message
 // Function to send messageFunction to send message
     private void sendMessage() {

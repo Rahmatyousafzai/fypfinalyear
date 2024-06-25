@@ -306,6 +306,16 @@ TextView userusername;
     public void onEmojisFetched(List<Emoji> emojis) {
     }
 
+    @Override
+    public void onEmojiClick(int emojiId) {
+
+    }
+
+    @Override
+    public void onEmojiClick(int wishId, int emojiId) {
+
+    }
+
     // Function to send message
     private void sendMessage() {
         if (selectedEmoji == 0) {
