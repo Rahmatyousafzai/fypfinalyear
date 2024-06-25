@@ -62,7 +62,7 @@ public class ft_send_message_by_samester extends AppCompatActivity {
         done.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sendMessage();
+                showConfirmationDialog();
             }
         });
     }
@@ -109,9 +109,9 @@ public class ft_send_message_by_samester extends AppCompatActivity {
     private void extractIntentExtras() {
         Intent intent = getIntent();
         if (intent != null) {
-            selectedProgramId = intent.getIntExtra("programId", -1);
-            selectedSemesterIds = intent.getIntegerArrayListExtra("semesterIds");
-            selectedSectionIds = intent.getIntegerArrayListExtra("sectionIds");
+            selectedProgramId = intent.getIntExtra("selectedProgramId", -1);
+            selectedSemesterIds = intent.getIntegerArrayListExtra("selectedSemesterIds");
+            selectedSectionIds = intent.getIntegerArrayListExtra("selectedSectionIds");
         }
     }
 
@@ -128,6 +128,21 @@ public class ft_send_message_by_samester extends AppCompatActivity {
         }
     }
 
+    private void showConfirmationDialog() {
+        String content = typesomething.getText().toString();
+        if (content.isEmpty()) {
+            showErrorDialog("Message content cannot be empty.");
+            return;
+        }
+
+        new AlertDialog.Builder(this)
+                .setTitle("Confirm Send")
+                .setMessage("Are you sure you want to send this message?")
+                .setPositiveButton("Yes", (dialog, which) -> sendMessage())
+                .setNegativeButton("No", null)
+                .show();
+    }
+
     private void sendMessage() {
         String content = typesomething.getText().toString();
         if (content.isEmpty()) {
@@ -140,7 +155,7 @@ public class ft_send_message_by_samester extends AppCompatActivity {
         List<Audience> audienceList = new ArrayList<>();
         for (int semesterId : selectedSemesterIds) {
             for (int sectionId : selectedSectionIds) {
-                Audience audienceDto = new Audience(selectedProgramId, semesterId, sectionId,null);
+                Audience audienceDto = new Audience(selectedProgramId, semesterId, sectionId, null);
                 audienceList.add(audienceDto);
             }
         }

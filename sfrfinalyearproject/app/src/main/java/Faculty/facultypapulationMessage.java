@@ -42,11 +42,9 @@ public class facultypapulationMessage extends AppCompatActivity {
     private Apiservices apiservices;
     private String username;
     private Spinner spinnerProgram;
-    private LinearLayout layoutCheckboxes;
+    private LinearLayout layoutSemesters;
     private Button BTNdDONE;
 
-    private List<Integer> unselectedSemesterIds = new ArrayList<>();
-    private List<Integer> unselectedSectionIds = new ArrayList<>();
     private List<Program> programs = new ArrayList<>();
     private Map<Integer, List<Section>> semesterSectionsMap = new HashMap<>();
     private List<Integer> selectedSemesterIds = new ArrayList<>();
@@ -61,7 +59,7 @@ public class facultypapulationMessage extends AppCompatActivity {
         TextView profilename = findViewById(R.id.profelname);
         ImageView profile = findViewById(R.id.profilepicture);
         BTNdDONE = findViewById(R.id.btndone);
-        layoutCheckboxes = findViewById(R.id.layout_checkboxes);
+        layoutSemesters = findViewById(R.id.layout_checkboxes);
         apiservices = RetrofitClient.getInstance();
 
         username = UserDataSingleton.getInstance().getUsername();
@@ -98,7 +96,6 @@ public class facultypapulationMessage extends AppCompatActivity {
         });
 
         spinnerProgram = findViewById(R.id.programspinner);
-        layoutCheckboxes = findViewById(R.id.layout_checkboxes);
 
         // Fetch programs and populate spinner
         fetchPrograms();
@@ -170,7 +167,7 @@ public class facultypapulationMessage extends AppCompatActivity {
             public void onResponse(Call<List<Semester>> call, Response<List<Semester>> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     List<Semester> semesters = response.body();
-                    fetchSections(semesters);
+                    populateSemesterCheckBoxes(semesters);
                 } else {
                     String errorMessage = "Failed to fetch semesters. Response code: " + response.code() + ", Message: " + response.message();
                     Log.e("fetchSemesters", errorMessage);
@@ -187,76 +184,116 @@ public class facultypapulationMessage extends AppCompatActivity {
         });
     }
 
-    private void fetchSections(List<Semester> semesters) {
-        layoutCheckboxes.removeAllViews(); // Clear previous checkboxes
+    private void populateSemesterCheckBoxes(List<Semester> semesters) {
+        layoutSemesters.removeAllViews(); // Clear previous checkboxes
 
-        for (final Semester semester : semesters) {
-            Call<List<Section>> call = apiservices.getSections(username, semester.getSemesetrID());
-            call.enqueue(new Callback<List<Section>>() {
+        for (Semester semester : semesters) {
+            LinearLayout semesterLayout = new LinearLayout(this);
+            semesterLayout.setOrientation(LinearLayout.VERTICAL);
+
+            CheckBox semesterCheckBox = new CheckBox(this);
+            semesterCheckBox.setText("Semester " + semester.getSemsternumber());
+            semesterCheckBox.setTag(semester);
+            semesterCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
-                public void onResponse(Call<List<Section>> call, Response<List<Section>> response) {
-                    if (response.isSuccessful() && response.body() != null) {
-                        List<Section> sections = response.body();
-                        semesterSectionsMap.put(semester.getSemesetrID(), sections); // Store sections by semester ID
-                        populateCheckBoxes(semester, sections);
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    Semester selectedSemester = (Semester) buttonView.getTag();
+                    if (isChecked) {
+                        if (!selectedSemesterIds.contains(selectedSemester.getSemesetrID())) {
+                            selectedSemesterIds.add(selectedSemester.getSemesetrID());
+                        }
+                        fetchSections(selectedSemester, semesterLayout);
                     } else {
-                        String errorMessage = "Failed to fetch sections for semester " + semester.getSemsternumber() + ". Response code: " + response.code() + ", Message: " + response.message();
-                        Log.e("fetchSections", errorMessage);
-                        Toast.makeText(facultypapulationMessage.this, errorMessage, Toast.LENGTH_SHORT).show();
+                        selectedSemesterIds.remove((Integer) selectedSemester.getSemesetrID());
+                        removeSections(semesterLayout);
                     }
                 }
-
-                @Override
-                public void onFailure(Call<List<Section>> call, Throwable t) {
-                    String errorMessage = "Failed to fetch sections: " + t.getMessage();
-                    Log.e("fetchSections", errorMessage);
-                    Toast.makeText(facultypapulationMessage.this, errorMessage, Toast.LENGTH_SHORT).show();
-                }
             });
+            semesterLayout.addView(semesterCheckBox);
+            layoutSemesters.addView(semesterLayout);
         }
     }
 
-    private void populateCheckBoxes(Semester semester, List<Section> sections) {
-        TextView semesterHeader = new TextView(this);
-        semesterHeader.setText("Semester " + semester.getSemsternumber());
-        layoutCheckboxes.addView(semesterHeader);
+    private void fetchSections(Semester semester, LinearLayout semesterLayout) {
+        Call<List<Section>> call = apiservices.getSections(username, semester.getSemesetrID());
+        call.enqueue(new Callback<List<Section>>() {
+            @Override
+            public void onResponse(Call<List<Section>> call, Response<List<Section>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    List<Section> sections = response.body();
+                    semesterSectionsMap.put(semester.getSemesetrID(), sections); // Store sections by semester ID
+                    populateSectionCheckBoxes(sections, semesterLayout);
+                } else {
+                    String errorMessage = "Failed to fetch sections for semester " + semester.getSemsternumber() + ". Response code: " + response.code() + ", Message: " + response.message();
+                    Log.e("fetchSections", errorMessage);
+                    Toast.makeText(facultypapulationMessage.this, errorMessage, Toast.LENGTH_SHORT).show();
+                }
+            }
 
+            @Override
+            public void onFailure(Call<List<Section>> call, Throwable t) {
+                String errorMessage = "Failed to fetch sections: " + t.getMessage();
+                Log.e("fetchSections", errorMessage);
+                Toast.makeText(facultypapulationMessage.this, errorMessage, Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void populateSectionCheckBoxes(List<Section> sections, LinearLayout semesterLayout) {
         for (Section section : sections) {
-            CheckBox checkBox = new CheckBox(this);
-            checkBox.setText(section.getSectionname());
-            checkBox.setTag(section);
-            checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            CheckBox sectionCheckBox = new CheckBox(this);
+            sectionCheckBox.setText("Section " + section.getSectionname());
+            sectionCheckBox.setTag(section);
+            sectionCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     Section selectedSection = (Section) buttonView.getTag();
                     if (isChecked) {
-                        selectedSemesterIds.add(semester.getSemesetrID());
-                        selectedSectionIds.add(selectedSection.getSectionid());
-
-                        unselectedSemesterIds.remove(Integer.valueOf(semester.getSemesetrID()));
-                        unselectedSectionIds.remove(Integer.valueOf(selectedSection.getSectionid()));
+                        if (!selectedSectionIds.contains(selectedSection.getSectionid())) {
+                            selectedSectionIds.add(selectedSection.getSectionid());
+                        }
                     } else {
-                        selectedSemesterIds.remove(Integer.valueOf(semester.getSemesetrID()));
-                        selectedSectionIds.remove(Integer.valueOf(selectedSection.getSectionid()));
-
-                        if (!unselectedSemesterIds.contains(semester.getSemesetrID())) {
-                            unselectedSemesterIds.add(semester.getSemesetrID());
-                        }
-                        if (!unselectedSectionIds.contains(selectedSection.getSectionid())) {
-                            unselectedSectionIds.add(selectedSection.getSectionid());
-                        }
+                        selectedSectionIds.remove((Integer) selectedSection.getSectionid());
                     }
                 }
             });
-            layoutCheckboxes.addView(checkBox);
+            semesterLayout.addView(sectionCheckBox);
+        }
+    }
+
+    private void removeSections(LinearLayout semesterLayout) {
+        // Remove all section checkboxes from the semester layout
+        for (int i = 1; i < semesterLayout.getChildCount(); i++) {
+            View child = semesterLayout.getChildAt(i);
+            if (child instanceof CheckBox) {
+                semesterLayout.removeViewAt(i);
+                i--; // Adjust index after removal
+            }
         }
     }
 
     private void sendMessage() {
+        if (selectedSectionIds.isEmpty()) {
+            Toast.makeText(this, "No sections selected", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        // Debugging logs
+        Log.d("sendMessage", "Selected Program ID: " + selectedProgramId);
+        Log.d("sendMessage", "Selected Semester IDs: " + selectedSemesterIds.toString());
+        Log.d("sendMessage", "Selected Section IDs: " + selectedSectionIds.toString());
+
+        // Create an Intent and pass the selected program ID, semester IDs, and section IDs
         Intent intent = new Intent(facultypapulationMessage.this, ft_send_message_by_samester.class);
-        intent.putExtra("programId", selectedProgramId);
-        intent.putExtra("semesterIds", new ArrayList<>(selectedSemesterIds));
-        intent.putExtra("sectionIds", new ArrayList<>(selectedSectionIds));
+        intent.putExtra("selectedProgramId", selectedProgramId);
+        intent.putIntegerArrayListExtra("selectedSemesterIds", new ArrayList<>(selectedSemesterIds));
+        intent.putIntegerArrayListExtra("selectedSectionIds", new ArrayList<>(selectedSectionIds));
+
+        // Debugging Toasts
+        Toast.makeText(this, "Selected Program ID: " + selectedProgramId, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Selected Semester IDs: " + selectedSemesterIds.toString(), Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Selected Section IDs: " + selectedSectionIds.toString(), Toast.LENGTH_SHORT).show();
+
         startActivity(intent);
     }
 }

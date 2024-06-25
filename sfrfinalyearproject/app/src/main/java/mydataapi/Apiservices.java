@@ -12,6 +12,7 @@ import ModeClasees.cuTeacher;
 import ModeClasees.papulationselection;
 import ModeClasees.user;
 import chatClasses.MessageResponse;
+import dashboardclasese.wishingclass;
 import facultyClasses.Course;
 import facultyClasses.InsertPapolationDataDto;
 import facultyClasses.InsertPapolationResponse;
@@ -176,7 +177,18 @@ public interface Apiservices {
 
     @POST("api/Wish/Post")
     Call<Void> sendWish(@Body postpapolation sendWishRequestDto);
+    @GET("api/Wish/Getdashboardmessages")
+    Call<List<wishingclass>> getpost(
+            @Query("currentuser") String currentuser,
+            @Query("tcname") String tcname,
+            @Query("messagtype") String messagtype);
 
+    @GET("api/Wish/Getdashboardmessages")
+    Call<List<wishingclass>> getDashboardMessages(
+            @Query("currentuser") String currentuser,
+            @Query("tcname") String tcname,
+            @Query("messagtype") String messagetype
+    );
 
     @POST("api/Wish/InsertpapolationData")
     Call<InsertPapolationResponse> insertPapolationData(@Body InsertPapolationDataDto dto);

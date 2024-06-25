@@ -1,5 +1,6 @@
 package Faculty;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -29,14 +30,13 @@ import studentClasses.UserDataSingleton;
 import studentClasses.teacherRepository;
 
 public class ft_send_message_by_course extends AppCompatActivity {
-Button done;
-String username;
-    private String firstName;
-    private String lastName;
-    private String profileImage;
+    Button done;
+    String username;
+
     ImageView profile;
     private Apiservices apiService;
     TextView profilename;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,7 +47,7 @@ String username;
         profilename = findViewById(R.id.profelname);
         profile = findViewById(R.id.profilepicture);
 
-        done=findViewById(R.id.done);
+        done = findViewById(R.id.done);
 
         username = UserDataSingleton.getInstance().getUsername();
 
@@ -55,12 +55,9 @@ String username;
 
         userRepository.fetchTeacherData(username, new teacherRepository.teacherRepositoryCallback() {
             @Override
-            public void onSuccess(TeacherData data)
-            {
+            public void onSuccess(TeacherData data) {
                 // Access user data fields
-
                 String Disignation = data.getDisgnation();
-
                 String profileImage = data.getProfileImage();
                 String firstName = data.getFirstName();
                 String lastName = data.getLastName();
@@ -72,17 +69,14 @@ String username;
                 String displayData = (Disignation);
                 textView.setText(displayData);
                 if (profileImage != null && !profileImage.isEmpty()) {
-                    String imageUrl = RetrofitClient.getBaseUrl() + "images/profileimages/" +profileImage + ".jpg";
+                    String imageUrl = RetrofitClient.getBaseUrl() + "images/profileimages/" + profileImage + ".jpg";
                     Picasso.get().load(imageUrl).error(R.drawable.baseline_account_circle_24).into(profile);
                 } else {
                     profile.setImageResource(R.drawable.baseline_account_circle_24);
                 }
 
-
-
-                String fullName = firstName+ " " + lastName;
+                String fullName = firstName + " " + lastName;
                 profilename.setText(fullName);
-
             }
 
             @Override
@@ -99,11 +93,10 @@ String username;
         done.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
+                List<String> selectedCourseIds = getSelectedCourseIds();
+                sendSelectedCourses(selectedCourseIds);
             }
         });
-
     }
 
     private void fetchCourses() {
@@ -155,5 +148,12 @@ String username;
         }
 
         return selectedIds;
+    }
+
+    // Method to send selected course ids to next activity
+    private void sendSelectedCourses(List<String> selectedCourseIds) {
+        Intent intent = new Intent(ft_send_message_by_course.this, course_message_body.class); // Replace NextActivity with your target activity
+        intent.putStringArrayListExtra("selectedCourseIds", new ArrayList<>(selectedCourseIds));
+        startActivity(intent);
     }
 }

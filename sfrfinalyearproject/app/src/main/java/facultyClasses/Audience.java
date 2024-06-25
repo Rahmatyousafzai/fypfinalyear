@@ -1,7 +1,7 @@
 package facultyClasses;
 
 public class Audience {
-    private int program_id;
+    private Integer program_id;
 
     public int getProgram_id() {
         return program_id;
@@ -35,15 +35,23 @@ public class Audience {
         this.courseid = courseid;
     }
 
-    private int semesterID;
+    private Integer semesterID;
 
-    public Audience(int program_id, int semesterID, int sectionId, String courseid) {
+    public Audience(Integer program_id, Integer semesterID, Integer sectionId, String courseid) {
         this.program_id = program_id;
         this.semesterID = semesterID;
         this.sectionId = sectionId;
         this.courseid = courseid;
     }
 
-    private int sectionId;
+    public Audience(String courseid) {
+
+        this.courseid = courseid;
+    }
+
+
+
+
+    private Integer sectionId;
     private String courseid;
 }

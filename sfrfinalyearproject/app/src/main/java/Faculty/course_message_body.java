@@ -1,168 +1,205 @@
 package Faculty;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.sfrfinalyearproject.R;
 import com.squareup.picasso.Picasso;
 
-import genral.templete;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Locale;
+
+import facultyClasses.Audience;
+import facultyClasses.postpapolation;
+import mydataapi.Apiservices;
 import mydataapi.RetrofitClient;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import studentClasses.TeacherData;
 import studentClasses.UserDataSingleton;
 import studentClasses.teacherRepository;
 
 public class course_message_body extends AppCompatActivity {
-Button btnsendwish;
-    String username;
-ImageView imgback,imgcourse,imgtemplete;
+    private Button done;
+    private EditText typesomething;
+    private TextView courseslist;
+    private TextView profilename;
+    private TextView disgnation;
+    private ImageView profile;
+
+    private String username;
+    private ArrayList<String> selectedCourseIds;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_course_message_body);
-        btnsendwish=findViewById(R.id.sendwish);
 
-        imgcourse=findViewById(R.id.addcourse);
-        imgtemplete=findViewById(R.id.addtem);
+        initializeUI();
+        username = UserDataSingleton.getInstance().getUsername();
+        fetchTeacherData();
+        extractIntentExtras();
+        displaySelectedDetails();
 
-       TextView profilename = findViewById(R.id.profelname);  // Initialize this
-         ImageView  profile = findViewById(R.id.profileimage);          // Initialize this
+        done.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showConfirmationDialog();
+            }
+        });
+    }
 
-         username = UserDataSingleton.getInstance().getUsername();
+    private void initializeUI() {
+        done = findViewById(R.id.sendwish);
+        typesomething = findViewById(R.id.typepost);
+        courseslist = findViewById(R.id.courseslist);
+        profilename = findViewById(R.id.profelname);
+        disgnation = findViewById(R.id.desgnation);
+        profile = findViewById(R.id.profileimage);
+    }
 
+    private void fetchTeacherData() {
         teacherRepository userRepository = new teacherRepository();
-
         userRepository.fetchTeacherData(username, new teacherRepository.teacherRepositoryCallback() {
             @Override
-            public void onSuccess(TeacherData data)
-            {
-                // Access user data fields
-
-                String Disignation = data.getDisgnation();
-
-                String profileImage = data.getProfileImage();
-                String firstName = data.getFirstName();
-                String lastName = data.getLastName();
-
-                Log.e("UserData.........", "Section Name:........... " + Disignation);
-
-                // Optionally, update UI with user data
-                TextView textView = findViewById(R.id.disgnation);
-                String displayData = (Disignation);
-                textView.setText(displayData);
-                if (profileImage != null && !profileImage.isEmpty()) {
-                    String imageUrl = RetrofitClient.getBaseUrl() + "images/profileimages/" +profileImage + ".jpg";
-                    Picasso.get().load(imageUrl).error(R.drawable.baseline_account_circle_24).into(profile);
-                } else {
-                    profile.setImageResource(R.drawable.baseline_account_circle_24);
-                }
-
-
-
-                String fullName = firstName+ " " + lastName;
-                profilename.setText(fullName);
-
+            public void onSuccess(TeacherData data) {
+                updateTeacherProfile(data);
             }
 
             @Override
             public void onFailure(Exception e) {
-                Log.e("SomeActivity", "Error fetching user data: " + e.getMessage());
-                // Handle error case, e.g., show a toast or an error message
+                Log.e("ft_send_message", "Error fetching teacher data: " + e.getMessage());
             }
         });
+    }
 
+    private void updateTeacherProfile(TeacherData data) {
+        disgnation.setText(data.getDisgnation());
 
+        String profileImage = data.getProfileImage();
+        if (profileImage != null && !profileImage.isEmpty()) {
+            String imageUrl = RetrofitClient.getBaseUrl() + "images/profileimages/" + profileImage + ".jpg";
+            Picasso.get().load(imageUrl).error(R.drawable.baseline_account_circle_24).into(profile);
+        } else {
+            profile.setImageResource(R.drawable.baseline_account_circle_24);
+        }
 
+        String fullName = data.getFirstName() + " " + data.getLastName();
+        profilename.setText(fullName);
+    }
 
+    private void extractIntentExtras() {
+        Intent intent = getIntent();
+        if (intent != null) {
+            selectedCourseIds = intent.getStringArrayListExtra("selectedCourseIds");
+        }
+    }
 
+    private void displaySelectedDetails() {
+        Log.d("ft_send_message", "Selected course IDs: " + selectedCourseIds);
+        courseslist.setText(selectedCourseIds.toString());
 
+        if (selectedCourseIds == null) {
+            Toast.makeText(this, "Failed to receive data", Toast.LENGTH_LONG).show();
+            finish();
+        }
+    }
 
+    private void showConfirmationDialog() {
+        String content = typesomething.getText().toString();
+        if (content.isEmpty()) {
+            showErrorDialog("Message content cannot be empty.");
+            return;
+        }
 
+        new AlertDialog.Builder(this)
+                .setTitle("Confirm Send")
+                .setMessage("Are you sure you want to send this message?")
+                .setPositiveButton("Yes", (dialog, which) -> sendMessage())
+                .setNegativeButton("No", null)
+                .show();
+    }
 
+    private void sendMessage() {
+        String content = typesomething.getText().toString();
+        if (content.isEmpty()) {
+            showErrorDialog("Message content cannot be empty.");
+            return;
+        }
 
+        String formattedDateTime = getCurrentFormattedDateTime();
 
-        btnsendwish.setOnClickListener(new View.OnClickListener() {
+        List<Audience> audienceList = new ArrayList<>();
+        if (selectedCourseIds != null) {
+            for (String courseId : selectedCourseIds) {
+                Log.d("sendMessage", "Creating Audience with courseId: " + courseId);
+                Audience audienceDto = new Audience(null, null, null, courseId);
+                audienceList.add(audienceDto);
+            }
+        } else {
+            Log.e("sendMessage", "selectedCourseIds is null");
+        }
+
+        postpapolation sendWishRequestDto = new postpapolation(
+                username,
+                content,
+                null,
+                audienceList
+        );
+
+        ProgressDialog progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("Sending message...");
+        progressDialog.setCancelable(false);
+        progressDialog.show();
+
+        Apiservices apiService = RetrofitClient.getInstance();
+        Call<Void> sendWishCall = apiService.sendWish(sendWishRequestDto);
+        sendWishCall.enqueue(new Callback<Void>() {
             @Override
-            public void onClick(View v) {
-
-                sendwish();
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                progressDialog.dismiss();
+                if (response.isSuccessful()) {
+                    Toast.makeText(course_message_body.this, "Wish sent successfully.", Toast.LENGTH_LONG).show();
+                    finish();
+                } else {
+                    showErrorDialog("Failed to send wish. Response code: " + response.code());
+                }
             }
-        });
 
-
-        imgback.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-
-                Navegateback();
-
-
+            public void onFailure(Call<Void> call, Throwable t) {
+                progressDialog.dismiss();
+                showErrorDialog("Error sending wish: " + t.getMessage());
             }
         });
-        imgtemplete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                navigateTemplate();
-
-            }
-        });
-        imgcourse.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-navigateCourse();
-            }
-        });
-
-
-
-
-
-
-
-    }
-
-    private void sendwish() {
-
-
-        Intent intent=new Intent(course_message_body.this, faculty_dashboard.class);
-        startActivity(intent);
-        finish();
-    }
-
-    private void Navegateback() {
-        Intent intent=new Intent(course_message_body.this, ft_send_message_by_course.class);
-        startActivity(intent);
-        finish();
-    }
-
-    private void navigateTemplate() {
-        Intent intent=new Intent(course_message_body.this, templete.class);
-        startActivity(intent);
-        finish();
-    }
-
-    private void navigateCourse() {
-        Intent intent=new Intent(course_message_body.this, ft_send_message_by_course.class);
-        startActivity(intent);
-        finish();
-    }
-
-    public void onBackPressed() {
-        // Navigate back to the login screen
-        Intent intent = new Intent(this, faculty_dashboard.class);
-        startActivity(intent);
-        finish(); // Finish the current activity to prevent returning to it when pressing back again
-        super.onBackPressed(); // Call super method
     }
 
 
+    private String getCurrentFormattedDateTime() {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+        return sdf.format(new Date());
+    }
 
+    private void showErrorDialog(String message) {
+        new AlertDialog.Builder(this)
+                .setTitle("Error")
+                .setMessage(message)
+                .setPositiveButton("OK", null)
+                .show();
+    }
 }

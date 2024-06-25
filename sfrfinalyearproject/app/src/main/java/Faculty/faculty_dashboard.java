@@ -11,6 +11,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.sfrfinalyearproject.R;
 import com.squareup.picasso.Picasso;
@@ -18,10 +19,8 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.List;
 
-import ModeClasees.Wish;
-import ModeClasees.cuTeacher;
-import ModeClasees.user;
-import adopter.OnTeacherClickListener;
+import dashboardclasese.wishingadopter;
+import dashboardclasese.wishingclass;
 import mydataapi.Apiservices;
 import mydataapi.RetrofitClient;
 import retrofit2.Call;
@@ -31,21 +30,25 @@ import studentClasses.TeacherData;
 import studentClasses.UserDataSingleton;
 import studentClasses.teacherRepository;
 
-public class faculty_dashboard extends AppCompatActivity implements OnTeacherClickListener {
+public class faculty_dashboard extends AppCompatActivity {
 
-    private static final String TAG = "ftdashboard";
+
+    private static final String TAG = "FacultyDashboard";
+
     private Apiservices apiServices;
     TextView news, notification, message, student, favstudent, typepost, profilename;
     ImageView imgnews, imgNotification, imgmessage, imgstudent, imgfavstudent, imgpost, profile;
     private RecyclerView recyclerView;
 
     // private wish adapter;
-    private List<Wish> wishList = new ArrayList<>();
-
+    private List<wishingclass> wishList = new ArrayList<>();
+    private wishingadopter adapter;
     private String username;
     private String firstName;
     private String lastName;
     private String profileImage;
+    private SwipeRefreshLayout swipeRefreshLayout;
+    private boolean isLoading = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,28 +75,20 @@ public class faculty_dashboard extends AppCompatActivity implements OnTeacherCli
         profile = findViewById(R.id.profilepicture);
 
 
-
-
-
-
-
-
-
-        String username = UserDataSingleton.getInstance().getUsername();
+         username = UserDataSingleton.getInstance().getUsername();
 
         teacherRepository userRepository = new teacherRepository();
 
         userRepository.fetchTeacherData(username, new teacherRepository.teacherRepositoryCallback() {
             @Override
-            public void onSuccess(TeacherData data)
-            {
+            public void onSuccess(TeacherData data) {
                 // Access user data fields
 
                 String sectionName = data.getDisgnation();
 
-                profileImage=data.getProfileImage();
-                firstName=data.getFirstName();
-                lastName=data.getLastName();
+                profileImage = data.getProfileImage();
+                firstName = data.getFirstName();
+                lastName = data.getLastName();
 
                 Log.e("UserData.........", "Section Name:........... " + sectionName);
 
@@ -102,15 +97,14 @@ public class faculty_dashboard extends AppCompatActivity implements OnTeacherCli
                 String displayData = (sectionName);
                 textView.setText(displayData);
                 if (profileImage != null && !profileImage.isEmpty()) {
-                    String imageUrl = RetrofitClient.getBaseUrl() + "images/profileimages/" +profileImage + ".jpg";
+                    String imageUrl = RetrofitClient.getBaseUrl() + "images/profileimages/" + profileImage + ".jpg";
                     Picasso.get().load(imageUrl).error(R.drawable.baseline_account_circle_24).into(profile);
                 } else {
                     profile.setImageResource(R.drawable.baseline_account_circle_24);
                 }
 
 
-
-                String fullName = firstName+ " " + lastName;
+                String fullName = firstName + " " + lastName;
                 profilename.setText(fullName);
 
             }
@@ -123,25 +117,32 @@ public class faculty_dashboard extends AppCompatActivity implements OnTeacherCli
         });
 
 
+        recyclerView = findViewById(R.id.recyclerView);
+        swipeRefreshLayout = findViewById(R.id.swipeRefreshLayout);
 
-
-
-
-
-
-
-
-
-
-        apiServices = RetrofitClient.getInstance();
-        recyclerView = findViewById(R.id.strcview);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-    //    adapter = new Wishadapter(this, wishList, this);
-      //  recyclerView.setAdapter(adapter);
+        adapter = new wishingadopter(this, wishList);
+        recyclerView.setAdapter(adapter);
+
+        // Configure SwipeRefreshLayout
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                fetchData(); // Call fetchData() when user swipes to refresh
+            }
+        });
+
+        // Initial data load
+        fetchData();
+
+        // Fetch data from API
+
+        //    adapter = new Wishadapter(this, wishList, this);
+        //  recyclerView.setAdapter(adapter);
 
         Log.d("recycl", "recyclerView Data " + recyclerView.toString());
         //Log.d("recycl", "adopter Data " + adapter.toString());
-       // fetchAndDisplayWishes();
+        // fetchAndDisplayWishes();
 
         /////////////////////////////////////////////////////////////////////////
         ///////////////////////// Set click listeners////////////////////////////
@@ -289,49 +290,71 @@ public class faculty_dashboard extends AppCompatActivity implements OnTeacherCli
         finish();
     }
 
-    private void fetchAndDisplayWishes() {
-        apiServices.getWishes().enqueue(new Callback<List<Wish>>() {
+    ///////////////////////////display wishes//////////
+
+    private void fetchData() {
+        // Show progress indicator
+        swipeRefreshLayout.setRefreshing(true);
+        String messagetype = "Teacher";
+
+        // Implement your Retrofit call here to fetch data
+        Apiservices apiService = RetrofitClient.getInstance();
+        Call<List<wishingclass>> call = apiService.getDashboardMessages(username, "BIIT0001", messagetype);
+
+        Log.d(TAG, "fetchData: Making Retrofit call...");
+
+        call.enqueue(new Callback<List<wishingclass>>() {
             @Override
-            public void onResponse(Call<List<Wish>> call, Response<List<Wish>> response) {
-                if (response.isSuccessful() && response.body() != null) {
-                    wishList.clear();
-                    wishList.addAll(response.body());
-                    //adapter.notifyDataSetChanged(); // Notify adapter of data change
-                    Log.d(TAG, "Wishes fetched successfully. List size: " + wishList.size());
+            public void onResponse(Call<List<wishingclass>> call, Response<List<wishingclass>> response) {
+                // Hide progress indicator
+                swipeRefreshLayout.setRefreshing(false);
+
+                if (response.isSuccessful()) {
+                    List<wishingclass> wishes = response.body();
+                    if (wishes != null) {
+                        // If loading for the first time or refreshing
+                        if (!isLoading) {
+                            wishList.clear(); // Clear previous data
+                            isLoading = true; // Set loading state
+                        }
+
+                        wishList.addAll(wishes); // Add new data to list
+                        adapter.notifyDataSetChanged(); // Notify adapter
+
+                        isLoading = false; // Reset loading state
+
+                        Log.d(TAG, "onResponse: Data loaded successfully. Size: " + wishes.size());
+                    } else {
+                        Log.d(TAG, "onResponse: Response body is null");
+                    }
                 } else {
-                    Log.d(TAG, "Failed to get wishes. Response code: " + response.code());
+                    Log.d(TAG, "onResponse: Response not successful. Code: " + response.code());
+                    Toast.makeText(faculty_dashboard.this, "Failed to fetch data", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
-            public void onFailure(Call<List<Wish>> call, Throwable t) {
-                Log.d(TAG, "Error fetching wishes: " + t.getMessage());
-                Toast.makeText(faculty_dashboard.this, "Error fetching wishes", Toast.LENGTH_SHORT).show();
+            public void onFailure(Call<List<wishingclass>> call, Throwable t) {
+                // Hide progress indicator
+                swipeRefreshLayout.setRefreshing(false);
+
+                // Handle failure
+                Log.e(TAG, "onFailure: Error fetching data", t);
+                Toast.makeText(faculty_dashboard.this, "Error fetching data", Toast.LENGTH_SHORT).show();
             }
         });
     }
 
-    @Override
-    public void onTeacherClick(user teacher) {
-        // Handle teacher click
-    }
 
-    @Override
-    public void onTeacherClick(cuTeacher teacher) {
-        // Handle cuTeacher click
-    }
 
-    @Override
-    public void onTeacherClick(Wish wish) {
-        showToast("Clicked on: " + wish.getSwid());
-    }
 
-    @Override
-    public void onTeacherClick(Object item) {
-        // Handle other item clicks
-    }
 
-    private void showToast(String message) {
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
-    }
+
+
+
+
+
+
+
 }
+

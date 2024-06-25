@@ -100,15 +100,7 @@
 
 
             ></TextView>
-    <RadioGroup
-        android:id="@+id/radioGroup"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="10dp"
-        android:layout_gravity="center"
-        android:background="@drawable/flateborderwitecolor"
-        />
+
 
     <!-- Spinners -->
         <Spinner
@@ -124,6 +116,7 @@
         <!-- Text Message -->
 
 </LinearLayout>
+
     <LinearLayout
         android:id="@+id/layout_checkboxes"
         android:layout_width="match_parent"
@@ -131,6 +124,8 @@
         android:background="@color/white"
         android:orientation="vertical"
         android:padding="20dp" >
+
+
 
     <LinearLayout
     android:layout_width="match_parent"
