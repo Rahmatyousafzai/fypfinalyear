@@ -10,7 +10,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class RetrofitClient {
 
     // Base URL for the API
-    private static final String BASE_URL = "http://192.168.43.250/fyp-api-versoin4/";
+    private static final String BASE_URL = "http://192.168.43.158/fyp-api-versoin4/";
     private static Retrofit retrofit;
     private static Apiservices apiService;
 

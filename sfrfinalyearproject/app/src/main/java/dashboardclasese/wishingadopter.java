@@ -56,7 +56,7 @@ public class wishingadopter extends RecyclerView.Adapter<wishingadopter.ViewHold
         wishingclass wish = wishes.get(position);
         holder.txtContent.setText(wish.getContent());
         holder.txtDateTime.setText(wish.getDateTime());
-
+        holder.txtReactionCount.setText("Reactions: " + wish.getReactionCount());
 
         String Firstneme=wish.getFirstName();
         String lastname=wish.getLastName();
@@ -190,16 +190,18 @@ public class wishingadopter extends RecyclerView.Adapter<wishingadopter.ViewHold
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        TextView txtContent;
+        TextView txtContent,txtReactionCount;
         TextView txtDateTime,pfname;
 
         ImageView profile;
+
         public ViewHolder(View itemView) {
             super(itemView);
             pfname = itemView.findViewById(R.id.pfname);
             profile=itemView.findViewById(R.id.senderimage);
             txtContent = itemView.findViewById(R.id.wishcontent);
             txtDateTime = itemView.findViewById(R.id.dateTime);
+            txtReactionCount = itemView.findViewById(R.id.reactionCount);
 
         }
     }

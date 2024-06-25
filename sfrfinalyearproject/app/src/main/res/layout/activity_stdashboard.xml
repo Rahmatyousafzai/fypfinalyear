@@ -199,16 +199,18 @@ android:textSize="20dp"
         android:layout_margin="0dp"
 
         >
-    <androidx.recyclerview.widget.RecyclerView
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_gravity="center"
-        android:background="@color/white"
-        android:backgroundTint="@color/white"
-        android:layout_marginLeft="20dp"
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/swipeRefreshLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-        android:id="@+id/strcview"
-        ></androidx.recyclerview.widget.RecyclerView>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
     </LinearLayout>
     <LinearLayout
         android:layout_width="wrap_content"

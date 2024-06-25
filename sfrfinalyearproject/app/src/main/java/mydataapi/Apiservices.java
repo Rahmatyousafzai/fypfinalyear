@@ -64,7 +64,7 @@ public interface Apiservices {
 
 
     @GET("api/Wish/messageList")
-    Call<List<Wish>> getinboxlist( @Query("messageType") String messageType);
+    Call<List<Wish>> getinboxlist( @Query("reciverid") String reciverid);
 
     @GET("api/Wish/inboxmessageList")
     Call<List<Wish>> getinboxMessage( @Query("senderID") String senderID);
@@ -201,5 +201,7 @@ public interface Apiservices {
             @Query("requestedBy") String requestedBy,
             @Query("requestedFor") String requestedFor
     );
+    @POST("api/Wish/PostReaction")
+    Call<Void> postReaction(@Body Reaction reaction);
 
 }

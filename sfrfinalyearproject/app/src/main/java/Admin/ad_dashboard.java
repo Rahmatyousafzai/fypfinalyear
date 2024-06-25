@@ -10,6 +10,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.sfrfinalyearproject.R;
 import com.squareup.picasso.Picasso;
@@ -17,25 +18,27 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.List;
 
-import ModeClasees.Wish;
-import ModeClasees.cuTeacher;
-import ModeClasees.user;
-import adopter.OnTeacherClickListener;
-//import adopter.Wishadapter;
+import dashboardclasese.wishingadopter;
+import dashboardclasese.wishingclass;
 import mydataapi.Apiservices;
 import mydataapi.RetrofitClient;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import studentClasses.TeacherData;
+import studentClasses.UserDataSingleton;
+import studentClasses.teacherRepository;
 
-public class ad_dashboard extends AppCompatActivity implements OnTeacherClickListener {
+public class ad_dashboard extends AppCompatActivity implements wishingadopter.EmojiClickListener {
 
     private TextView adminPost, addTeacher, adNews, adMessage, addAchievement, adStudent, profileName, notification;
-    private RecyclerView recyclerView;
-    //private Wishadapter adapter;
-    private List<Wish> wishList = new ArrayList<>();
+    private wishingadopter adapter;
+    private List<wishingclass> wishList = new ArrayList<>();
+    private String username, firstName, lastName, profileImage;
+    private SwipeRefreshLayout swipeRefreshLayout;
+    private boolean isLoading = false;
     private ImageView profile, popup;
-
+    private RecyclerView recyclerView;
     private static final String TAG = "ad_dashboard";
     private Apiservices apiServices;
 
@@ -47,11 +50,65 @@ public class ad_dashboard extends AppCompatActivity implements OnTeacherClickLis
         // Initialize views and image list
         initViews();
 
-        // Set up RecyclerView and click listeners for views
+        // Initialize RecyclerView
+        recyclerView = findViewById(R.id.recyclerView);
+        if (recyclerView != null) {
+            recyclerView.setLayoutManager(new LinearLayoutManager(this));
+            adapter = new wishingadopter(this, wishList, this); // Pass this as EmojiClickListener
+            recyclerView.setAdapter(adapter);
+        } else {
+            Log.e(TAG, "RecyclerView is null. Check the layout file for the RecyclerView with id 'recyclerView'");
+        }
+
+        username = UserDataSingleton.getInstance().getUsername();
+
+        teacherRepository userRepository = new teacherRepository();
+        userRepository.fetchTeacherData(username, new teacherRepository.teacherRepositoryCallback() {
+            @Override
+            public void onSuccess(TeacherData data) {
+                // Access user data fields
+                String sectionName = data.getDisgnation();
+                profileImage = data.getProfileImage();
+                firstName = data.getFirstName();
+                lastName = data.getLastName();
+
+                Log.e("UserData.........", "Section Name:........... " + sectionName);
+
+                // Update UI with user data
+                profileName.setText(firstName + " " + lastName);
+                TextView textView = findViewById(R.id.disgnation);
+                textView.setText(sectionName);
+
+                // Load profile image using Picasso
+                if (profileImage != null && !profileImage.isEmpty()) {
+                    String imageUrl = RetrofitClient.getBaseUrl() + "images/profileimages/" + profileImage + ".jpg";
+                    Picasso.get().load(imageUrl).error(R.drawable.baseline_account_circle_24).into(profile);
+                } else {
+                    profile.setImageResource(R.drawable.baseline_account_circle_24);
+                }
+            }
+
+            @Override
+            public void onFailure(Exception e) {
+                Log.e("SomeActivity", "Error fetching user data: " + e.getMessage());
+                Toast.makeText(ad_dashboard.this, "Error fetching user data", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        // Initialize SwipeRefreshLayout
+        swipeRefreshLayout = findViewById(R.id.swipeRefreshLayout);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                fetchData(); // Refresh data when swipe gesture is performed
+            }
+        });
+
+        // Initial data fetch
+        fetchData();
+
+        // Set click listeners for various actions
         setClickListeners();
-
-        fetchAndDisplayWishes();
-
     }
 
     private void initViews() {
@@ -64,8 +121,7 @@ public class ad_dashboard extends AppCompatActivity implements OnTeacherClickLis
         addAchievement = findViewById(R.id.adtextachvment);
         adStudent = findViewById(R.id.adstudent);
         profileName = findViewById(R.id.profelname);
-        recyclerView = findViewById(R.id.adrcview);
-        profile = findViewById(R.id.profileimage);
+        profile = findViewById(R.id.profilepicture);
         popup = findViewById(R.id.popup);
 
         Intent intent = getIntent();
@@ -85,55 +141,6 @@ public class ad_dashboard extends AppCompatActivity implements OnTeacherClickLis
         }
 
         apiServices = RetrofitClient.getInstance();
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-       // adapter = new Wishadapter(this, wishList, this);
-       // recyclerView.setAdapter(adapter);
-    }
-
-    private void fetchAndDisplayWishes() {
-        apiServices.getWishes().enqueue(new Callback<List<Wish>>() {
-            @Override
-            public void onResponse(Call<List<Wish>> call, Response<List<Wish>> response) {
-                if (response.isSuccessful() && response.body() != null) {
-                    wishList.clear();
-                    wishList.addAll(response.body());
-               //     adapter.notifyDataSetChanged(); // Notify adapter of data change
-                    Log.d(TAG, "Wishes fetched successfully. List size: " + wishList.size());
-                } else {
-                    Log.d(TAG, "Failed to get wishes. Response code: " + response.code());
-                }
-            }
-
-            @Override
-            public void onFailure(Call<List<Wish>> call, Throwable t) {
-                Log.d(TAG, "Error fetching wishes: " + t.getMessage());
-                Toast.makeText(ad_dashboard.this, "Error fetching wishes", Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
-
-    @Override
-    public void onTeacherClick(user teacher) {
-        // Handle teacher click
-    }
-
-    @Override
-    public void onTeacherClick(cuTeacher teacher) {
-
-    }
-
-    @Override
-    public void onTeacherClick(Wish wish) {
-        showToast("Clicked on: " + wish.getSwid());
-    }
-
-    @Override
-    public void onTeacherClick(Object item) {
-        // Handle other item clicks
-    }
-
-    private void showToast(String message) {
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
     private void setClickListeners() {
@@ -147,6 +154,52 @@ public class ad_dashboard extends AppCompatActivity implements OnTeacherClickLis
         addAchievement.setOnClickListener(v -> viewAchievement());
         popup.setOnClickListener(v -> {
             // Handle popup click
+        });
+    }
+
+    private void fetchData() {
+        swipeRefreshLayout.setRefreshing(true); // Show refresh indicator
+
+        // Retrofit call to fetch wishes
+        Apiservices apiService = RetrofitClient.getInstance();
+        Call<List<wishingclass>> call = apiService.getDashboardMessages(username, null, "Admin");
+
+        call.enqueue(new Callback<List<wishingclass>>() {
+            @Override
+            public void onResponse(Call<List<wishingclass>> call, Response<List<wishingclass>> response) {
+                swipeRefreshLayout.setRefreshing(false); // Hide refresh indicator
+
+                if (response.isSuccessful()) {
+                    List<wishingclass> wishes = response.body();
+                    if (wishes != null) {
+                        // Clear previous data if not loading more
+                        if (!isLoading) {
+                            wishList.clear();
+                            isLoading = true;
+                        }
+                        wishList.addAll(wishes); // Add new data
+                        if (adapter != null) {
+                            adapter.notifyDataSetChanged(); // Notify adapter of data change
+                        } else {
+                            Log.e(TAG, "Adapter is null in onResponse");
+                        }
+                        isLoading = false; // Reset loading state
+                        Log.d(TAG, "onResponse: Data loaded successfully. Size: " + wishes.size());
+                    } else {
+                        Log.d(TAG, "onResponse: Response body is null");
+                    }
+                } else {
+                    Log.d(TAG, "onResponse: Response not successful. Code: " + response.code());
+                    Toast.makeText(ad_dashboard.this, "Failed to fetch data", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<wishingclass>> call, Throwable t) {
+                swipeRefreshLayout.setRefreshing(false); // Hide refresh indicator
+                Log.e(TAG, "onFailure: Error fetching data", t);
+                Toast.makeText(ad_dashboard.this, "Error fetching data", Toast.LENGTH_SHORT).show();
+            }
         });
     }
 
@@ -212,5 +265,17 @@ public class ad_dashboard extends AppCompatActivity implements OnTeacherClickLis
         intent.putExtra("image", R.drawable.baseline_account_circle_24);
         startActivity(intent);
         finish();
+    }
+
+    // Emoji click listener method implementation
+    @Override
+    public void onEmojiClick(int wishId, int emojiId) {
+        Log.d(TAG, "Emoji Click: Wish ID: " + wishId + ", Emoji ID: " + emojiId);
+        // Handle emoji click event here
+    }
+
+    @Override
+    public void onEmojiClick(int emojiId) {
+        // Handle emoji click event here
     }
 }

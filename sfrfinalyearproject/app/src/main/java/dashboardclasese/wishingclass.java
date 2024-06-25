@@ -5,6 +5,16 @@ public class wishingclass {
          private String Username;
     private String        FirstName;
 
+    public int getReactionCount() {
+        return reactionCount;
+    }
+
+    public void setReactionCount(int reactionCount) {
+        this.reactionCount = reactionCount;
+    }
+
+    private int reactionCount;
+
     public wishingclass(String username, String firstName, String lastName, String profileImage, String content, String dateTime, Integer swId) {
         Username = username;
         FirstName = firstName;

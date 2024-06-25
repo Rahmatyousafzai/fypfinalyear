@@ -67,4 +67,10 @@ public class UserDataSingleton implements UserRepository.UserRepositoryCallback 
         Log.e("UserDataSingleton", "Error fetching user data: " + e.getMessage());
         // Handle error case, e.g., show a toast or an error message
     }
+
+
+    public void clearData() {
+        this.username = null;
+        // Clear other user data fields
+    }
 }

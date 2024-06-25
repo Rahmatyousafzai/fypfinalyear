@@ -65,5 +65,10 @@
             android:textSize="16sp"/>
 
     </LinearLayout>
-
+    <TextView
+        android:id="@+id/reactionCount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Reactions: 0"
+        android:textSize="12sp"/>
 </androidx.appcompat.widget.LinearLayoutCompat>

@@ -5,9 +5,12 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.sfrfinalyearproject.R;
 import com.squareup.picasso.Picasso;
@@ -15,14 +18,18 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.List;
 
-import ModeClasees.Message;
+import dashboardclasese.wishingadopter;
+import dashboardclasese.wishingclass;
 import mydataapi.Apiservices;
 import mydataapi.RetrofitClient;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import studentClasses.UserDataSingleton;
 import studentClasses.UserRepository;
 import studentClasses.studentData;
 
-public class stdashboard extends AppCompatActivity {
+public class stdashboard extends AppCompatActivity implements wishingadopter.EmojiClickListener{
     //implements OnTeacherClickListener {
 
     private static final String TAG = "StudentDashboard";
@@ -30,12 +37,22 @@ public class stdashboard extends AppCompatActivity {
     // Views
     private TextView txtNews, sectionandsamester, txtMessage, txtNotification, txtFavTeacher, profilename, textteacher;
     private ImageView profile;
-    private RecyclerView recyclerView;
 
+
+
+
+
+
+
+
+    private RecyclerView recyclerView;
+    private wishingadopter adapter;
+    private List<wishingclass> wishList = new ArrayList<>();
+
+    private SwipeRefreshLayout swipeRefreshLayout;
+    private boolean isLoading = false;
     // Data
-    private List<Message> messages = new ArrayList<>();
-    //private MessageAdapter messageAdapter;
-    private Apiservices apiServices;
+
     private String username, firstName, lastName, profileImage;
 
     @Override
@@ -43,23 +60,37 @@ public class stdashboard extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stdashboard);
 
-        apiServices = RetrofitClient.getInstance();
-
 
         initializeViews();
 
         Intent intent = getIntent();
 
-
        // setupRecyclerView();
 
         setupClickListeners();
 
+
+        recyclerView = findViewById(R.id.recyclerView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        adapter = new wishingadopter(this, wishList, this); // Pass this as EmojiClickListener
+        recyclerView.setAdapter(adapter);
+
+        // Initialize SwipeRefreshLayout
+        swipeRefreshLayout = findViewById(R.id.swipeRefreshLayout);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                fetchData(); // Refresh data when swipe gesture is performed
+            }
+        });
+
+        // Initial data fetch
+        fetchData();
         //fetchAndDisplayWishes();
 
 
 // In any other activity where you want to access the username
-        String username = UserDataSingleton.getInstance().getUsername();
+        username = UserDataSingleton.getInstance().getUsername();
 
         UserRepository userRepository = new UserRepository();
         userRepository.fetchUserData(username, new UserRepository.UserRepositoryCallback() {
@@ -114,7 +145,7 @@ public class stdashboard extends AppCompatActivity {
         textteacher = findViewById(R.id.textteacher);
         profilename = findViewById(R.id.profelname);
         profile = findViewById(R.id.profilepicture);
-        recyclerView = findViewById(R.id.strcview);
+
     }
 
    /* private void extractUserInfo(Intent intent) {
@@ -232,4 +263,75 @@ public class stdashboard extends AppCompatActivity {
     }
 
    */
+
+
+    private void fetchData() {
+        swipeRefreshLayout.setRefreshing(true); // Show refresh indicator
+
+        // Retrofit call to fetch wishes
+        Apiservices apiService = RetrofitClient.getInstance();
+        Call<List<wishingclass>> call = apiService.getDashboardMessages(username, "null", "Student");
+
+        call.enqueue(new Callback<List<wishingclass>>() {
+            @Override
+            public void onResponse(Call<List<wishingclass>> call, Response<List<wishingclass>> response) {
+                swipeRefreshLayout.setRefreshing(false); // Hide refresh indicator
+
+                if (response.isSuccessful()) {
+                    List<wishingclass> wishes = response.body();
+                    if (wishes != null) {
+                        // Clear previous data if not loading more
+                        if (!isLoading) {
+                            wishList.clear();
+                            isLoading = true;
+                        }
+                        wishList.addAll(wishes); // Add new data
+                        if (adapter != null) {
+                            adapter.notifyDataSetChanged(); // Notify adapter of data change
+                        } else {
+                            Log.e(TAG, "Adapter is null in onResponse");
+                        }
+                        isLoading = false; // Reset loading state
+                        Log.d(TAG, "onResponse: Data loaded successfully. Size: " + wishes.size());
+                    } else {
+                        Log.d(TAG, "onResponse: Response body is null");
+                    }
+                } else {
+                    Log.d(TAG, "onResponse: Response not successful. Code: " + response.code());
+                    Toast.makeText(stdashboard.this, "Failed to fetch data", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<wishingclass>> call, Throwable t) {
+                swipeRefreshLayout.setRefreshing(false); // Hide refresh indicator
+                Log.e(TAG, "onFailure: Error fetching data", t);
+                Toast.makeText(stdashboard.this, "Error fetching data", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    // Emoji click listener method implementation
+    @Override
+    public void onEmojiClick(int wishId, int emojiId) {
+        Log.d(TAG, "Emoji Click: Wish ID: " + wishId + ", Emoji ID: " + emojiId);
+        // Handle emoji click event here
+    }
+
+    @Override
+    public void onEmojiClick(int emojiId) {
+
+    }
+
+
+
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        // Clear user data when exiting
+        UserDataSingleton.getInstance().clearData();
+    }
+
+
 }
