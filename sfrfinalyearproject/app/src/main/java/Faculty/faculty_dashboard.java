@@ -308,7 +308,7 @@ public class faculty_dashboard extends AppCompatActivity implements wishingadopt
     }
 
     private void notification() {
-        Intent intent = new Intent(faculty_dashboard.this, ftStudent.class);
+        Intent intent = new Intent(faculty_dashboard.this,ftNotification.class);
         intent.putExtra("username", username);
         intent.putExtra("FullName", firstName + " " + lastName);
         intent.putExtra("profileimage", profileImage);

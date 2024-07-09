@@ -19,6 +19,9 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name="Faculty.ftNotification"
+            android:exported="false" />
+        <activity
             android:name="Admin.admincources"
             android:exported="false" />
         <activity

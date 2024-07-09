@@ -4,10 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="Faculty.adviserscreen"
+    tools:context="Faculty.ftNotification"
+    android:orientation="vertical"
     android:background="@drawable/backgroundcolor"
-    android:orientation="vertical">
-
+    >
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -68,49 +68,47 @@
             />
 
     </LinearLayout>
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:orientation="horizontal"
         android:background="#59C0CC"
         android:layout_marginTop="10dp"
+
+
         >
 
         <ImageView
-            android:layout_marginLeft="20dp"
+            android:layout_marginLeft="50dp"
             android:layout_gravity="center"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:src="@drawable/heart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/student"
 
             ></ImageView>
-
         <TextView
             android:layout_marginLeft="20dp"
             android:layout_gravity="center"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
 
-            android:textAllCaps="false"
+            android:textAllCaps="true"
             android:textStyle="bold"
             android:textSize="30dp"
-            android:text="Favurite Student">
+            android:text="STUDENT">
 
         </TextView>
 
     </LinearLayout>
 
+
+
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/Rcfavestudent"
-        android:layout_gravity="center"
-
+        android:layout_height="500dp"
+        android:id="@+id/StudentRC"
 
         ></androidx.recyclerview.widget.RecyclerView>
-
-
 
 
 </androidx.appcompat.widget.LinearLayoutCompat>

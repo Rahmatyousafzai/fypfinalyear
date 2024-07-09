@@ -4,7 +4,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -13,13 +15,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.sfrfinalyearproject.R;
 import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import ModeClasees.Wish;
-import ModeClasees.cuTeacher;
 import ModeClasees.user;
-import adopter.FavTeachercustomAdopter;
+import facultyClasses.BirhdaynotificationAdopter;
 import mydataapi.Apiservices;
 import mydataapi.RetrofitClient;
 import retrofit2.Call;
@@ -29,17 +28,17 @@ import studentClasses.TeacherData;
 import studentClasses.UserDataSingleton;
 import studentClasses.teacherRepository;
 
-public class adviserscreen extends AppCompatActivity  implements FavTeachercustomAdopter.OnTeacherClickListener {
-    private Apiservices apiServices = RetrofitClient.getInstance();
-    private RecyclerView recyclerView;
-    private FavTeachercustomAdopter adapter;
-    private List<cuTeacher> teacherList = new ArrayList<>();
-
+public class ftNotification extends AppCompatActivity {
+    ImageView imgback;
+    ListView tclistview;
     String username;
+    private RecyclerView recyclerView;
+    private BirhdaynotificationAdopter adapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_adviserscreen);
+        setContentView(R.layout.activity_ft_notification);
+
 
 
         TextView profilename = findViewById(R.id.profelname);
@@ -88,43 +87,51 @@ public class adviserscreen extends AppCompatActivity  implements FavTeachercusto
             }
         });
 
-        recyclerView = findViewById(R.id.Rcfavestudent);
+
+
+
+
+        recyclerView = findViewById(R.id.StudentRC);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new FavTeachercustomAdopter(new ArrayList<>(), this);
-        recyclerView.setAdapter(adapter);
 
-        loadfavstudent();
-
-
-
-
+        fetchAlumni();
     }
 
 
 
+    private void fetchAlumni() {
+        Apiservices apiService = RetrofitClient.getInstance();
 
-    private void loadfavstudent() {
-        apiServices.getFavTeacher(username).enqueue(new Callback<List<cuTeacher>>() {
+        Call<List<user>> call = apiService.getBirhday(username);
+        call.enqueue(new Callback<List<user>>() {
             @Override
-            public void onResponse(Call<List<cuTeacher>> call, Response<List<cuTeacher>> response) {
+            public void onResponse(Call<List<user>> call, Response<List<user>> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    List<cuTeacher> teachers = response.body();
-                    for (cuTeacher teacher : teachers) {
-                        if (teacher.getProfileImage() == null || teacher.getProfileImage().isEmpty()) {
-                            teacher.setProfileImage(String.valueOf(R.drawable.baseline_account_circle_24));
-                        }
-                    }
-                    adapter.setTeacherList(teachers);
+                    List<user> studentList = response.body();
+                    adapter = new BirhdaynotificationAdopter(ftNotification.this, studentList);
+                    recyclerView.setAdapter(adapter);
+                } else {
+                    Toast.makeText(ftNotification.this, "Failed to fetch alumni", Toast.LENGTH_SHORT).show();
+                    Log.d("msg","student"+recyclerView);
+
+
                 }
+
             }
 
             @Override
-            public void onFailure(Call<List<cuTeacher>> call, Throwable t) {
-                // Handle the error
-                Log.e("FavTeacher", "Error loading teachers: " + t.getMessage());
+            public void onFailure(Call<List<user>> call, Throwable t) {
+                Log.e("AlumniActivity", "API call failed: " + t.getMessage());
+                Toast.makeText(ftNotification.this, "API call failed", Toast.LENGTH_SHORT).show();
             }
         });
     }
+
+
+
+
+
+
 
 
 
@@ -139,24 +146,10 @@ public class adviserscreen extends AppCompatActivity  implements FavTeachercusto
         super.onBackPressed(); // Call super method
     }
 
-    @Override
-    public void onTeacherClick(user teacher) {
 
-    }
 
-    @Override
-    public void onTeacherClick(cuTeacher teacher) {
 
-    }
 
-    @Override
-    public void onTeacherClick(Wish wish) {
 
-    }
-
-    @Override
-    public void onTeacherClick(Object item) {
-
-    }
 
 }

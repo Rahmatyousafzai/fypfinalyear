@@ -24,6 +24,7 @@ import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 import student.Program;
 import student.Section;
@@ -43,6 +44,18 @@ public interface Apiservices {
             @Query("password") String password
     );
 
+    @GET("api/wish/GetBirthdayUsers")
+    Call<List<user>>getBirhday(@Query("teacherUsername") String teacherUsername);
+
+    @GET("api/wish/GetBirthdayUsers")
+    Call<String> getBirthdayUsers(@Query("username") String username);
+
+    @GET("api/Emoji/GetDistinctReactions/{sw_id}")
+    Call<List<Reaction>> getDistinctReactions(@Path("sw_id") int swId);
+
+    @GET("api/Emoji/GetDistinctReactions/{sw_id}")
+    Call<List<user>>getreaction(@Query("teacherUsername") String teacherUsername);
+    ///student api end point
     @GET("api/Student/GetALLTeacher")
     Call<List<user>> getAllTeachers();
     // Get wishes API call
@@ -55,13 +68,14 @@ public interface Apiservices {
 
 
 
-    @GET("api/Wish/GetStudentDashBoardWishes")
-    Call<List<Wish>> getWishes();
+
 
     // Get all teachers API call
     @GET("api/Student/GetCurrentTeacher")
     Call<List<cuTeacher>> getCurrentTeacher(@Query("username") String username);
 
+
+    //////common api endpoint
 
     @GET("api/Wish/messageList")
     Call<List<Wish>> getinboxlist( @Query("reciverid") String reciverid);
@@ -167,6 +181,9 @@ public interface Apiservices {
     @GET("api/Teacher/GetSemestersForProgram")
     Call<List<Semester>> GetSemestersForProgram(@Query("teacherUsername") String teacherId, @Query("programid") int programId);
 
+
+
+
     @GET("api/Teacher/GetSectionsForSemester")
     Call<List<Section>> getSections(@Query("teacherUsername") String teacherUsername, @Query("semesterid") int semesterid);
 
@@ -201,6 +218,9 @@ public interface Apiservices {
             @Query("requestedBy") String requestedBy,
             @Query("requestedFor") String requestedFor
     );
+
+
+
     @POST("api/Wish/PostReaction")
     Call<Void> postReaction(@Body Reaction reaction);
 
