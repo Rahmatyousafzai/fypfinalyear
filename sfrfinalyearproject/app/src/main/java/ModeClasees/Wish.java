@@ -5,7 +5,6 @@ import java.util.List;
 
 public class Wish {
 
-    private int dateTime;
 
 
     public String getLastName() {
@@ -23,7 +22,18 @@ public class Wish {
     private String ProfileImage;
     private int SwId;
 
-    public Wish(String username, String firstName, String profileImage, int swId, String content, String title, List<Emoji> emojis, int swid) {
+
+    public String getWishDateTime() {
+        return WishDateTime;
+    }
+
+    public void setWishDateTime(String wishDateTime) {
+        WishDateTime = wishDateTime;
+    }
+
+    private String       WishDateTime;
+
+    public Wish(String username, String firstName, String profileImage, int swId, String content, String title, List<Emoji> emojis, int swid ,String WishDateTime) {
         Username = username;
         FirstName = firstName;
         ProfileImage = profileImage;
@@ -32,6 +42,7 @@ public class Wish {
         Title = title;
         this.emojis = emojis;
         this.swid = swid;
+        WishDateTime=WishDateTime;
     }
 
     private  String Content;
@@ -110,11 +121,5 @@ public class Wish {
     }
 
 
-    public int getDateTime() {
-        return dateTime;
-    }
 
-    public void setDateTime(int dateTime) {
-        this.dateTime = dateTime;
-    }
 }

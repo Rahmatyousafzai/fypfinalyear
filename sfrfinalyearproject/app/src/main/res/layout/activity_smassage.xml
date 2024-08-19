@@ -51,7 +51,7 @@
             android:layout_weight="1"
             ></TextView>
         <ImageView
-            android:id="@+id/back"
+            android:id="@+id/setting"
             android:layout_width="@dimen/_40sdp"
             android:layout_height="@dimen/_40sdp"
             android:src="@drawable/baseline_more_vert_24"

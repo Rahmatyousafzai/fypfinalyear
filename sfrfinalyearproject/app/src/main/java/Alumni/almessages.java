@@ -21,11 +21,9 @@ import ModeClasees.cuTeacher;
 import ModeClasees.user;
 import adopter.MessagListAdopter;
 import adopter.OnTeacherClickListener;
+import facultyClasses.mWishlist;
 import mydataapi.Apiservices;
 import mydataapi.RetrofitClient;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 import student.sprfile;
 
 public class almessages extends AppCompatActivity implements OnTeacherClickListener {
@@ -84,7 +82,7 @@ public class almessages extends AppCompatActivity implements OnTeacherClickListe
         adapter = new MessagListAdopter(new ArrayList<>(), this);
         recyclerView.setAdapter(adapter);
 
-        loadTeachers();
+        //loadTeachers();
     }
 
     @Override
@@ -116,12 +114,17 @@ public class almessages extends AppCompatActivity implements OnTeacherClickListe
     }
 
     @Override
+    public void onTeacherClick(mWishlist wish) {
+
+    }
+
+    @Override
     public void onTeacherClick(Object item) {
         // Implement as needed
     }
-
+/*
     private void loadTeachers() {
-        apiServices.getinboxlist(username).enqueue(new Callback<List<Wish>>() {
+        apiServices.GetRelatedWishes(username).enqueue(new Callback<List<Wish>>() {
             @Override
             public void onResponse(Call<List<Wish>> call, Response<List<Wish>> response) {
                 if (response.isSuccessful() && response.body() != null) {
@@ -146,6 +149,7 @@ public class almessages extends AppCompatActivity implements OnTeacherClickListe
         });
     }
 
+    */
     @Override
     public void onPointerCaptureChanged(boolean hasCapture) {
         super.onPointerCaptureChanged(hasCapture);

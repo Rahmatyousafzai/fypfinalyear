@@ -17,11 +17,15 @@ import facultyClasses.Course;
 import facultyClasses.InsertPapolationDataDto;
 import facultyClasses.InsertPapolationResponse;
 import facultyClasses.Sendwish;
+import facultyClasses.appPermission;
+import facultyClasses.forwordsetting;
+import facultyClasses.mWishlist;
 import facultyClasses.postpapolation;
 import modelclassespost.SendWishRequestDto;
 import modelclassespost.SendWishResponse;
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
@@ -77,9 +81,27 @@ public interface Apiservices {
 
     //////common api endpoint
 
-    @GET("api/Wish/messageList")
-    Call<List<Wish>> getinboxlist( @Query("reciverid") String reciverid);
+    @GET("api/Wish/GetRelatedWishes")
+    Call<List<mWishlist>> GetRelatedWishes(@Query("userId") String userId);
 
+
+
+
+
+    @GET("api/Teacher/apppermisoin")  // Update this to your actual endpoint
+    Call<List<appPermission>> getPermissions(@Query("filterUsername") String filterUsername);
+
+
+    @POST("api/Teacher/InsertAppPermission")
+    Call<Void> insertAppPermission(@Body appPermission appPermission);
+
+
+    @DELETE("api/Teacher/apppermission/{id}")
+    Call<Void> deleteAppPermission(@Path("id") int id);
+
+
+    @GET("api/Teacher/forwodsetting")  // Update this to your actual endpoint
+    Call<List<forwordsetting>> getforwordsetting(@Query("filterUsername") String filterUsername);
     @GET("api/Wish/inboxmessageList")
     Call<List<Wish>> getinboxMessage( @Query("senderID") String senderID);
 

@@ -12,36 +12,61 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_30sdp"
-        android:layout_gravity="center">
+        android:layout_gravity="center"
+
+        >
 
         <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/profileimage"
+            android:id="@+id/profilepicture"
+
             android:layout_width="@dimen/_40sdp"
             android:layout_height="@dimen/_40sdp"
+            android:layout_weight="2"
             android:layout_gravity="center"
-            android:src="@drawable/rahmatpic"
+            android:src="@drawable/saeed"
             app:civ_border_color="@color/black"
-            app:civ_border_width="2dp" />
+            app:civ_border_width="2dp"
 
+
+            />
         <TextView
             android:id="@+id/profelname"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/_10sdp"
-            android:text="Rahmat yousafzai"
+            android:text="Rahmat Yousafzai"
             android:textColor="@color/black"
             android:textSize="20sp"
+            android:layout_weight="1"
+
             android:layout_gravity="center"
-            android:layout_marginStart="@dimen/_8sdp" />
+            android:layout_marginStart="@dimen/_8sdp"/>
+
+        <TextView
+            android:id="@+id/disgnation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/_10sdp"
+            android:text="Rah"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:layout_weight="1"
+
+            android:layout_gravity="bottom"
+            android:layout_marginStart="@dimen/_8sdp"/>
 
         <ImageView
-            android:id="@+id/back"
+            android:id="@+id/setting"
             android:layout_width="@dimen/_40sdp"
             android:layout_height="@dimen/_40sdp"
             android:src="@drawable/baseline_more_vert_24"
             android:layout_gravity="center"
-            android:layout_marginStart="@dimen/_50sdp"
-            android:backgroundTint="@color/white" />
+            android:backgroundTint="@color/white"
+
+
+
+            />
+
     </LinearLayout>
 
     <LinearLayout
@@ -159,7 +184,7 @@
         <androidx.recyclerview.widget.RecyclerView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/allteacherRec"
+            android:id="@+id/wishesh"
             android:layout_gravity="center" />
     </LinearLayout>
 

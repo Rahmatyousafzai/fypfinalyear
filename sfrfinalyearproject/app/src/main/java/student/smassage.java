@@ -25,11 +25,9 @@ import ModeClasees.cuTeacher;
 import ModeClasees.user;
 import adopter.MessagListAdopter;
 import adopter.OnTeacherClickListener;
+import facultyClasses.mWishlist;
 import mydataapi.Apiservices;
 import mydataapi.RetrofitClient;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 import studentClasses.GroupsData;
 import studentClasses.UserDataSingleton;
 import studentClasses.UserRepository;
@@ -92,8 +90,7 @@ public class smassage extends AppCompatActivity implements OnTeacherClickListene
                 if (profileImage != null && !profileImage.isEmpty()) {
                     String imageUrl = RetrofitClient.getBaseUrl() + "images/profileimages/" + profileImage + ".jpg";
                     Picasso.get().load(imageUrl).error(R.drawable.baseline_account_circle_24).into(profile);
-                }
-                else {
+                } else {
                     profile.setImageResource(R.drawable.baseline_account_circle_24);
                 }
 
@@ -115,13 +112,13 @@ public class smassage extends AppCompatActivity implements OnTeacherClickListene
         recyclerView.setAdapter(adapter);
 
         // Load simple messages initially
-        loadMessages();
+      //  loadMessages();
 
         createGroup.setVisibility(View.VISIBLE);
 
         // Set click listeners for buttons
         smipleMessage.setOnClickListener(v -> {
-            loadMessages();
+           // loadMessages();
             createGroup.setVisibility(View.GONE);
             groupmessage.setVisibility(View.VISIBLE);
             highlightButton(smipleMessage);
@@ -129,7 +126,7 @@ public class smassage extends AppCompatActivity implements OnTeacherClickListene
         });
 
         groupmessage.setOnClickListener(v -> {
-            loadGroupMessages();
+          //  loadGroupMessages();
             createGroup.setVisibility(View.VISIBLE);
             smipleMessage.setVisibility(View.VISIBLE);
             highlightButton(groupmessage);
@@ -146,7 +143,7 @@ public class smassage extends AppCompatActivity implements OnTeacherClickListene
         apiRunnable = new Runnable() {
             @Override
             public void run() {
-                loadMessages(); // Load messages in the background
+               // loadMessages(); // Load messages in the background
                 handler.postDelayed(this, 5000); // Repeat every 5 seconds
             }
         };
@@ -195,12 +192,17 @@ public class smassage extends AppCompatActivity implements OnTeacherClickListene
     }
 
     @Override
+    public void onTeacherClick(mWishlist wish) {
+
+    }
+
+    @Override
     public void onTeacherClick(Object item) {
         // Implement as needed
     }
 
-    private void loadMessages() {
-        apiServices.getinboxlist(username).enqueue(new Callback<List<Wish>>() {
+   /* private void loadMessages() {
+        apiServices.GetRelatedWishes(username).enqueue(new Callback<List<Wish>>() {
             @Override
             public void onResponse(Call<List<Wish>> call, Response<List<Wish>> response) {
                 if (response.isSuccessful() && response.body() != null) {
@@ -225,7 +227,7 @@ public class smassage extends AppCompatActivity implements OnTeacherClickListene
         });
     }
 
-    private void loadGroupMessages() {
+    /*private void loadGroupMessages() {
         apiServices.getGroupinboxMessage(username).enqueue(new Callback<List<GroupsData>>() {
             @Override
             public void onResponse(Call<List<GroupsData>> call, Response<List<GroupsData>> response) {
@@ -249,7 +251,7 @@ public class smassage extends AppCompatActivity implements OnTeacherClickListene
                 // Handle the error
             }
         });
-    }
+    }*/
 
     @Override
     public void onBackPressed() {

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="@color/colorAccent"
+
+    >
+
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Message Setting"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:textSize="25dp"
+        android:textAlignment="center"
+
+
+        ></TextView>
+    <!-- Auto Reply Toggle -->
+    <TextView
+        android:id="@+id/auto_reply_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black"
+        android:text="Auto Reply"
+        android:textSize="18sp" />
+
+    <!-- Message Forward Toggle -->
+    <Switch
+        android:id="@+id/switch_auto_reply"
+        android:layout_width="80dp"
+        android:layout_height="60dp"
+
+
+
+        />
+
+    <TextView
+        android:id="@+id/message_forward_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Message Forwarding"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        android:layout_marginTop="16dp" />
+
+    <Switch
+        android:id="@+id/switch_message_forward"
+        android:layout_width="80dp"
+        android:layout_height="60dp"
+  />
+
+    <TextView
+
+        android:text="Forword  To"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/forwordid"
+android:textColor="@color/black"
+        android:textSize="18sp"
+        android:layout_marginTop="16dp"
+        ></TextView>
+    <!-- Button to open forward setting dialog -->
+    <Button
+        android:id="@+id/btn_forward_setting"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Forward Setting"
+        android:backgroundTint="@color/green"
+        android:layout_marginTop="24dp" />
+</LinearLayout>

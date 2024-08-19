@@ -20,6 +20,7 @@ import ModeClasees.cuTeacher;
 import ModeClasees.user;
 import adopter.OnTeacherClickListener;
 import adopter.TeachercustomAdopter;
+import facultyClasses.mWishlist;
 import mydataapi.Apiservices;
 import mydataapi.RetrofitClient;
 import retrofit2.Call;
@@ -102,6 +103,11 @@ public class ad_teachers extends AppCompatActivity implements OnTeacherClickList
         intent.putExtra("lastName", wish.getLastName());
         intent.putExtra("profileImage", wish.getProfileImage());
         startActivity(intent);
+
+    }
+
+    @Override
+    public void onTeacherClick(mWishlist wish) {
 
     }
 

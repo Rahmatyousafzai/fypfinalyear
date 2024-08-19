@@ -21,6 +21,7 @@ import ModeClasees.Wish;
 import ModeClasees.cuTeacher;
 import ModeClasees.user;
 import adopter.OnTeacherClickListener;
+import facultyClasses.mWishlist;
 import mydataapi.Apiservices;
 import mydataapi.RetrofitClient;
 import student.snotification;
@@ -158,6 +159,11 @@ public class al_dahsboard extends AppCompatActivity implements OnTeacherClickLis
     @Override
     public void onTeacherClick(Wish wish) {
         showToast("Clicked on: " + wish.getSwid());
+    }
+
+    @Override
+    public void onTeacherClick(mWishlist wish) {
+
     }
 
     @Override
