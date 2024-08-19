@@ -89,7 +89,7 @@ public class course_message_body extends AppCompatActivity {
     }
 
     private void updateTeacherProfile(TeacherData data) {
-        disgnation.setText(data.getDisgnation());
+        disgnation.setText(data.getDisgnatione());
 
         String profileImage = data.getProfileImage();
         if (profileImage != null && !profileImage.isEmpty()) {

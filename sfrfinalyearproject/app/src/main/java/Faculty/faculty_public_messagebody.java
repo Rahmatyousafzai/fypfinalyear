@@ -64,7 +64,7 @@ typesomthing=findViewById(R.id.typesomthing);
             {
                 // Access user data fields
 
-                String Disignation = data.getDisgnation();
+                String Disignation = data.getDisgnatione();
 
                 String profileImage = data.getProfileImage();
                 String firstName = data.getFirstName();

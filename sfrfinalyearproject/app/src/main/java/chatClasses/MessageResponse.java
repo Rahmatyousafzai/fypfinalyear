@@ -15,6 +15,31 @@ public class MessageResponse {
         private String Emojidata;
         private String WishDateTime;
 
+    public MessageResponse(String senderUsername, String senderFirstName, String senderLastName, String senderProfileImage, String receiverprofile, String receiverUsername, String receiverFirstName, String receiverLastName, String receiverProfileImage, String emojidata, String wishDateTime, String wishcontent) {
+        SenderUsername = senderUsername;
+        SenderFirstName = senderFirstName;
+        SenderLastName = senderLastName;
+        SenderProfileImage = senderProfileImage;
+        Receiverprofile = receiverprofile;
+        ReceiverUsername = receiverUsername;
+        ReceiverFirstName = receiverFirstName;
+        ReceiverLastName = receiverLastName;
+        ReceiverProfileImage = receiverProfileImage;
+        Emojidata = emojidata;
+        WishDateTime = wishDateTime;
+        this.wishcontent = wishcontent;
+    }
+
+    public String getWishcontent() {
+        return wishcontent;
+    }
+
+    public void setWishcontent(String wishcontent) {
+        this.wishcontent = wishcontent;
+    }
+
+    private String wishcontent;
+
         // Getters and setters
         public String getSenderUsername() {
             return SenderUsername;

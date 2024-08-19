@@ -43,7 +43,7 @@ public class ConversationAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             view = LayoutInflater.from(context).inflate(R.layout.item_receiver_message, parent, false);
             return new ReceiverViewHolder(view);
         }
-        return null; // Add default return statement or handle other view types
+        return null;
     }
 
     @Override
@@ -53,24 +53,43 @@ public class ConversationAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         if (holder.getItemViewType() == VIEW_TYPE_SENDER) {
             SenderViewHolder senderViewHolder = (SenderViewHolder) holder;
             senderViewHolder.senderName.setText(item.getSenderFirstName());
+
             if (item.getSenderProfileImage() != null && !item.getSenderProfileImage().isEmpty()) {
                 Picasso.get().load(getProfileImageUrl(item.getSenderProfileImage())).into(senderViewHolder.senderImage);
             } else {
-                senderViewHolder.senderImage.setImageResource(R.drawable.baseline_account_circle_24); // Load default image from drawable
+                senderViewHolder.senderImage.setImageResource(R.drawable.baseline_account_circle_24);
             }
-            Picasso.get().load(RetrofitClient.getBaseUrl() + "images/emojis/" + item.getEmojiData() + ".png").into(senderViewHolder.emojiImageView);
+
+            if (item.getEmojiData() != null && !item.getEmojiData().isEmpty()) {
+                Picasso.get().load(RetrofitClient.getBaseUrl() + "images/emojis/" + item.getEmojiData() + ".png").into(senderViewHolder.emojiImageView);
+                senderViewHolder.messageTextView.setVisibility(View.GONE);
+                senderViewHolder.emojiImageView.setVisibility(View.VISIBLE);
+            } else {
+                senderViewHolder.messageTextView.setText(item.getWishcontent());
+                senderViewHolder.messageTextView.setVisibility(View.VISIBLE);
+                senderViewHolder.emojiImageView.setVisibility(View.GONE);
+            }
         } else {
             ReceiverViewHolder receiverViewHolder = (ReceiverViewHolder) holder;
             receiverViewHolder.receiverName.setText(item.getSenderFirstName());
+
             if (item.getSenderProfileImage() != null && !item.getSenderProfileImage().isEmpty()) {
                 Picasso.get().load(getProfileImageUrl(item.getSenderProfileImage())).into(receiverViewHolder.receiverImage);
             } else {
-                receiverViewHolder.receiverImage.setImageResource(R.drawable.baseline_account_circle_24); // Load default image from drawable
+                receiverViewHolder.receiverImage.setImageResource(R.drawable.baseline_account_circle_24);
             }
-            Picasso.get().load(RetrofitClient.getBaseUrl() + "images/emojis/"  + item.getEmojiData() + ".png").into(receiverViewHolder.emojiImageView);
+
+            if (item.getEmojiData() != null && !item.getEmojiData().isEmpty()) {
+                Picasso.get().load(RetrofitClient.getBaseUrl() + "images/emojis/" + item.getEmojiData() + ".png").into(receiverViewHolder.emojiImageView);
+                receiverViewHolder.messageTextView.setVisibility(View.GONE);
+                receiverViewHolder.emojiImageView.setVisibility(View.VISIBLE);
+            } else {
+                receiverViewHolder.messageTextView.setText(item.getWishcontent());
+                receiverViewHolder.messageTextView.setVisibility(View.VISIBLE);
+                receiverViewHolder.emojiImageView.setVisibility(View.GONE);
+            }
         }
     }
-
 
     @Override
     public int getItemCount() {
@@ -82,36 +101,15 @@ public class ConversationAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         ConversationItem item = conversationItems.get(position);
         if (currentUserUsername.equals(item.getSenderUsername())) {
             return VIEW_TYPE_SENDER;
-        } else  {
+        } else {
             return VIEW_TYPE_RECEIVER;
         }
-         // Handle other cases or return a default value
     }
-
 
     public void addItem(ConversationItem newItem) {
         if (conversationItems != null) {
             conversationItems.add(newItem);
             notifyItemInserted(conversationItems.size() - 1);
-        }
-    }
-
-
-
-    private String getProfileImageUrl(String profileImage) {
-        // Logic to get profile image URL based on profile image data
-        return RetrofitClient.getBaseUrl() + "images/profileimages/" + profileImage + ".jpg";
-    }
-
-    static class SenderViewHolder extends RecyclerView.ViewHolder {
-        ImageView emojiImageView, senderImage;
-        TextView senderName;
-
-        SenderViewHolder(@NonNull View itemView) {
-            super(itemView);
-            emojiImageView = itemView.findViewById(R.id.emoji_image_view_sender);
-            senderImage = itemView.findViewById(R.id.senderImage);
-            senderName = itemView.findViewById(R.id.sender_name);
         }
     }
 
@@ -121,15 +119,33 @@ public class ConversationAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         notifyDataSetChanged();
     }
 
+    private String getProfileImageUrl(String profileImage) {
+        return RetrofitClient.getBaseUrl() + "images/profileimages/" + profileImage + ".jpg";
+    }
+
+    static class SenderViewHolder extends RecyclerView.ViewHolder {
+        ImageView emojiImageView, senderImage;
+        TextView senderName, messageTextView;
+
+        SenderViewHolder(@NonNull View itemView) {
+            super(itemView);
+            emojiImageView = itemView.findViewById(R.id.emoji_image_view_sender);
+            senderImage = itemView.findViewById(R.id.senderImage);
+            senderName = itemView.findViewById(R.id.sender_name);
+            messageTextView = itemView.findViewById(R.id.sender_message);
+        }
+    }
+
     static class ReceiverViewHolder extends RecyclerView.ViewHolder {
         ImageView emojiImageView, receiverImage;
-        TextView receiverName;
+        TextView receiverName, messageTextView;
 
         ReceiverViewHolder(@NonNull View itemView) {
             super(itemView);
-            emojiImageView = itemView.findViewById(R.id.Reciveremoji);
-            receiverImage = itemView.findViewById(R.id.emoji_image_view_receiver);
-            receiverName = itemView.findViewById(R.id.rcname);
+            emojiImageView = itemView.findViewById(R.id.emoji_image_view_receiver);
+            receiverImage = itemView.findViewById(R.id.receiverImage);
+            receiverName = itemView.findViewById(R.id.receiver_name);
+            messageTextView = itemView.findViewById(R.id.receiver_message);
         }
     }
 }

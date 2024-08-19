@@ -74,7 +74,7 @@ public class faculty_dashboard extends AppCompatActivity implements wishingadopt
             @Override
             public void onSuccess(TeacherData data) {
                 // Access user data fields
-                String sectionName = data.getDisgnation();
+                String sectionName = data.getDisgnatione();
                 profileImage = data.getProfileImage();
                 firstName = data.getFirstName();
                 lastName = data.getLastName();

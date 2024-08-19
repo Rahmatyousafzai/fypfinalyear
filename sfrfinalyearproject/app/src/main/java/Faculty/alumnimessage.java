@@ -64,7 +64,7 @@ public class alumnimessage extends AppCompatActivity {
             {
                 // Access user data fields
 
-                String Disignation = data.getDisgnation();
+                String Disignation = data.getDisgnatione();
 
                 profileImage=data.getProfileImage();
                       firstName = data.getFirstName();

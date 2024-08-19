@@ -200,7 +200,7 @@ public interface Apiservices {
             @Query("tcname") String tcname,
             @Query("messagtype") String messagtype);
 
-    @GET("api/Wish/Getdashboardmessages")
+    @GET("api/Wish/Getdashboard")
     Call<List<wishingclass>> getDashboardMessages(
             @Query("currentuser") String currentuser,
             @Query("tcname") String tcname,

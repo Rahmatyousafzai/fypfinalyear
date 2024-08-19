@@ -3,6 +3,7 @@ package Faculty;
 import android.content.DialogInterface;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,6 +22,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.sfrfinalyearproject.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -30,6 +32,9 @@ import facultyClasses.message;
 import modelclassespost.ConversationAdapter;
 import mydataapi.Apiservices;
 import mydataapi.RetrofitClient;
+import studentClasses.TeacherData;
+import studentClasses.UserDataSingleton;
+import studentClasses.teacherRepository;
 
 public class ft_message extends AppCompatActivity {
 
@@ -72,8 +77,57 @@ public class ft_message extends AppCompatActivity {
         createGroup.setVisibility(View.GONE);
         LinearLayout linearLayout = findViewById(R.id.search);
 
+
+        username = UserDataSingleton.getInstance().getUsername();
+
+        teacherRepository userRepository = new teacherRepository();
+
+        userRepository.fetchTeacherData(username, new teacherRepository.teacherRepositoryCallback() {
+            @Override
+            public void onSuccess(TeacherData data)
+            {
+                // Access user data fields
+
+                String Disignation = data.getDisgnatione();
+
+                String profileImage = data.getProfileImage();
+                String firstName = data.getFirstName();
+                String lastName = data.getLastName();
+
+                Log.e("UserData.........", "Section Name:........... " + Disignation);
+
+                // Optionally, update UI with user data
+                TextView textView = findViewById(R.id.disgnation);
+                String displayData = (Disignation);
+                textView.setText(displayData);
+                if (profileImage != null && !profileImage.isEmpty()) {
+                    String imageUrl = RetrofitClient.getBaseUrl() + "images/profileimages/" +profileImage + ".jpg";
+                    Picasso.get().load(imageUrl).error(R.drawable.baseline_account_circle_24).into(profile);
+                } else {
+                    profile.setImageResource(R.drawable.baseline_account_circle_24);
+                }
+
+
+                String fullName = firstName+ " " + lastName;
+                profilename.setText(fullName);
+
+            }
+
+            @Override
+            public void onFailure(Exception e) {
+                Log.e("SomeActivity", "Error fetching user data: " + e.getMessage());
+                // Handle error case, e.g., show a toast or an error message
+            }
+        });
+
+
+
+
         recyclerView = findViewById(R.id.Rcmassage);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+
+
 
 
         // Set OnClickListener for the groupMessage button

@@ -92,7 +92,7 @@ public class ft_send_message_by_samester extends AppCompatActivity {
     }
 
     private void updateTeacherProfile(TeacherData data) {
-        disgnation.setText(data.getDisgnation());
+        disgnation.setText(data.getDisgnatione());
 
         String profileImage = data.getProfileImage();
         if (profileImage != null && !profileImage.isEmpty()) {

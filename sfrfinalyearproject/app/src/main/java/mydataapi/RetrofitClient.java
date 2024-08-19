@@ -10,7 +10,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class RetrofitClient {
 
     // Base URL for the API
-    private static final String BASE_URL = "http://192.168.100.3/fyp-api-versoin4/";
+    private static final String BASE_URL = "http://192.168.100.6/fyp-api-versoin4/";
     private static Retrofit retrofit;
     private static Apiservices apiService;
 
@@ -25,7 +25,7 @@ public class RetrofitClient {
             logging.setLevel(HttpLoggingInterceptor.Level.BODY);
 
             OkHttpClient client = new OkHttpClient.Builder()
-                    .callTimeout(5, TimeUnit.SECONDS)
+                    .callTimeout(10, TimeUnit.SECONDS)
                     .addInterceptor(logging)
                     .build();
 

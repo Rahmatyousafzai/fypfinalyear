@@ -68,7 +68,7 @@ public class facultypapulationMessage extends AppCompatActivity {
         userRepository.fetchTeacherData(username, new teacherRepository.teacherRepositoryCallback() {
             @Override
             public void onSuccess(TeacherData data) {
-                String Disignation = data.getDisgnation();
+                String Disignation = data.getDisgnatione();
                 String profileImage = data.getProfileImage();
                 String firstName = data.getFirstName();
                 String lastName = data.getLastName();

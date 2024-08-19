@@ -1,11 +1,28 @@
 package mydataapi;
 
 public class SendWishRequest {
-    private int emojiId;
+    private Integer emojiId;
 
     public String getSenderid() {
         return senderid;
     }
+
+    public SendWishRequest(Integer emojiId, String content, String senderid, String messageType) {
+        this.emojiId = emojiId;
+        this.content = content;
+        this.senderid = senderid;
+        this.messageType = messageType;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    String content;
 
     public void setSenderid(String senderid) {
         this.senderid = senderid;
@@ -34,11 +51,7 @@ public class SendWishRequest {
         this.messageType = messageType;
     }
 
-    public SendWishRequest(String senderid, String messageType, int emojiId) {
-        this.senderid = senderid;
-        this.messageType = messageType;
-        this.emojiId = emojiId;
-    }
+
 
     // Getter and setter methods
 }

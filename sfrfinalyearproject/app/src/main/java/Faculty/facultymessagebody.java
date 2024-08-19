@@ -283,7 +283,7 @@ public class facultymessagebody extends AppCompatActivity implements OnEmojiClic
             return;
         }
 
-        SendWishRequest request = new SendWishRequest("2020-arid-3535", "BIIT0001", selectedEmoji);
+        SendWishRequest request = new SendWishRequest(selectedEmoji,null,"2020-arid-3535", "BIIT0001");
 
         //    // Insert data into the database
         apiService.createWish(request).enqueue(new Callback<SendWishResponse>() {

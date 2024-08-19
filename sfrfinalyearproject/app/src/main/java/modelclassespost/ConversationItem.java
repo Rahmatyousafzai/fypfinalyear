@@ -12,6 +12,30 @@ public class ConversationItem {
     private String emojiData;
     private String wishDateTime;
 
+    public String getWishcontent() {
+        return wishcontent;
+    }
+
+    public void setWishcontent(String wishcontent) {
+        this.wishcontent = wishcontent;
+    }
+
+    public ConversationItem(String senderUsername, String senderFirstName, String senderLastName, String senderProfileImage, String receiverUsername, String receiverFirstName, String receiverLastName, String receiverProfileImage, String emojiData, String wishDateTime, String wishcontent) {
+        this.senderUsername = senderUsername;
+        this.senderFirstName = senderFirstName;
+        this.senderLastName = senderLastName;
+        this.senderProfileImage = senderProfileImage;
+        this.receiverUsername = receiverUsername;
+        this.receiverFirstName = receiverFirstName;
+        this.receiverLastName = receiverLastName;
+        this.receiverProfileImage = receiverProfileImage;
+        this.emojiData = emojiData;
+        this.wishDateTime = wishDateTime;
+        this.wishcontent = wishcontent;
+    }
+
+    private String    wishcontent;
+
     // Constructor
     public ConversationItem(String senderUsername, String senderFirstName, String senderLastName, String senderProfileImage,
                             String receiverUsername, String receiverFirstName, String receiverLastName, String receiverProfileImage,

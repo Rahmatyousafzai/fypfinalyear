@@ -57,7 +57,7 @@ public class ft_send_message_by_course extends AppCompatActivity {
             @Override
             public void onSuccess(TeacherData data) {
                 // Access user data fields
-                String Disignation = data.getDisgnation();
+                String Disignation = data.getDisgnatione();
                 String profileImage = data.getProfileImage();
                 String firstName = data.getFirstName();
                 String lastName = data.getLastName();

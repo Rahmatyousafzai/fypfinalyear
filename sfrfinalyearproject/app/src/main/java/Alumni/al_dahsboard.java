@@ -21,12 +21,8 @@ import ModeClasees.Wish;
 import ModeClasees.cuTeacher;
 import ModeClasees.user;
 import adopter.OnTeacherClickListener;
-//import adopter.Wishadapter;
 import mydataapi.Apiservices;
 import mydataapi.RetrofitClient;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 import student.snotification;
 
 
@@ -80,7 +76,7 @@ public class al_dahsboard extends AppCompatActivity implements OnTeacherClickLis
 
         Log.d("recycl","recyclerView Data "+recyclerView.toString());
         //Log.d("recycl","adopter Data "+adapter.toString());
-        fetchAndDisplayWishes();
+     //   fetchAndDisplayWishes();
 
         textteacher.setOnClickListener(v -> {
             Intent teacherIntent = new Intent(al_dahsboard.this, alteachers.class);
@@ -127,7 +123,7 @@ public class al_dahsboard extends AppCompatActivity implements OnTeacherClickLis
         });
     }
 
-    private void fetchAndDisplayWishes() {
+    /*private void fetchAndDisplayWishes() {
         apiServices.getWishes().enqueue(new Callback<List<Wish>>() {
             @Override
             public void onResponse(Call<List<Wish>> call, Response<List<Wish>> response) {
@@ -148,7 +144,7 @@ public class al_dahsboard extends AppCompatActivity implements OnTeacherClickLis
             }
         });
     }
-
+*/
     @Override
     public void onTeacherClick(user teacher) {
         // Handle teacher click

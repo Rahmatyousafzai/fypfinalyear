@@ -117,10 +117,13 @@ public class smassage extends AppCompatActivity implements OnTeacherClickListene
         // Load simple messages initially
         loadMessages();
 
+        createGroup.setVisibility(View.VISIBLE);
+
         // Set click listeners for buttons
         smipleMessage.setOnClickListener(v -> {
             loadMessages();
             createGroup.setVisibility(View.GONE);
+            groupmessage.setVisibility(View.VISIBLE);
             highlightButton(smipleMessage);
             unhighlightButton(groupmessage);
         });
@@ -128,6 +131,7 @@ public class smassage extends AppCompatActivity implements OnTeacherClickListene
         groupmessage.setOnClickListener(v -> {
             loadGroupMessages();
             createGroup.setVisibility(View.VISIBLE);
+            smipleMessage.setVisibility(View.VISIBLE);
             highlightButton(groupmessage);
             unhighlightButton(smipleMessage);
         });
@@ -159,6 +163,8 @@ public class smassage extends AppCompatActivity implements OnTeacherClickListene
 
     private void highlightButton(View button) {
         button.setBackgroundColor(ContextCompat.getColor(this, R.color.highlighted_color));
+
+
     }
 
     private void unhighlightButton(View button) {
@@ -254,10 +260,5 @@ public class smassage extends AppCompatActivity implements OnTeacherClickListene
         super.onBackPressed(); // Call super method
     }
 
-    @Override
-    protected void onDestroy() {
-        // Remove the callback when the activity is destroyed to prevent memory leaks
-        handler.removeCallbacks(apiRunnable);
-        super.onDestroy();
-    }
+
 }

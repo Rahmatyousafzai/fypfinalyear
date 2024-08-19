@@ -51,17 +51,13 @@ public class TeacherDataSingleton implements teacherRepository.teacherRepository
         Log.d("TeacherDataSingleton", "Fetched program name: " + data.getFirstName());
         Log.d("TeacherDataSingleton", "Fetched section name: " + data.getLastName());
         Log.d("TeacherDataSingleton", "Fetched program name: " + data.getProfileImage());
-        Log.d("TeacherDataSingleton", "Fetched section name: " + data.getDisgnation());
+        Log.d("TeacherDataSingleton", "Fetched section name: " + data.getDisgnatione());
 
 
 
-        // Access user data fields
-        String programName = data.getProgramName();
-        String sectionName = data.getSectionName();
 
-        // Log user data
-        Log.e("TeacherDataSingleton", "Program Name: " + programName);
-        Log.e("TeacherDataSingleton", "Section Name: " + sectionName);
+
+
 
         // Optionally, update UI or notify listeners
     }
