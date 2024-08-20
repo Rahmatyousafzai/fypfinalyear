@@ -23,9 +23,6 @@ import adopter.TeachercustomAdopter;
 import facultyClasses.mWishlist;
 import mydataapi.Apiservices;
 import mydataapi.RetrofitClient;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 import student.sprfile;
 
 public class alteachers extends AppCompatActivity implements OnTeacherClickListener {
@@ -69,7 +66,7 @@ public class alteachers extends AppCompatActivity implements OnTeacherClickListe
 
         imgBack.setOnClickListener(v -> finish());
 
-        loadTeachers();
+    //    loadTeachers();
     }
 
     @Override
@@ -114,7 +111,7 @@ public class alteachers extends AppCompatActivity implements OnTeacherClickListe
 
     }
 
-    private void loadTeachers() {
+ /*   private void loadTeachers() {
         apiServices.getAllTeachers().enqueue(new Callback<List<user>>() {
             @Override
             public void onResponse(Call<List<user>> call, Response<List<user>> response) {
@@ -135,7 +132,7 @@ public class alteachers extends AppCompatActivity implements OnTeacherClickListe
             }
         });
     }
-
+*/
     @Override
     public void onPointerCaptureChanged(boolean hasCapture) {
         super.onPointerCaptureChanged(hasCapture);

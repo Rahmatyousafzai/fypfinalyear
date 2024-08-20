@@ -27,6 +27,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import student.sprfile;
+import studentClasses.TeacherData;
 
 public class ad_teachers extends AppCompatActivity implements OnTeacherClickListener {
 
@@ -117,22 +118,22 @@ public class ad_teachers extends AppCompatActivity implements OnTeacherClickList
     }
 
     private void loadTeachers() {
-        apiServices.getAllTeachers().enqueue(new Callback<List<user>>() {
+        apiServices.getAllTeachers().enqueue(new Callback<List<TeacherData>>() {
             @Override
-            public void onResponse(Call<List<user>> call, Response<List<user>> response) {
+            public void onResponse(Call<List<TeacherData>> call, Response<List<TeacherData>> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    List<user> teachers = response.body();
-                    for (user teacher : teachers) {
+                    List<TeacherData> teachers = response.body();
+                    for (TeacherData teacher : teachers) {
                         if (teacher.getProfileImage() == null || teacher.getProfileImage().isEmpty()) {
                             teacher.setProfileImage(String.valueOf(R.drawable.baseline_account_circle_24));
                         }
                     }
-                    adapter.setTeacherList(teachers);
+                    //       adapter.setTeacherList(teachers);
                 }
             }
 
             @Override
-            public void onFailure(Call<List<user>> call, Throwable t) {
+            public void onFailure(Call<List<TeacherData>> call, Throwable t) {
                 // Handle the error
             }
         });

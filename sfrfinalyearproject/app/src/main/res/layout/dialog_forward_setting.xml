@@ -14,6 +14,11 @@
         android:text="Forward To (Enter Name)"
         android:textSize="18sp" />
 
+    <Spinner
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/spinner"
+></Spinner>
     <EditText
         android:id="@+id/et_forward_name"
         android:layout_width="match_parent"

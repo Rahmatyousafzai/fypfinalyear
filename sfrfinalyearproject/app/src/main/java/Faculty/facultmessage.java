@@ -4,9 +4,11 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -347,8 +349,39 @@ public class facultmessage extends AppCompatActivity implements OnTeacherClickLi
         Dialog dialog = new Dialog(this);
         dialog.setContentView(R.layout.dialog_forward_setting);
 
+        Spinner spinner = dialog.findViewById(R.id.spinner);
         EditText forwardNameEditText = dialog.findViewById(R.id.et_forward_name);
         Button saveButton = dialog.findViewById(R.id.btn_save_forward_name);
+
+        // API call to fetch data
+        Apiservices apiService = RetrofitClient.getInstance();
+        Call<List<TeacherData>> call = apiService.getAllTeachers();
+        call.enqueue(new Callback<List<TeacherData>>() {
+            @Override
+            public void onResponse(Call<List<TeacherData>> call, Response<List<TeacherData>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    List<TeacherData> userInfoList = response.body();
+
+                    // Create a list of names to display in the Spinner
+                    List<String> names = new ArrayList<>();
+                    for (TeacherData userInfo : userInfoList) {
+                        names.add(userInfo.getFirstName() + " " + userInfo.getLastName());
+                    }
+
+                    // Set the data to the Spinner
+                    ArrayAdapter<String> adapter = new ArrayAdapter<>(facultmessage.this, android.R.layout.simple_spinner_item, names);
+                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    spinner.setAdapter(adapter);
+                } else {
+                    Toast.makeText(facultmessage.this, "Failed to retrieve user info", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<TeacherData>> call, Throwable t) {
+                Toast.makeText(facultmessage.this, "Error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
 
         forwardNameEditText.setText(forwardName);
 

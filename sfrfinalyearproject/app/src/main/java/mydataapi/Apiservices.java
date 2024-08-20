@@ -37,6 +37,7 @@ import studentClasses.Group;
 import studentClasses.GroupMember;
 import studentClasses.GroupsData;
 import studentClasses.StudentResponse;
+import studentClasses.TeacherData;
 import studentClasses.TeacherResponse;
 
 public interface Apiservices {
@@ -61,7 +62,7 @@ public interface Apiservices {
     Call<List<user>>getreaction(@Query("teacherUsername") String teacherUsername);
     ///student api end point
     @GET("api/Student/GetALLTeacher")
-    Call<List<user>> getAllTeachers();
+    Call<List<TeacherData>> getAllTeachers();
     // Get wishes API call
     @GET("api/Student/GetfavTeacher")
     Call<List<cuTeacher>> getFavTeacher(@Query("username") String username);
@@ -102,6 +103,9 @@ public interface Apiservices {
 
     @GET("api/Teacher/forwodsetting")  // Update this to your actual endpoint
     Call<List<forwordsetting>> getforwordsetting(@Query("filterUsername") String filterUsername);
+
+
+
     @GET("api/Wish/inboxmessageList")
     Call<List<Wish>> getinboxMessage( @Query("senderID") String senderID);
 
