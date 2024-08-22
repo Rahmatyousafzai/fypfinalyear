@@ -66,7 +66,7 @@ public class MessagListAdopter extends RecyclerView.Adapter<MessagListAdopter.Vi
         void bind(final mWishlist wish, final OnTeacherClickListener listener) {
             nameTextView.setText(wish.getFirstName() + " " + wish.getLastName());
             senddate.setText(wish.getWishDateTime());
-            String imageUrl = RetrofitClient.getBaseUrl() + "images/profileimages/" + wish.getProfileImage() + ".jpg";
+            String imageUrl =RetrofitClient.getBaseUrl() + "images/profileimages/" + wish.getProfileImage() + ".jpg";
             Picasso.get().load(imageUrl)
                     .error(R.drawable.baseline_account_circle_24)
                     .into(profileImageView);

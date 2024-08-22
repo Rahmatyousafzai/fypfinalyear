@@ -37,6 +37,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import student.EmojiAdapter;
+import studentClasses.UserDataSingleton;
 
 public class facultymessagebody extends AppCompatActivity implements OnEmojiClickListener {
     // Declare UI components
@@ -52,13 +53,13 @@ public class facultymessagebody extends AppCompatActivity implements OnEmojiClic
     private int selectedEmoji;
     private TextView profilename, teachername;
     private ImageView profile, teacherprofileimage;
-    private String studentusername, FullName, profileImage, teacherUsername;
+    private String username, studentusername, FullName, profileImage, teacherUsername;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_facultymessagebody);
-
+        username = UserDataSingleton.getInstance().getUsername();
         // Initialize RecyclerView
         recyclerView = findViewById(R.id.recycllerviewmessage);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -115,7 +116,7 @@ public class facultymessagebody extends AppCompatActivity implements OnEmojiClic
 
         // Set OnClickListener for send button
         sendButton.setOnClickListener(v -> {
-            insertSingleData(null,selectedEmoji,null,null,false,teacherUsername,studentusername,null,0);
+            insertSingleData(studentusername,teacherUsername,null,selectedEmoji,null,null,false,null,0);
             fetchConversation();
             emojiImageView.setImageDrawable(null);
         });
@@ -123,7 +124,7 @@ public class facultymessagebody extends AppCompatActivity implements OnEmojiClic
 
     private void fetchConversation() {
         Log.d("API Call", "Fetching conversation for user: " + studentusername + " with teacher: " + teacherUsername);
-        apiService.chatmessage(studentusername, teacherUsername).enqueue(new Callback<List<Message>>() {
+        apiService.chatmessage( username, teacherUsername).enqueue(new Callback<List<Message>>() {
             @Override
             public void onResponse(Call<List<Message>> call, Response<List<Message>> response) {
                 if (response.isSuccessful() && response.body() != null) {
@@ -150,10 +151,23 @@ public class facultymessagebody extends AppCompatActivity implements OnEmojiClic
                         ));
                     }
 
-                    adapter = new ConversationAdapter(facultymessagebody.this, conversationItems, studentusername);
+                    adapter = new ConversationAdapter(facultymessagebody.this, conversationItems,  username);
                     recyclerView.setAdapter(adapter);
+
+// Initialize the LayoutManager
+                    LinearLayoutManager layoutManager = new LinearLayoutManager(facultymessagebody.this);
+
+// Set reverse layout to true if you want to show the latest messages at the bottom
+                    layoutManager.setReverseLayout(true);
+
+// Set stack from end to true if you want the RecyclerView to start from the bottom
+                    layoutManager.setStackFromEnd(true);
+
+// Apply the LayoutManager to the RecyclerView
+                    recyclerView.setLayoutManager(layoutManager);
+
+// Set RecyclerView to have a fixed size (optional, but good for performance if the size is fixed)
                     recyclerView.setHasFixedSize(true);
-                    recyclerView.setLayoutManager(new LinearLayoutManager(facultymessagebody.this));
 
                     Log.d("API Call", "Conversation items loaded: " + conversationItems.size());
                 } else {
@@ -349,22 +363,22 @@ public class facultymessagebody extends AppCompatActivity implements OnEmojiClic
 
     // Inside your Activity, ViewModel, or Repository class
 
-    public void insertSingleData(String content, int emojiID, Integer templeteID, Integer achievID, boolean isEmail, String senderId, String receiverId, Integer adid, int status) {
+    public void insertSingleData(String senderId, String receiverId, String content, Integer emojiID, Integer templeteID, Integer achievID, boolean isEmail, Integer adid, Integer status) {
+
         // Create the Retrofit service
 
 
         // Create the request object
         WishRequest request = new WishRequest(
-                content,
-                emojiID,
-                templeteID,
-                achievID,
-                isEmail,
                 senderId,
                 receiverId,
-                adid,
-                status
-        );
+                content,
+                emojiID,
+                 templeteID,
+                achievID,
+                 isEmail,
+                 adid,
+                status);
 
         // Call the API
         Call<ResponseBody> call = apiService.insertSingleData(request);

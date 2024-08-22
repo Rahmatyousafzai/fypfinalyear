@@ -1,43 +1,35 @@
-<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:padding="8dp">
+    android:gravity="end">
+
+    <TextView
+        android:id="@+id/sender_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Sender Name"
+        android:padding="5dp" />
 
     <ImageView
         android:id="@+id/senderImage"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:src="@drawable/baseline_account_circle_24"
-        android:layout_gravity="center_vertical" />
+        android:layout_marginStart="8dp"
+        android:src="@drawable/baseline_account_circle_24" />
 
-    <LinearLayout
+    <TextView
+        android:id="@+id/sender_message"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_marginStart="8dp">
+        android:text="Sender Message"
+        android:background="@drawable/border"
+        android:padding="10dp" />
 
-        <TextView
-            android:id="@+id/sender_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Sender Name"
-            android:textStyle="bold"
-            android:textSize="14sp" />
-
-        <TextView
-            android:id="@+id/sender_message"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Message Content"
-            android:textSize="14sp" />
-
-        <ImageView
-            android:id="@+id/emoji_image_view_sender"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginTop="4dp"
-            android:visibility="gone" />
-    </LinearLayout>
+    <ImageView
+        android:id="@+id/emoji_image_view_sender"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone" />
 </LinearLayout>
+
