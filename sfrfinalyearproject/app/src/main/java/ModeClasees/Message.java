@@ -1,115 +1,113 @@
 package ModeClasees;
 
-import com.google.gson.annotations.SerializedName;
-
 public class Message {
-    @SerializedName("senderUsername")
-private String senderUsername;
+        private String SenderUsername;
+        private String SenderFirstName;
+        private String SenderLastName;
+        private String SenderProfileImage;
+        private String Reciverprofile;
+        private String ReceiverUsername;
+        private String ReceiverFirstName;
+        private String ReceiverLastName;
+        private String ReceiverProfileImage;
+        private String wishcontent;
+        private String Emojidata;
+        private String WishDateTime;
 
-    @SerializedName("senderFirstName")
-    private String senderFirstName;
+        // Getters and setters
+        public String getSenderUsername() {
+            return SenderUsername;
+        }
 
-    @SerializedName("senderLastName")
-    private String senderLastName;
+        public void setSenderUsername(String senderUsername) {
+            this.SenderUsername = senderUsername;
+        }
 
-    @SerializedName("senderProfileImage")
-    private String senderProfileImage;
+        public String getSenderFirstName() {
+            return SenderFirstName;
+        }
 
-    @SerializedName("receiverUsername")
-    private String receiverUsername;
+        public void setSenderFirstName(String senderFirstName) {
+            this.SenderFirstName = senderFirstName;
+        }
 
-    @SerializedName("receiverFirstName")
-    private String receiverFirstName;
+        public String getSenderLastName() {
+            return SenderLastName;
+        }
 
-    @SerializedName("receiverLastName")
-    private String receiverLastName;
+        public void setSenderLastName(String senderLastName) {
+            this.SenderLastName = senderLastName;
+        }
 
-    @SerializedName("receiverProfileImage")
-    private String receiverProfileImage;
+        public String getSenderProfileImage() {
+            return SenderProfileImage;
+        }
 
-    @SerializedName("emojiData")
-    private String emojiData;
+        public void setSenderProfileImage(String senderProfileImage) {
+            this.SenderProfileImage = senderProfileImage;
+        }
 
-    @SerializedName("wishDateTime")
-    private String wishDateTime;
+        public String getReciverprofile() {
+            return Reciverprofile;
+        }
 
-    // Getters and setters
-    public String getSenderUsername() {
-        return senderUsername;
+        public void setReciverprofile(String reciverprofile) {
+            this.Reciverprofile = reciverprofile;
+        }
+
+        public String getReceiverUsername() {
+            return ReceiverUsername;
+        }
+
+        public void setReceiverUsername(String receiverUsername) {
+            this.ReceiverUsername = receiverUsername;
+        }
+
+        public String getReceiverFirstName() {
+            return ReceiverFirstName;
+        }
+
+        public void setReceiverFirstName(String receiverFirstName) {
+            this.ReceiverFirstName = receiverFirstName;
+        }
+
+        public String getReceiverLastName() {
+            return ReceiverLastName;
+        }
+
+        public void setReceiverLastName(String receiverLastName) {
+            this.ReceiverLastName = receiverLastName;
+        }
+
+        public String getReceiverProfileImage() {
+            return ReceiverProfileImage;
+        }
+
+        public void setReceiverProfileImage(String receiverProfileImage) {
+            this.ReceiverProfileImage = receiverProfileImage;
+        }
+
+        public String getWishcontent() {
+            return wishcontent;
+        }
+
+        public void setWishcontent(String wishcontent) {
+            this.wishcontent = wishcontent;
+        }
+
+        public String getEmojidata() {
+            return Emojidata;
+        }
+
+        public void setEmojidata(String emojidata) {
+            this.Emojidata = emojidata;
+        }
+
+        public String getWishDateTime() {
+            return WishDateTime;
+        }
+
+        public void setWishDateTime(String wishDateTime) {
+            this.WishDateTime = wishDateTime;
+        }
     }
-
-    public void setSenderUsername(String senderUsername) {
-        this.senderUsername = senderUsername;
-    }
-
-    public String getSenderFirstName() {
-        return senderFirstName;
-    }
-
-    public void setSenderFirstName(String senderFirstName) {
-        this.senderFirstName = senderFirstName;
-    }
-
-    public String getSenderLastName() {
-        return senderLastName;
-    }
-
-    public void setSenderLastName(String senderLastName) {
-        this.senderLastName = senderLastName;
-    }
-
-    public String getSenderProfileImage() {
-        return senderProfileImage;
-    }
-
-    public void setSenderProfileImage(String senderProfileImage) {
-        this.senderProfileImage = senderProfileImage;
-    }
-
-    public String getReceiverUsername() {
-        return receiverUsername;
-    }
-
-    public void setReceiverUsername(String receiverUsername) {
-        this.receiverUsername = receiverUsername;
-    }
-
-    public String getReceiverFirstName() {
-        return receiverFirstName;
-    }
-
-    public void setReceiverFirstName(String receiverFirstName) {
-        this.receiverFirstName = receiverFirstName;
-    }
-
-    public String getReceiverLastName() {
-        return receiverLastName;
-    }
-
-    public void setReceiverLastName(String receiverLastName) {
-        this.receiverLastName = receiverLastName;
-    }
-
-    public String getReceiverProfileImage() {
-        return receiverProfileImage;
-    }
-
-    public void setReceiverProfileImage(String receiverProfileImage) {
-        this.receiverProfileImage = receiverProfileImage;
-    }
-
-    public String getEmojiData() {
-        return emojiData;
-    }
-
-    public void setEmojiData(String emojiData) {
-        this.emojiData = emojiData;
-    }
-
-    public String getWishDateTime() {
-        return wishDateTime;
-    }
-
-    public void setWishDateTime(String wishDateTime) {
-        this.wishDateTime = wishDateTime;
-    }}

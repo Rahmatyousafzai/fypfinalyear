@@ -54,12 +54,12 @@ public class CreateGroup extends AppCompatActivity {
         adapter = new SelectUserAdapter(new ArrayList<>(), this::onUserSelected);
         recyclerView.setAdapter(adapter);
 
-        loadTeachers();
+       // loadTeachers();
 
         createGroupButton.setOnClickListener(v -> createGroup());
     }
 
-    private void loadTeachers() {
+ /*   private void loadTeachers() {
         apiServices.getAllTeachers().enqueue(new Callback<List<user>>() {
             @Override
             public void onResponse(Call<List<user>> call, Response<List<user>> response) {
@@ -76,7 +76,7 @@ public class CreateGroup extends AppCompatActivity {
             }
         });
     }
-
+*/
     private void onUserSelected(user user, boolean isSelected) {
         if (isSelected) {
             selectedUsers.add(user);

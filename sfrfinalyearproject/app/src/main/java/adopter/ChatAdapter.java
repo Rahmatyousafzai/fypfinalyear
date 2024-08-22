@@ -46,9 +46,9 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
             holder.receivedMessageLayout.setVisibility(View.GONE);
 
 
-            if (message.getEmojiData() != null) {
+            if (message.getEmojidata() != null) {
                 holder.sentEmoji.setVisibility(View.VISIBLE);
-                Picasso.get().load(RetrofitClient.getBaseUrl() + "images/emojis/" + message.getEmojiData()+".png").into(holder.sentEmoji);
+                Picasso.get().load(RetrofitClient.getBaseUrl() + "images/emojis/" + message.getEmojidata()+".png").into(holder.sentEmoji);
             } else {
                 holder.sentEmoji.setVisibility(View.GONE);
             }
@@ -57,9 +57,9 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
             holder.sentMessageLayout.setVisibility(View.GONE);
 
 
-            if (message.getEmojiData() != null) {
+            if (message.getEmojidata() != null) {
                 holder.receivedEmoji.setVisibility(View.VISIBLE);
-                Picasso.get().load(RetrofitClient.getBaseUrl() + "images/emojis/" + message.getEmojiData()+".png").into(holder.receivedEmoji);
+                Picasso.get().load(RetrofitClient.getBaseUrl() + "images/emojis/" + message.getEmojidata()+".png").into(holder.receivedEmoji);
             } else {
                 holder.receivedEmoji.setVisibility(View.GONE);
             }

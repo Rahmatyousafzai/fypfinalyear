@@ -23,7 +23,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ModeClasees.Emoji;
-import chatClasses.MessageResponse;
 import modelclassespost.ConversationAdapter;
 import modelclassespost.ConversationItem;
 import modelclassespost.SendWishResponse;
@@ -160,7 +159,7 @@ public class smessagebody extends AppCompatActivity implements OnEmojiClickListe
 
         // Initialize ApiService
         apiService = RetrofitClient.getInstance();
-        fetchConversation(username,teacherUsername);
+        //fetchConversation(username,teacherUsername);
         // Initialize adapter
         adapter = new ConversationAdapter(this, new ArrayList<>(), username);
 
@@ -192,14 +191,14 @@ public class smessagebody extends AppCompatActivity implements OnEmojiClickListe
             @Override
             public void onClick(View v) {
                 sendMessage();
-                fetchConversation(username,teacherUsername);
+            //    fetchConversation(username,teacherUsername);
                 messageInputField=null;
             }
         });
     }
 
     // Function to fetch conversation between sender and receiver
-    private void fetchConversation(String username,String teacherUsername) {
+   /* private void fetchConversation(String username,String teacherUsername) {
         apiService.chatmessage(username, teacherUsername).enqueue(new Callback<List<MessageResponse>>() {
             @Override
             public void onResponse(Call<List<MessageResponse>> call, Response<List<MessageResponse>> response) {
@@ -238,6 +237,7 @@ public class smessagebody extends AppCompatActivity implements OnEmojiClickListe
         });
     }
 
+    */
     // Function to fetch all emojis from the server
     private void fetchAllEmojis() {
         apiService.getAllEmojis().enqueue(new Callback<List<Emoji>>() {

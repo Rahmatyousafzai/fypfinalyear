@@ -48,6 +48,7 @@
             android:layout_gravity="bottom"
             android:layout_marginLeft="20dp"
             android:id="@+id/senddate"
+            android:textColor="@color/colorPrimaryDark"
             ></TextView>
     </LinearLayout>
 

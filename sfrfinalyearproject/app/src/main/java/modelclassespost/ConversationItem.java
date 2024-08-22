@@ -39,7 +39,7 @@ public class ConversationItem {
     // Constructor
     public ConversationItem(String senderUsername, String senderFirstName, String senderLastName, String senderProfileImage,
                             String receiverUsername, String receiverFirstName, String receiverLastName, String receiverProfileImage,
-                            String emojiData, String wishDateTime) {
+                            String emojiData, String wishDateTime ) {
         this.senderUsername = senderUsername;
         this.senderFirstName = senderFirstName;
         this.senderLastName = senderLastName;

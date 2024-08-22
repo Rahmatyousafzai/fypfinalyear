@@ -24,9 +24,6 @@ import adopter.TeachercustomAdopter;
 import facultyClasses.mWishlist;
 import mydataapi.Apiservices;
 import mydataapi.RetrofitClient;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 import studentClasses.UserDataSingleton;
 import studentClasses.UserRepository;
 import studentClasses.studentData;
@@ -108,7 +105,7 @@ public class AllTeacherActivity extends AppCompatActivity implements OnTeacherCl
         adapter = new TeachercustomAdopter(teacherList, this);
         recyclerView.setAdapter(adapter);
 
-        loadTeachers();
+      //  loadTeachers();
     }
 
 
@@ -170,7 +167,7 @@ public class AllTeacherActivity extends AppCompatActivity implements OnTeacherCl
 
     }
 
-    private void loadTeachers() {
+    /*private void loadTeachers() {
         apiServices.getAllTeachers().enqueue(new Callback<List<user>>() {
             @Override
             public void onResponse(Call<List<user>> call, Response<List<user>> response) {
@@ -192,6 +189,7 @@ public class AllTeacherActivity extends AppCompatActivity implements OnTeacherCl
         });
     }
 
+    */
     @Override
     public void onPointerCaptureChanged(boolean hasCapture) {
         super.onPointerCaptureChanged(hasCapture);

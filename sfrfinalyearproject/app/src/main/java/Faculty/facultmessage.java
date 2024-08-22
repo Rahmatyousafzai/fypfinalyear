@@ -4,8 +4,13 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Filter;
 import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -171,6 +176,8 @@ public class facultmessage extends AppCompatActivity implements OnTeacherClickLi
         intent.putExtra("teacher_firstName", wish.getFirstName());
         intent.putExtra("teacher_lastName", wish.getLastName());
         intent.putExtra("teacher_profileImage", wish.getProfileImage() != null ? wish.getProfileImage() : "");
+        intent.putExtra("forwordedName",forwardName);
+
         startActivity(intent);
         Log.d(TAG, "Clicked on wish from user: " + wish.getUsername());
     }
@@ -347,8 +354,101 @@ public class facultmessage extends AppCompatActivity implements OnTeacherClickLi
         Dialog dialog = new Dialog(this);
         dialog.setContentView(R.layout.dialog_forward_setting);
 
+        AutoCompleteTextView autoCompleteTextView = dialog.findViewById(R.id.autoCompleteTextView);
         EditText forwardNameEditText = dialog.findViewById(R.id.et_forward_name);
         Button saveButton = dialog.findViewById(R.id.btn_save_forward_name);
+
+        // API call to fetch data
+        Apiservices apiService = RetrofitClient.getInstance();
+        Call<List<TeacherData>> call = apiService.getAllTeachers();
+        call.enqueue(new Callback<List<TeacherData>>() {
+            @Override
+            public void onResponse(Call<List<TeacherData>> call, Response<List<TeacherData>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    List<TeacherData> userInfoList = response.body();
+
+                    // Create an ArrayAdapter with the list of user data
+                    ArrayAdapter<TeacherData> adapter = new ArrayAdapter<TeacherData>(facultmessage.this, android.R.layout.simple_dropdown_item_1line, userInfoList) {
+                        @Override
+                        public View getView(int position, View convertView, ViewGroup parent) {
+                            View view = super.getView(position, convertView, parent);
+                            TeacherData item = getItem(position);
+                            if (item != null) {
+                                ((TextView) view).setText(item.getFirstName() + " " + item.getLastName());
+                            }
+                            return view;
+                        }
+
+                        @Override
+                        public Filter getFilter() {
+                            return new Filter() {
+                                @Override
+                                protected FilterResults performFiltering(CharSequence constraint) {
+                                    FilterResults results = new FilterResults();
+                                    List<TeacherData> filteredList = new ArrayList<>();
+
+                                    if (constraint != null && constraint.length() > 0) {
+                                        String filterPattern = constraint.toString().toLowerCase().trim();
+
+                                        for (TeacherData teacher : userInfoList) {
+                                            // Filter by username or first/last name
+                                            if (teacher.getUsername().toLowerCase().contains(filterPattern) ||
+                                                    teacher.getFirstName().toLowerCase().contains(filterPattern) ||
+                                                    teacher.getLastName().toLowerCase().contains(filterPattern)
+                                            ||teacher.getFirstName().toUpperCase().contains(filterPattern)
+                                                    ||teacher.getLastName().toUpperCase().contains(filterPattern)
+                                                    ||teacher.getUsername().toUpperCase().contains(filterPattern)
+                                                    ||teacher.getUsername().toLowerCase().contains(filterPattern)
+
+
+
+                                            ) {
+                                                filteredList.add(teacher);
+                                            }
+                                        }
+                                    } else {
+                                        // No filter, show all data
+                                        filteredList.addAll(userInfoList);
+                                    }
+
+                                    results.values = filteredList;
+                                    results.count = filteredList.size();
+                                    return results;
+                                }
+
+                                @Override
+                                protected void publishResults(CharSequence constraint, FilterResults results) {
+                                    @SuppressWarnings("unchecked")
+                                    List<TeacherData> filteredList = (List<TeacherData>) results.values;
+                                    clear();
+                                    addAll(filteredList);
+                                    notifyDataSetChanged();
+                                }
+                            };
+                        }
+                    };
+
+                    // Set the adapter to AutoCompleteTextView
+                    autoCompleteTextView.setAdapter(adapter);
+                    autoCompleteTextView.setThreshold(1); // Start filtering after 1 character
+
+                    autoCompleteTextView.setOnItemClickListener((parent, view, position, id) -> {
+                        TeacherData selectedTeacher = (TeacherData) parent.getItemAtPosition(position);
+                        if (selectedTeacher != null) {
+                            forwardNameEditText.setText(selectedTeacher.getFirstName() + " " + selectedTeacher.getLastName());
+                            // Optionally, you can scroll to the selected item in the dropdown
+                        }
+                    });
+                } else {
+                    Toast.makeText(facultmessage.this, "Failed to retrieve user info", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<TeacherData>> call, Throwable t) {
+                Toast.makeText(facultmessage.this, "Error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
 
         forwardNameEditText.setText(forwardName);
 
@@ -364,6 +464,10 @@ public class facultmessage extends AppCompatActivity implements OnTeacherClickLi
 
         dialog.show();
     }
+
+
+
+
 
     @Override
     public void onBackPressed() {
