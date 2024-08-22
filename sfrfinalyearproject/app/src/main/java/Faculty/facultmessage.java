@@ -4,14 +4,17 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Filter;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -354,7 +357,11 @@ public class facultmessage extends AppCompatActivity implements OnTeacherClickLi
         Dialog dialog = new Dialog(this);
         dialog.setContentView(R.layout.dialog_forward_setting);
 
+
         AutoCompleteTextView autoCompleteTextView = dialog.findViewById(R.id.autoCompleteTextView);
+
+        Spinner spinner = dialog.findViewById(R.id.spinner);
+
         EditText forwardNameEditText = dialog.findViewById(R.id.et_forward_name);
         Button saveButton = dialog.findViewById(R.id.btn_save_forward_name);
 
@@ -366,6 +373,7 @@ public class facultmessage extends AppCompatActivity implements OnTeacherClickLi
             public void onResponse(Call<List<TeacherData>> call, Response<List<TeacherData>> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     List<TeacherData> userInfoList = response.body();
+
 
                     // Create an ArrayAdapter with the list of user data
                     ArrayAdapter<TeacherData> adapter = new ArrayAdapter<TeacherData>(facultmessage.this, android.R.layout.simple_dropdown_item_1line, userInfoList) {
@@ -439,6 +447,17 @@ public class facultmessage extends AppCompatActivity implements OnTeacherClickLi
                             // Optionally, you can scroll to the selected item in the dropdown
                         }
                     });
+                    // Create a list of names to display in the Spinner
+                    List<String> names = new ArrayList<>();
+                    for (TeacherData userInfo : userInfoList) {
+                        names.add(userInfo.getFirstName() + " " + userInfo.getLastName());
+                    }
+
+                    // Set the data to the Spinner
+                    ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<>(facultmessage.this, android.R.layout.simple_spinner_item, names);
+                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    spinner.setAdapter(adapter);
+
                 } else {
                     Toast.makeText(facultmessage.this, "Failed to retrieve user info", Toast.LENGTH_SHORT).show();
                 }

@@ -1,6 +1,7 @@
 package modelclassespost;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -50,6 +51,11 @@ public class ConversationAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         ConversationItem item = conversationItems.get(position);
 
+        Log.d("RecyclerView", "Binding item: " + item.toString());
+        Log.d("RecyclerView", "Textmessaeg: " + item.getWishcontent().toString());
+        Log.d("RecyclerView", "EMoji: " + item.getEmojiData().toString());
+
+
         if (holder.getItemViewType() == VIEW_TYPE_SENDER) {
             SenderViewHolder senderViewHolder = (SenderViewHolder) holder;
             senderViewHolder.senderName.setText(item.getSenderFirstName());
@@ -60,14 +66,29 @@ public class ConversationAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 senderViewHolder.senderImage.setImageResource(R.drawable.baseline_account_circle_24);
             }
 
-            if (item.getEmojiData() != null && !item.getEmojiData().isEmpty()) {
-                Picasso.get().load(RetrofitClient.getBaseUrl() + "images/emojis/" + item.getEmojiData() + ".png").into(senderViewHolder.emojiImageView);
-                senderViewHolder.messageTextView.setVisibility(View.GONE);
-                senderViewHolder.emojiImageView.setVisibility(View.VISIBLE);
+            String emojiData = item.getWishcontent();
+            String wishContent = item.getEmojiData();
+
+            if (wishContent != null && !wishContent.isEmpty()) {
+                Log.d("RecyclerView", "Sender wish content: " + wishContent);
+                senderViewHolder.messageTextViewsender.setText(wishContent);
+                senderViewHolder.messageTextViewsender.setVisibility(View.VISIBLE);
+                senderViewHolder.senderemojiImageView.setVisibility(View.GONE);
+            } else if (emojiData != null && !emojiData.isEmpty()) {
+                String imageUrl = RetrofitClient.getBaseUrl() + "images/emojis/" + emojiData + ".png";
+                Log.d("RecyclerView", "Loading emoji image from: " + imageUrl);
+
+                Picasso.get()
+                        .load(imageUrl)
+                        .placeholder(R.drawable.sad)
+                        .error(R.drawable.sad)
+                        .into(senderViewHolder.senderemojiImageView);
+
+                senderViewHolder.messageTextViewsender.setVisibility(View.GONE);
+                senderViewHolder.senderemojiImageView.setVisibility(View.VISIBLE);
             } else {
-                senderViewHolder.messageTextView.setText(item.getWishcontent());
-                senderViewHolder.messageTextView.setVisibility(View.VISIBLE);
-                senderViewHolder.emojiImageView.setVisibility(View.GONE);
+                senderViewHolder.messageTextViewsender.setVisibility(View.GONE);
+                senderViewHolder.senderemojiImageView.setVisibility(View.GONE);
             }
         } else {
             ReceiverViewHolder receiverViewHolder = (ReceiverViewHolder) holder;
@@ -79,13 +100,28 @@ public class ConversationAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 receiverViewHolder.receiverImage.setImageResource(R.drawable.baseline_account_circle_24);
             }
 
-            if (item.getEmojiData() != null && !item.getEmojiData().isEmpty()) {
-                Picasso.get().load(RetrofitClient.getBaseUrl() + "images/emojis/" + item.getEmojiData() + ".png").into(receiverViewHolder.emojiImageView);
-                receiverViewHolder.messageTextView.setVisibility(View.GONE);
+            String emojiData = item.getWishcontent();
+            String  wishContent= item.getEmojiData();
+
+            if (wishContent != null && !wishContent.isEmpty()) {
+                Log.d("RecyclerView", "Receiver wish content: " + wishContent);
+                receiverViewHolder.messageTextViewreciver.setText(wishContent);
+                receiverViewHolder.messageTextViewreciver.setVisibility(View.VISIBLE);
+                receiverViewHolder.emojiImageView.setVisibility(View.GONE);
+            } else if (emojiData != null && !emojiData.isEmpty()) {
+                String imageUrl = RetrofitClient.getBaseUrl() + "images/emojis/" + emojiData + ".png";
+                Log.d("RecyclerView", "Loading emoji image from: " + imageUrl);
+
+                Picasso.get()
+                        .load(imageUrl)
+                        .placeholder(R.drawable.sad)
+                        .error(R.drawable.sad)
+                        .into(receiverViewHolder.emojiImageView);
+
+                receiverViewHolder.messageTextViewreciver.setVisibility(View.GONE);
                 receiverViewHolder.emojiImageView.setVisibility(View.VISIBLE);
             } else {
-                receiverViewHolder.messageTextView.setText(item.getWishcontent());
-                receiverViewHolder.messageTextView.setVisibility(View.VISIBLE);
+                receiverViewHolder.messageTextViewreciver.setVisibility(View.GONE);
                 receiverViewHolder.emojiImageView.setVisibility(View.GONE);
             }
         }
@@ -117,6 +153,11 @@ public class ConversationAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         conversationItems.clear();
         conversationItems.addAll(newData);
         notifyDataSetChanged();
+
+
+
+
+
     }
 
     private String getProfileImageUrl(String profileImage) {
@@ -124,28 +165,28 @@ public class ConversationAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     }
 
     static class SenderViewHolder extends RecyclerView.ViewHolder {
-        ImageView emojiImageView, senderImage;
-        TextView senderName, messageTextView;
+        ImageView senderemojiImageView, senderImage;
+        TextView senderName, messageTextViewsender;
 
         SenderViewHolder(@NonNull View itemView) {
             super(itemView);
-            emojiImageView = itemView.findViewById(R.id.emoji_image_view_sender);
+            senderemojiImageView = itemView.findViewById(R.id.emoji_image_view_sender);
             senderImage = itemView.findViewById(R.id.senderImage);
             senderName = itemView.findViewById(R.id.sender_name);
-            messageTextView = itemView.findViewById(R.id.sender_message);
+            messageTextViewsender = itemView.findViewById(R.id.sender_message);
         }
     }
 
     static class ReceiverViewHolder extends RecyclerView.ViewHolder {
         ImageView emojiImageView, receiverImage;
-        TextView receiverName, messageTextView;
+        TextView receiverName, messageTextViewreciver;
 
         ReceiverViewHolder(@NonNull View itemView) {
             super(itemView);
             emojiImageView = itemView.findViewById(R.id.emoji_image_view_receiver);
             receiverImage = itemView.findViewById(R.id.receiverImage);
             receiverName = itemView.findViewById(R.id.receiver_name);
-            messageTextView = itemView.findViewById(R.id.receiver_message);
+            messageTextViewreciver = itemView.findViewById(R.id.receiver_message);
         }
     }
 }

@@ -24,12 +24,9 @@ import java.util.List;
 
 import ModeClasees.Emoji;
 import modelclassespost.ConversationAdapter;
-import modelclassespost.ConversationItem;
-import modelclassespost.SendWishResponse;
 import mydataapi.Apiservices;
 import mydataapi.OnEmojiClickListener;
 import mydataapi.RetrofitClient;
-import mydataapi.SendWishRequest;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -190,7 +187,7 @@ public class smessagebody extends AppCompatActivity implements OnEmojiClickListe
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sendMessage();
+
             //    fetchConversation(username,teacherUsername);
                 messageInputField=null;
             }
@@ -413,85 +410,8 @@ public class smessagebody extends AppCompatActivity implements OnEmojiClickListe
     }
 
     // Function to send message
-    private void sendMessage() {
-        if (selectedEmoji == 0) {
-            Log.e("Validation Error", "Emoji is required");
-            return;
-        }
 
-        // Assuming you have the necessary parameters to send a message, modify this accordingly
-        SendWishRequest request = new SendWishRequest(selectedEmoji,null,username, teacherUsername);
 
-        apiService.createWish(request).enqueue(new Callback<SendWishResponse>() {
-            @Override
-            public void onResponse(Call<SendWishResponse> call, Response<SendWishResponse> response) {
-                if (response.isSuccessful() && response.body() != null) {
-                    Log.i("Send Message", "Message sent successfully");
-                    // Create a ConversationItem with the sent message data
-                    ConversationItem sentMessage = new ConversationItem(
-                            request.getSenderid(),
-                            request.getMessageType(), // Assuming messageType is used to identify emojis
-                            request.getEmojiId() // Assuming emojiId is used to store the selected emoji ID
-                    );
-                    // Add the sent message to the adapter
-                    adapter.addItem(sentMessage);
-                    recyclerView.scrollToPosition(adapter.getItemCount() - 1);
-                    // Reset emoji selection
-                    emojiImageView.setImageDrawable(null);
-                    selectedEmoji = 0;
-                    Log.d("RecyclerView Update", "New item added to dataset: " + sentMessage);
-                    sendautoMessage();
-                } else {
-                    Log.e("API Error", "Failed to send message");
-                }
-            }
-
-            @Override
-            public void onFailure(Call<SendWishResponse> call, Throwable t) {
-                Log.e("Network Error", "Failed to send message", t);
-            }
-        });
-    }
-
-    private void sendautoMessage() {
-        if (1!=0) {
-            Log.e("Validation Error", "Emoji is required");
-            return;
-        }
-
-        // Assuming you have the necessary parameters to send a message, modify this accordingly
-        SendWishRequest request = new SendWishRequest(null,"thank you", teacherUsername,username);
-
-        apiService.createWish(request).enqueue(new Callback<SendWishResponse>() {
-            @Override
-            public void onResponse(Call<SendWishResponse> call, Response<SendWishResponse> response) {
-                if (response.isSuccessful() && response.body() != null) {
-                    Log.i("Send Message", "Message sent successfully");
-                    // Create a ConversationItem with the sent message data
-                    ConversationItem sentMessage = new ConversationItem(
-                            request.getSenderid(),
-                            request.getMessageType(),
-                            // Assuming messageType is used to identify emojis
-                            request.getEmojiId() // Assuming emojiId is used to store the selected emoji ID
-                    );
-                    // Add the sent message to the adapter
-                    adapter.addItem(sentMessage);
-                    recyclerView.scrollToPosition(adapter.getItemCount() - 1);
-                    // Reset emoji selection
-                    emojiImageView.setImageDrawable(null);
-                    selectedEmoji = 0;
-                    Log.d("RecyclerView Update", "New item added to dataset: " + sentMessage);
-                } else {
-                    Log.e("API Error", "Failed to send message");
-                }
-            }
-
-            @Override
-            public void onFailure(Call<SendWishResponse> call, Throwable t) {
-                Log.e("Network Error", "Failed to send message", t);
-            }
-        });
-    }
     @Override
     public void onBackPressed() {
         // Navigate back to the login screen

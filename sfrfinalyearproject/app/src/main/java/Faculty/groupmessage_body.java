@@ -22,12 +22,9 @@ import java.util.List;
 
 import ModeClasees.Emoji;
 import modelclassespost.ConversationAdapter;
-import modelclassespost.ConversationItem;
-import modelclassespost.SendWishResponse;
 import mydataapi.Apiservices;
 import mydataapi.OnEmojiClickListener;
 import mydataapi.RetrofitClient;
-import mydataapi.SendWishRequest;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -187,7 +184,7 @@ TextView userusername;
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sendMessage();
+               // sendMessage();
 
 
             }
@@ -318,46 +315,5 @@ TextView userusername;
     }
 
     // Function to send message
-    private void sendMessage() {
-        if (selectedEmoji == 0) {
-            Log.e("Validation Error", "Emoji and message text are required");
-            return;
-        }
 
-        SendWishRequest request = new SendWishRequest(selectedEmoji,null,"2020-arid-3535", "BIIT0001");
-
-        // Insert data into the database
-        apiService.createWish(request).enqueue(new Callback<SendWishResponse>() {
-            @Override
-            public void onResponse(Call<SendWishResponse> call, Response<SendWishResponse> response) {
-                if (response.isSuccessful() && response.body() != null) {
-                    Log.i("Send Message", "Message sent successfully");
-                    // Create a new ConversationItem representing the sent message
-                    ConversationItem sentMessage = new ConversationItem(username, GroupID, selectedEmoji);
-
-                    // Add the sent message to the adapter
-                    adapter.addItem(sentMessage);
-
-                    // Scroll RecyclerView to the bottom
-                    recyclerView.scrollToPosition(adapter.getItemCount() - 1);
-
-                    // Clear the emojiImageView
-                    emojiImageView.setImageDrawable(null);
-
-                    // Reset the selected emoji ID
-                    selectedEmoji = 0;
-
-                    // Log to verify dataset update
-                    Log.d("RecyclerView Update", "New item added to dataset: " + sentMessage);
-                } else {
-                    Log.e("API Error", "Failed to send message");
-                }
-            }
-
-            @Override
-            public void onFailure(Call<SendWishResponse> call, Throwable t) {
-                Log.e("Network Error", "Failed to send message", t);
-            }
-        });
-    }
 }

@@ -132,6 +132,7 @@ public class facultymessagebody extends AppCompatActivity implements OnEmojiClic
                     List<ConversationItem> conversationItems = new ArrayList<>();
 
                     for (Message message : messages) {
+                        Log.d("api text content", "messagecontent: " + (message.getWishcontent() != null ? message.getWishcontent() : "null"));
                         String senderProfileImage = message.getSenderProfileImage() != null ? message.getSenderProfileImage() : "";
                         String receiverProfileImage = message.getReceiverProfileImage() != null ? message.getReceiverProfileImage() : "";
                         String emojidata = message.getEmojidata() != null ? message.getEmojidata() : "";
@@ -146,6 +147,7 @@ public class facultymessagebody extends AppCompatActivity implements OnEmojiClic
                                 message.getReceiverFirstName() != null ? message.getReceiverFirstName() : "",
                                 message.getReceiverLastName() != null ? message.getReceiverLastName() : "",
                                 receiverProfileImage,
+                                message.getWishcontent() != null ? message.getWishcontent() : "",
                                 emojidata,
                                 wishDateTime
                         ));
@@ -168,6 +170,7 @@ public class facultymessagebody extends AppCompatActivity implements OnEmojiClic
 
 // Set RecyclerView to have a fixed size (optional, but good for performance if the size is fixed)
                     recyclerView.setHasFixedSize(true);
+                    Log.d("API text", "Conversation items loaded: ");
 
                     Log.d("API Call", "Conversation items loaded: " + conversationItems.size());
                 } else {

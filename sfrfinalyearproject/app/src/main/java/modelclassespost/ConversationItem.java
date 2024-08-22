@@ -5,57 +5,7 @@ public class ConversationItem {
     private String senderFirstName;
     private String senderLastName;
     private String senderProfileImage;
-    private String receiverUsername;
-    private String receiverFirstName;
-    private String receiverLastName;
-    private String receiverProfileImage;
-    private String emojiData;
-    private String wishDateTime;
 
-    public String getWishcontent() {
-        return wishcontent;
-    }
-
-    public void setWishcontent(String wishcontent) {
-        this.wishcontent = wishcontent;
-    }
-
-    public ConversationItem(String senderUsername, String senderFirstName, String senderLastName, String senderProfileImage, String receiverUsername, String receiverFirstName, String receiverLastName, String receiverProfileImage, String emojiData, String wishDateTime, String wishcontent) {
-        this.senderUsername = senderUsername;
-        this.senderFirstName = senderFirstName;
-        this.senderLastName = senderLastName;
-        this.senderProfileImage = senderProfileImage;
-        this.receiverUsername = receiverUsername;
-        this.receiverFirstName = receiverFirstName;
-        this.receiverLastName = receiverLastName;
-        this.receiverProfileImage = receiverProfileImage;
-        this.emojiData = emojiData;
-        this.wishDateTime = wishDateTime;
-        this.wishcontent = wishcontent;
-    }
-
-    private String    wishcontent;
-
-    // Constructor
-    public ConversationItem(String senderUsername, String senderFirstName, String senderLastName, String senderProfileImage,
-                            String receiverUsername, String receiverFirstName, String receiverLastName, String receiverProfileImage,
-                            String emojiData, String wishDateTime ) {
-        this.senderUsername = senderUsername;
-        this.senderFirstName = senderFirstName;
-        this.senderLastName = senderLastName;
-        this.senderProfileImage = senderProfileImage;
-        this.receiverUsername = receiverUsername;
-        this.receiverFirstName = receiverFirstName;
-        this.receiverLastName = receiverLastName;
-        this.receiverProfileImage = receiverProfileImage;
-        this.emojiData = emojiData;
-        this.wishDateTime = wishDateTime;
-    }
-
-    public ConversationItem(String senderid, String messageType, int emojiId) {
-    }
-
-    // Getters and setters
     public String getSenderUsername() {
         return senderUsername;
     }
@@ -121,11 +71,19 @@ public class ConversationItem {
     }
 
     public String getEmojiData() {
-        return emojiData;
+        return EmojiData;
     }
 
     public void setEmojiData(String emojiData) {
-        this.emojiData = emojiData;
+        EmojiData = emojiData;
+    }
+
+    public String getWishcontent() {
+        return wishcontent;
+    }
+
+    public void setWishcontent(String wishcontent) {
+        this.wishcontent = wishcontent;
     }
 
     public String getWishDateTime() {
@@ -135,4 +93,40 @@ public class ConversationItem {
     public void setWishDateTime(String wishDateTime) {
         this.wishDateTime = wishDateTime;
     }
+
+    private String receiverUsername;
+    private String receiverFirstName;
+    private String receiverLastName;
+    private String receiverProfileImage;
+    private String EmojiData;
+    private String wishcontent; // The wish message or content
+    private String wishDateTime; // The date/time of the wish
+
+    // Constructor for initializing all fields
+    public ConversationItem(String senderUsername,
+                            String senderFirstName,
+                            String senderLastName,
+                            String senderProfileImage,
+                            String receiverUsername,
+                            String receiverFirstName,
+                            String receiverLastName,
+                            String receiverProfileImage,
+                            String EmojiData,
+                            String wishcontent,
+                            String wishDateTime) {
+        this.senderUsername = senderUsername;
+        this.senderFirstName = senderFirstName;
+        this.senderLastName = senderLastName;
+        this.senderProfileImage = senderProfileImage;
+        this.receiverUsername = receiverUsername;
+        this.receiverFirstName = receiverFirstName;
+        this.receiverLastName = receiverLastName;
+        this.receiverProfileImage = receiverProfileImage;
+        this.EmojiData = EmojiData;
+        this.wishcontent = wishcontent;
+        this.wishDateTime = wishDateTime;
+    }
+
+    // Getters and setters
+
 }

@@ -1,35 +1,62 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
     android:gravity="end">
+<LinearLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/border"
+    android:padding="5dp"
+    android:backgroundTint="#DAA5A5"
+    android:layout_marginRight="20dp"
 
+    >
     <TextView
         android:id="@+id/sender_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Sender Name"
-        android:padding="5dp" />
+        android:textSize="20dp"
+        android:padding="5dp"
+        android:layout_gravity="center"
 
-    <ImageView
+        />
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        app:civ_border_color="@color/black"
+        app:civ_border_width="2dp"
         android:id="@+id/senderImage"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         android:layout_marginStart="8dp"
         android:src="@drawable/baseline_account_circle_24" />
-
+</LinearLayout>
     <TextView
+        android:layout_marginTop="10dp"
         android:id="@+id/sender_message"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Sender Message"
         android:background="@drawable/border"
-        android:padding="10dp" />
+
+        android:backgroundTint="#D6DFDE"
+        android:padding="10dp"
+        android:layout_marginRight="50dp"
+
+        />
 
     <ImageView
         android:id="@+id/emoji_image_view_sender"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="gone" />
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:backgroundTint="#D6DFDE"
+        android:visibility="gone"
+        android:layout_marginRight="50dp"
+        android:layout_marginTop="10dp"
+
+
+        />
 </LinearLayout>
 

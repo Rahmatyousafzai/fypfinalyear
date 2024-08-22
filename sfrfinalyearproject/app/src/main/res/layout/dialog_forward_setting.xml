@@ -17,6 +17,11 @@
         android:hint="Select or search a user" />
 
 
+    <Spinner
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/spinner"
+></Spinner>
     <EditText
         android:id="@+id/et_forward_name"
         android:layout_width="match_parent"
