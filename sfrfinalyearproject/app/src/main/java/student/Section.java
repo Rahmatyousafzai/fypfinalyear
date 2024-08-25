@@ -1,20 +1,11 @@
 package student;
 
 public class Section {
-   private int sectionid;
+   private String  sectionname;
+   private String  sectionid;
 
-    public Section(int sectionid, String sectionname) {
-        this.sectionid = sectionid;
+    public Section(String sectionname, String sectionid) {
         this.sectionname = sectionname;
-    }
-
-    private String sectionname;
-
-    public int getSectionid() {
-        return sectionid;
-    }
-
-    public void setSectionid(int sectionid) {
         this.sectionid = sectionid;
     }
 
@@ -24,5 +15,13 @@ public class Section {
 
     public void setSectionname(String sectionname) {
         this.sectionname = sectionname;
+    }
+
+    public String getSectionid() {
+        return sectionid;
+    }
+
+    public void setSectionid(String sectionid) {
+        this.sectionid = sectionid;
     }
 }

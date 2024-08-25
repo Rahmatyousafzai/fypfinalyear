@@ -1,18 +1,18 @@
 package Faculty;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
-
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Filter;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Switch;
@@ -24,6 +24,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.sfrfinalyearproject.R;
+import com.example.sfrfinalyearproject.admin_login;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -57,12 +58,13 @@ public class facultmessage extends AppCompatActivity implements OnTeacherClickLi
     private ImageView profile;
     private MessagListAdopter adapter;
 
-    private String username, firstName, lastName, profileImage, ForwarduserName;
+    private String username, firstName, lastName, profileImage, ForwarduserName,forwrodprofileName;
 
-    private String forwardName = "";  // To store forward name
+    private String forwardName = "", selectedName,selectedusername;  // To store forward name
     private boolean isAutoReplyOn = false;  // Store the state of Auto Reply
     private boolean isMessageForwardOn = false;
     private int deletepermissoin;
+    private int forwordingID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -236,7 +238,10 @@ public class facultmessage extends AppCompatActivity implements OnTeacherClickLi
                     for (forwordsetting setting : settings) {
                         Log.d(TAG, "Forward Setting: " + setting.getCurrentuser() + " (Forward To: " + setting.getForworduser() + ")");
                         if (setting.getCurrentuser().equals(username)) {
-                            ForwarduserName = setting.getForworduser();
+                            ForwarduserName = setting.getFname()+""+setting.getLname();
+
+                            forwrodprofileName = setting.getFname()+""+setting.getLname();
+                            forwordingID=setting.getStid();
                             messageForwardEnabled = true;
                             break;
                         }
@@ -264,8 +269,23 @@ public class facultmessage extends AppCompatActivity implements OnTeacherClickLi
 
         Switch autoReplySwitch = dialog.findViewById(R.id.switch_auto_reply);
         Switch messageForwardSwitch = dialog.findViewById(R.id.switch_message_forward);
-        Button forwardSettingButton = dialog.findViewById(R.id.btn_forward_setting);
+        TextView forwardSettingButton = dialog.findViewById(R.id.btn_forward_setting);
         TextView forwardTextView = dialog.findViewById(R.id.forwordid);
+        TextView Logout=dialog.findViewById(R.id.logout);
+
+        ImageView imgLogout=dialog.findViewById(R.id.imgLogout);
+        imgLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent =new Intent(facultmessage.this, admin_login.class);
+            }
+        });
+        Logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent =new Intent(facultmessage.this, admin_login.class);
+            }
+        });
 
        forwardTextView.setText(ForwarduserName);
 
@@ -353,17 +373,20 @@ public class facultmessage extends AppCompatActivity implements OnTeacherClickLi
         });
     }
 
+
+    // Custom Adapter for AutoCompleteTextView and Spinner
     private void showForwardSettingDialog() {
         Dialog dialog = new Dialog(this);
         dialog.setContentView(R.layout.dialog_forward_setting);
 
-
         AutoCompleteTextView autoCompleteTextView = dialog.findViewById(R.id.autoCompleteTextView);
-
         Spinner spinner = dialog.findViewById(R.id.spinner);
-
         EditText forwardNameEditText = dialog.findViewById(R.id.et_forward_name);
         Button saveButton = dialog.findViewById(R.id.btn_save_forward_name);
+        Button removeButton = dialog.findViewById(R.id.btn_save_remove_name);
+        Button updateButton = dialog.findViewById(R.id.btn_save_update_name);
+
+        forwardNameEditText.setText(forwrodprofileName);
 
         // API call to fetch data
         Apiservices apiService = RetrofitClient.getInstance();
@@ -374,89 +397,47 @@ public class facultmessage extends AppCompatActivity implements OnTeacherClickLi
                 if (response.isSuccessful() && response.body() != null) {
                     List<TeacherData> userInfoList = response.body();
 
-
-                    // Create an ArrayAdapter with the list of user data
-                    ArrayAdapter<TeacherData> adapter = new ArrayAdapter<TeacherData>(facultmessage.this, android.R.layout.simple_dropdown_item_1line, userInfoList) {
-                        @Override
-                        public View getView(int position, View convertView, ViewGroup parent) {
-                            View view = super.getView(position, convertView, parent);
-                            TeacherData item = getItem(position);
-                            if (item != null) {
-                                ((TextView) view).setText(item.getFirstName() + " " + item.getLastName());
-                            }
-                            return view;
-                        }
-
-                        @Override
-                        public Filter getFilter() {
-                            return new Filter() {
-                                @Override
-                                protected FilterResults performFiltering(CharSequence constraint) {
-                                    FilterResults results = new FilterResults();
-                                    List<TeacherData> filteredList = new ArrayList<>();
-
-                                    if (constraint != null && constraint.length() > 0) {
-                                        String filterPattern = constraint.toString().toLowerCase().trim();
-
-                                        for (TeacherData teacher : userInfoList) {
-                                            // Filter by username or first/last name
-                                            if (teacher.getUsername().toLowerCase().contains(filterPattern) ||
-                                                    teacher.getFirstName().toLowerCase().contains(filterPattern) ||
-                                                    teacher.getLastName().toLowerCase().contains(filterPattern)
-                                            ||teacher.getFirstName().toUpperCase().contains(filterPattern)
-                                                    ||teacher.getLastName().toUpperCase().contains(filterPattern)
-                                                    ||teacher.getUsername().toUpperCase().contains(filterPattern)
-                                                    ||teacher.getUsername().toLowerCase().contains(filterPattern)
-
-
-
-                                            ) {
-                                                filteredList.add(teacher);
-                                            }
-                                        }
-                                    } else {
-                                        // No filter, show all data
-                                        filteredList.addAll(userInfoList);
-                                    }
-
-                                    results.values = filteredList;
-                                    results.count = filteredList.size();
-                                    return results;
-                                }
-
-                                @Override
-                                protected void publishResults(CharSequence constraint, FilterResults results) {
-                                    @SuppressWarnings("unchecked")
-                                    List<TeacherData> filteredList = (List<TeacherData>) results.values;
-                                    clear();
-                                    addAll(filteredList);
-                                    notifyDataSetChanged();
-                                }
-                            };
-                        }
-                    };
+                    // Use the custom TeacherAdapter
+                    TeacherAdapter teacherAdapter = new TeacherAdapter(facultmessage.this, userInfoList);
 
                     // Set the adapter to AutoCompleteTextView
-                    autoCompleteTextView.setAdapter(adapter);
-                    autoCompleteTextView.setThreshold(1); // Start filtering after 1 character
+                    autoCompleteTextView.setAdapter(teacherAdapter);
+                    autoCompleteTextView.setThreshold(1);
 
+                    // Set the adapter to Spinner
+                    spinner.setAdapter(teacherAdapter);
+
+                    // Handle AutoCompleteTextView item selection
                     autoCompleteTextView.setOnItemClickListener((parent, view, position, id) -> {
-                        TeacherData selectedTeacher = (TeacherData) parent.getItemAtPosition(position);
+                        TeacherData selectedTeacher = teacherAdapter.getItem(position);
                         if (selectedTeacher != null) {
                             forwardNameEditText.setText(selectedTeacher.getFirstName() + " " + selectedTeacher.getLastName());
-                            // Optionally, you can scroll to the selected item in the dropdown
+                            selectedusername = selectedTeacher.getUsername();
+                            selectedName = selectedTeacher.getFirstName() + " " + selectedTeacher.getLastName();
+                            ;
                         }
                     });
-                    // Create a list of names to display in the Spinner
-                    List<String> names = new ArrayList<>();
-                    for (TeacherData userInfo : userInfoList) {
-                        names.add(userInfo.getFirstName() + " " + userInfo.getLastName());
-                    }
 
-                    // Set the data to the Spinner
-                    ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<>(facultmessage.this, android.R.layout.simple_spinner_item, names);
-                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                    spinner.setAdapter(adapter);
+                    // Handle Spinner item selection
+                    spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                        @Override
+                        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                            TeacherData selectedTeacher = teacherAdapter.getItem(position);
+                            if (selectedTeacher != null) {
+                                forwardNameEditText.setText(selectedTeacher.getFirstName() + " " + selectedTeacher.getLastName());
+                                selectedusername = selectedTeacher.getUsername();
+                                selectedName = selectedTeacher.getFirstName() + " " + selectedTeacher.getLastName();
+                            }
+                        }
+
+                        @Override
+                        public void onNothingSelected(AdapterView<?> parent) {
+
+
+                            forwardNameEditText.setText(ForwarduserName);
+                            // Handle case when nothing is selected, if needed
+                        }
+                    });
 
                 } else {
                     Toast.makeText(facultmessage.this, "Failed to retrieve user info", Toast.LENGTH_SHORT).show();
@@ -469,11 +450,11 @@ public class facultmessage extends AppCompatActivity implements OnTeacherClickLi
             }
         });
 
-        forwardNameEditText.setText(forwardName);
-
+        // Handle save button click
         saveButton.setOnClickListener(v -> {
             forwardName = forwardNameEditText.getText().toString().trim();
             if (!forwardName.isEmpty()) {
+                insertForwordSetting(username, selectedusername);
                 Toast.makeText(this, "Forward Name Saved: " + forwardName, Toast.LENGTH_SHORT).show();
                 dialog.dismiss();
             } else {
@@ -481,10 +462,157 @@ public class facultmessage extends AppCompatActivity implements OnTeacherClickLi
             }
         });
 
+        // Handle remove button click
+        removeButton.setOnClickListener(v -> {
+            deleteAppsetting(forwordingID);
+            Toast.makeText(this, "Record removed", Toast.LENGTH_SHORT).show();
+            dialog.dismiss();
+        });
+
+        // Handle update button click
+        updateButton.setOnClickListener(v -> {
+            updateForwardSetting(forwordingID, selectedusername);
+            Toast.makeText(this, "Record updated", Toast.LENGTH_SHORT).show();
+            dialog.dismiss();
+        });
+
+        // Show the dialog
         dialog.show();
     }
 
+    private void updateForwardSetting(int id, String forworduser) {
+        // Create the updated forward setting object
+        forwordsetting updatedForwordSetting = new forwordsetting(id,selectedusername);
+         // Assuming `id` is a field in your `forwordsetting` class
+        updatedForwordSetting.setForworduser(forworduser);
 
+        // Create the API service instance
+        Apiservices apiService = RetrofitClient.getInstance();
+
+        // Make the API call to update the forward setting
+        Call<Void> call = apiService.updateForwardSetting(id, updatedForwordSetting);
+
+        // Enqueue the call to execute it asynchronously
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                if (response.isSuccessful()) {
+                    Toast.makeText(getApplicationContext(), "Record updated successfully.", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getApplicationContext(), "Failed to update record: " + response.message(), Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                Toast.makeText(getApplicationContext(), "Error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+
+    private void deleteAppsetting(int id) {
+        // Create Retrofit instance and ApiService
+
+
+        // Make the API call
+        apiServices.Deleteforwodsetting(id).enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                if (response.isSuccessful()) {
+                    // Display success message
+                    Toast.makeText(facultmessage.this, "Record deleted successfully.", Toast.LENGTH_SHORT).show();
+                } else {
+                    // Handle failure response
+                    Toast.makeText(facultmessage.this, "Failed to delete record: " + response.code(), Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                // Log and display error message
+                Log.e(TAG, "API call failed: " + t.getMessage());
+                Toast.makeText(facultmessage.this, "Error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+
+    private void insertForwordSetting(String currentuser, String forworduser) {
+        // Create the newForwordSetting object
+        forwordsetting newForwordSetting = new forwordsetting(currentuser,forworduser);
+        newForwordSetting.setCurrentuser(currentuser);
+        newForwordSetting.setForworduser(forworduser);
+
+        // Get the API service
+        Apiservices apiService = RetrofitClient.getInstance();
+
+        // Make the POST request
+        Call<Void> call = apiService.insertForwordSetting(newForwordSetting);
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                if (response.isSuccessful()) {
+                    // Handle successful response
+                    Toast.makeText(getApplicationContext(), "Record inserted successfully.", Toast.LENGTH_SHORT).show();
+                } else {
+                    // Handle error response
+                    Toast.makeText(getApplicationContext(), "Failed to insert record: " + response.message(), Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                // Handle failure
+                Toast.makeText(getApplicationContext(), "Error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+
+    public class TeacherAdapter extends ArrayAdapter<TeacherData> {
+
+        public TeacherAdapter(Context context, List<TeacherData> teachers) {
+            super(context, 0, teachers);
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            if (convertView == null) {
+                convertView = LayoutInflater.from(getContext()).inflate(android.R.layout.simple_dropdown_item_1line, parent, false);
+            }
+
+            TeacherData teacher = getItem(position);
+            TextView textView = convertView.findViewById(android.R.id.text1);
+
+            if (teacher != null) {
+                textView.setText(teacher.getFirstName() + " " + teacher.getLastName());
+            }
+
+            return convertView;
+        }
+
+        @Override
+        public View getDropDownView(int position, View convertView, ViewGroup parent) {
+            if (convertView == null) {
+                convertView = LayoutInflater.from(getContext()).inflate(android.R.layout.simple_spinner_dropdown_item, parent, false);
+            }
+
+            TeacherData teacher = getItem(position);
+            TextView textView = convertView.findViewById(android.R.id.text1);
+
+            if (teacher != null) {
+                textView.setText(teacher.getFirstName() + " " + teacher.getLastName());
+            }
+
+            return convertView;
+        }
+
+        @Override
+        public TeacherData getItem(int position) {
+            return super.getItem(position);
+        }
+    }
 
 
 

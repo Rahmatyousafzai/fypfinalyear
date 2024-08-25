@@ -320,6 +320,16 @@ public class smessagebody extends AppCompatActivity implements OnEmojiClickListe
             public void onEmojisFetched(List<Emoji> emojis) {}
 
             @Override
+            public void onEmojiClickWithId(int emojiId) {
+
+            }
+
+            @Override
+            public void onEmojiClickForWish(int wishId, int emojiId) {
+
+            }
+
+            @Override
             public void onEmojiClick(int emojiId) {
 
             }
@@ -398,6 +408,16 @@ public class smessagebody extends AppCompatActivity implements OnEmojiClickListe
 
     @Override
     public void onEmojisFetched(List<Emoji> emojis) {}
+
+    @Override
+    public void onEmojiClickWithId(int emojiId) {
+
+    }
+
+    @Override
+    public void onEmojiClickForWish(int wishId, int emojiId) {
+
+    }
 
     @Override
     public void onEmojiClick(int emojiId) {

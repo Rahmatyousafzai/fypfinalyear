@@ -5,14 +5,6 @@ import com.google.gson.annotations.SerializedName;
 public class Course {
 
 
-    public String getCourseid() {
-        return courseid;
-    }
-
-    public void setCourseid(String courseid) {
-        this.courseid = courseid;
-    }
-
     public String getTitle() {
         return title;
     }
@@ -21,8 +13,21 @@ public class Course {
         this.title = title;
     }
 
+    public String title;
+
+
+    public String getCourseid() {
+        return courseid;
+    }
+
+    public void setCourseid(String courseid) {
+        this.courseid = courseid;
+    }
+
+
+
     private String courseid;
-     private String title;
+
 
     @SerializedName("SemesterNo")
     private int semesterNo;

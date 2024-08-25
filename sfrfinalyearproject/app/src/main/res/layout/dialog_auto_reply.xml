@@ -22,6 +22,9 @@
 
         ></TextView>
     <!-- Auto Reply Toggle -->
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
     <TextView
         android:id="@+id/auto_reply_label"
         android:layout_width="wrap_content"
@@ -39,6 +42,10 @@
 
 
         />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
 
     <TextView
         android:id="@+id/message_forward_label"
@@ -53,7 +60,24 @@
         android:id="@+id/switch_message_forward"
         android:layout_width="80dp"
         android:layout_height="60dp"
+        android:layout_gravity="center"
   />
+
+    </LinearLayout>
+
+  <LinearLayout
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content">
+      <TextView
+          android:id="@+id/btn_forward_setting"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="Forward Setting"
+          android:backgroundTint="@color/green"
+          android:layout_gravity="center"
+          android:textSize="20dp"
+          android:textColor="@color/black"
+          />
 
     <TextView
 
@@ -63,14 +87,48 @@
         android:id="@+id/forwordid"
 android:textColor="@color/black"
         android:textSize="18sp"
-        android:layout_marginTop="16dp"
+        android:layout_marginLeft="20dp"
+
         ></TextView>
     <!-- Button to open forward setting dialog -->
-    <Button
-        android:id="@+id/btn_forward_setting"
+
+
+  </LinearLayout>
+
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Forward Setting"
-        android:backgroundTint="@color/green"
-        android:layout_marginTop="24dp" />
+        android:layout_marginTop="30dp"
+        >
+
+
+        <TextView
+
+            android:text="Log Out"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/logout"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+
+            ></TextView>
+        <!-- Button to open forward setting dialog -->
+        <ImageView
+            android:id="@+id/imgLogout"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:text="Forward Setting"
+            android:backgroundTint="@color/green"
+            android:layout_gravity="center"
+            android:textSize="20dp"
+            android:src="@drawable/laughter"
+
+            android:layout_marginLeft="20dp"
+            />
+
+    </LinearLayout>
+
+
+
+
 </LinearLayout>

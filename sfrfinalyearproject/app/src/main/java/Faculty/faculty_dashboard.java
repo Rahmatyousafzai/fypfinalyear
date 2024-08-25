@@ -130,7 +130,7 @@ public class faculty_dashboard extends AppCompatActivity implements wishingadopt
 
         // Retrofit call to fetch wishes
         Apiservices apiService = RetrofitClient.getInstance();
-        Call<List<wishingclass>> call = apiService.getDashboardMessages(username, "BIIT0001", "Teacher");
+        Call<List<wishingclass>> call = apiService.getDashboardMessages(username);
 
         call.enqueue(new Callback<List<wishingclass>>() {
             @Override

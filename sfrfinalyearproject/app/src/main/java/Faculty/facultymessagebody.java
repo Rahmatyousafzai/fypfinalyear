@@ -272,6 +272,16 @@ public class facultymessagebody extends AppCompatActivity implements OnEmojiClic
             public void onEmojisFetched(List<Emoji> emojis) {}
 
             @Override
+            public void onEmojiClickWithId(int emojiId) {
+
+            }
+
+            @Override
+            public void onEmojiClickForWish(int wishId, int emojiId) {
+
+            }
+
+            @Override
             public void onEmojiClick(int emojiId) {
 
             }
@@ -352,6 +362,16 @@ public class facultymessagebody extends AppCompatActivity implements OnEmojiClic
     @Override
     public void onEmojisFetched(List<Emoji> emojis) {
         // Implement if needed
+    }
+
+    @Override
+    public void onEmojiClickWithId(int emojiId) {
+
+    }
+
+    @Override
+    public void onEmojiClickForWish(int wishId, int emojiId) {
+
     }
 
     @Override

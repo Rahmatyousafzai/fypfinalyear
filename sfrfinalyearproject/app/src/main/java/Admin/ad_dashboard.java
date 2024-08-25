@@ -162,7 +162,7 @@ public class ad_dashboard extends AppCompatActivity implements wishingadopter.Em
 
         // Retrofit call to fetch wishes
         Apiservices apiService = RetrofitClient.getInstance();
-        Call<List<wishingclass>> call = apiService.getDashboardMessages(username, null, "Admin");
+        Call<List<wishingclass>> call = apiService.getDashboardMessages(username);
 
         call.enqueue(new Callback<List<wishingclass>>() {
             @Override

@@ -6,7 +6,35 @@ import java.util.List;
 public class Wish {
 
 
+    public Wish(Integer templeteID, Integer achievID, String username, int swId, String wishDateTime, String content, List<Emoji> emojis) {
+        this.templeteID = templeteID;
+        this.achievID = achievID;
+        Username = username;
+        SwId = swId;
+        WishDateTime = wishDateTime;
+        Content = content;
+        this.emojis = emojis;
+        this.swid = swid;
+    }
 
+    public Integer getTempleteID() {
+        return templeteID;
+    }
+
+    public void setTempleteID(Integer templeteID) {
+        this.templeteID = templeteID;
+    }
+
+    public Integer getAchievID() {
+        return achievID;
+    }
+
+    public void setAchievID(Integer achievID) {
+        this.achievID = achievID;
+    }
+
+    private Integer templeteID;
+    private Integer achievID;
     public String getLastName() {
         return LastName;
     }

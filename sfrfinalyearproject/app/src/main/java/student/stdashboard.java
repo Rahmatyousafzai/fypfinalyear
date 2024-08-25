@@ -133,7 +133,7 @@ public class stdashboard extends AppCompatActivity implements wishingadopter.Emo
         swipeRefreshLayout.setRefreshing(true);
 
         Apiservices apiService = RetrofitClient.getInstance();
-        Call<List<wishingclass>> call = apiService.getDashboardMessages(username, "null", "Student");
+        Call<List<wishingclass>> call = apiService.getDashboardMessages(username);
 
         call.enqueue(new Callback<List<wishingclass>>() {
             @Override

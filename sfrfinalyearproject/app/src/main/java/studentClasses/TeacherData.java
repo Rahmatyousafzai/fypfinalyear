@@ -4,7 +4,9 @@ public class TeacherData {
 
         private String Username;
         private  String        FirstName;
-
+    public String toString() {
+        return FirstName + " " + LastName; // or any other meaningful representation
+    }
     public String getUsername() {
         return Username;
     }

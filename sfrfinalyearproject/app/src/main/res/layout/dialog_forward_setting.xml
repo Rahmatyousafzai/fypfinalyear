@@ -27,12 +27,40 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Selected Name" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+
+
+        >
 
     <Button
         android:id="@+id/btn_save_forward_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:backgroundTint="@color/green"
-        android:text="Save" />
+        android:text="Save"
+
+        android:layout_gravity="start"
+        />
+
+        <Button
+            android:id="@+id/btn_save_remove_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:backgroundTint="@color/green"
+            android:text="Remove"
+            android:layout_marginLeft="20dp"/>
+
+    <Button
+        android:id="@+id/btn_save_update_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+android:layout_marginLeft="20dp"
+        android:backgroundTint="@color/green"
+        android:text="Remove" />
+    </LinearLayout>
 
 </LinearLayout>

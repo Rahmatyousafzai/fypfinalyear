@@ -16,6 +16,7 @@ import facultyClasses.Course;
 import facultyClasses.InsertPapolationDataDto;
 import facultyClasses.InsertPapolationResponse;
 import facultyClasses.Sendwish;
+import facultyClasses.StudentInfoDto;
 import facultyClasses.WishRequest;
 import facultyClasses.appPermission;
 import facultyClasses.forwordsetting;
@@ -29,11 +30,11 @@ import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
-import student.Program;
 import student.Section;
-import student.Semester;
+import student.SelectAudeince;
 import studentClasses.Group;
 import studentClasses.GroupMember;
 import studentClasses.GroupsData;
@@ -42,6 +43,8 @@ import studentClasses.TeacherData;
 import studentClasses.TeacherResponse;
 
 public interface Apiservices {
+
+
 
     // Login API call
     @GET("api/User/Login")
@@ -56,8 +59,12 @@ public interface Apiservices {
     @GET("api/wish/GetBirthdayUsers")
     Call<String> getBirthdayUsers(@Query("username") String username);
 
-    @GET("api/Emoji/GetDistinctReactions/{sw_id}")
-    Call<List<Reaction>> getDistinctReactions(@Path("sw_id") int swId);
+    @GET("api/Wish/GetReactionCount")
+    Call<Reaction> getReactionCount(@Query("swId") Integer swId);
+    @POST("api/Wish/Reaction")
+    Call<Void> postReaction(@Body Reaction reaction);
+
+
 
     @GET("api/Emoji/GetDistinctReactions/{sw_id}")
     Call<List<user>>getreaction(@Query("teacherUsername") String teacherUsername);
@@ -105,7 +112,14 @@ public interface Apiservices {
     @GET("api/Teacher/forwodsetting")  // Update this to your actual endpoint
     Call<List<forwordsetting>> getforwordsetting(@Query("filterUsername") String filterUsername);
 
+    @POST("api/Teacher/Insertforwodsetting")
+    Call<Void> insertForwordSetting(@Body forwordsetting newForwordSetting);
 
+    @PUT("api/Teacher/Updateforwodsetting/{id}")
+    Call<Void> updateForwardSetting(@Path("id") int id, @Body forwordsetting forwardSetting);
+
+    @DELETE(" api/Teacher/Deleteforwodsetting/{id}")
+    Call<Void> Deleteforwodsetting(@Path("id") int id);
 
     @GET("api/Wish/inboxmessageList")
     Call<List<Wish>> getinboxMessage( @Query("senderID") String senderID);
@@ -206,18 +220,36 @@ public interface Apiservices {
 
 
 
-    @GET("api/Teacher/GetPrograms")
-    Call<List<Program>> getPrograms(@Query("teacherId") String teacherId);
-    @GET("api/Teacher/GetCourse")
-    Call<List<Course>> getCourse(@Query("username") String username);
-    @GET("api/Teacher/GetSemestersForProgram")
-    Call<List<Semester>> GetSemestersForProgram(@Query("teacherUsername") String teacherId, @Query("programid") int programId);
+    @GET("api/Teacher/GetSections")
+    Call<List<SelectAudeince>> getAllocations(@Query("teacherId") String teacherId);
+
+
+    @GET("api/Teacher/GetStudentsForPapulation")
+    Call<List<StudentInfoDto>> GetStudentsForPapulation(
+            @Query("semesterNOs") List<String> semesterNOs,
+            @Query("sections") List<String> sections,
+            @Query("deportments") List<String> deportments
+    );
+
+
+///////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////
+
+
+    @POST("api/Wish/InsertpapolationData")
+     Call<Void> insertpublicmessage(@Body InsertPapolationDataDto dto);
 
 
 
 
+
+
+
+    ///////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////
     @GET("api/Teacher/GetSectionsForSemester")
-    Call<List<Section>> getSections(@Query("teacherUsername") String teacherUsername, @Query("semesterid") int semesterid);
+    Call<List<Section>> getSections(@Query("teacherUsername") String teacherUsername, @Query("semesterid") String semesterid);
 
     @POST("api/Wish/InsertSendWish")
     Call<InsertPapolationResponse> insertSendWish(@Body Sendwish sendWish);
@@ -232,12 +264,15 @@ public interface Apiservices {
             @Query("tcname") String tcname,
             @Query("messagtype") String messagtype);
 
-    @GET("api/Wish/Getdashboard")
+
+
+
+
+    @GET("api/Wish/Getbulkwishes")
     Call<List<wishingclass>> getDashboardMessages(
-            @Query("currentuser") String currentuser,
-            @Query("tcname") String tcname,
-            @Query("messagtype") String messagetype
-    );
+            @Query("username") String username)
+
+    ;
 
     @POST("api/Wish/InsertpapolationData")
     Call<InsertPapolationResponse> insertPapolationData(@Body InsertPapolationDataDto dto);
@@ -253,7 +288,6 @@ public interface Apiservices {
 
 
 
-    @POST("api/Wish/PostReaction")
-    Call<Void> postReaction(@Body Reaction reaction);
+
 
 }

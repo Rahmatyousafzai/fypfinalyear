@@ -2,7 +2,34 @@ package mydataapi;
 
 public class Reaction {
 
+    public String getReacterID(String reacterID) {
+        return this.reacterID;
+    }
 
+    public int getSw_id() {
+        return sw_id;
+    }
+
+    public void setSw_id(int sw_id) {
+        this.sw_id = sw_id;
+    }
+
+    public  int    sw_id;
+
+    public void setReacterID(String reacterID) {
+        this.reacterID = reacterID;
+    }
+
+    private String reacterID;
+    public int getCount() {
+        return count;
+    }
+
+    public void setCount(int count) {
+        this.count = count;
+    }
+
+    private int count;
     private int reactionId;
     private String userId;
     private int emojiId;

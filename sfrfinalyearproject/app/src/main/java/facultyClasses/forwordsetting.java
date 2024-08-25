@@ -5,6 +5,32 @@ public class forwordsetting {
 
      private int stid;
 
+
+
+     private String Fname;
+
+    public String getFname() {
+        return Fname;
+    }
+
+    public forwordsetting(String currentuser, String forworduser) {
+        this.currentuser = currentuser;
+        this.forworduser = forworduser;
+    }
+
+    public void setFname(String fname) {
+        Fname = fname;
+    }
+
+    public String getLname() {
+        return lname;
+    }
+
+    public void setLname(String lname) {
+        this.lname = lname;
+    }
+
+    private String lname;
     public int getStid() {
         return stid;
     }
@@ -17,6 +43,11 @@ public class forwordsetting {
         return currentuser;
     }
 
+    public forwordsetting(int stid, String forworduser) {
+        this.stid = stid;
+        this.forworduser = forworduser;
+    }
+
     public void setCurrentuser(String currentuser) {
         this.currentuser = currentuser;
     }
@@ -26,6 +57,7 @@ public class forwordsetting {
     }
 
     public void setForworduser(String forworduser) {
+
         this.forworduser = forworduser;
     }
 

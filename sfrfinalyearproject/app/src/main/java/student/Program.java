@@ -2,12 +2,9 @@ package student;
 
 public class Program {
 
-    public Program(String programId, String programTitle) {
+    public Program(String programId) {
         ProgramId = programId;
-        ProgramTitle = programTitle;
     }
-
-    private String ProgramId;
 
     public String getProgramId() {
         return ProgramId;
@@ -17,15 +14,7 @@ public class Program {
         ProgramId = programId;
     }
 
-    public String getProgramTitle() {
-        return ProgramTitle;
-    }
-
-    public void setProgramTitle(String programTitle) {
-        ProgramTitle = programTitle;
-    }
-
-    private  String  ProgramTitle;
+    private String ProgramId;
 
 
 }

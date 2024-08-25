@@ -2,73 +2,92 @@ package facultyClasses;
 
 import java.util.List;
 
+import Faculty.AdueinceDetail;
+
 public class InsertPapolationDataDto {
-    private Sendwish sendwish;
-    private Audience audience;
-    private MessageRecipient messageRecipient;
 
-    public Sendwish getSendwish() {
-        return sendwish;
+
+
+
+public InsertPapolationDataDto(){
+
+}
+
+    private publicWish Wish;
+
+    public List<String> getSelectedcourseIds() {
+        return SelectedcourseIds;
     }
 
-    public void setSendwish(Sendwish sendwish) {
-        this.sendwish = sendwish;
+    public void setSelectedcourseIds(List<String> selectedcourseIds) {
+        SelectedcourseIds = selectedcourseIds;
     }
 
-    public Audience getAudience() {
-        return audience;
+    private  List<String> SelectedcourseIds;
+
+    private List<Audience> AudienceList;
+
+    public InsertPapolationDataDto(publicWish wish, List<Audience> audienceList, List<AdueinceDetail> adueinceDetailsList, List<Integer> selectedSemesterIds, List<Integer> selectedSectionIds) {
+        Wish = wish;
+        AudienceList = audienceList;
+        AdueinceDetailsList = adueinceDetailsList;
+        SelectedSemesterIds = selectedSemesterIds;
+        SelectedSectionIds = selectedSectionIds;
     }
 
-    public void setAudience(Audience audience) {
-        this.audience = audience;
+    private List<AdueinceDetail> AdueinceDetailsList;
+
+    public publicWish getWish() {
+        return Wish;
     }
 
-    public MessageRecipient getMessageRecipient() {
-        return messageRecipient;
+    public void setWish(publicWish wish) {
+        Wish = wish;
     }
 
-    public void setMessageRecipient(MessageRecipient messageRecipient) {
-        this.messageRecipient = messageRecipient;
+    public List<Audience> getAudienceList() {
+        return AudienceList;
     }
 
-    public int getSendWishId() {
-        return sendWishId;
+    public void setAudienceList(List<Audience> audienceList) {
+        AudienceList = audienceList;
     }
 
-    public void setSendWishId(int sendWishId) {
-        this.sendWishId = sendWishId;
+    public List<AdueinceDetail> getAdueinceDetailsList() {
+        return AdueinceDetailsList;
+    }
+
+    public void setAdueinceDetailsList(List<AdueinceDetail> adueinceDetailsList) {
+        AdueinceDetailsList = adueinceDetailsList;
     }
 
     public List<Integer> getSelectedSemesterIds() {
-        return selectedSemesterIds;
+        return SelectedSemesterIds;
     }
 
     public void setSelectedSemesterIds(List<Integer> selectedSemesterIds) {
-        this.selectedSemesterIds = selectedSemesterIds;
+        SelectedSemesterIds = selectedSemesterIds;
     }
 
     public List<Integer> getSelectedSectionIds() {
-        return selectedSectionIds;
+        return SelectedSectionIds;
     }
 
     public void setSelectedSectionIds(List<Integer> selectedSectionIds) {
-        this.selectedSectionIds = selectedSectionIds;
+        SelectedSectionIds = selectedSectionIds;
     }
 
-    private int sendWishId;
-    private List<Integer> selectedSemesterIds;
-    private List<Integer> selectedSectionIds;
+    private List<Integer> SelectedSemesterIds;
+    private List<Integer> SelectedSectionIds;
 
-    public InsertPapolationDataDto(Sendwish sendwish, Audience audience, MessageRecipient messageRecipient,
-                                   int sendWishId, List<Integer> selectedSemesterIds, List<Integer> selectedSectionIds) {
-        this.sendwish = sendwish;
-        this.audience = audience;
-        this.messageRecipient = messageRecipient;
-        this.sendWishId = sendWishId;
-        this.selectedSemesterIds = selectedSemesterIds;
-        this.selectedSectionIds = selectedSectionIds;
-    }
 
-    // Getters and setters
-    // ...
+
+
+
+
+
+
+
+
+
 }

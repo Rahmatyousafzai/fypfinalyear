@@ -305,6 +305,16 @@ TextView userusername;
     }
 
     @Override
+    public void onEmojiClickWithId(int emojiId) {
+
+    }
+
+    @Override
+    public void onEmojiClickForWish(int wishId, int emojiId) {
+
+    }
+
+    @Override
     public void onEmojiClick(int emojiId) {
 
     }
