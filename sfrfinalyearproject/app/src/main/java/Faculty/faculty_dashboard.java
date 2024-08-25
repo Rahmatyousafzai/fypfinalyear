@@ -22,6 +22,7 @@ import java.util.List;
 import dashboardclasese.wishingadopter;
 import dashboardclasese.wishingclass;
 import mydataapi.Apiservices;
+import mydataapi.Reaction;
 import mydataapi.RetrofitClient;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -43,6 +44,8 @@ public class faculty_dashboard extends AppCompatActivity implements wishingadopt
     private String username, firstName, lastName, profileImage;
     private SwipeRefreshLayout swipeRefreshLayout;
     private boolean isLoading = false;
+    private int currentSwId;
+    private int currentEmojiId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -124,6 +127,60 @@ public class faculty_dashboard extends AppCompatActivity implements wishingadopt
         setClickListeners();
     }
 
+
+
+    @Override
+    public void onEmojiClick(int wishId, int emojiId) {
+        this.currentSwId = wishId;
+        this.currentEmojiId = emojiId;
+        postReaction(username ,currentSwId, currentEmojiId);
+        adapter.animateEmojiZoom(emojiId);
+    }
+
+    @Override
+    public void onEmojiClick(int emojiId) {
+        // This method is not needed for this scenario
+    }
+    private void postReaction(String reacterId,int wishid,int emojiid) {
+        Apiservices apiService = RetrofitClient.getInstance();
+
+        // Create the reaction object
+        Reaction reaction = new Reaction();
+        reaction.setReacterID(reacterId);
+        reaction.setSw_id(wishid);
+        reaction.setEmojiId(emojiid);
+        reaction.setDatetime(""); // Ensure the server handles this correctly
+
+        // Log the request payload
+        Log.d("postReaction", "Posting reaction: " + reaction.toString());
+
+        // Call the API
+        Call<Void> call = apiService.postReaction(reaction);
+
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                if (response.isSuccessful()) {
+                    Log.d("API Response", "Reaction processed successfully");
+                    // Update the reaction count for the specific wish
+                    updateReactionCount(wishid);
+
+                } else {
+                    Log.e("API Error", "Error response: " + response.code() + " " + response.message());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                Log.e("API Failure", "Failed to post reaction", t);
+            }
+        });
+    }
+
+
+
+
+
     // Method to fetch data using Retrofit
     private void fetchData() {
         swipeRefreshLayout.setRefreshing(true); // Show refresh indicator
@@ -172,16 +229,7 @@ public class faculty_dashboard extends AppCompatActivity implements wishingadopt
     }
 
     // Emoji click listener method implementation
-    @Override
-    public void onEmojiClick(int wishId, int emojiId) {
-        Log.d(TAG, "Emoji Click: Wish ID: " + wishId + ", Emoji ID: " + emojiId);
-        // Handle emoji click event here
-    }
 
-    @Override
-    public void onEmojiClick(int emojiId) {
-
-    }
 
     // Other methods for handling various click actions
     private void setClickListeners() {
@@ -202,7 +250,12 @@ public class faculty_dashboard extends AppCompatActivity implements wishingadopt
         news.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+
+
                 news();
+
+
             }
         });
 
@@ -323,5 +376,14 @@ public class faculty_dashboard extends AppCompatActivity implements wishingadopt
         intent.putExtra("profileimage", profileImage);
         startActivity(intent);
         finish();
+    }
+
+
+    private void updateReactionCount(int wishId) {
+        // Assuming you have a method to get the adapter and update data
+        if (adapter != null) {
+            adapter.updateReactionCount(wishId);
+        }
+
     }
 }

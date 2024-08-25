@@ -1,8 +1,11 @@
 package Faculty;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -12,7 +15,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.sfrfinalyearproject.R;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import mydataapi.Apiservices;
 import mydataapi.RetrofitClient;
@@ -27,7 +32,8 @@ public class facultypapulationMessage extends AppCompatActivity {
     private Apiservices apiservices;
     private String username;
     private LinearLayout layoutAllocations;
-    private List<Integer> selectedAllocationIds = new ArrayList<>();
+    private Map<Integer, String> selectedAllocations = new HashMap<>();
+    private Map<Integer, String> unselectedAllocations = new HashMap<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,10 +42,24 @@ public class facultypapulationMessage extends AppCompatActivity {
 
         initializeViews();
         initializeApiServices();
+        Button Done=findViewById(R.id.btndone);
 
         username = UserDataSingleton.getInstance().getUsername();
         fetchAllocations();
+
+        Done.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                sendAllocationsToNextActivity();
+            }
+        });
+
+
+
     }
+
+
 
     private void initializeViews() {
         layoutAllocations = findViewById(R.id.checkboxelayout);
@@ -71,17 +91,18 @@ public class facultypapulationMessage extends AppCompatActivity {
 
     private void populateAllocationCheckBoxes(List<SelectAudeince> allocations) {
         layoutAllocations.removeAllViews();
+        unselectedAllocations.clear(); // Clear previous data
 
-        for (int i = 0; i < allocations.size(); i++) {
-            SelectAudeince allocation = allocations.get(i);
+        for (SelectAudeince allocation : allocations) {
+            unselectedAllocations.put(allocation.getTaId(), allocation.getTitle()); // Initially all allocations are unselected
 
             CheckBox checkBox = createCustomCheckBox(allocation);
-            Log.d("checkboxITem","checkboxitem"+allocation.getTitle());
+            Log.d("checkboxITem", "checkboxitem" + allocation.getTitle());
             // Alternate row colors
-            if (i % 2 == 0) {
+            if (allocations.indexOf(allocation) % 2 == 0) {
                 checkBox.setBackgroundColor(Color.parseColor("#FF03DAC5")); // Light grey
             } else {
-                checkBox.setBackgroundColor(Color.parseColor("#FFFFFF")); // White
+                checkBox.setBackgroundColor(Color.parseColor("#CC6CE7")); // White
             }
             layoutAllocations.addView(checkBox);
         }
@@ -94,10 +115,14 @@ public class facultypapulationMessage extends AppCompatActivity {
 
         checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
             int allocationId = (int) buttonView.getTag();
+            String allocationTitle = (String) buttonView.getText();
+
             if (isChecked) {
-                selectedAllocationIds.add(allocationId);
+                selectedAllocations.put(allocationId, allocationTitle);
+                unselectedAllocations.remove(allocationId);
             } else {
-                selectedAllocationIds.remove(Integer.valueOf(allocationId));
+                selectedAllocations.remove(allocationId);
+                unselectedAllocations.put(allocationId, allocationTitle);
             }
         });
 
@@ -114,5 +139,14 @@ public class facultypapulationMessage extends AppCompatActivity {
         String errorMessage = "Failed to fetch data in " + methodName + ": " + t.getMessage();
         Log.e(methodName, errorMessage);
         Toast.makeText(facultypapulationMessage.this, errorMessage, Toast.LENGTH_SHORT).show();
+    }
+
+    private void sendAllocationsToNextActivity() {
+        Intent intent = new Intent(facultypapulationMessage.this, ft_send_message_by_samester.class);
+        intent.putIntegerArrayListExtra("selectedIds", new ArrayList<>(selectedAllocations.keySet()));
+        intent.putStringArrayListExtra("selectedTitles", new ArrayList<>(selectedAllocations.values()));
+        intent.putIntegerArrayListExtra("unselectedIds", new ArrayList<>(unselectedAllocations.keySet()));
+        intent.putStringArrayListExtra("unselectedTitles", new ArrayList<>(unselectedAllocations.values()));
+        startActivity(intent);
     }
 }

@@ -3,6 +3,16 @@ package student;
 public class SelectAudeince {
     private  int alocationid;
 
+    private String senderId;
+
+    public SelectAudeince(String senderId, String allocationIds, String wishMessage) {
+        this.senderId = senderId;
+        this.allocationIds = allocationIds;
+        this.wishMessage = wishMessage;
+    }
+
+    private String allocationIds;
+    private String wishMessage;
 
   private int  TaId;
 

@@ -8,6 +8,10 @@ public interface OnEmojiClickListener {
     // Handle emoji click with the Emoji object
     void onEmojiClick(Emoji emoji);
 
+
+
+
+
     // Handle emoji fetched (e.g., from a specific section)
     void onEmojiFetched(List<Emoji> section3Emojis);
 

@@ -149,7 +149,8 @@ public interface Apiservices {
     @POST("api/wishes/InsertsingleData")
     Call<ResponseBody> insertSingleData(@Body WishRequest request);
 
-
+    @POST("api/Teacher/SenBulkWish")
+    Call<Void> sendBulkWish(@Body SelectAudeince request);
     @GET("api/wish/GetAllEmojis")
     Call<List<Emoji>> getAllEmojis();
 

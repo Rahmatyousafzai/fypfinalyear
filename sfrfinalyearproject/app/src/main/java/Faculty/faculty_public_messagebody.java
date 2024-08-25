@@ -53,7 +53,7 @@ public class faculty_public_messagebody extends AppCompatActivity {
 
         profilename = findViewById(R.id.profelname);  // Initialize this
         profile = findViewById(R.id.profilepicture);          // Initialize this
-typesomthing=findViewById(R.id.typesomthing);
+        typesomthing=findViewById(R.id.typesomthing);
         username = UserDataSingleton.getInstance().getUsername();
 
         teacherRepository userRepository = new teacherRepository();

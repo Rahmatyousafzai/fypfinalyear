@@ -276,6 +276,8 @@ public class ad_dashboard extends AppCompatActivity implements wishingadopter.Em
 
     @Override
     public void onEmojiClick(int emojiId) {
-        // Handle emoji click event here
+
     }
+
+
 }

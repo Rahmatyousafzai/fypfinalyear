@@ -36,6 +36,7 @@ public class EmojiAdapter extends RecyclerView.Adapter<EmojiAdapter.EmojiViewHol
     @NonNull
     @Override
     public EmojiViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        // Inflate the layout for each emoji item
         View view = LayoutInflater.from(context).inflate(R.layout.item_emoji, parent, false);
         return new EmojiViewHolder(view);
     }
@@ -44,6 +45,8 @@ public class EmojiAdapter extends RecyclerView.Adapter<EmojiAdapter.EmojiViewHol
     public void onBindViewHolder(@NonNull EmojiViewHolder holder, int position) {
         Emoji emoji = emojis.get(position);
         holder.bind(emoji);
+
+        // Set click listener on each emoji item
         holder.itemView.setOnClickListener(v -> {
             if (listener != null) {
                 listener.onEmojiClick(emoji);
