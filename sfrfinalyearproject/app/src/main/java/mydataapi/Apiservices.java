@@ -2,6 +2,7 @@ package mydataapi;
 
 import java.util.List;
 
+import Faculty.BirthdayUser;
 import ModeClasees.Achievement;
 import ModeClasees.Emoji;
 import ModeClasees.Message;
@@ -24,7 +25,6 @@ import facultyClasses.mWishlist;
 import facultyClasses.postpapolation;
 import modelclassespost.SendWishRequestDto;
 import modelclassespost.SendWishResponse;
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
@@ -56,8 +56,7 @@ public interface Apiservices {
     @GET("api/wish/GetBirthdayUsers")
     Call<List<user>>getBirhday(@Query("teacherUsername") String teacherUsername);
 
-    @GET("api/wish/GetBirthdayUsers")
-    Call<String> getBirthdayUsers(@Query("username") String username);
+
 
     @GET("api/Wish/GetReactionCount")
     Call<Reaction> getReactionCount(@Query("swId") Integer swId);
@@ -65,7 +64,8 @@ public interface Apiservices {
     Call<Void> postReaction(@Body Reaction reaction);
 
 
-
+    @GET("api/wish/GetBirthdayUsers")
+    Call<List<BirthdayUser>> getBirthdayUsers(@Query("username") String username);
     @GET("api/Emoji/GetDistinctReactions/{sw_id}")
     Call<List<user>>getreaction(@Query("teacherUsername") String teacherUsername);
     ///student api end point
@@ -142,15 +142,15 @@ public interface Apiservices {
 
 
 
-    @GET("api/Wish/Singleinboxwish")
-    Call<List<Message>> chatmessage(@Query("senderID") String senderID, @Query("ReciverId") String ReciverId);
+    @GET("api/Wish/GetWishesForReceiverInbox")
+    Call<List<Message>> chatmessage(@Query("receiverId") String receiverId, @Query("senderID") String senderID);
 
-
-    @POST("api/wishes/InsertsingleData")
-    Call<ResponseBody> insertSingleData(@Body WishRequest request);
 
     @POST("api/Teacher/SenBulkWish")
     Call<Void> sendBulkWish(@Body SelectAudeince request);
+
+    @POST("api/Wish/SendSinglewish")
+    Call<Void> sendSingleWish(@Body WishRequest wishRequest);
     @GET("api/wish/GetAllEmojis")
     Call<List<Emoji>> getAllEmojis();
 
@@ -180,7 +180,7 @@ public interface Apiservices {
     @GET("api/Wish/GetAchievements")
     Call<List<Achievement>> getAchievements();
 
-    @GET("api/Teacher/GetStudent")
+    @GET("api/Teacher/GetStudents")
     Call<List<Student>> getstudent();
 
     @GET("api/Teacher/GetSemesterSectionProgram")

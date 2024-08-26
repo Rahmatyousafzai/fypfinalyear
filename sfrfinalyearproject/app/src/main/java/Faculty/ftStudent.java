@@ -2,7 +2,10 @@ package Faculty;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -15,7 +18,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.sfrfinalyearproject.R;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import ModeClasees.Student;
 import adopter.StudentAdopter;
@@ -31,7 +36,11 @@ import studentClasses.teacherRepository;
 public class ftStudent extends AppCompatActivity {
 ImageView imgback;
 ListView tclistview;
-String username;
+
+    private List<Student> studentList;
+    private List<Student> filteredList;
+    private EditText searchEditText;
+    String username;
     private RecyclerView recyclerView;
     private StudentAdopter adapter;
     @Override
@@ -41,7 +50,7 @@ String username;
 
         TextView profilename = findViewById(R.id.profelname);
         ImageView profile = findViewById(R.id.profilepicture);
-
+searchEditText=findViewById(R.id.serattext);
         username = UserDataSingleton.getInstance().getUsername();
 
         teacherRepository userRepository = new teacherRepository();
@@ -93,11 +102,40 @@ String username;
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         fetchAlumni();
+      //  searchEditText.onCheckIsTextEditor();
+
+
+        searchEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int start, int count, int after) {
+                // No action needed here
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int start, int before, int count) {
+                // Call filterStudents when text changes
+                filterStudents();
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                // No action needed here
+            }
+        });
 
 
     }
 
 
+    private void filterStudents() {
+        String query = searchEditText.getText().toString().toLowerCase();
+        filteredList = studentList.stream()
+                .filter(student -> student.getFname().toLowerCase().contains(query) ||
+                        student.getLname().toLowerCase().contains(query) ||
+                        student.getUsername().toLowerCase().contains(query))
+                .collect(Collectors.toList());
+        adapter.notifyDataSetChanged();
+    }
 
     private void fetchAlumni() {
        Apiservices apiService = RetrofitClient.getInstance();
@@ -109,6 +147,8 @@ String username;
                 if (response.isSuccessful() && response.body() != null) {
                     List<Student> studentList = response.body();
                     adapter = new StudentAdopter(ftStudent.this, studentList);
+                    filteredList = new ArrayList<>(studentList);
+                    adapter = new StudentAdopter(ftStudent.this, filteredList);
                     recyclerView.setAdapter(adapter);
                 } else {
                     Toast.makeText(ftStudent.this, "Failed to fetch alumni", Toast.LENGTH_SHORT).show();

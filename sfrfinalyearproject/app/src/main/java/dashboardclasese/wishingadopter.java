@@ -60,7 +60,7 @@ public class wishingadopter extends RecyclerView.Adapter<wishingadopter.ViewHold
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         wishingclass wish = wishes.get(position);
 
-        if (wish.getContent() != null && !wish.getContent().isEmpty()) {
+        if (wish.getContent() != null && !wish.getContent().isEmpty()&&!wish.getFirstName().isEmpty()&&!wish.getLastName().isEmpty()&&!wish.getContent().isEmpty()) {
             holder.txtContent.setText(wish.getContent());
             holder.txtDateTime.setText(wish.getDateTime());
 

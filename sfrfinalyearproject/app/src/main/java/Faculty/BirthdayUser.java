@@ -1,0 +1,17 @@
+package Faculty;
+
+public class BirthdayUser {
+    public String getFullName() {
+        return fullName;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
+
+    private String fullName;
+
+
+
+
+}

@@ -20,19 +20,18 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.sfrfinalyearproject.R;
 import com.squareup.picasso.Picasso;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import ModeClasees.Emoji;
 import ModeClasees.Message;
+import chatClasses.PollingManager;
 import facultyClasses.WishRequest;
 import modelclassespost.ConversationAdapter;
 import modelclassespost.ConversationItem;
 import mydataapi.Apiservices;
 import mydataapi.OnEmojiClickListener;
 import mydataapi.RetrofitClient;
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -51,6 +50,7 @@ public class facultymessagebody extends AppCompatActivity implements OnEmojiClic
     private List<Emoji> allEmojis;
     private List<Emoji> RistricEmoji;
     private int selectedEmoji;
+    private PollingManager pollingManager;
     private TextView profilename, teachername;
     private ImageView profile, teacherprofileimage;
     private String username, studentusername, FullName, profileImage, teacherUsername;
@@ -62,7 +62,12 @@ public class facultymessagebody extends AppCompatActivity implements OnEmojiClic
         username = UserDataSingleton.getInstance().getUsername();
         // Initialize RecyclerView
         recyclerView = findViewById(R.id.recycllerviewmessage);
+        LinearLayoutManager LayoutManager=new LinearLayoutManager(this);
+        LayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        LayoutManager.setReverseLayout(true);
+        LayoutManager.setStackFromEnd(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
 
         // Initialize UI components
         emojiImageView = findViewById(R.id.message_input_field);
@@ -82,7 +87,7 @@ public class facultymessagebody extends AppCompatActivity implements OnEmojiClic
         String teacherFirstName = intent.getStringExtra("teacher_firstName");
         String teacherLastName = intent.getStringExtra("teacher_lastName");
         String teacherProfileImage = intent.getStringExtra("teacher_profileImage");
-        String forwordName = intent.getStringExtra("forwordedName");
+
 
         // Set profile and teacher details
         String Techerfullname = teacherFirstName + " " + teacherLastName;
@@ -111,20 +116,41 @@ public class facultymessagebody extends AppCompatActivity implements OnEmojiClic
 
         fetchRestrictedEmojis();
 
+
         // Set OnClickListener for emoji button
         emojiButton.setOnClickListener(v -> showEmojisPopupWindow(allEmojis));
 
         // Set OnClickListener for send button
         sendButton.setOnClickListener(v -> {
-            insertSingleData(studentusername,teacherUsername,null,selectedEmoji,null,null,false,null,0);
-            fetchConversation();
+            sendWish(username,teacherUsername,selectedEmoji);
+            pollingManager = new PollingManager(this, apiService, username, teacherUsername);
+            pollingManager.startPolling();
+
             emojiImageView.setImageDrawable(null);
+            fetchConversation();
+
         });
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        // Stop polling when the activity is destroyed
+        if (pollingManager != null) {
+            pollingManager.stopPolling();
+        }
+    }
+
+
+
+
+    public void addNewMessage(ConversationItem newItem) {
+        adapter.addItem(newItem);
+        recyclerView.post(() -> recyclerView.smoothScrollToPosition(adapter.getItemCount() - 1));
+    }
     private void fetchConversation() {
         Log.d("API Call", "Fetching conversation for user: " + studentusername + " with teacher: " + teacherUsername);
-        apiService.chatmessage( username, teacherUsername).enqueue(new Callback<List<Message>>() {
+        apiService.chatmessage(username, teacherUsername).enqueue(new Callback<List<Message>>() {
             @Override
             public void onResponse(Call<List<Message>> call, Response<List<Message>> response) {
                 if (response.isSuccessful() && response.body() != null) {
@@ -132,10 +158,9 @@ public class facultymessagebody extends AppCompatActivity implements OnEmojiClic
                     List<ConversationItem> conversationItems = new ArrayList<>();
 
                     for (Message message : messages) {
-                        Log.d("api text content", "messagecontent: " + (message.getWishcontent() != null ? message.getWishcontent() : "null"));
                         String senderProfileImage = message.getSenderProfileImage() != null ? message.getSenderProfileImage() : "";
                         String receiverProfileImage = message.getReceiverProfileImage() != null ? message.getReceiverProfileImage() : "";
-                        String emojidata = message.getEmojidata() != null ? message.getEmojidata() : "";
+                        String emojiData = message.getEmojidata() != null ? message.getEmojidata() : "";
                         String wishDateTime = message.getWishDateTime() != null ? message.getWishDateTime() : "";
 
                         conversationItems.add(new ConversationItem(
@@ -148,33 +173,23 @@ public class facultymessagebody extends AppCompatActivity implements OnEmojiClic
                                 message.getReceiverLastName() != null ? message.getReceiverLastName() : "",
                                 receiverProfileImage,
                                 message.getWishcontent() != null ? message.getWishcontent() : "",
-                                emojidata,
+                                emojiData,
                                 wishDateTime
                         ));
                     }
 
-                    adapter = new ConversationAdapter(facultymessagebody.this, conversationItems,  username);
+                    // Initialize the adapter with the correct parameters
+                    adapter = new ConversationAdapter(facultymessagebody.this, conversationItems, username,recyclerView);
+
+                    // Set the adapter to RecyclerView
                     recyclerView.setAdapter(adapter);
 
-// Initialize the LayoutManager
-                    LinearLayoutManager layoutManager = new LinearLayoutManager(facultymessagebody.this);
-
-// Set reverse layout to true if you want to show the latest messages at the bottom
-                    layoutManager.setReverseLayout(true);
-
-// Set stack from end to true if you want the RecyclerView to start from the bottom
-                    layoutManager.setStackFromEnd(true);
-
-// Apply the LayoutManager to the RecyclerView
-                    recyclerView.setLayoutManager(layoutManager);
-
-// Set RecyclerView to have a fixed size (optional, but good for performance if the size is fixed)
-                    recyclerView.setHasFixedSize(true);
-                    Log.d("API text", "Conversation items loaded: ");
+                    // Scroll to the bottom of the RecyclerView
+                    recyclerView.post(() -> recyclerView.smoothScrollToPosition(adapter.getItemCount() - 1));
 
                     Log.d("API Call", "Conversation items loaded: " + conversationItems.size());
                 } else {
-                    Log.d("API Call", "Failed to fetch conversation data");
+                    Log.d("API Call", "Failed to fetch conversation data: " + response.message());
                 }
             }
 
@@ -386,52 +401,32 @@ public class facultymessagebody extends AppCompatActivity implements OnEmojiClic
 
     // Inside your Activity, ViewModel, or Repository class
 
-    public void insertSingleData(String senderId, String receiverId, String content, Integer emojiID, Integer templeteID, Integer achievID, boolean isEmail, Integer adid, Integer status) {
-
-        // Create the Retrofit service
+    private void sendWish(String senderId, String receiverId, int emojiId) {
 
 
-        // Create the request object
-        WishRequest request = new WishRequest(
-                senderId,
-                receiverId,
-                content,
-                emojiID,
-                 templeteID,
-                achievID,
-                 isEmail,
-                 adid,
-                status);
 
-        // Call the API
-        Call<ResponseBody> call = apiService.insertSingleData(request);
-        call.enqueue(new Callback<ResponseBody>() {
+        WishRequest wishRequest = new WishRequest(senderId, receiverId, emojiId);
+
+        Apiservices apiService = RetrofitClient.getInstance();
+        Call<Void> call = apiService.sendSingleWish(wishRequest);
+
+        call.enqueue(new Callback<Void>() {
             @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+            public void onResponse(Call<Void> call, Response<Void> response) {
                 if (response.isSuccessful()) {
-                    // Handle the successful response
-                    Toast.makeText(getApplicationContext(), "Data inserted successfully", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(facultymessagebody.this, "Wish sent successfully", Toast.LENGTH_SHORT).show();
                 } else {
-                    // Handle the error response
-                    try {
-                        String errorBody = response.errorBody() != null ? response.errorBody().string() : "Unknown error";
-                        Toast.makeText(getApplicationContext(), "Failed to insert data: " + errorBody, Toast.LENGTH_SHORT).show();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                        Toast.makeText(getApplicationContext(), "Error parsing error response", Toast.LENGTH_SHORT).show();
-                    }
+                    Toast.makeText(facultymessagebody.this, "Failed to send wish", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
-                // Handle network failure or other errors
-                Toast.makeText(getApplicationContext(), "Network Error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+            public void onFailure(Call<Void> call, Throwable t) {
+                Log.e("API Error", t.getMessage());
+                Toast.makeText(facultymessagebody.this, "Error occurred", Toast.LENGTH_SHORT).show();
             }
         });
     }
-
-
     @Override
     public void onBackPressed() {
         Intent intent = new Intent(this, facultmessage.class);

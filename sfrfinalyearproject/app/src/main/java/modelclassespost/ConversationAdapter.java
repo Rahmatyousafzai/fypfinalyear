@@ -22,15 +22,17 @@ public class ConversationAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     private Context context;
     private List<ConversationItem> conversationItems;
     private String currentUserUsername;
+    private RecyclerView recyclerView;
 
     // View types for sender and receiver messages
     private static final int VIEW_TYPE_SENDER = 1;
     private static final int VIEW_TYPE_RECEIVER = 2;
 
-    public ConversationAdapter(Context context, List<ConversationItem> conversationItems, String currentUserUsername) {
+    public ConversationAdapter(Context context, List<ConversationItem> conversationItems, String currentUserUsername, RecyclerView recyclerView) {
         this.context = context;
         this.conversationItems = conversationItems;
         this.currentUserUsername = currentUserUsername;
+        this.recyclerView = recyclerView;
     }
 
     @NonNull
@@ -54,7 +56,6 @@ public class ConversationAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         Log.d("RecyclerView", "Binding item: " + item.toString());
         Log.d("RecyclerView", "Textmessaeg: " + item.getWishcontent().toString());
         Log.d("RecyclerView", "EMoji: " + item.getEmojiData().toString());
-
 
         if (holder.getItemViewType() == VIEW_TYPE_SENDER) {
             SenderViewHolder senderViewHolder = (SenderViewHolder) holder;
@@ -101,7 +102,7 @@ public class ConversationAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             }
 
             String emojiData = item.getWishcontent();
-            String  wishContent= item.getEmojiData();
+            String wishContent = item.getEmojiData();
 
             if (wishContent != null && !wishContent.isEmpty()) {
                 Log.d("RecyclerView", "Receiver wish content: " + wishContent);
@@ -146,6 +147,10 @@ public class ConversationAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         if (conversationItems != null) {
             conversationItems.add(newItem);
             notifyItemInserted(conversationItems.size() - 1);
+            // Scroll to the bottom after adding a new item
+            if (recyclerView != null) {
+                recyclerView.smoothScrollToPosition(conversationItems.size() - 1);
+            }
         }
     }
 
@@ -153,11 +158,10 @@ public class ConversationAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         conversationItems.clear();
         conversationItems.addAll(newData);
         notifyDataSetChanged();
-
-
-
-
-
+        // Scroll to the bottom after updating data
+        if (recyclerView != null) {
+            recyclerView.smoothScrollToPosition(conversationItems.size() - 1);
+        }
     }
 
     private String getProfileImageUrl(String profileImage) {

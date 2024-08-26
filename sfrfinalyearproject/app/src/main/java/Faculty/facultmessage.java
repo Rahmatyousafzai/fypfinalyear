@@ -193,6 +193,12 @@ public class facultmessage extends AppCompatActivity implements OnTeacherClickLi
     }
 
     private void getPermissions() {
+        if (username == null || username.isEmpty()) {
+            Toast.makeText(facultmessage.this, "Username is not set", Toast.LENGTH_SHORT).show();
+            Log.e(TAG, "Username is null or empty");
+            return;
+        }
+
         apiServices.getPermissions(username).enqueue(new Callback<List<appPermission>>() {
             @Override
             public void onResponse(Call<List<appPermission>> call, Response<List<appPermission>> response) {
@@ -201,11 +207,10 @@ public class facultmessage extends AppCompatActivity implements OnTeacherClickLi
                     boolean autoReplyEnabled = false;
 
                     for (appPermission permission : permissions) {
-                        Log.d(TAG, "Permission: " + permission.getUsername() + " (ID: " + permission.getAtid() + ")");
-                        deletepermissoin=permission.getAtid();
+                        Log.d(TAG, "Permission: " + (permission.getUsername() != null ? permission.getUsername() : "null") + " (ID: " + permission.getAtid() + ")");
+                        deletepermissoin = permission.getAtid();
 
-
-                        if (permission.getUsername().equals(username)) {
+                        if (username.equals(permission.getUsername())) {
                             autoReplyEnabled = true;
                             break;
                         }
@@ -215,17 +220,18 @@ public class facultmessage extends AppCompatActivity implements OnTeacherClickLi
                     // No need to show dialog here, it will be handled in getForwardSetting()
                 } else {
                     Toast.makeText(facultmessage.this, "Failed to retrieve data", Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "Response not successful: " + response.code());
+                    Log.e(TAG, "Response not successful: " + response.code() + " - " + response.message());
                 }
             }
 
             @Override
             public void onFailure(Call<List<appPermission>> call, Throwable t) {
                 Toast.makeText(facultmessage.this, "Failed to load data", Toast.LENGTH_SHORT).show();
-                Log.e(TAG, "API call failed: " + t.getMessage());
+                Log.e(TAG, "API call failed: " + t.getMessage(), t);
             }
         });
     }
+
 
     private void getForwardSetting() {
         apiServices.getforwordsetting(username).enqueue(new Callback<List<forwordsetting>>() {
@@ -278,6 +284,7 @@ public class facultmessage extends AppCompatActivity implements OnTeacherClickLi
             @Override
             public void onClick(View v) {
                 Intent intent =new Intent(facultmessage.this, admin_login.class);
+                startActivity(intent);
             }
         });
         Logout.setOnClickListener(new View.OnClickListener() {

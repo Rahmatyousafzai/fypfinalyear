@@ -1,7 +1,6 @@
 package ModeClasees;
 
 public class Student {
-
         private String username;
         private String fname;
         private String lname;

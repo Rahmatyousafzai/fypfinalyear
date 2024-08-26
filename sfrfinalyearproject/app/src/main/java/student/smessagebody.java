@@ -158,10 +158,11 @@ public class smessagebody extends AppCompatActivity implements OnEmojiClickListe
         apiService = RetrofitClient.getInstance();
         //fetchConversation(username,teacherUsername);
         // Initialize adapter
-        adapter = new ConversationAdapter(this, new ArrayList<>(), username);
+        adapter = new ConversationAdapter(this, new ArrayList<>(), username,recyclerView);
 
         LinearLayoutManager manager=new LinearLayoutManager(this);
         manager.setReverseLayout(true);
+        manager.setStackFromEnd(true);
         recyclerView.setLayoutManager(manager);
         recyclerView.setAdapter(adapter);
 
