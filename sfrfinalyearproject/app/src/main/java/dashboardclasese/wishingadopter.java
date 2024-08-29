@@ -23,10 +23,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ModeClasees.Emoji;
+import facultyClasses.Reaction;
+import facultyClasses.ReactionAdapter;
 import modelclassespost.EmojiAdapter;
 import mydataapi.Apiservices;
 import mydataapi.OnEmojiClickListener;
-import mydataapi.Reaction;
 import mydataapi.RetrofitClient;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -60,7 +61,8 @@ public class wishingadopter extends RecyclerView.Adapter<wishingadopter.ViewHold
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         wishingclass wish = wishes.get(position);
 
-        if (wish.getContent() != null && !wish.getContent().isEmpty()&&!wish.getFirstName().isEmpty()&&!wish.getLastName().isEmpty()&&!wish.getContent().isEmpty()) {
+        if (wish.getContent() != null && !wish.getContent().isEmpty() &&
+                !wish.getFirstName().isEmpty() && !wish.getLastName().isEmpty()) {
             holder.txtContent.setText(wish.getContent());
             holder.txtDateTime.setText(wish.getDateTime());
 
@@ -72,29 +74,40 @@ public class wishingadopter extends RecyclerView.Adapter<wishingadopter.ViewHold
             Log.d("null wishes", "null wishes");
         }
 
-        if (wish.getProfileImage() != null && !wish.getProfileImage().isEmpty()) {
-            String imageUrl = RetrofitClient.getBaseUrl() + "images/profileimages/" + wish.getProfileImage() + ".jpg";
-
-            Picasso.get()
-                    .load(imageUrl)
-                    .error(R.drawable.baseline_account_circle_24)
-                    .into(holder.profile, new com.squareup.picasso.Callback() {
-                        @Override
-                        public void onSuccess() {}
-
-                        @Override
-                        public void onError(Exception e) {
-                            Log.e("Picasso Error", "Failed to load profile image", e);
-                        }
-                    });
-        } else {
-            holder.profile.setImageResource(R.drawable.baseline_account_circle_24);
-        }
 
         holder.itemView.setOnLongClickListener(v -> {
-            currentSwId = wish.getSwId(); // Save the swId
+            if (wish.getProfileImage() != null && !wish.getProfileImage().isEmpty()) {
+                String imageUrl = RetrofitClient.getBaseUrl() + "images/profileimages/" + wish.getProfileImage() + ".jpg";
+                Picasso.get()
+                        .load(imageUrl)
+                        .error(R.drawable.baseline_account_circle_24)
+                        .into(holder.profile, new com.squareup.picasso.Callback() {
+                            @Override
+                            public void onSuccess() {}
+
+                            @Override
+                            public void onError(Exception e) {
+                                Log.e("Picasso Error", "Failed to load profile image", e);
+                            }
+                        });
+            } else {
+                holder.profile.setImageResource(R.drawable.baseline_account_circle_24);
+            }
+            currentSwId = wish.getSwId();
             showEmojiPopup(v);
             return true;
+        });
+
+        // Setup click listener to fetch and show reactions
+        holder.txtReactionCount.setOnClickListener(v -> {
+            fetchReactionsForWish(wish.getSwId(), reactions -> {
+                showReactionsPopup(v, reactions);
+            });
+        });
+        holder.allreaction.setOnClickListener(v -> {
+            fetchReactionsForWish(wish.getSwId(), reactions -> {
+                showReactionsPopup(v, reactions);
+            });
         });
     }
 
@@ -111,7 +124,6 @@ public class wishingadopter extends RecyclerView.Adapter<wishingadopter.ViewHold
         EmojiAdapter emojiAdapter = new EmojiAdapter(context, allEmojis, new OnEmojiClickListener() {
             @Override
             public void onEmojiClick(Emoji emoji) {
-                // Handle emoji click
                 if (emojiClickListener != null) {
                     emojiClickListener.onEmojiClick(currentSwId, emoji.getEmojiID());
                 }
@@ -150,6 +162,54 @@ public class wishingadopter extends RecyclerView.Adapter<wishingadopter.ViewHold
                 return true;
             }
             return false;
+        });
+    }
+
+    private void showReactionsPopup(View anchorView, List<Reaction> reactions) {
+        if (popupWindow != null && popupWindow.isShowing()) {
+            popupWindow.dismiss();
+        }
+
+        View popupView = LayoutInflater.from(context).inflate(R.layout.reactions_popup_window, null);
+        RecyclerView reactionsRecyclerView = popupView.findViewById(R.id.reactions_recyclerview);
+        reactionsRecyclerView.setLayoutManager(new LinearLayoutManager(context));
+
+        ReactionAdapter reactionAdapter = new ReactionAdapter(context, reactions);
+        reactionsRecyclerView.setAdapter(reactionAdapter);
+
+        PopupWindow reactionsPopupWindow = new PopupWindow(popupView, RecyclerView.LayoutParams.MATCH_PARENT, RecyclerView.LayoutParams.WRAP_CONTENT);
+        reactionsPopupWindow.setFocusable(true);
+        reactionsPopupWindow.showAsDropDown(anchorView);
+
+        popupView.setOnTouchListener((v, event) -> {
+            if (event.getAction() == MotionEvent.ACTION_OUTSIDE) {
+                reactionsPopupWindow.dismiss();
+                return true;
+            }
+            return false;
+        });
+    }
+
+    private void fetchReactionsForWish(int swId, ReactionCallback callback) {
+        Apiservices apiService = RetrofitClient.getInstance();
+        Call<List<Reaction>> call = apiService.getAllReactions(swId);
+
+        call.enqueue(new Callback<List<Reaction>>() {
+            @Override
+            public void onResponse(Call<List<Reaction>> call, Response<List<Reaction>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    callback.onReactionsFetched(response.body());
+                } else {
+                    Log.d("Failed to get reactions", "Failed to get reactions");
+                    callback.onReactionsFetched(new ArrayList<>()); // Return an empty list if fetching fails
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Reaction>> call, Throwable t) {
+                Log.d("reactions", "Failed to fetch reactions", t);
+                callback.onReactionsFetched(new ArrayList<>()); // Return an empty list if fetching fails
+            }
         });
     }
 
@@ -199,9 +259,8 @@ public class wishingadopter extends RecyclerView.Adapter<wishingadopter.ViewHold
         });
     }
 
-    @Override
-    public int getItemCount() {
-        return wishes.size();
+    public interface ReactionCallback {
+        void onReactionsFetched(List<Reaction> reactions);
     }
 
     public interface EmojiClickListener {
@@ -210,8 +269,13 @@ public class wishingadopter extends RecyclerView.Adapter<wishingadopter.ViewHold
         void onEmojiClick(int emojiId);
     }
 
+    @Override
+    public int getItemCount() {
+        return wishes.size();
+    }
+
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        ImageView profile;
+        ImageView profile,allreaction;
         TextView txtContent, txtDateTime, txtReactionCount, pfname;
 
         public ViewHolder(@NonNull View itemView) {
@@ -221,22 +285,19 @@ public class wishingadopter extends RecyclerView.Adapter<wishingadopter.ViewHold
             txtDateTime = itemView.findViewById(R.id.dateTime);
             txtReactionCount = itemView.findViewById(R.id.reactionCount);
             pfname = itemView.findViewById(R.id.pfname);
+            allreaction=itemView.findViewById(R.id.allreaction);
         }
     }
 
-
     public void animateEmojiZoom(int emojiId) {
-        // Ensure popup window is displayed before trying to animate
         if (popupWindow == null || !popupWindow.isShowing()) {
             Log.e("wishingadopter", "PopupWindow not shown.");
             return;
         }
 
-        // Find the emoji view by ID
         View emojiView = findEmojiViewById(emojiId);
 
         if (emojiView != null) {
-            // Create a scale animation to zoom in
             ScaleAnimation scaleAnimation = new ScaleAnimation(
                     1.0f, 1.5f, // Start and end values for the X axis scaling
                     1.0f, 1.5f, // Start and end values for the Y axis scaling
@@ -246,13 +307,13 @@ public class wishingadopter extends RecyclerView.Adapter<wishingadopter.ViewHold
             scaleAnimation.setDuration(300); // Duration of the animation
             scaleAnimation.setFillAfter(true); // Keep the scaling after animation ends
 
-            // Start the animation
             emojiView.startAnimation(scaleAnimation);
             Log.d("wishingadopter", "Animation started for emoji ID: " + emojiId);
         } else {
             Log.e("wishingadopter", "Emoji view not found for ID: " + emojiId);
         }
     }
+
     private View findEmojiViewById(int emojiId) {
         if (popupWindow != null && popupWindow.isShowing()) {
             View popupView = popupWindow.getContentView();
@@ -266,17 +327,13 @@ public class wishingadopter extends RecyclerView.Adapter<wishingadopter.ViewHold
         }
         return null; // Return null if view not found
     }
+
     public void updateReactionCount(int wishId) {
         for (int i = 0; i < wishes.size(); i++) {
             if (wishes.get(i).getSwId() == wishId) {
-                // Notify the adapter to refresh this item
                 notifyItemChanged(i);
                 break;
             }
-
         }
-
-
     }
-
 }

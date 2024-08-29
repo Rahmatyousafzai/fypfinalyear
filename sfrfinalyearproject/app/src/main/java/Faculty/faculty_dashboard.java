@@ -33,10 +33,10 @@ import java.util.List;
 
 import dashboardclasese.wishingadopter;
 import dashboardclasese.wishingclass;
+import facultyClasses.Reaction;
 import facultyClasses.appPermission;
 import facultyClasses.forwordsetting;
 import mydataapi.Apiservices;
-import mydataapi.Reaction;
 import mydataapi.RetrofitClient;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -173,7 +173,7 @@ public class faculty_dashboard extends AppCompatActivity implements wishingadopt
         Reaction reaction = new Reaction();
         reaction.setReacterID(reacterId);
         reaction.setSw_id(wishid);
-        reaction.setEmojiId(emojiid);
+        reaction.setEmojiID(emojiid);
         reaction.setDatetime(""); // Ensure the server handles this correctly
 
         // Log the request payload

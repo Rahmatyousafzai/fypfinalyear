@@ -1,5 +1,7 @@
 package mydataapi;
 
+import facultyClasses.Reaction;
+
 public class ReactionResponse {
 
 

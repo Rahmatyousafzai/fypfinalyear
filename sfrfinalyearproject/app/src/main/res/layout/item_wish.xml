@@ -71,4 +71,13 @@
         android:layout_height="wrap_content"
         android:text="Reactions: 0"
         android:textSize="12sp"/>
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/favorite_filled"
+        android:layout_marginLeft="40dp"
+        android:id="@+id/allreaction"
+
+        ></ImageView>
+
 </androidx.appcompat.widget.LinearLayoutCompat>

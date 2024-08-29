@@ -17,6 +17,7 @@ import facultyClasses.Course;
 import facultyClasses.FavritUser;
 import facultyClasses.InsertPapolationDataDto;
 import facultyClasses.InsertPapolationResponse;
+import facultyClasses.Reaction;
 import facultyClasses.Sendwish;
 import facultyClasses.StudentInfoDto;
 import facultyClasses.WishRequest;
@@ -287,6 +288,10 @@ public interface Apiservices {
             @Query("username") String username)
 
     ;
+
+    @GET("api/Wish/GetAllreaction")
+    Call<List<Reaction>> getAllReactions(@Query("swId") Integer swId);
+
 
     @POST("api/Wish/InsertpapolationData")
     Call<InsertPapolationResponse> insertPapolationData(@Body InsertPapolationDataDto dto);
