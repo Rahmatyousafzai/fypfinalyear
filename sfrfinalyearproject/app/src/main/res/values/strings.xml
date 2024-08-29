@@ -52,4 +52,5 @@
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>
     <string name="second_fragment_label">Second Fragment</string>
+    <string name="heart_icon_desc"><![CDATA[\n\n<resources>\n    <color name=\"heartColor\">#FF0000</color> <!-- Red heart color -->\n    <color name=\"defaultColor\">#CCCCCC</color> <!-- Default gray color -->\n</resources>\n]]></string>
 </resources>

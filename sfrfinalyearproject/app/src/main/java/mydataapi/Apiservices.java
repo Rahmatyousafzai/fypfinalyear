@@ -14,6 +14,7 @@ import ModeClasees.papulationselection;
 import ModeClasees.user;
 import dashboardclasese.wishingclass;
 import facultyClasses.Course;
+import facultyClasses.FavritUser;
 import facultyClasses.InsertPapolationDataDto;
 import facultyClasses.InsertPapolationResponse;
 import facultyClasses.Sendwish;
@@ -183,6 +184,18 @@ public interface Apiservices {
     @GET("api/Teacher/GetStudents")
     Call<List<Student>> getstudent();
 
+
+    // Fetch the favorite status for a specific user
+    @GET("api/Teacher/GetFavritUsers")
+    Call<List<FavritUser>> getfavorite(@Query("Username") String Username, @Query("Username") String favtuserID);
+
+    // Add a new favorite
+    @POST("api/Teacher/AddFavorite")
+    Call<Void> addFavorite(@Query ("UserID")String UserID,@Query("favriteID") String favriteID);
+
+    // Delete a favorite
+    @DELETE("api/Teacher/DeleteFavorite")
+    Call<Void> deleteFavorite(@Query("userID") String userID, @Query("Favuser") String Favuser);
     @GET("api/Teacher/GetSemesterSectionProgram")
     Call<List<papulationselection>> getSemesterSectionProgram(@Query("teacherId") String teacherId);
 

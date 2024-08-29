@@ -7,7 +7,6 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,17 +31,18 @@ import retrofit2.Response;
 import studentClasses.TeacherData;
 import studentClasses.UserDataSingleton;
 import studentClasses.teacherRepository;
+import facultyClasses.OnStudentInteractionListener;
 
-public class ftStudent extends AppCompatActivity {
-ImageView imgback;
-ListView tclistview;
+public  class ftStudent extends AppCompatActivity implements OnStudentInteractionListener {
 
-    private List<Student> studentList;
-    private List<Student> filteredList;
+    ImageView imgback;
+    private List<Student> studentList = new ArrayList<>();
+    private List<Student> filteredList = new ArrayList<>();
     private EditText searchEditText;
-    String username;
     private RecyclerView recyclerView;
     private StudentAdopter adapter;
+    private String username;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,60 +50,44 @@ ListView tclistview;
 
         TextView profilename = findViewById(R.id.profelname);
         ImageView profile = findViewById(R.id.profilepicture);
-searchEditText=findViewById(R.id.serattext);
+        searchEditText = findViewById(R.id.serattext);
+
         username = UserDataSingleton.getInstance().getUsername();
 
         teacherRepository userRepository = new teacherRepository();
-
         userRepository.fetchTeacherData(username, new teacherRepository.teacherRepositoryCallback() {
             @Override
-            public void onSuccess(TeacherData data)
-            {
-                // Access user data fields
-
+            public void onSuccess(TeacherData data) {
                 String Disignation = data.getDisgnatione();
-
                 String profileImage = data.getProfileImage();
                 String firstName = data.getFirstName();
                 String lastName = data.getLastName();
 
-                Log.e("UserData.........", "Section Name:........... " + Disignation);
-
-                // Optionally, update UI with user data
                 TextView textView = findViewById(R.id.disgnation);
-                String displayData = (Disignation);
-                textView.setText(displayData);
+                textView.setText(Disignation);
+
                 if (profileImage != null && !profileImage.isEmpty()) {
-                    String imageUrl = RetrofitClient.getBaseUrl() + "images/profileimages/" +profileImage + ".jpg";
+                    String imageUrl = RetrofitClient.getBaseUrl() + "images/profileimages/" + profileImage + ".jpg";
                     Picasso.get().load(imageUrl).error(R.drawable.baseline_account_circle_24).into(profile);
                 } else {
                     profile.setImageResource(R.drawable.baseline_account_circle_24);
                 }
 
-
-
-                String fullName = firstName+ " " + lastName;
+                String fullName = firstName + " " + lastName;
                 profilename.setText(fullName);
-
             }
 
             @Override
             public void onFailure(Exception e) {
                 Log.e("SomeActivity", "Error fetching user data: " + e.getMessage());
-                // Handle error case, e.g., show a toast or an error message
+                Toast.makeText(ftStudent.this, "Error fetching user data", Toast.LENGTH_SHORT).show();
             }
         });
-
-
-
-
 
         recyclerView = findViewById(R.id.StudentRC);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        fetchAlumni();
-      //  searchEditText.onCheckIsTextEditor();
-
+        fetchStudents();
 
         searchEditText.addTextChangedListener(new TextWatcher() {
             @Override
@@ -113,7 +97,6 @@ searchEditText=findViewById(R.id.serattext);
 
             @Override
             public void onTextChanged(CharSequence charSequence, int start, int before, int count) {
-                // Call filterStudents when text changes
                 filterStudents();
             }
 
@@ -122,10 +105,38 @@ searchEditText=findViewById(R.id.serattext);
                 // No action needed here
             }
         });
-
-
     }
 
+    private void fetchStudents() {
+        Apiservices apiService = RetrofitClient.getInstance();
+
+        Call<List<Student>> call = apiService.getstudent();
+        call.enqueue(new Callback<List<Student>>() {
+            @Override
+            public void onResponse(Call<List<Student>> call, Response<List<Student>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    studentList = response.body();
+                    Log.d("fetchStudents", "Fetched data size: " + studentList.size());
+                    filteredList = new ArrayList<>(studentList);
+                    if (adapter == null) {
+                        adapter = new StudentAdopter(ftStudent.this, studentList, ftStudent.this);
+                        recyclerView.setAdapter(adapter);
+                    } else {
+                        adapter.updateData(filteredList);
+                    }
+                } else {
+                    Toast.makeText(ftStudent.this, "Failed to fetch students", Toast.LENGTH_SHORT).show();
+                    Log.d("fetchStudents", "Response unsuccessful or empty");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Student>> call, Throwable t) {
+                Log.e("fetchStudents", "API call failed: " + t.getMessage());
+                Toast.makeText(ftStudent.this, "API call failed", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
 
     private void filterStudents() {
         String query = searchEditText.getText().toString().toLowerCase();
@@ -134,58 +145,24 @@ searchEditText=findViewById(R.id.serattext);
                         student.getLname().toLowerCase().contains(query) ||
                         student.getUsername().toLowerCase().contains(query))
                 .collect(Collectors.toList());
-        adapter.notifyDataSetChanged();
+        adapter.updateData(filteredList);
     }
 
-    private void fetchAlumni() {
-       Apiservices apiService = RetrofitClient.getInstance();
-
-        Call<List<Student>> call = apiService.getstudent();
-        call.enqueue(new Callback<List<Student>>() {
-            @Override
-            public void onResponse(Call<List<Student>> call, Response<List<Student>> response) {
-                if (response.isSuccessful() && response.body() != null) {
-                    List<Student> studentList = response.body();
-                    adapter = new StudentAdopter(ftStudent.this, studentList);
-                    filteredList = new ArrayList<>(studentList);
-                    adapter = new StudentAdopter(ftStudent.this, filteredList);
-                    recyclerView.setAdapter(adapter);
-                } else {
-                    Toast.makeText(ftStudent.this, "Failed to fetch alumni", Toast.LENGTH_SHORT).show();
-              Log.d("msg","student"+recyclerView);
-
-
-                }
-
-            }
-
-            @Override
-            public void onFailure(Call<List<Student>> call, Throwable t) {
-                Log.e("AlumniActivity", "API call failed: " + t.getMessage());
-                Toast.makeText(ftStudent.this, "API call failed", Toast.LENGTH_SHORT).show();
-            }
-        });
+    @Override
+    public void onSendMessage(Student student) {
+        Intent intent = new Intent(this, facultymessagebody.class);
+        intent.putExtra("username", student.getUsername());
+        intent.putExtra("fname", student.getFname());
+        intent.putExtra("lname", student.getLname());
+        intent.putExtra("profile_image", student.getImage());
+        startActivity(intent);
     }
-
-
-
-
-
-
-
-
-
-
 
     @Override
     public void onBackPressed() {
-        // Navigate back to the login screen
         Intent intent = new Intent(this, faculty_dashboard.class);
         startActivity(intent);
-        finish(); // Finish the current activity to prevent returning to it when pressing back again
-        super.onBackPressed(); // Call super method
+        finish();
+        super.onBackPressed();
     }
-
-
-
 }

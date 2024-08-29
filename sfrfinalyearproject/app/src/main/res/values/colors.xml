@@ -14,6 +14,10 @@
 
 
 
+        <color name="heartColor">#FF0000</color> <!-- Red heart color -->
+        <color name="defaultColor">#CCCCCC</color> <!-- Default gray color -->
+
+
 
         <color name="highlighted_color">#E66B6B</color>
         <color name="unhighlighted_color">#6BDFED</color>
