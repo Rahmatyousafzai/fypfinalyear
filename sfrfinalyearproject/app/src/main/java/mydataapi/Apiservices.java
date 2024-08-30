@@ -67,7 +67,11 @@ public interface Apiservices {
 
 
     @GET("api/wish/GetBirthdayUsers")
-    Call<List<BirthdayUser>> getBirthdayUsers(@Query("username") String username);
+    Call<String> getBirthdayUsers(@Query("username") String username);
+
+    @GET("api/wish/GetBirthdayUsersDetails")
+    Call<List<BirthdayUser>> getBirthdayUsersdetails(@Query("username") String username);
+
     @GET("api/Emoji/GetDistinctReactions/{sw_id}")
     Call<List<user>>getreaction(@Query("teacherUsername") String teacherUsername);
     ///student api end point

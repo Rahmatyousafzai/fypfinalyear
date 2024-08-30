@@ -1,6 +1,13 @@
 package facultyClasses;
 
 public class FavritUser {
+
+
+
+
+
+
+
     private int ID;
     private String Usernmae;
     private String favoritID;
