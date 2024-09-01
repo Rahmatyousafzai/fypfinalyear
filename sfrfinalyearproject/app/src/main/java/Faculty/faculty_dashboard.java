@@ -414,82 +414,7 @@ public class faculty_dashboard extends AppCompatActivity implements wishingadopt
 
 
 
-    private void getPermissions() {
-        if (username == null || username.isEmpty()) {
-            Toast.makeText(faculty_dashboard.this, "Username is not set", Toast.LENGTH_SHORT).show();
-            Log.e(TAG, "Username is null or empty");
-            return;
-        }
 
-        apiServices.getPermissions(username).enqueue(new Callback<List<appPermission>>() {
-            @Override
-            public void onResponse(Call<List<appPermission>> call, Response<List<appPermission>> response) {
-                if (response.isSuccessful() && response.body() != null) {
-                    List<appPermission> permissions = response.body();
-                    boolean autoReplyEnabled = false;
-
-                    for (appPermission permission : permissions) {
-                        Log.d(TAG, "Permission: " + (permission.getUsername() != null ? permission.getUsername() : "null") + " (ID: " + permission.getAtid() + ")");
-                        deletepermissoin = permission.getAtid();
-
-                        if (username.equals(permission.getUsername())) {
-                            autoReplyEnabled = true;
-                            break;
-                        }
-                    }
-
-                    isAutoReplyOn = autoReplyEnabled;
-                    // No need to show dialog here, it will be handled in getForwardSetting()
-                } else {
-                    Toast.makeText(faculty_dashboard.this, "Failed to retrieve data", Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "Response not successful: " + response.code() + " - " + response.message());
-                }
-            }
-
-            @Override
-            public void onFailure(Call<List<appPermission>> call, Throwable t) {
-                Toast.makeText(faculty_dashboard.this, "Failed to load data", Toast.LENGTH_SHORT).show();
-                Log.e(TAG, "API call failed: " + t.getMessage(), t);
-            }
-        });
-    }
-
-
-    private void getForwardSetting() {
-        apiServices.getforwordsetting(username).enqueue(new Callback<List<forwordsetting>>() {
-            @Override
-            public void onResponse(Call<List<forwordsetting>> call, Response<List<forwordsetting>> response) {
-                if (response.isSuccessful() && response.body() != null) {
-                    List<forwordsetting> settings = response.body();
-                    boolean messageForwardEnabled = false;
-
-                    for (forwordsetting setting : settings) {
-                        Log.d(TAG, "Forward Setting: " + setting.getCurrentuser() + " (Forward To: " + setting.getForworduser() + ")");
-                        if (setting.getCurrentuser().equals(username)) {
-                            ForwarduserName = setting.getFname()+""+setting.getLname();
-
-                            forwrodprofileName = setting.getFname()+""+setting.getLname();
-                            forwordingID=setting.getStid();
-                            messageForwardEnabled = true;
-                            break;
-                        }
-                    }
-
-                    isMessageForwardOn = messageForwardEnabled;
-                    // Show dialog after setting the initial state
-                } else {
-                    Toast.makeText(faculty_dashboard.this, "Failed to retrieve data", Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "Response not successful: " + response.code());
-                }
-            }
-
-            @Override
-            public void onFailure(Call<List<forwordsetting>> call, Throwable t) {
-                Toast.makeText(faculty_dashboard.this, "Failed to load data", Toast.LENGTH_SHORT).show();
-                Log.e(TAG, "API call failed: " + t.getMessage());
-            }
-        });
-    }
 
     private void showAutoReplyDialog() {
         Dialog dialog = new Dialog(this);
@@ -841,6 +766,13 @@ public class faculty_dashboard extends AppCompatActivity implements wishingadopt
         public TeacherData getItem(int position) {
             return super.getItem(position);
         }
+    }
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(this, admin_login.class);
+        startActivity(intent);
+        finish();
+        super.onBackPressed();
     }
 
 

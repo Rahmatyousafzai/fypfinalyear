@@ -149,7 +149,12 @@ public class ConversationAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             notifyItemInserted(conversationItems.size() - 1);
             // Scroll to the bottom after adding a new item
             if (recyclerView != null) {
-                recyclerView.smoothScrollToPosition(conversationItems.size() - 1);
+                recyclerView.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        recyclerView.smoothScrollToPosition(conversationItems.size() - 1);
+                    }
+                });
             }
         }
     }
@@ -160,7 +165,12 @@ public class ConversationAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         notifyDataSetChanged();
         // Scroll to the bottom after updating data
         if (recyclerView != null) {
-            recyclerView.smoothScrollToPosition(conversationItems.size() - 1);
+            recyclerView.post(new Runnable() {
+                @Override
+                public void run() {
+                    recyclerView.smoothScrollToPosition(conversationItems.size() - 1);
+                }
+            });
         }
     }
 

@@ -106,7 +106,7 @@ android:background="@drawable/borderwithgreen"
         android:text="Alumni"
         android:textSize="30dp"
         android:textStyle="bold"
-       android:layout_marginTop="20dp"></Button>
+       android:layout_marginTop="50dp"></Button>
 
         <Button
             android:id="@+id/Displine"
@@ -116,21 +116,10 @@ android:background="@drawable/borderwithgreen"
             android:text="Program"
             android:textSize="30dp"
             android:textStyle="bold"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="50dp"
 ></Button>
 
-        <Button
-            android:id="@+id/semeter"
-            android:layout_width="296dp"
-            android:layout_height="70dp"
-            android:backgroundTint="@color/green"
-            android:text="Course"
-            android:textSize="30dp"
-            android:textStyle="bold"
-            android:layout_marginTop="20dp"
 
-
-        ></Button>
     </LinearLayout>
 
 </LinearLayout>

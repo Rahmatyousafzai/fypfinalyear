@@ -1,9 +1,171 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="Admin.admincources">
+    tools:context="Admin.admincources"
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    android:background="@drawable/backgroundcolor"
+    android:orientation="vertical"
+    >
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_30sdp"
+        android:layout_gravity="center"
+
+        >
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/profilepicture"
+
+            android:layout_width="@dimen/_40sdp"
+            android:layout_height="@dimen/_40sdp"
+            android:layout_weight="2"
+            android:layout_gravity="center"
+            android:src="@drawable/saeed"
+            app:civ_border_color="@color/black"
+            app:civ_border_width="2dp"
+
+
+            />
+        <TextView
+            android:id="@+id/profelname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/_10sdp"
+            android:text="Rahmat Yousafzai"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:layout_weight="1"
+
+            android:layout_gravity="center"
+            android:layout_marginStart="@dimen/_8sdp"/>
+
+        <TextView
+            android:id="@+id/disgnation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/_10sdp"
+            android:text="Rah"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:layout_weight="1"
+
+            android:layout_gravity="bottom"
+            android:layout_marginStart="@dimen/_8sdp"/>
+
+        <ImageView
+            android:id="@+id/back"
+            android:layout_width="@dimen/_40sdp"
+            android:layout_height="@dimen/_40sdp"
+            android:src="@drawable/baseline_more_vert_24"
+            android:layout_gravity="center"
+            android:backgroundTint="@color/white"
+
+
+
+            />
+
+    </LinearLayout>
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="550dp"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/buttom_rounded_border"
+        android:backgroundTint="@color/white"
+        android:orientation="vertical"
+        >
+
+        <Spinner
+            android:layout_width="200dp"
+            android:layout_height="50dp"
+            android:background="@drawable/border"
+            android:id="@+id/semsetersection"
+            android:textSize="30dp"
+            android:text="Alumni"
+            android:textAlignment="center"
+            android:padding="5dp"
+            android:textStyle="bold"
+            android:layout_marginTop="10dp"
+            android:layout_gravity="center"
+
+
+
+            ></Spinner>
+
+        <Spinner
+            android:layout_width="200dp"
+            android:layout_height="50dp"
+            android:background="@drawable/border"
+            android:id="@+id/alocationid"
+            android:textSize="30dp"
+            android:text="Alumni"
+            android:textAlignment="center"
+            android:padding="5dp"
+            android:textStyle="bold"
+            android:layout_marginTop="10dp"
+            android:layout_gravity="center"
+
+
+
+            ></Spinner>
+
+
+        <LinearLayout
+            android:layout_marginTop="10dp"
+            android:layout_width="350dp"
+            android:layout_height="350dp"
+            android:background="@drawable/border"
+            android:layout_gravity="center"
+            android:orientation="vertical"
+
+            >
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="Type something"
+                android:id="@+id/typesomthing"
+                >
+
+            </EditText>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/green"
+                android:layout_gravity="right"
+                android:layout_marginRight="20dp"
+                android:text="Send"
+                android:textSize="20dp"
+                android:layout_marginStart="250dp"
+                android:id="@+id/done"
+
+
+                ></Button>
+            <ProgressBar
+                android:id="@+id/progressBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:visibility="gone"
+                android:indeterminate="true" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+</androidx.appcompat.widget.LinearLayoutCompat>

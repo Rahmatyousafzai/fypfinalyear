@@ -26,7 +26,7 @@ public class postshareoption extends AppCompatActivity {
         student=findViewById(R.id.astudent);
         alumni=findViewById(R.id.aalumni);
        TextView program=findViewById(R.id.program);
-      TextView  courses=findViewById(R.id.course);
+
 
 profileimage=findViewById(R.id.profileimage);
 profilename=findViewById(R.id.profelname);
@@ -35,7 +35,7 @@ program.setOnClickListener(new View.OnClickListener() {
     @Override
     public void onClick(View v) {
 
-        Intent intent=new Intent(postshareoption.this, admincources.class)
+        Intent intent=new Intent(postshareoption.this,admincources.class)
                ;
         startActivity(intent);
         finish();

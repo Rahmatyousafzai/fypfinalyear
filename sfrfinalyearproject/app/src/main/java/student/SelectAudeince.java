@@ -11,6 +11,11 @@ public class SelectAudeince {
         this.wishMessage = wishMessage;
     }
 
+    public SelectAudeince(String senderId, String wishMessage) {
+        this.senderId = senderId;
+        this.wishMessage = wishMessage;
+    }
+
     private String allocationIds;
     private String wishMessage;
 

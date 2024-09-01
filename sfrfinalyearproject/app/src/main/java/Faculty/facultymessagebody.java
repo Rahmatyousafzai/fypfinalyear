@@ -49,6 +49,7 @@ public class facultymessagebody extends AppCompatActivity implements OnEmojiClic
 
     private List<Emoji> allEmojis;
     private List<Emoji> RistricEmoji;
+   private List<ConversationItem> conversationItems;
     private int selectedEmoji;
     private PollingManager pollingManager;
     private TextView profilename, teachername;
@@ -61,12 +62,20 @@ public class facultymessagebody extends AppCompatActivity implements OnEmojiClic
         setContentView(R.layout.activity_facultymessagebody);
         username = UserDataSingleton.getInstance().getUsername();
         // Initialize RecyclerView
-        recyclerView = findViewById(R.id.recycllerviewmessage);
-        LinearLayoutManager LayoutManager=new LinearLayoutManager(this);
-        LayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        LayoutManager.setReverseLayout(true);
-        LayoutManager.setStackFromEnd(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        layoutManager.setReverseLayout(true);
+        layoutManager.setStackFromEnd(true);
+        recyclerView.setLayoutManager(layoutManager);
+
+        // Initialize the adapter with the correct parameters
+
+        adapter = new ConversationAdapter(facultymessagebody.this, conversationItems, username,recyclerView);
+
+        // Set the adapter to RecyclerView
+        recyclerView.setAdapter(adapter);
+
+
+        adapter.notifyItemInserted(0);
 
 
         // Initialize UI components
@@ -110,6 +119,7 @@ public class facultymessagebody extends AppCompatActivity implements OnEmojiClic
         // Initialize ApiService
         apiService = RetrofitClient.getInstance();
 
+
         // Fetch data
         fetchConversation();
         fetchAllEmojis();
@@ -123,31 +133,18 @@ public class facultymessagebody extends AppCompatActivity implements OnEmojiClic
         // Set OnClickListener for send button
         sendButton.setOnClickListener(v -> {
             sendWish(username,teacherUsername,selectedEmoji);
-            pollingManager = new PollingManager(this, apiService, username, teacherUsername);
-            pollingManager.startPolling();
-
             emojiImageView.setImageDrawable(null);
             fetchConversation();
 
         });
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        // Stop polling when the activity is destroyed
-        if (pollingManager != null) {
-            pollingManager.stopPolling();
-        }
-    }
 
 
 
 
-    public void addNewMessage(ConversationItem newItem) {
-        adapter.addItem(newItem);
-        recyclerView.post(() -> recyclerView.smoothScrollToPosition(adapter.getItemCount() - 1));
-    }
+
+
     private void fetchConversation() {
         Log.d("API Call", "Fetching conversation for user: " + studentusername + " with teacher: " + teacherUsername);
         apiService.chatmessage(username, teacherUsername).enqueue(new Callback<List<Message>>() {
@@ -178,14 +175,11 @@ public class facultymessagebody extends AppCompatActivity implements OnEmojiClic
                         ));
                     }
 
-                    // Initialize the adapter with the correct parameters
-                    adapter = new ConversationAdapter(facultymessagebody.this, conversationItems, username,recyclerView);
 
-                    // Set the adapter to RecyclerView
-                    recyclerView.setAdapter(adapter);
+
 
                     // Scroll to the bottom of the RecyclerView
-                    recyclerView.post(() -> recyclerView.smoothScrollToPosition(adapter.getItemCount() - 1));
+
 
                     Log.d("API Call", "Conversation items loaded: " + conversationItems.size());
                 } else {
@@ -429,7 +423,7 @@ public class facultymessagebody extends AppCompatActivity implements OnEmojiClic
     }
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent(this, facultmessage.class);
+        Intent intent = new Intent(this, faculty_select_message_option.class);
         startActivity(intent);
         finish();
         super.onBackPressed();

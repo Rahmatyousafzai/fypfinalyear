@@ -7,12 +7,15 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.sfrfinalyearproject.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -25,12 +28,16 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import student.SelectAudeince;
+import studentClasses.TeacherData;
 import studentClasses.UserDataSingleton;
+import studentClasses.teacherRepository;
 
 public class facultypapulationMessage extends AppCompatActivity {
 
     private Apiservices apiservices;
-    private String username;
+    private TextView  profilename;
+    private ImageView  profile;
+    private String username, firstName, lastName, profileImage ;
     private LinearLayout layoutAllocations;
     private Map<Integer, String> selectedAllocations = new HashMap<>();
     private Map<Integer, String> unselectedAllocations = new HashMap<>();
@@ -39,6 +46,48 @@ public class facultypapulationMessage extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_facultypapulation_message);
+
+        profilename = findViewById(R.id.profelname);
+        profile = findViewById(R.id.profilepicture);
+        ImageView appSetting = findViewById(R.id.back);
+
+        username = UserDataSingleton.getInstance().getUsername();
+
+        // Fetch user data using repository
+        teacherRepository userRepository = new teacherRepository();
+        userRepository.fetchTeacherData(username, new teacherRepository.teacherRepositoryCallback() {
+            @Override
+            public void onSuccess(TeacherData data) {
+                // Access user data fields
+                String sectionName = data.getDisgnatione();
+                profileImage = data.getProfileImage();
+                firstName = data.getFirstName();
+                lastName = data.getLastName();
+
+                Log.e("UserData.........", "Section Name:........... " + sectionName);
+
+                // Update UI with user data
+                profilename.setText(firstName + " " + lastName);
+                TextView textView = findViewById(R.id.disgnation);
+                textView.setText(sectionName);
+
+                // Load profile image using Picasso
+                if (profileImage != null && !profileImage.isEmpty()) {
+                    String imageUrl = RetrofitClient.getBaseUrl() + "images/profileimages/" + profileImage + ".jpg";
+                    Picasso.get().load(imageUrl).error(R.drawable.baseline_account_circle_24).into(profile);
+                } else {
+                    profile.setImageResource(R.drawable.baseline_account_circle_24);
+                }
+            }
+
+            @Override
+            public void onFailure(Exception e) {
+                Log.e("SomeActivity", "Error fetching user data: " + e.getMessage());
+                Toast.makeText(facultypapulationMessage.this, "Error fetching user data", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
 
         initializeViews();
         initializeApiServices();
@@ -148,5 +197,13 @@ public class facultypapulationMessage extends AppCompatActivity {
         intent.putIntegerArrayListExtra("unselectedIds", new ArrayList<>(unselectedAllocations.keySet()));
         intent.putStringArrayListExtra("unselectedTitles", new ArrayList<>(unselectedAllocations.values()));
         startActivity(intent);
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(this, facultmessage.class);
+        startActivity(intent);
+        finish();
+        super.onBackPressed();
     }
 }

@@ -40,8 +40,10 @@ public class ft_send_message_by_samester extends AppCompatActivity {
     private ImageView profile;
     private ProgressBar progressBar;
     private Apiservices apiservices;
+    private TextView  profilename;
+    private String username, firstName, lastName, profileImage;
 
-    private String username;
+
     private ArrayList<Integer> selectedIds; // Define selectedIds to use in sendBulkWish
 
     @Override
@@ -49,12 +51,52 @@ public class ft_send_message_by_samester extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ft_send_message_by_samester);
 
+        profilename = findViewById(R.id.profelname);
+        profile = findViewById(R.id.profilepicture);
+
+
+        username = UserDataSingleton.getInstance().getUsername();
+
+        // Fetch user data using repository
+        teacherRepository userRepository = new teacherRepository();
+        userRepository.fetchTeacherData(username, new teacherRepository.teacherRepositoryCallback() {
+            @Override
+            public void onSuccess(TeacherData data) {
+                // Access user data fields
+                String sectionName = data.getDisgnatione();
+                profileImage = data.getProfileImage();
+                firstName = data.getFirstName();
+                lastName = data.getLastName();
+
+                Log.e("UserData.........", "Section Name:........... " + sectionName);
+
+                // Update UI with user data
+                profilename.setText(firstName + " " + lastName);
+                TextView textView = findViewById(R.id.disgnation);
+                textView.setText(sectionName);
+
+                // Load profile image using Picasso
+                if (profileImage != null && !profileImage.isEmpty()) {
+                    String imageUrl = RetrofitClient.getBaseUrl() + "images/profileimages/" + profileImage + ".jpg";
+                    Picasso.get().load(imageUrl).error(R.drawable.baseline_account_circle_24).into(profile);
+                } else {
+                    profile.setImageResource(R.drawable.baseline_account_circle_24);
+                }
+            }
+
+            @Override
+            public void onFailure(Exception e) {
+                Log.e("SomeActivity", "Error fetching user data: " + e.getMessage());
+                Toast.makeText(ft_send_message_by_samester.this, "Error fetching user data", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
+        ImageView appSetting = findViewById(R.id.back);
         // Initialize UI components
         initializeUI();
 
-        // Fetch user data
-        username = UserDataSingleton.getInstance().getUsername();
-        fetchUserData();
+
 
         // Initialize Retrofit service
         apiservices = RetrofitClient.getInstance();

@@ -155,6 +155,22 @@ public interface Apiservices {
     @POST("api/Teacher/SenBulkWish")
     Call<Void> sendBulkWish(@Body SelectAudeince request);
 
+    @POST("api/Teacher/SenBulkWishToallalumni")
+    Call<Void> sendBulkWishToALumni(@Body SelectAudeince request);
+
+
+    @POST("api/Teacher/SenBulkWishToall")
+    Call<Void> SenBulkWishToall(@Body SelectAudeince request);
+
+    @POST("api/Teacher/SenBulkWishToallstudent")
+    Call<Void> SenBulkWishToallstudent(@Body SelectAudeince request);
+
+    @POST("api/Teacher/SenBulkWishToallTeacher")
+    Call<Void> SenBulkWishToallTeacher(@Body SelectAudeince request);
+
+
+
+
     @POST("api/Wish/SendSinglewish")
     Call<Void> sendSingleWish(@Body WishRequest wishRequest);
     @GET("api/wish/GetAllEmojis")

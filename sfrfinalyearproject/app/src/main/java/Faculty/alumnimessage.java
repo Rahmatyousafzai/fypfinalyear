@@ -1,5 +1,6 @@
 package Faculty;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -7,25 +8,24 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.sfrfinalyearproject.R;
 import com.squareup.picasso.Picasso;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.ArrayList;
 
-import genral.templete;
-import modelclassespost.SendWishRequestDto;
-import modelclassespost.SendWishResponse;
 import mydataapi.Apiservices;
 import mydataapi.RetrofitClient;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import student.SelectAudeince;
 import studentClasses.TeacherData;
 import studentClasses.UserDataSingleton;
 import studentClasses.teacherRepository;
@@ -35,155 +35,174 @@ public class alumnimessage extends AppCompatActivity {
     Button sendwish;
     ImageView addtemplate, back;
     private static final String TAG = "Alumni";
+
+    private Button sendMessage;
+    private EditText typeSomething;
+    private TextView semesterSection;
+    private TextView profileName;
+    private TextView designation;
+    private ImageView profile;
+    private ProgressBar progressBar;
+    private Apiservices apiservices;
+
     private String username;
-    private String FullName;
-    String firstName;
-    private String lastName;
-    private String profileImage;
-    private Apiservices apiServices;
-    TextView profilename;
-    ImageView profile;
-    EditText typesomthing;
+  // Define selectedIds to use in sendBulkWish;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_alumnimessage);
-        sendwish = findViewById(R.id.sendwish);
 
 
-        profilename = findViewById(R.id.profelname);  // Initialize this
-        profile = findViewById(R.id.profilepicture);          // Initialize this
-        typesomthing=findViewById(R.id.typesomthing);
-        String username = UserDataSingleton.getInstance().getUsername();
+        // Initialize UI components
+        initializeUI();
 
+        // Fetch user data
+        username = UserDataSingleton.getInstance().getUsername();
+        fetchUserData();
+
+        // Initialize Retrofit service
+        apiservices = RetrofitClient.getInstance();
+
+        // Set OnClickListener for sendMessage button
+        sendMessage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Confirm before sending message
+                showConfirmationDialog();
+            }
+        });
+
+
+    }
+
+    private void initializeUI() {
+        sendMessage = findViewById(R.id.done);
+        typeSomething = findViewById(R.id.typesomthing);
+        semesterSection = findViewById(R.id.semsetersection);
+        profileName = findViewById(R.id.profelname);
+        designation = findViewById(R.id.disgnation);
+        profile = findViewById(R.id.profilepicture);
+        progressBar = findViewById(R.id.progressBar); // Ensure you have this in your layout
+
+
+    }
+
+    private void fetchUserData() {
         teacherRepository userRepository = new teacherRepository();
-
         userRepository.fetchTeacherData(username, new teacherRepository.teacherRepositoryCallback() {
             @Override
-            public void onSuccess(TeacherData data)
-            {
-                // Access user data fields
-
-                String Disignation = data.getDisgnatione();
-
-                profileImage=data.getProfileImage();
-                      firstName = data.getFirstName();
-                lastName=data.getLastName();
-
-                Log.e("UserData.........", "Section Name:........... " + Disignation);
-
-                // Optionally, update UI with user data
-                TextView textView = findViewById(R.id.disgnation);
-                String displayData = (Disignation);
-                textView.setText(displayData);
-                if (profileImage != null && !profileImage.isEmpty()) {
-                    String imageUrl = RetrofitClient.getBaseUrl() + "images/profileimages/" +profileImage + ".jpg";
-                    Picasso.get().load(imageUrl).error(R.drawable.baseline_account_circle_24).into(profile);
-                } else {
-                    profile.setImageResource(R.drawable.baseline_account_circle_24);
-                }
-
-
-
-                String fullName = firstName+ " " + lastName;
-                profilename.setText(fullName);
-
+            public void onSuccess(TeacherData data) {
+                updateTeacherProfile(data);
             }
 
             @Override
             public void onFailure(Exception e) {
-                Log.e("SomeActivity", "Error fetching user data: " + e.getMessage());
-                // Handle error case, e.g., show a toast or an error message
+                Log.e("UserData", "Error fetching user data: " + e.getMessage());
+                Toast.makeText(alumnimessage.this, "Error fetching user data", Toast.LENGTH_SHORT).show();
             }
         });
-
-        sendwish.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Assume these values are obtained from your app's logic
-                String senderId = username;
-                String content = typesomthing.getText().toString();
-                Integer templateId = null;  // Replace with actual value if available
-                String messageType = null;  // Replace with actual value if available
-                Integer emojiId = null;     // Replace with actual value if available
-                Integer achievId = null;    // Replace with actual value if available
-                String dateTime = getCurrentDateTime();
-                Boolean isEmail = true;
-                String enrollmentId = null; // Replace with actual value if available
-                String receiverId = null;   // Replace with actual value if available
-                String sectionId = null;    // Replace with actual value if available
-                String semesterId = null;   // Replace with actual value if available
-                String discipline = null;   // Replace with actual value if available
-                String courseId = null;     // Replace with actual value if available
-                String papulation = "Alumni";
-
-                // Create the SendWishRequestDto object with all necessary parameters
-                SendWishRequestDto wishData = new SendWishRequestDto(
-                        senderId, content, templateId, messageType, emojiId, achievId, dateTime,
-                        isEmail, enrollmentId, receiverId, sectionId, semesterId, discipline, courseId, papulation
-                );
-
-                sendWish(wishData);
-            }
-        });
-
-
-
     }
 
-    private void sendWish(SendWishRequestDto wishData) {
-        apiServices.sendWishByPapluation(wishData).enqueue(new Callback<SendWishResponse>() {
-            @Override
-            public void onResponse(Call<SendWishResponse> call, Response<SendWishResponse> response) {
-                if (response.isSuccessful()) {
-                    SendWishResponse sendWishResponse = response.body();
-                    if (sendWishResponse != null) {
-                        Toast.makeText(alumnimessage.this, "Wish sent successfully with ID: " + sendWishResponse.getSendWishId(), Toast.LENGTH_SHORT).show();
-                    } else {
-                        Toast.makeText(alumnimessage.this, "Wish sent successfully", Toast.LENGTH_SHORT).show();
+    private void updateTeacherProfile(TeacherData data) {
+        designation.setText(data.getDisgnatione());
+
+        String profileImage = data.getProfileImage();
+        if (profileImage != null && !profileImage.isEmpty()) {
+            String imageUrl = RetrofitClient.getBaseUrl() + "images/profileimages/" + profileImage + ".jpg";
+            Picasso.get().load(imageUrl).error(R.drawable.baseline_account_circle_24).into(profile);
+        } else {
+            profile.setImageResource(R.drawable.baseline_account_circle_24);
+        }
+
+        String fullName = data.getFirstName() + " " + data.getLastName();
+        profileName.setText(fullName);
+    }
+
+    private void showConfirmationDialog() {
+        new AlertDialog.Builder(this)
+                .setTitle("Confirm")
+                .setMessage("Are you sure you want to send this message?")
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Send the message
+
+                        String wishMessage = typeSomething.getText().toString();
+                        sendBulkWish(username,  wishMessage);
                     }
+                })
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Do nothing
+                        dialog.dismiss();
+                    }
+                })
+                .create()
+                .show();
+    }
+
+    private String convertIdsToString(ArrayList<Integer> ids) {
+        StringBuilder sb = new StringBuilder();
+        if (ids != null) {
+            for (int id : ids) {
+                sb.append(id).append(",");
+            }
+            // Remove trailing comma
+            if (sb.length() > 0) {
+                sb.setLength(sb.length() - 1);
+            }
+        }
+        return sb.toString();
+    }
+
+    private void sendBulkWish(String senderId, String wishMessage) {
+        // Show progress bar
+        progressBar.setVisibility(View.VISIBLE);
+
+        // Create request object
+        SelectAudeince request = new SelectAudeince(senderId, wishMessage);
+
+        // Make API call
+        Call<Void> call = apiservices.sendBulkWishToALumni(request);
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                // Hide progress bar
+                progressBar.setVisibility(View.GONE);
+
+                if (response.isSuccessful()) {
+                    // Show success message and redirect
+                    Toast.makeText(alumnimessage.this, "Wishes sent successfully!", Toast.LENGTH_SHORT).show();
+                    redirectToDashboard();
                 } else {
-                    Log.d("Failed to send wish. Response code: ", "error sending wish" + response.code());
+                    // Show error message
+                    Toast.makeText(alumnimessage.this, "Request failed: " + response.message(), Toast.LENGTH_LONG).show();
                 }
             }
 
             @Override
-            public void onFailure(Call<SendWishResponse> call, Throwable t) {
-                Log.d("Error sending wish: ", "error sending" + t.getMessage());
-                Toast.makeText(alumnimessage.this, "Error sending wish", Toast.LENGTH_SHORT).show();
+            public void onFailure(Call<Void> call, Throwable t) {
+                // Hide progress bar
+                progressBar.setVisibility(View.GONE);
+
+                // Show error message
+                Toast.makeText(alumnimessage.this, "Request failed: " + t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
     }
 
-    private String getCurrentDateTime() {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
-        return sdf.format(new Date());
-    }
-
-
-
-    private void addtemplate() {
-        Intent intent = new Intent(alumnimessage.this, templete.class);
-        startActivity(intent);
-        finish();
-    }
-
-    private void sendwish() {
+    private void redirectToDashboard() {
         Intent intent = new Intent(alumnimessage.this, faculty_dashboard.class);
         startActivity(intent);
-        finish();
+        finish(); // Optional: Close the current activity
     }
-
-
     @Override
     public void onBackPressed() {
-        // Navigate back to the login screen
-        Intent intent = new Intent(this, faculty_select_message_option.class);
+        Intent intent = new Intent(this, facultypapulationMessage.class);
         startActivity(intent);
-        finish(); // Finish the current activity to prevent returning to it when pressing back again
-        super.onBackPressed(); // Call super method
+        finish();
+        super.onBackPressed();
     }
-
-
-
 }

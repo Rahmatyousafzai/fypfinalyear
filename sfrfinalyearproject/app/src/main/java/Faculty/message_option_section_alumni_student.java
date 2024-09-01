@@ -81,15 +81,7 @@ public class message_option_section_alumni_student extends AppCompatActivity {
 
 
 
-        course.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                sendMessagBycourse();
 
-
-
-            }
-        });
         samester.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -127,9 +119,5 @@ public class message_option_section_alumni_student extends AppCompatActivity {
 
     }
 
-    private void sendMessagBycourse() {
-        Intent intent=new Intent(message_option_section_alumni_student.this,ft_send_message_by_course.class);
-        startActivity(intent);
-        finish();
-    }
+ 
 }

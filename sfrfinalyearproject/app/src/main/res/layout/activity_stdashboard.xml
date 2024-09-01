@@ -70,72 +70,126 @@ android:textSize="20dp"
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:background="#0BDBF3"
-        android:padding="5dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="#73E3F1"
         android:layout_marginTop="10dp"
+        android:padding="2dp"
+
 
         >
+        <LinearLayout
 
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
 
-
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            >
             <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="40dp"
+                android:layout_height="50dp"
                 android:src="@drawable/img_8"
+                android:id="@+id/imgnews"
                 android:layout_gravity="center"
-android:id="@+id/ImgNews"
-
-                android:layout_weight="1"
                 ></ImageView>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="News"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:id="@+id/news"
+
+                android:textAlignment="center"
+
+
+                ></TextView>
+
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginLeft="30dp"
+            android:layout_weight="1"
 
 
 
-
-
-
-
+            >
             <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
                 android:src="@drawable/notificationbell"
                 android:id="@+id/imgnptification"
-
-                android:layout_weight="1"
                 android:layout_gravity="center"
                 ></ImageView>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="Notification"
+                android:textSize="20dp"
+                android:textAlignment="center"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:id="@+id/txtnotification"
+                android:layout_gravity="center"
+
+
+                >
+
+            </TextView>
+
+
+        </LinearLayout>
 
 
 
 
 
 
+        <LinearLayout
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginLeft="30dp"
+            android:layout_weight="1"
+            >
             <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
                 android:src="@drawable/chat"
                 android:id="@+id/imgmessage"
                 android:layout_gravity="center"
-                android:layout_weight="1"
-
-
                 ></ImageView>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Message"
+                android:textSize="20dp"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:id="@+id/txtmessage"
+                android:layout_gravity="center"
+                >
+
+            </TextView>
 
 
-
-
-
-
-
-
-
-
+        </LinearLayout>
 
 
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="500dp"
+        android:layout_height="450dp"
         android:background="@color/white"
         android:layout_margin="0dp"
 

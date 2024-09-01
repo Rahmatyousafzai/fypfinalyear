@@ -71,8 +71,7 @@ public class PollingManager {
                                 message.getWishDateTime() != null ? message.getWishDateTime() : ""
                         );
 
-                        // Only add new items to the RecyclerView
-                        activity.runOnUiThread(() -> activity.addNewMessage(newItem));
+                        // Only add new items to the
                     }
                 } else {
                     Log.d("PollingManager", "Failed to fetch messages");

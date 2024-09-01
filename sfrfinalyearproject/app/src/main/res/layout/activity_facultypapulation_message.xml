@@ -43,25 +43,18 @@
             android:layout_gravity="center"
             android:layout_marginStart="@dimen/_8sdp"/>
 
-
         <TextView
+            android:id="@+id/disgnation"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/_10sdp"
+            android:text="Rah"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:layout_weight="1"
+
             android:layout_gravity="bottom"
-            android:text="title"
-            android:textStyle="italic"
-
-            android:id="@+id/disgnation"
-            ></TextView>
-
-
-
-
-
-
-
-
-
+            android:layout_marginStart="@dimen/_8sdp"/>
 
         <ImageView
             android:id="@+id/back"
@@ -69,7 +62,6 @@
             android:layout_height="@dimen/_40sdp"
             android:src="@drawable/baseline_more_vert_24"
             android:layout_gravity="center"
-            android:layout_marginStart="@dimen/_50sdp"
             android:backgroundTint="@color/white"
 
 
