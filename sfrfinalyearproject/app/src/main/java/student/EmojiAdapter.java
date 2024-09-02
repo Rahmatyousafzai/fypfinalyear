@@ -1,6 +1,7 @@
 package student;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,10 +21,18 @@ import mydataapi.RetrofitClient;
 
 public class EmojiAdapter extends RecyclerView.Adapter<EmojiAdapter.EmojiViewHolder> {
 
-
     private Context context;
     private List<Emoji> emojis;
     private OnEmojiClickListener listener;
+    private OnItemClickListener onItemClickListener;
+
+    public interface OnItemClickListener {
+        void onItemClick(Emoji emoji);
+    }
+
+    public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
+        this.onItemClickListener = onItemClickListener;
+    }
 
     public EmojiAdapter(Context context, List<Emoji> emojis, OnEmojiClickListener listener) {
         this.context = context;
@@ -38,50 +47,39 @@ public class EmojiAdapter extends RecyclerView.Adapter<EmojiAdapter.EmojiViewHol
         return new EmojiViewHolder(view);
     }
 
-    // Inside the EmojiAdapter class
     @Override
     public void onBindViewHolder(@NonNull EmojiViewHolder holder, int position) {
         Emoji emoji = emojis.get(position);
         holder.bind(emoji);
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Pass the clicked emoji to the listener
-                if (listener != null) {
-                    listener.onEmojiClick(emoji);
-                }
-            }
-        });
     }
-
 
     @Override
     public int getItemCount() {
         return emojis.size();
     }
 
-    class EmojiViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+
+
+    class EmojiViewHolder extends RecyclerView.ViewHolder {
         ImageView emojiImageView;
 
         public EmojiViewHolder(@NonNull View itemView) {
             super(itemView);
             emojiImageView = itemView.findViewById(R.id.emoji_image_view);
-            itemView.setOnClickListener(this);
         }
 
         public void bind(Emoji emoji) {
             // Load image into ImageView using Picasso
             String imageUrl = RetrofitClient.getBaseUrl() + "images/emojis/" + emoji.getImagePath() + ".png";
             Picasso.get().load(imageUrl).into(emojiImageView);
-        }
 
-        @Override
-        public void onClick(View v) {
-            int position = getAdapterPosition();
-            if (position != RecyclerView.NO_POSITION) {
-                Emoji clickedEmoji = emojis.get(position);
-                listener.onEmojiClick(clickedEmoji);
-            }
+            // Set click listener for the entire itemView
+            itemView.setOnClickListener(v -> {
+                Log.d("EmojiAdapter", "Emoji clicked: ID " + emoji.getEmojiID());
+                if (listener != null) {
+                    listener.onEmojiClick(emoji);
+                }
+            });
         }
     }
 }

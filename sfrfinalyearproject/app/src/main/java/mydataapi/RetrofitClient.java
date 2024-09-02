@@ -11,7 +11,7 @@ public class RetrofitClient {
 
     // Base URL for the API
 
-    private static final String BASE_URL = "http://192.168.100.2/fyp-api-versoin4/";
+    private static final String BASE_URL = "http://192.168.0.247/fyp-api-versoin4/";
 
     private static Retrofit retrofit;
     private static Apiservices apiService;
@@ -27,7 +27,7 @@ public class RetrofitClient {
             logging.setLevel(HttpLoggingInterceptor.Level.BODY);
 
             OkHttpClient client = new OkHttpClient.Builder()
-                    .callTimeout(30, TimeUnit.SECONDS)
+                    .callTimeout(100, TimeUnit.SECONDS)
                     .addInterceptor(logging)
                     .build();
 

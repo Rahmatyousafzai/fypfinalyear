@@ -18,7 +18,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ModeClasees.Emoji;
-import facultyClasses.WishRequest;
 import mydataapi.Apiservices;
 import mydataapi.RetrofitClient;
 import retrofit2.Call;
@@ -58,15 +57,15 @@ public class ad_notification extends AppCompatActivity {
 
                 Toast.makeText(ad_notification.this, "Permit clicked: " + emojiRequest.getEsid(), Toast.LENGTH_SHORT).show();
 
-                updateEmojiPermission(emojiRequest.getEsid(),null,"p",null);
-                sendWish(emojiRequest.getRequsetedby(),emojiRequest.getRequestedfor(),emojiRequest.getEsid());
+                updateEmojiPermission(emojiRequest.getEsid(),"p",null,null);
+
 
 
             }
 
             @Override
             public void onCancelClick(Emoji emojiRequest) {
-                updateEmojiPermission(emojiRequest.getEsid(),null,"R",null);
+                updateEmojiPermission(emojiRequest.getEsid(),"p",null,null);
                 // Handle cancel action
                 Toast.makeText(ad_notification.this, "Cancel clicked: " + emojiRequest.getEsid(), Toast.LENGTH_SHORT).show();
             }
@@ -119,7 +118,7 @@ notification();
 
 
 
-    private void updateEmojiPermission(int emojiId,String requestedBy,String permission,String requestedFor) {
+    private void updateEmojiPermission(int emojiId ,String permission,String requestedBy,String requestedFor) {
 
 
 
@@ -144,28 +143,6 @@ notification();
             public void onFailure(Call<Void> call, Throwable t) {
                 Log.e("Network Error", "Failed to update emoji permission", t);
                 Toast.makeText(ad_notification.this, "Error updating permission", Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
-
-
-    private void sendWish(String senderId, String receiverId, int emojiId) {
-        Apiservices apiservices=RetrofitClient.getInstance();
-        WishRequest wishRequest = new WishRequest(senderId, receiverId, emojiId);
-        apiservices.sendSingleWish(wishRequest).enqueue(new Callback<Void>() {
-            @Override
-            public void onResponse(Call<Void> call, Response<Void> response) {
-                if (response.isSuccessful()) {
-                    Toast.makeText(ad_notification.this, "Wish sent successfully", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(ad_notification.this, "Failed to send wish", Toast.LENGTH_SHORT).show();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<Void> call, Throwable t) {
-                Log.e("API Error", t.getMessage());
-                Toast.makeText(ad_notification.this, "Error occurred", Toast.LENGTH_SHORT).show();
             }
         });
     }

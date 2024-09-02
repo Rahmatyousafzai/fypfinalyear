@@ -105,14 +105,17 @@
                 android:layout_weight="1"
                 android:layout_marginStart="@dimen/_16sdp"/>
 
-            <Button
+            <ImageView
                 android:id="@+id/send_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
                 android:text="Wish"
                 android:textSize="20sp"
                 android:textStyle="bold"
-                android:backgroundTint="@color/green"/>
+                android:src="@android:drawable/ic_menu_send"
+                 android:background="@drawable/backgroundcolor"
+
+/>
         </LinearLayout>
     </LinearLayout>
 

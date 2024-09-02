@@ -2,6 +2,7 @@ package mydataapi;
 
 import java.util.List;
 
+import Admin.User;
 import Faculty.BirthdayUser;
 import ModeClasees.Achievement;
 import ModeClasees.Emoji;
@@ -291,7 +292,7 @@ public interface Apiservices {
 
 
 
-    @POST("api/Wish/Post")
+    @POST("api/Wish/SendSinglewish")
     Call<Void> sendWish(@Body postpapolation sendWishRequestDto);
     @GET("api/Wish/Getdashboardmessages")
     Call<List<wishingclass>> getpost(
@@ -327,4 +328,6 @@ public interface Apiservices {
 
     @GET("api/Wish/Getrequestedemoji")
     Call<List<Emoji>> getEmojiRequests();
+    @GET("api/teacher/popularusers")
+    Call<List<User>> getPopularUsers();
 }

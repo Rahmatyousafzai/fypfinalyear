@@ -96,7 +96,28 @@ public class Emoji  {
 
 
         private int emojiID;
-        private String ImagePath;
+
+    public void setEsid(int esid) {
+        this.esid = esid;
+    }
+
+    public void setRequestedfor(String requestedfor) {
+        this.requestedfor = requestedfor;
+    }
+
+    public void setRequsetedby(String requsetedby) {
+        this.requsetedby = requsetedby;
+    }
+
+    public void setFirstname(String firstname) {
+        Firstname = firstname;
+    }
+
+    public void setLastname(String lastname) {
+        Lastname = lastname;
+    }
+
+    private String ImagePath;
 
         public int getEmojiID() {
             return emojiID;

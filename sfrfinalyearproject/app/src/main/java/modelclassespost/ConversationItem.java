@@ -6,6 +6,25 @@ public class ConversationItem {
     private String senderLastName;
     private String senderProfileImage;
 
+    public String getCurrentUser() {
+        return currentUser;
+    }
+
+    public void setCurrentUser(String currentUser) {
+        this.currentUser = currentUser;
+    }
+
+    private String currentUser;
+
+    public Boolean getSentByCurrentUser() {
+        return isSentByCurrentUser;
+    }
+
+    public void setSentByCurrentUser(Boolean sentByCurrentUser) {
+        isSentByCurrentUser = sentByCurrentUser;
+    }
+
+    private Boolean isSentByCurrentUser;
     public String getSenderUsername() {
         return senderUsername;
     }
@@ -81,6 +100,9 @@ public class ConversationItem {
     public String getWishcontent() {
         return wishcontent;
     }
+    public boolean isSentByCurrentUser() {
+        return senderUsername != null && senderUsername.equals(currentUser);
+    }
 
     public void setWishcontent(String wishcontent) {
         this.wishcontent = wishcontent;
@@ -112,8 +134,9 @@ public class ConversationItem {
                             String receiverLastName,
                             String receiverProfileImage,
                             String EmojiData,
-                            String wishcontent,
-                            String wishDateTime) {
+                            String wishcontent
+
+    ) {
         this.senderUsername = senderUsername;
         this.senderFirstName = senderFirstName;
         this.senderLastName = senderLastName;
@@ -125,6 +148,9 @@ public class ConversationItem {
         this.EmojiData = EmojiData;
         this.wishcontent = wishcontent;
         this.wishDateTime = wishDateTime;
+
+        this.isSentByCurrentUser=isSentByCurrentUser;
+
     }
 
     // Getters and setters

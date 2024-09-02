@@ -27,7 +27,6 @@ import facultyClasses.Reaction;
 import facultyClasses.ReactionAdapter;
 import modelclassespost.EmojiAdapter;
 import mydataapi.Apiservices;
-import mydataapi.OnEmojiClickListener;
 import mydataapi.RetrofitClient;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -73,7 +72,6 @@ public class wishingadopter extends RecyclerView.Adapter<wishingadopter.ViewHold
         } else {
             Log.d("null wishes", "null wishes");
         }
-
 
         holder.itemView.setOnLongClickListener(v -> {
             if (wish.getProfileImage() != null && !wish.getProfileImage().isEmpty()) {
@@ -121,35 +119,15 @@ public class wishingadopter extends RecyclerView.Adapter<wishingadopter.ViewHold
         RecyclerView emojisPopupRecyclerView = popupView.findViewById(R.id.emojis_popup_recyclerview);
         emojisPopupRecyclerView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
 
-        EmojiAdapter emojiAdapter = new EmojiAdapter(context, allEmojis, new OnEmojiClickListener() {
-            @Override
-            public void onEmojiClick(Emoji emoji) {
-                if (emojiClickListener != null) {
-                    emojiClickListener.onEmojiClick(currentSwId, emoji.getEmojiID());
-                }
-                if (popupWindow != null) {
-                    popupWindow.dismiss();
-                }
+        EmojiAdapter emojiAdapter = new EmojiAdapter(context, allEmojis, emoji -> {
+            if (emojiClickListener != null) {
+                emojiClickListener.onEmojiClick(currentSwId, emoji.getEmojiID()); // Pass currentSwId and selected emoji ID
             }
-
-            @Override
-            public void onEmojiFetched(List<Emoji> section3Emojis) {}
-
-            @Override
-            public void onEmojisFetched(List<Emoji> emojis) {}
-
-            @Override
-            public void onEmojiClickWithId(int emojiId) {}
-
-            @Override
-            public void onEmojiClickForWish(int wishId, int emojiId) {}
-
-            @Override
-            public void onEmojiClick(int emojiId) {}
-
-            @Override
-            public void onEmojiClick(int wishId, int emojiId) {}
+            if (popupWindow != null) {
+                popupWindow.dismiss();
+            }
         });
+
         emojisPopupRecyclerView.setAdapter(emojiAdapter);
 
         popupWindow = new PopupWindow(popupView, RecyclerView.LayoutParams.MATCH_PARENT, RecyclerView.LayoutParams.WRAP_CONTENT);
@@ -276,7 +254,7 @@ public class wishingadopter extends RecyclerView.Adapter<wishingadopter.ViewHold
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        ImageView profile,allreaction;
+        ImageView profile, allreaction;
         TextView txtContent, txtDateTime, txtReactionCount, pfname;
 
         public ViewHolder(@NonNull View itemView) {
@@ -286,7 +264,7 @@ public class wishingadopter extends RecyclerView.Adapter<wishingadopter.ViewHold
             txtDateTime = itemView.findViewById(R.id.dateTime);
             txtReactionCount = itemView.findViewById(R.id.reactionCount);
             pfname = itemView.findViewById(R.id.pfname);
-            allreaction=itemView.findViewById(R.id.allreaction);
+            allreaction = itemView.findViewById(R.id.allreaction);
         }
     }
 
@@ -322,7 +300,7 @@ public class wishingadopter extends RecyclerView.Adapter<wishingadopter.ViewHold
             if (recyclerView != null) {
                 EmojiAdapter adapter = (EmojiAdapter) recyclerView.getAdapter();
                 if (adapter != null) {
-                    return adapter.getEmojiViewById(emojiId); // Ensure this method is implemented in EmojiAdapter
+                    // Ensure this method is implemented in EmojiAdapter
                 }
             }
         }

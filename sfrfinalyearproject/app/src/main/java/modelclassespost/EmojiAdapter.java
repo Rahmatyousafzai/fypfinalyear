@@ -12,61 +12,48 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.sfrfinalyearproject.R;
 import com.squareup.picasso.Picasso;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import ModeClasees.Emoji;
-import mydataapi.OnEmojiClickListener;
 import mydataapi.RetrofitClient;
 
+// EmojiAdapter.java
 public class EmojiAdapter extends RecyclerView.Adapter<EmojiAdapter.EmojiViewHolder> {
 
     private Context context;
-    private List<Emoji> emojis;
-    private OnEmojiClickListener listener;
-    private Map<Integer, View> emojiViewMap = new HashMap<>();
+    private List<Emoji> emojiList;
+    private OnEmojiClickListener onEmojiClickListener;
 
-    public EmojiAdapter(Context context, List<Emoji> emojis, OnEmojiClickListener listener) {
+    public EmojiAdapter(Context context, List<Emoji> emojis, OnEmojiClickListener onEmojiClickListener) {
         this.context = context;
-        this.emojis = emojis;
-        this.listener = listener;
+        this.emojiList = emojis;
+        this.onEmojiClickListener = onEmojiClickListener;
     }
 
     @NonNull
     @Override
     public EmojiViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        // Inflate the layout for each emoji item
         View view = LayoutInflater.from(context).inflate(R.layout.item_emoji, parent, false);
         return new EmojiViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull EmojiViewHolder holder, int position) {
-        Emoji emoji = emojis.get(position);
+        Emoji emoji = emojiList.get(position);
         holder.bind(emoji);
-
-        // Set click listener on each emoji item
         holder.itemView.setOnClickListener(v -> {
-            if (listener != null) {
-                listener.onEmojiClick(emoji);
+            if (onEmojiClickListener != null) {
+                onEmojiClickListener.onEmojiClick(emoji);
             }
         });
-
-        // Update the map with the latest emoji view
-        emojiViewMap.put(emoji.getEmojiID(), holder.itemView);
     }
 
     @Override
     public int getItemCount() {
-        return emojis.size();
+        return emojiList.size();
     }
 
-    public View getEmojiViewById(int emojiId) {
-        return emojiViewMap.get(emojiId);
-    }
-
-    class EmojiViewHolder extends RecyclerView.ViewHolder {
+    public static class EmojiViewHolder extends RecyclerView.ViewHolder {
         ImageView emojiImageView;
 
         public EmojiViewHolder(@NonNull View itemView) {
@@ -75,10 +62,12 @@ public class EmojiAdapter extends RecyclerView.Adapter<EmojiAdapter.EmojiViewHol
         }
 
         public void bind(Emoji emoji) {
-            if (emoji != null) {
-                String imageUrl = RetrofitClient.getBaseUrl() + "images/emojis/" + emoji.getImagePath() + ".png";
-                Picasso.get().load(imageUrl).into(emojiImageView);
-            }
+            String imageUrl = RetrofitClient.getBaseUrl() + "images/emojis/" + emoji.getImagePath() + ".png";
+            Picasso.get().load(imageUrl).into(emojiImageView);
         }
+    }
+
+    public interface OnEmojiClickListener {
+        void onEmojiClick(Emoji emoji);
     }
 }

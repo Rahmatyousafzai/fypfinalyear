@@ -14,6 +14,16 @@ public class Message {
         private String Emojidata;
         private String WishDateTime;
 
+    public boolean isSentByCurrentUser() {
+        return isSentByCurrentUser;
+    }
+
+    public void setSentByCurrentUser(boolean sentByCurrentUser) {
+        isSentByCurrentUser = sentByCurrentUser;
+    }
+
+    private boolean isSentByCurrentUser;
+
         // Getters and setters
         public String getSenderUsername() {
             return SenderUsername;

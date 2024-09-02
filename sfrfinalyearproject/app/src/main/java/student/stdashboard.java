@@ -45,7 +45,8 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import studentClasses.TeacherData;
 import studentClasses.UserDataSingleton;
-import studentClasses.teacherRepository;
+import studentClasses.UserRepository;
+import studentClasses.studentData;
 
 public class stdashboard extends AppCompatActivity implements wishingadopter.EmojiClickListener {
 
@@ -96,39 +97,11 @@ public class stdashboard extends AppCompatActivity implements wishingadopter.Emo
         // Retrieve username from UserDataSingleton (assuming it's set previously)
         username = UserDataSingleton.getInstance().getUsername();
 
-        // Fetch user data using repository
-        teacherRepository userRepository = new teacherRepository();
-        userRepository.fetchTeacherData(username, new teacherRepository.teacherRepositoryCallback() {
-            @Override
-            public void onSuccess(TeacherData data) {
-                // Access user data fields
-                String sectionName = data.getDisgnatione();
-                profileImage = data.getProfileImage();
-                firstName = data.getFirstName();
-                lastName = data.getLastName();
+        // Retrieve username from UserDataSingleton
+        username = UserDataSingleton.getInstance().getUsername();
 
-                Log.e("UserData.........", "Section Name:........... " + sectionName);
-
-                // Update UI with user data
-                profilename.setText(firstName + " " + lastName);
-                TextView textView = findViewById(R.id.disgnation);
-                textView.setText(sectionName);
-
-                // Load profile image using Picasso
-                if (profileImage != null && !profileImage.isEmpty()) {
-                    String imageUrl = RetrofitClient.getBaseUrl() + "images/profileimages/" + profileImage + ".jpg";
-                    Picasso.get().load(imageUrl).error(R.drawable.baseline_account_circle_24).into(profile);
-                } else {
-                    profile.setImageResource(R.drawable.baseline_account_circle_24);
-                }
-            }
-
-            @Override
-            public void onFailure(Exception e) {
-                Log.e("SomeActivity", "Error fetching user data: " + e.getMessage());
-                Toast.makeText(stdashboard.this, "Error fetching user data", Toast.LENGTH_SHORT).show();
-            }
-        });
+        // Fetch user data
+        fetchUserData();
 
         // Initialize RecyclerView and adapter
         recyclerView = findViewById(R.id.recyclerView);
@@ -204,7 +177,46 @@ public class stdashboard extends AppCompatActivity implements wishingadopter.Emo
     }
 
 
+    private void fetchUserData() {
+        UserRepository userRepository = new UserRepository();
+        userRepository.fetchUserData(username, new UserRepository.UserRepositoryCallback() {
+            @Override
+            public void onSuccess(studentData data) {
+                // Access user data fields
+                String programName = data.getProgramName();
+                int semesterName = data.getSemesterName();
+                String sectionName = data.getSectionName();
 
+                profileImage = data.getProfileImage();
+                firstName = data.getFirstName();
+                lastName = data.getLastName();
+
+                // Log user data
+                Log.e("UserData.......", "Program Name...........: " + programName);
+                Log.e("UserData......", "Semester Name..........: " + semesterName);
+                Log.e("UserData.........", "Section Name:........... " + sectionName);
+
+                // Optionally, update UI with user data
+                String displayData = "(" + programName + " " + semesterName + " " + sectionName + ")";
+                profilename.setText(firstName + " " + lastName);
+
+
+                // Load profile image using Picasso
+                if (profileImage != null && !profileImage.isEmpty()) {
+                    String imageUrl = RetrofitClient.getBaseUrl() + "images/profileimages/" + profileImage + ".jpg";
+                    Picasso.get().load(imageUrl).error(R.drawable.baseline_account_circle_24).into(profile);
+                } else {
+                    profile.setImageResource(R.drawable.baseline_account_circle_24);
+                }
+            }
+
+            @Override
+            public void onFailure(Exception e) {
+                Log.e("SomeActivity", "Error fetching user data: " + e.getMessage());
+                // Handle error case, e.g., show a toast or an error message
+            }
+        });
+    }
 
 
     // Method to fetch data using Retrofit
