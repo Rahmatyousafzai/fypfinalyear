@@ -201,7 +201,7 @@ public class facultypapulationMessage extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent(this, facultmessage.class);
+        Intent intent = new Intent(this, faculty_select_message_option.class);
         startActivity(intent);
         finish();
         super.onBackPressed();

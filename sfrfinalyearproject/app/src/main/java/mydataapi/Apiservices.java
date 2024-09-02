@@ -325,8 +325,6 @@ public interface Apiservices {
             @Query("requestedFor") String requestedFor
     );
 
-
-
-
-
+    @GET("api/Wish/Getrequestedemoji")
+    Call<List<Emoji>> getEmojiRequests();
 }

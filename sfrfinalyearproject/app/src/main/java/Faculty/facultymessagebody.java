@@ -36,10 +36,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import student.EmojiAdapter;
-import studentClasses.UserDataSingleton;
 
 public class facultymessagebody extends AppCompatActivity implements OnEmojiClickListener {
-    // Declare UI components
     private ImageView messageInputField;
     private Button sendButton;
     private ImageView emojiButton, emojiImageView;
@@ -48,9 +46,9 @@ public class facultymessagebody extends AppCompatActivity implements OnEmojiClic
     private Apiservices apiService;
 
     private List<Emoji> allEmojis;
-    private List<Emoji> RistricEmoji;
-   private List<ConversationItem> conversationItems;
-    private int selectedEmoji;
+    private List<Emoji> restrictedEmojis;
+    private List<ConversationItem> conversationItems;
+    private int selectedEmoji = -1;
     private PollingManager pollingManager;
     private TextView profilename, teachername;
     private ImageView profile, teacherprofileimage;
@@ -60,32 +58,29 @@ public class facultymessagebody extends AppCompatActivity implements OnEmojiClic
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_facultymessagebody);
-        username = UserDataSingleton.getInstance().getUsername();
+
+        // Initialize UI components
+        recyclerView = findViewById(R.id.recycllerviewmessage);
+        messageInputField = findViewById(R.id.message_input_field);
+        sendButton = findViewById(R.id.send_button);
+        emojiButton = findViewById(R.id.emojibutton);
+        emojiImageView = findViewById(R.id.message_input_field);
+        profilename = findViewById(R.id.profelname);
+        profile = findViewById(R.id.profileimage);
+        teachername = findViewById(R.id.teachername);
+        teacherprofileimage = findViewById(R.id.teacherImage);
+
+        // Initialize lists
+        conversationItems = new ArrayList<>();
+
         // Initialize RecyclerView
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setReverseLayout(true);
         layoutManager.setStackFromEnd(true);
         recyclerView.setLayoutManager(layoutManager);
 
-        // Initialize the adapter with the correct parameters
-
-        adapter = new ConversationAdapter(facultymessagebody.this, conversationItems, username,recyclerView);
-
-        // Set the adapter to RecyclerView
+        adapter = new ConversationAdapter(this, conversationItems, username, recyclerView);
         recyclerView.setAdapter(adapter);
-
-
-        adapter.notifyItemInserted(0);
-
-
-        // Initialize UI components
-        emojiImageView = findViewById(R.id.message_input_field);
-        sendButton = findViewById(R.id.send_button);
-        emojiButton = findViewById(R.id.emojibutton);
-        profilename = findViewById(R.id.profelname);
-        profile = findViewById(R.id.profileimage);
-        teachername = findViewById(R.id.teachername);
-        teacherprofileimage = findViewById(R.id.techerimage);
 
         // Extract data from Intent
         Intent intent = getIntent();
@@ -97,10 +92,9 @@ public class facultymessagebody extends AppCompatActivity implements OnEmojiClic
         String teacherLastName = intent.getStringExtra("teacher_lastName");
         String teacherProfileImage = intent.getStringExtra("teacher_profileImage");
 
-
         // Set profile and teacher details
-        String Techerfullname = teacherFirstName + " " + teacherLastName;
-        teachername.setText(Techerfullname);
+        String teacherFullName = teacherFirstName + " " + teacherLastName;
+        teachername.setText(teacherFullName);
         if (teacherProfileImage != null && !teacherProfileImage.isEmpty()) {
             String imageUrl = RetrofitClient.getBaseUrl() + "images/profileimages/" + teacherProfileImage + ".jpg";
             Picasso.get().load(imageUrl).into(teacherprofileimage);
@@ -119,31 +113,25 @@ public class facultymessagebody extends AppCompatActivity implements OnEmojiClic
         // Initialize ApiService
         apiService = RetrofitClient.getInstance();
 
-
         // Fetch data
         fetchConversation();
         fetchAllEmojis();
-
         fetchRestrictedEmojis();
-
 
         // Set OnClickListener for emoji button
         emojiButton.setOnClickListener(v -> showEmojisPopupWindow(allEmojis));
 
         // Set OnClickListener for send button
         sendButton.setOnClickListener(v -> {
-            sendWish(username,teacherUsername,selectedEmoji);
-            emojiImageView.setImageDrawable(null);
-            fetchConversation();
-
+            if (selectedEmoji != -1) {
+                sendWish(username, teacherUsername, selectedEmoji);
+                emojiImageView.setImageDrawable(null);
+                fetchConversation();
+            } else {
+                Toast.makeText(this, "Please select an emoji", Toast.LENGTH_SHORT).show();
+            }
         });
     }
-
-
-
-
-
-
 
     private void fetchConversation() {
         Log.d("API Call", "Fetching conversation for user: " + studentusername + " with teacher: " + teacherUsername);
@@ -152,50 +140,37 @@ public class facultymessagebody extends AppCompatActivity implements OnEmojiClic
             public void onResponse(Call<List<Message>> call, Response<List<Message>> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     List<Message> messages = response.body();
-                    List<ConversationItem> conversationItems = new ArrayList<>();
-
+                    conversationItems.clear();
                     for (Message message : messages) {
-                        String senderProfileImage = message.getSenderProfileImage() != null ? message.getSenderProfileImage() : "";
-                        String receiverProfileImage = message.getReceiverProfileImage() != null ? message.getReceiverProfileImage() : "";
-                        String emojiData = message.getEmojidata() != null ? message.getEmojidata() : "";
-                        String wishDateTime = message.getWishDateTime() != null ? message.getWishDateTime() : "";
-
                         conversationItems.add(new ConversationItem(
-                                message.getSenderUsername() != null ? message.getSenderUsername() : "",
-                                message.getSenderFirstName() != null ? message.getSenderFirstName() : "",
-                                message.getSenderLastName() != null ? message.getSenderLastName() : "",
-                                senderProfileImage,
-                                message.getReceiverUsername() != null ? message.getReceiverUsername() : "",
-                                message.getReceiverFirstName() != null ? message.getReceiverFirstName() : "",
-                                message.getReceiverLastName() != null ? message.getReceiverLastName() : "",
-                                receiverProfileImage,
-                                message.getWishcontent() != null ? message.getWishcontent() : "",
-                                emojiData,
-                                wishDateTime
+                                message.getSenderUsername(),
+                                message.getSenderFirstName(),
+                                message.getSenderLastName(),
+                                message.getSenderProfileImage(),
+                                message.getReceiverUsername(),
+                                message.getReceiverFirstName(),
+                                message.getReceiverLastName(),
+                                message.getReceiverProfileImage(),
+                                message.getWishcontent(),
+                                message.getEmojidata(),
+                                message.getWishDateTime()
                         ));
                     }
-
-
-
-
-                    // Scroll to the bottom of the RecyclerView
-
-
+                    runOnUiThread(() -> adapter.notifyDataSetChanged());
                     Log.d("API Call", "Conversation items loaded: " + conversationItems.size());
                 } else {
-                    Log.d("API Call", "Failed to fetch conversation data: " + response.message());
+                    Log.e("API Call", "Failed to fetch conversation data: " + response.message());
+                    Toast.makeText(facultymessagebody.this, "Failed to fetch messages", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<List<Message>> call, Throwable t) {
                 Log.e("API Call", "Failed to fetch conversation data", t);
+                Toast.makeText(facultymessagebody.this, "Error occurred", Toast.LENGTH_SHORT).show();
             }
         });
     }
-
-
-
 
     private void fetchAllEmojis() {
         apiService.getAllEmojis().enqueue(new Callback<List<Emoji>>() {
@@ -205,12 +180,14 @@ public class facultymessagebody extends AppCompatActivity implements OnEmojiClic
                     allEmojis = response.body();
                 } else {
                     Log.e("API Error", "Failed to fetch all emojis");
+                    Toast.makeText(facultymessagebody.this, "Error fetching emojis", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<List<Emoji>> call, Throwable t) {
                 Log.e("Network Error", "Failed to fetch all emojis", t);
+                Toast.makeText(facultymessagebody.this, "Network error", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -220,27 +197,28 @@ public class facultymessagebody extends AppCompatActivity implements OnEmojiClic
             @Override
             public void onResponse(Call<List<Emoji>> call, Response<List<Emoji>> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    RistricEmoji = response.body();
+                    restrictedEmojis = response.body();
                 } else {
                     Log.e("API Error", "Failed to fetch restricted emojis");
+                    Toast.makeText(facultymessagebody.this, "Error fetching restricted emojis", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<List<Emoji>> call, Throwable t) {
                 Log.e("Network Error", "Failed to fetch restricted emojis", t);
+                Toast.makeText(facultymessagebody.this, "Network error", Toast.LENGTH_SHORT).show();
             }
         });
     }
 
-    // Function to show emoji popup window
     private void showEmojisPopupWindow(List<Emoji> emojis) {
         if (emojis == null || emojis.isEmpty()) {
             return;
         }
         View popupView = LayoutInflater.from(this).inflate(R.layout.popup_window_layout, null);
         RecyclerView emojisPopupRecyclerView = popupView.findViewById(R.id.emojis_popup_recyclerview);
-        ImageView ristrictemoji = popupView.findViewById(R.id.ristrictemoji);
+        ImageView restrictedEmoji = popupView.findViewById(R.id.ristrictemoji);
         emojisPopupRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         EmojiAdapter emojiAdapter = new EmojiAdapter(this, emojis, this);
         emojisPopupRecyclerView.setAdapter(emojiAdapter);
@@ -248,65 +226,22 @@ public class facultymessagebody extends AppCompatActivity implements OnEmojiClic
         popupWindow.setFocusable(true);
         popupWindow.showAtLocation(popupView, Gravity.BOTTOM, 10, 10);
 
-        ristrictemoji.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showRestrictedEmojiPopupWindow(RistricEmoji);
-            }
-        });
+        restrictedEmoji.setOnClickListener(v -> showRestrictedEmojiPopupWindow(restrictedEmojis));
     }
 
-    // Function to show restricted emojis popup window
-// Function to show restricted emojis popup window
-    private void showRestrictedEmojiPopupWindow(List<Emoji> ristricEmoji) {
-        if (ristricEmoji == null || ristricEmoji.isEmpty()) {
+    private void showRestrictedEmojiPopupWindow(List<Emoji> restrictedEmojis) {
+        if (restrictedEmojis == null || restrictedEmojis.isEmpty()) {
             return;
         }
         View popupView = LayoutInflater.from(this).inflate(R.layout.restrictedemojipopup_window_layout, null);
         RecyclerView emojisPopupRecyclerView = popupView.findViewById(R.id.emojis_popup_recyclerview);
-
         emojisPopupRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
-        EmojiAdapter emojiAdapter = new EmojiAdapter(this, ristricEmoji, new OnEmojiClickListener() {
-            @Override
-            public void onEmojiClick(Emoji emoji) {
-                // Pass the clicked emoji to the confirmation dialog
-                showConfirmationDialog(emoji);
-                Log.e("clicked emoji.....","clickedEMoji......"+emoji.getEmojiID());
-            }
-
-            @Override
-            public void onEmojiFetched(List<Emoji> section3Emojis) {}
-
-            @Override
-            public void onEmojisFetched(List<Emoji> emojis) {}
-
-            @Override
-            public void onEmojiClickWithId(int emojiId) {
-
-            }
-
-            @Override
-            public void onEmojiClickForWish(int wishId, int emojiId) {
-
-            }
-
-            @Override
-            public void onEmojiClick(int emojiId) {
-
-            }
-
-            @Override
-            public void onEmojiClick(int wishId, int emojiId) {
-
-            }
-        });
+        EmojiAdapter emojiAdapter = new EmojiAdapter(this, restrictedEmojis, this);
         emojisPopupRecyclerView.setAdapter(emojiAdapter);
         PopupWindow popupWindow = new PopupWindow(popupView, RecyclerView.LayoutParams.MATCH_PARENT, RecyclerView.LayoutParams.WRAP_CONTENT);
         popupWindow.setFocusable(true);
         popupWindow.showAtLocation(popupView, Gravity.BOTTOM, 0, 0);
     }
-
-
 
     private void showConfirmationDialog(Emoji emoji) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -314,42 +249,37 @@ public class facultymessagebody extends AppCompatActivity implements OnEmojiClic
         builder.setMessage("This emoji is restricted. Do you want to proceed?");
         builder.setPositiveButton("Yes", (dialog, which) -> {
             updateEmojiPermission(emoji);
-            builder.setMessage("request succesfully send to admin ");
-
-            // Make sure emoji is correct here
         });
         builder.setNegativeButton("No", (dialog, which) -> dialog.dismiss());
         AlertDialog dialog = builder.create();
         dialog.show();
     }
 
-
-    // Function to update emoji permission in the database
     private void updateEmojiPermission(Emoji emoji) {
-        int esid = selectedEmoji; // Ensure this returns the correct ID
+        int emojiId = emoji.getEmojiID();
         String permission = "R";
-        String requestedBy = studentusername;  // Replace with actual value
-        String requestedFor = teacherUsername;  // Replace with actual value
+        String requestedBy = studentusername;
+        String requestedFor = teacherUsername;
 
-        Log.d("API Call", "Updating emoji with ID: " + esid + ", permission: " + permission +
+        Log.d("API Call", "Updating emoji with ID: " + emojiId + ", permission: " + permission +
                 ", requestedBy: " + requestedBy + ", requestedFor: " + requestedFor);
 
-        apiService.updateEmojiPermission(esid, permission, requestedBy, requestedFor).enqueue(new Callback<Void>() {
+        apiService.updateEmojiPermission(emojiId, permission, requestedBy, requestedFor).enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
                 if (response.isSuccessful()) {
                     Log.i("Update Emoji", "Emoji permission updated successfully");
-                    // Handle success (e.g., notify the user, update UI, etc.)
+                    Toast.makeText(facultymessagebody.this, "Permission request sent to admin", Toast.LENGTH_SHORT).show();
                 } else {
                     Log.e("API Error", "Failed to update emoji permission. Response code: " + response.code());
-                    // Handle the failure (e.g., show error message)
+                    Toast.makeText(facultymessagebody.this, "Failed to update permission", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<Void> call, Throwable t) {
                 Log.e("Network Error", "Failed to update emoji permission", t);
-                // Handle network error (e.g., show error message)
+                Toast.makeText(facultymessagebody.this, "Error updating permission", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -375,12 +305,12 @@ public class facultymessagebody extends AppCompatActivity implements OnEmojiClic
 
     @Override
     public void onEmojiClickWithId(int emojiId) {
-
+        // Implement if needed
     }
 
     @Override
     public void onEmojiClickForWish(int wishId, int emojiId) {
-
+        // Implement if needed
     }
 
     @Override
@@ -393,18 +323,9 @@ public class facultymessagebody extends AppCompatActivity implements OnEmojiClic
         // Implement if needed
     }
 
-    // Inside your Activity, ViewModel, or Repository class
-
-    private void sendWish(String senderId, String receiverId, int emojiId) {
-
-
-
-        WishRequest wishRequest = new WishRequest(senderId, receiverId, emojiId);
-
-        Apiservices apiService = RetrofitClient.getInstance();
-        Call<Void> call = apiService.sendSingleWish(wishRequest);
-
-        call.enqueue(new Callback<Void>() {
+    private void sendWish(String senderId, String ReciverID, int emojiID) {
+        WishRequest wishRequest = new WishRequest(senderId, ReciverID, emojiID);
+        apiService.sendSingleWish(wishRequest).enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
                 if (response.isSuccessful()) {
@@ -421,9 +342,10 @@ public class facultymessagebody extends AppCompatActivity implements OnEmojiClic
             }
         });
     }
+
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent(this, faculty_select_message_option.class);
+        Intent intent = new Intent(this, facultmessage.class);
         startActivity(intent);
         finish();
         super.onBackPressed();

@@ -21,7 +21,7 @@ import studentClasses.teacherRepository;
 
 public class faculty_select_message_option extends AppCompatActivity {
 
-Button Student, alumni, course,program ;
+Button Student, alumni,program ;
 
     private String username;
     private String firstName;

@@ -31,12 +31,6 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.List;
 
-import Faculty.facultmessage;
-
-import Faculty.faculty_select_message_option;
-import Faculty.ftNotification;
-import Faculty.ftStudent;
-import Faculty.ftfavstudent;
 import dashboardclasese.wishingadopter;
 import dashboardclasese.wishingclass;
 import facultyClasses.Reaction;
@@ -85,21 +79,21 @@ public class ad_dashboard extends AppCompatActivity implements wishingadopter.Em
         news = findViewById(R.id.news);
         notification = findViewById(R.id.txtnotification);
         message = findViewById(R.id.txtmessage);
-        favstudent = findViewById(R.id.txtfavstudent);
-        student = findViewById(R.id.textstudent);
+      //  favstudent = findViewById(R.id.txtfavstudent);
+      //  student = findViewById(R.id.textstudent);
         imgnews = findViewById(R.id.imgnews);
         imgNotification = findViewById(R.id.imgnptification);
         imgmessage = findViewById(R.id.imgmessage);
         imgstudent = findViewById(R.id.imgstudent);
-        imgfavstudent = findViewById(R.id.imgfavstudent);
+        //imgfavstudent = findViewById(R.id.imgfavstudent);
         imgpost = findViewById(R.id.typepost);
         typepost = findViewById(R.id.addpost);
         profilename = findViewById(R.id.profelname);
         profile = findViewById(R.id.profilepicture);
 
-        ImageView appSetting = findViewById(R.id.back);
+       // ImageView appSetting = findViewById(R.id.back);
 
-        appSetting.setOnClickListener(v -> showAutoReplyDialog());
+       // appSetting.setOnClickListener(v -> showAutoReplyDialog());
         // Retrieve username from UserDataSingleton (assuming it's set previously)
         username = UserDataSingleton.getInstance().getUsername();
 
@@ -285,7 +279,6 @@ public class ad_dashboard extends AppCompatActivity implements wishingadopter.Em
             public void onClick(View v) {
 
 
-
                 news();
 
 
@@ -306,19 +299,6 @@ public class ad_dashboard extends AppCompatActivity implements wishingadopter.Em
             }
         });
 
-        student.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                student();
-            }
-        });
-
-        favstudent.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                favstudent();
-            }
-        });
 
         imgnews.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -341,20 +321,9 @@ public class ad_dashboard extends AppCompatActivity implements wishingadopter.Em
             }
         });
 
-        imgstudent.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                student();
-            }
-        });
-
-        imgfavstudent.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                favstudent();
-            }
-        });
     }
+
+
 
     // Methods to handle various actions
     private void TYPEPOST() {
@@ -375,23 +344,6 @@ public class ad_dashboard extends AppCompatActivity implements wishingadopter.Em
         finish();
     }
 
-    private void student() {
-        Intent intent = new Intent(ad_dashboard.this, ad_student.class);
-        intent.putExtra("username", username);
-        intent.putExtra("FullName", firstName + " " + lastName);
-        intent.putExtra("profileimage", profileImage);
-        startActivity(intent);
-        finish();
-    }
-
-    private void favstudent() {
-        Intent intent = new Intent(ad_dashboard.this, ad_teachers.class);
-        intent.putExtra("username", username);
-        intent.putExtra("FullName", firstName + " " + lastName);
-        intent.putExtra("profileimage", profileImage);
-        startActivity(intent);
-        finish();
-    }
 
     private void notification() {
         Intent intent = new Intent(ad_dashboard.this, ad_notification.class);

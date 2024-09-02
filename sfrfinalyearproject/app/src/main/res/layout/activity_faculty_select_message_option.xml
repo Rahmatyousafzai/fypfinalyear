@@ -5,123 +5,118 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="Faculty.faculty_select_message_option"
+    android:orientation="vertical"
+    android:background="@drawable/backgroundcolor">
 
-android:orientation="vertical"
-    android:background="@drawable/backgroundcolor"
-
-    >
+    <!-- Profile Section -->
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_30sdp"
-        android:layout_gravity="center"
-
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:padding="16dp"
+        android:layout_marginTop="30dp"
         >
 
+        <!-- Profile Image -->
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/profilepicture"
-
-            android:layout_width="@dimen/_40sdp"
-            android:layout_height="@dimen/_40sdp"
-            android:layout_weight="2"
-            android:layout_gravity="center"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:src="@drawable/saeed"
             app:civ_border_color="@color/black"
-            app:civ_border_width="2dp"
+            app:civ_border_width="2dp"/>
 
-
-            />
-        <TextView
-            android:id="@+id/profelname"
-            android:layout_width="wrap_content"
+        <!-- Name and Designation -->
+        <LinearLayout
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/_10sdp"
-            android:text="Rahmat Yousafzai"
-            android:textColor="@color/black"
-            android:textSize="20sp"
             android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center_vertical"
+            android:layout_marginStart="12dp">
 
-            android:layout_gravity="center"
-            android:layout_marginStart="@dimen/_8sdp"/>
+            <TextView
+                android:id="@+id/profelname"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Rahmat Yousafzai"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                android:textStyle="bold"/>
 
+            <TextView
+                android:id="@+id/disgnation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="title"
+                android:textStyle="italic"
+                android:layout_marginTop="4dp"/>
+        </LinearLayout>
 
-
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:text="title"
-            android:textStyle="italic"
-
-            android:id="@+id/disgnation"
-            ></TextView>
+        <!-- Back ImageView -->
         <ImageView
             android:id="@+id/back"
-            android:layout_width="@dimen/_40sdp"
-            android:layout_height="@dimen/_40sdp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:src="@drawable/baseline_more_vert_24"
-            android:layout_gravity="center"
-            android:layout_marginStart="@dimen/_50sdp"
-            android:backgroundTint="@color/white"
-
-
-
-            />
-
+            android:layout_marginStart="16dp"
+            android:backgroundTint="@color/white"/>
     </LinearLayout>
 
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="500dp"
-    android:orientation="vertical"
-    android:background="@color/white"
-    android:layout_marginTop="50dp"
-    >
-
+    <!-- Buttons Section -->
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="450dp"
-android:background="@drawable/borderwithgreen"
-        android:layout_gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:orientation="vertical"
-        android:layout_marginTop="10dp"
-        android:padding="40dp"
-        >
-    <Button
-        android:id="@+id/Student"
-        android:layout_width="296dp"
-        android:layout_height="70dp"
-        android:backgroundTint="@color/green"
-        android:text="Student"
-        android:textSize="30dp"
-        android:textStyle="bold"
-  ></Button>
+        android:background="@color/white"
+        android:padding="16dp">
 
-    <Button
-        android:id="@+id/Alumni"
-        android:layout_width="296dp"
-        android:layout_height="70dp"
-        android:backgroundTint="@color/green"
-        android:text="Alumni"
-        android:textSize="30dp"
-        android:textStyle="bold"
-       android:layout_marginTop="50dp"></Button>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_100sdp"
+            android:orientation="vertical"
+            android:background="@drawable/borderwithgreen"
+            android:padding="30dp"
+            android:gravity="center">
 
-        <Button
-            android:id="@+id/Displine"
-            android:layout_width="296dp"
-            android:layout_height="70dp"
-            android:backgroundTint="@color/green"
-            android:text="Program"
-            android:textSize="30dp"
-            android:textStyle="bold"
-            android:layout_marginTop="50dp"
-></Button>
+            <!-- Student Button -->
+            <Button
+                android:layout_marginTop="40dp"
+                android:id="@+id/Student"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/green"
+                android:text="Student"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="40dp"/>
 
+            <!-- Alumni Button -->
+            <Button
+                android:id="@+id/Alumni"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/green"
+                android:text="Alumni"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="40dp"/>
 
+            <!-- Program Button -->
+            <Button
+                android:id="@+id/Displine"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/green"
+                android:text="Program"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="40dp"
+
+                />
+        </LinearLayout>
     </LinearLayout>
-
-</LinearLayout>
-
 </androidx.appcompat.widget.LinearLayoutCompat>

@@ -14,7 +14,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         // Find the login button by its ID
-        Button buttonNext = findViewById(R.id.login);
+        Button buttonNext = findViewById(R.id.loginButton);
 
         // Set a click listener for the login button
         buttonNext.setOnClickListener(new View.OnClickListener() {

@@ -223,6 +223,7 @@ public class wishingadopter extends RecyclerView.Adapter<wishingadopter.ViewHold
                 if (response.isSuccessful() && response.body() != null) {
                     int count = response.body().getCount();
                     reactionCountView.setText("Reactions: " + count);
+
                 } else {
                     Log.d("Failed to get count", "Failed to get count");
                     reactionCountView.setText("Reactions: 0");

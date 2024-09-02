@@ -2,6 +2,36 @@ package ModeClasees;
 
 public class Emoji  {
 
+
+    private int esid;
+;
+    private String requestedfor;
+
+    public int getEsid() {
+        return esid;
+    }
+
+    public String getRequestedfor() {
+        return requestedfor;
+    }
+
+    public String getRequsetedby() {
+        return requsetedby;
+    }
+
+    public String getFirstname() {
+        return Firstname;
+    }
+
+    public String getLastname() {
+        return Lastname;
+    }
+
+    private String requsetedby;
+
+   private String  Firstname;
+   private String Lastname;
+
     public Emoji(String senderId, boolean sentBySender, String emojiString, int emojiID, String imagePath) {
         this.senderId = senderId;
         this.sentBySender = sentBySender;

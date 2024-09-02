@@ -40,16 +40,27 @@ public class ftNotification extends AppCompatActivity {
     private UserDetailsAdapter userDetailsAdapter;
     private String username, firstName, lastName, profileImage;
 
-    private TextView student, favstudent, typepost;
-    private ImageView imgstudent, imgfavstudent, imgpost;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ft_notification);
 
+        // Initialize views
+        initializeViews();
+        setClickListeners();
 
+        // Retrieve username from UserDataSingleton
+        username = UserDataSingleton.getInstance().getUsername();
 
+        if (username != null) {
+            fetchUserData(username);
+            fetchBirthdayMessage(username);
+        } else {
+            Toast.makeText(this, "Username not found", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void initializeViews() {
         news = findViewById(R.id.news);
         notification = findViewById(R.id.txtnotification);
         message = findViewById(R.id.txtmessage);
@@ -57,201 +68,32 @@ public class ftNotification extends AppCompatActivity {
         imgNotification = findViewById(R.id.imgnptification);
         imgmessage = findViewById(R.id.imgmessage);
 
-        imgpost = findViewById(R.id.typepost);
-        typepost = findViewById(R.id.addpost);
-        profilename = findViewById(R.id.profelname);
         profile = findViewById(R.id.profilepicture);
-
+        profilename = findViewById(R.id.profelname);
+        textViewDesignation = findViewById(R.id.disgnation);
+        messageTextView = findViewById(R.id.messageTextView);
         ImageView appSetting = findViewById(R.id.back);
 
-        username = UserDataSingleton.getInstance().getUsername();
-
-        // Fetch user data using repository
-        teacherRepository userRepository = new teacherRepository();
-        userRepository.fetchTeacherData(username, new teacherRepository.teacherRepositoryCallback() {
-            @Override
-            public void onSuccess(TeacherData data) {
-                // Access user data fields
-                String sectionName = data.getDisgnatione();
-                profileImage = data.getProfileImage();
-                firstName = data.getFirstName();
-                lastName = data.getLastName();
-
-                Log.e("UserData.........", "Section Name:........... " + sectionName);
-
-                // Update UI with user data
-                profilename.setText(firstName + " " + lastName);
-                TextView textView = findViewById(R.id.disgnation);
-                textView.setText(sectionName);
-
-                // Load profile image using Picasso
-                if (profileImage != null && !profileImage.isEmpty()) {
-                    String imageUrl = RetrofitClient.getBaseUrl() + "images/profileimages/" + profileImage + ".jpg";
-                    Picasso.get().load(imageUrl).error(R.drawable.baseline_account_circle_24).into(profile);
-                } else {
-                    profile.setImageResource(R.drawable.baseline_account_circle_24);
-                }
-            }
-
-            @Override
-            public void onFailure(Exception e) {
-                Log.e("SomeActivity", "Error fetching user data: " + e.getMessage());
-                Toast.makeText(ftNotification.this, "Error fetching user data", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        // Initialize views
-
-        // Retrieve username from UserDataSingleton
-        username = UserDataSingleton.getInstance().getUsername();
-
-        if (username != null) {
-            fetchBirthdayMessage(username);
-            fetchUserData(username);
-        } else {
-            Toast.makeText(this, "Username not found", Toast.LENGTH_SHORT).show();
-        }
-
-
-       setClickListeners();
-
-
-
+        // Initialize other views as needed
     }
 
-
-
-
-    // Other methods for handling various click actions
     private void setClickListeners() {
-
-
-
-
-        news.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-
-
-                news();
-
-
-            }
-        });
-
-        notification.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                notification();
-            }
-        });
-
-        message.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                message();
-            }
-        });
-
-        student.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                student();
-            }
-        });
-
-        favstudent.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                favstudent();
-            }
-        });
-
-        imgnews.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                news();
-            }
-        });
-
-        imgNotification.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                notification();
-            }
-        });
-
-        imgmessage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                message();
-            }
-        });
-
-        imgstudent.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                student();
-            }
-        });
-
-        imgfavstudent.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                favstudent();
-            }
-        });
+        news.setOnClickListener(v -> navigateToActivity(faculty_dashboard.class));
+        notification.setOnClickListener(v -> navigateToActivity(ftNotification.class));
+        message.setOnClickListener(v -> navigateToActivity(facultmessage.class));
+        imgnews.setOnClickListener(v -> navigateToActivity(faculty_dashboard.class));
+        imgNotification.setOnClickListener(v -> navigateToActivity(ftNotification.class));
+        imgmessage.setOnClickListener(v -> navigateToActivity(facultmessage.class));
     }
 
-    // Methods to handle various actions
-
-
-    private void message() {
-        Intent intent = new Intent(ftNotification.this, facultmessage.class);
+    private void navigateToActivity(Class<?> activityClass) {
+        Intent intent = new Intent(ftNotification.this, activityClass);
         intent.putExtra("username", username);
         intent.putExtra("FullName", firstName + " " + lastName);
         intent.putExtra("profileimage", profileImage);
         startActivity(intent);
         finish();
     }
-
-    private void student() {
-        Intent intent = new Intent(ftNotification.this, ftStudent.class);
-        intent.putExtra("username", username);
-        intent.putExtra("FullName", firstName + " " + lastName);
-        intent.putExtra("profileimage", profileImage);
-        startActivity(intent);
-        finish();
-    }
-
-    private void favstudent() {
-        Intent intent = new Intent(ftNotification.this, ftfavstudent.class);
-        intent.putExtra("username", username);
-        intent.putExtra("FullName", firstName + " " + lastName);
-        intent.putExtra("profileimage", profileImage);
-        startActivity(intent);
-        finish();
-    }
-
-    private void notification() {
-        Intent intent = new Intent(ftNotification.this,ftNotification.class);
-        intent.putExtra("username", username);
-        intent.putExtra("FullName", firstName + " " + lastName);
-        intent.putExtra("profileimage", profileImage);
-        startActivity(intent);
-        finish();
-    }
-
-    public void news() {
-        Intent intent = new Intent(ftNotification.this, faculty_dashboard.class);
-        intent.putExtra("username", username);
-        intent.putExtra("FullName", firstName + " " + lastName);
-        intent.putExtra("profileimage", profileImage);
-        startActivity(intent);
-        finish();
-    }
-
 
     private void fetchUserData(String username) {
         teacherRepository userRepository = new teacherRepository();
@@ -264,11 +106,9 @@ public class ftNotification extends AppCompatActivity {
                     profileImage = data.getProfileImage();
                     String sectionName = data.getDisgnatione();
 
-                    // Update UI with user data
                     profilename.setText(String.format("%s %s", firstName, lastName));
                     textViewDesignation.setText(sectionName);
 
-                    // Load profile image
                     loadProfileImage(profileImage);
                 } else {
                     Toast.makeText(ftNotification.this, "User data not found", Toast.LENGTH_SHORT).show();
@@ -377,37 +217,6 @@ public class ftNotification extends AppCompatActivity {
             startActivity(intent);
         });
     }
-
-    public void navigateToMessage() {
-        Intent intent = new Intent(this, facultmessage.class);
-        intent.putExtra("username", username);
-        intent.putExtra("FullName", firstName + " " + lastName);
-        intent.putExtra("profileimage", profileImage);
-        startActivity(intent);
-        finish();
-    }
-
-    public void navigateToNotification() {
-        Intent intent = new Intent(this, ftNotification.class);
-        intent.putExtra("username", username);
-        intent.putExtra("FullName", firstName + " " + lastName);
-        intent.putExtra("profileimage", profileImage);
-        startActivity(intent);
-        finish();
-    }
-
-    public void navigateToNews() {
-        Intent intent = new Intent(this, faculty_dashboard.class);
-        intent.putExtra("username", username);
-        intent.putExtra("FullName", firstName + " " + lastName);
-        intent.putExtra("profileimage", profileImage);
-        startActivity(intent);
-        finish();
-    }
-
-
-
-
 
     @Override
     public void onBackPressed() {

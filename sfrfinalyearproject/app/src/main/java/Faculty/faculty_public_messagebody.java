@@ -195,5 +195,15 @@ public class faculty_public_messagebody extends AppCompatActivity {
         startActivity(intent);
         finish(); // Optional: Close the current activity
     }
+    @Override
+    public void onBackPressed() {
+        // Navigate back to the login screen
+        Intent intent = new Intent(this, faculty_select_message_option.class);
+        startActivity(intent);
+        finish(); // Finish the current activity to prevent returning to it when pressing back again
+        super.onBackPressed(); // Call super method
+    }
+
+
 }
 

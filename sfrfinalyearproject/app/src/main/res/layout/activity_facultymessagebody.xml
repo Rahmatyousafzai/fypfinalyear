@@ -4,22 +4,22 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="Faculty.facultymessagebody"
-    android:background="@drawable/backgroundcolor"
-
     android:orientation="vertical"
-    >
+    android:padding="@dimen/_16sdp"
+    tools:context="Faculty.facultymessagebody"
+    android:background="@drawable/backgroundcolor">
+
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_30sdp"
-        android:layout_gravity="center">
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_marginBottom="@dimen/_16sdp">
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/profileimage"
             android:layout_width="@dimen/_40sdp"
             android:layout_height="@dimen/_40sdp"
-            android:layout_gravity="center"
             android:src="@drawable/rahmatpic"
             app:civ_border_color="@color/black"
             app:civ_border_width="2dp" />
@@ -28,145 +28,92 @@
             android:id="@+id/profelname"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/_10sdp"
-            android:text="Rahmat yousafzai"
+            android:layout_marginStart="@dimen/_8sdp"
+            android:text="Rahmat Yousafzai"
             android:textColor="@color/black"
             android:textSize="20sp"
-            android:layout_gravity="center"
-            android:layout_marginStart="@dimen/_8sdp" />
+            android:gravity="center_vertical"
+            android:layout_weight="1"/>
 
         <ImageView
             android:id="@+id/back"
             android:layout_width="@dimen/_40sdp"
             android:layout_height="@dimen/_40sdp"
             android:src="@drawable/baseline_more_vert_24"
-            android:layout_gravity="center"
-            android:layout_marginStart="@dimen/_50sdp"
-            android:backgroundTint="@color/white" />
+            android:backgroundTint="@color/white"
+            android:layout_gravity="end"/>
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="360dp"
-        android:layout_height="580dp"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:background="@drawable/border"
-        android:backgroundTint="@color/white"
-        android:layout_gravity="center"
-        android:layout_marginTop="10dp"
         android:orientation="vertical"
-        android:padding="5dp"
+        android:padding="@dimen/_8sdp">
 
-        >
         <LinearLayout
-            android:layout_width="340dp"
-            android:layout_height="60dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:background="@drawable/border"
-            android:layout_marginLeft="5dp"
-            android:layout_marginTop="10dp"
-            android:padding="10dp"
-
-            >
+            android:orientation="horizontal"
+            android:padding="@dimen/_8sdp">
 
             <de.hdodenhof.circleimageview.CircleImageView
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="@dimen/_40sdp"
+                android:layout_height="@dimen/_40sdp"
                 android:src="@drawable/saeed"
+                android:id="@+id/teacherImage"
                 app:civ_border_width="2dp"
-                app:civ_circle_background_color="@color/black"
-                android:id="@+id/techerimage"
-
-                >
-            </de.hdodenhof.circleimageview.CircleImageView>
+                app:civ_circle_background_color="@color/black"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Dr.Saeed Wattoo"
-                android:layout_marginLeft="10dp"
-                android:layout_gravity="center"
-                android:textSize="20dp"
-
+                android:layout_marginStart="@dimen/_8sdp"
+                android:text="Dr. Saeed Wattoo"
+                android:textSize="20sp"
                 android:id="@+id/teachername"
-
-                >
-            </TextView>
-
-
+                android:gravity="center_vertical"
+                android:layout_weight="1"/>
         </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycllerviewmessage"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_marginTop="@dimen/_8sdp"/>
+
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="400dp">
-            <androidx.recyclerview.widget.RecyclerView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:layout_gravity="center"
-                android:id="@+id/recycllerviewmessage"
-                >
-
-
-            </androidx.recyclerview.widget.RecyclerView>
-
-
-        </LinearLayout>
-
-
-
-
-        <LinearLayout
-            android:layout_width="340dp"
-            android:layout_height="70dp"
-
-
-
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
             android:background="@drawable/flateborder"
-            android:layout_gravity="center"
-            >
+            android:padding="@dimen/_8sdp">
 
             <ImageView
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:src="@drawable/smile"
-                android:layout_gravity="center"
-                android:layout_marginLeft="20dp"
                 android:id="@+id/emojibutton"
+                android:layout_width="@dimen/_40sdp"
+                android:layout_height="@dimen/_40sdp"
+                android:src="@drawable/smile"/>
 
-                ></ImageView>
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:hint=" "
-                android:layout_gravity="center"
-                android:layout_marginLeft="20dp"
-                android:layout_weight="1"
-
                 android:id="@+id/message_input_field"
-                ></ImageView>
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_marginStart="@dimen/_16sdp"/>
+
             <Button
+                android:id="@+id/send_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Wish"
-                android:textSize="20dp"
+                android:textSize="20sp"
                 android:textStyle="bold"
-                android:backgroundTint="@color/green"
-                android:layout_gravity="center"
-
-                android:id="@+id/send_button"
-                >
-
-
-
-            </Button>
-
+                android:backgroundTint="@color/green"/>
         </LinearLayout>
-
-
-
     </LinearLayout>
-
-
-
-
-
-
 
 </androidx.appcompat.widget.LinearLayoutCompat>
